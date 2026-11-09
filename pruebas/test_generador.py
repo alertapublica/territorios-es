@@ -78,8 +78,10 @@ class Readers(unittest.TestCase):
         self.assertEqual(items["Q1"]["codes"]["osm"], {"1", "2"})
         self.assertEqual(items["Q1"]["labels"], {"gl": "Pontevedra"})
         self.assertEqual(items["Q1"]["articles"], {"gl": "Pontevedra á"})
-        for query in wikidata.queries().values():
-            self.assertIn("SELECT", query)
+        queries = wikidata.queries()
+        self.assertEqual(len(queries), 2 * (1 + 2 * len(wikidata.LANGS)))
+        self.assertIn('FILTER(LANG(?label) = "eu")', queries["spain_labels_eu"])
+        self.assertIn("<https://gl.wikipedia.org/>", queries["country_articles_gl"])
 
 
 class Build(unittest.TestCase):

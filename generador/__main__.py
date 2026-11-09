@@ -55,7 +55,7 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     raw = {}
     for key, query in wikidata.queries().items():
         got = descargas.fetch(c["url"], data={"query": query}, accept="application/sparql-results+json",
-                              cache=cache, cache_name=f"wikidata_{key}.json")
+                              cache=cache, cache_name=f"wikidata_{key}.json", validate=json.loads)
         raw[key] = got.content
         records[f"wikidata_{key}"] = got.record(licence=c["licence"], attribution=c["attribution"])
         records[f"wikidata_{key}"]["url"] = c["url"] + " (SPARQL: " + key + ")"

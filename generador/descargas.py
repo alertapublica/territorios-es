@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import http.client
 import time
 import urllib.error
 import urllib.parse
@@ -26,8 +27,9 @@ class Download:
 
 
 def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: Path | None = None,
-          cache_name: str | None = None, attempts: int = 4) -> Download:
-    """GET (or POST form data). With a cache folder, a file already there is reused."""
+          cache_name: str | None = None, attempts: int = 4, validate=None) -> Download:
+    """GET (or POST form data). With a cache folder, a file already there is reused. `validate`
+    raises on a broken answer (e.g. JSON cut off by a server timeout), which is retried."""
     if cache and cache_name and (cache / cache_name).exists():
         return Download(url, (cache / cache_name).read_bytes())
     body = urllib.parse.urlencode(data).encode() if data else None
@@ -42,6 +44,12 @@ def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: 
             with urllib.request.urlopen(urllib.request.Request(url, data=body, headers=headers), timeout=180) as r:
                 content = r.read()
             time.sleep(PAUSE)
+            if validate:
+                try:
+                    validate(content)
+                except ValueError as e:
+                    error = e
+                    continue
             if cache and cache_name:
                 cache.mkdir(parents=True, exist_ok=True)
                 (cache / cache_name).write_bytes(content)
@@ -50,6 +58,6 @@ def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: 
             error = e
             if e.code not in (429, 500, 502, 503, 504):
                 break
-        except (urllib.error.URLError, TimeoutError) as e:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as e:
             error = e
     raise RuntimeError(f"Could not download {url}: {error}")

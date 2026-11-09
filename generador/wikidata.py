@@ -16,41 +16,36 @@ _SPAIN = """
 """
 _COUNTRIES = "?item wdt:P297 ?alpha2 ."
 
-_LANG_FILTER = ", ".join(f'"{lang}"' for lang in LANGS)
-_WIKIS = " ".join(f"<https://{lang}.wikipedia.org/>" for lang in LANGS)
-
-
-def queries() -> dict[str, str]:
-    return {
-        "spain_codes": f"""SELECT ?item ?ine ?iso ?nuts ?lau ?osm ?geonames ?end WHERE {{
+_SPAIN_CODES = f"""SELECT ?item ?ine ?iso ?nuts ?lau ?osm ?geonames ?end WHERE {{
   {_SPAIN}
   OPTIONAL {{ ?item wdt:P605 ?nuts }} OPTIONAL {{ ?item wdt:P782 ?lau }}
   OPTIONAL {{ ?item wdt:P402 ?osm }} OPTIONAL {{ ?item wdt:P1566 ?geonames }}
   OPTIONAL {{ ?item wdt:P576 ?end }}
-}}""",
-        "spain_labels": f"""SELECT ?item ?label WHERE {{
-  {_SPAIN}
-  ?item rdfs:label ?label . FILTER(LANG(?label) IN ({_LANG_FILTER}))
-}}""",
-        "spain_articles": f"""SELECT ?item ?article WHERE {{
-  {_SPAIN}
-  ?article schema:about ?item ; schema:isPartOf ?wiki . VALUES ?wiki {{ {_WIKIS} }}
-}}""",
-        "country_codes": f"""SELECT ?item ?alpha2 ?alpha3 ?numeric ?osm ?geonames ?end WHERE {{
+}}"""
+_COUNTRY_CODES = f"""SELECT ?item ?alpha2 ?alpha3 ?numeric ?osm ?geonames ?end WHERE {{
   {_COUNTRIES}
   OPTIONAL {{ ?item wdt:P298 ?alpha3 }} OPTIONAL {{ ?item wdt:P299 ?numeric }}
   OPTIONAL {{ ?item wdt:P402 ?osm }} OPTIONAL {{ ?item wdt:P1566 ?geonames }}
   OPTIONAL {{ ?item wdt:P576 ?end }}
-}}""",
-        "country_labels": f"""SELECT ?item ?label WHERE {{
-  {_COUNTRIES}
-  ?item rdfs:label ?label . FILTER(LANG(?label) IN ({_LANG_FILTER}))
-}}""",
-        "country_articles": f"""SELECT ?item ?article WHERE {{
-  {_COUNTRIES}
-  ?article schema:about ?item ; schema:isPartOf ?wiki . VALUES ?wiki {{ {_WIKIS} }}
-}}""",
-    }
+}}"""
+
+
+def queries() -> dict[str, str]:
+    """One query for the codes and one per language for labels and articles: a single big query
+    times out on the public endpoint and comes back cut off."""
+    result = {}
+    for prefix, items, codes in (("spain", _SPAIN, _SPAIN_CODES), ("country", _COUNTRIES, _COUNTRY_CODES)):
+        result[f"{prefix}_codes"] = codes
+        for lang in LANGS:
+            result[f"{prefix}_labels_{lang}"] = f"""SELECT ?item ?label WHERE {{
+  {items}
+  ?item rdfs:label ?label . FILTER(LANG(?label) = "{lang}")
+}}"""
+            result[f"{prefix}_articles_{lang}"] = f"""SELECT ?item ?article WHERE {{
+  {items}
+  ?article schema:about ?item ; schema:isPartOf <https://{lang}.wikipedia.org/> .
+}}"""
+    return result
 
 
 def _value(binding: dict, key: str) -> str | None:
@@ -77,10 +72,13 @@ def parse(results: dict[str, bytes], prefix: str) -> dict[str, dict]:
                 entry["codes"].setdefault(key, set()).add(value)
         if _value(binding, "end"):
             entry["dissolved"] = True
-    for binding in json.loads(results[f"{prefix}_labels"])["results"]["bindings"]:
+    keys = sorted(results)
+    labels = [b for k in keys if k.startswith(f"{prefix}_labels") for b in json.loads(results[k])["results"]["bindings"]]
+    articles = [b for k in keys if k.startswith(f"{prefix}_articles") for b in json.loads(results[k])["results"]["bindings"]]
+    for binding in labels:
         label = binding["label"]
         item(_value(binding, "item"))["labels"][label["xml:lang"]] = label["value"]
-    for binding in json.loads(results[f"{prefix}_articles"])["results"]["bindings"]:
+    for binding in articles:
         url = _value(binding, "article")
         lang = url.split("//", 1)[1].split(".", 1)[0]
         title = url.rsplit("/wiki/", 1)[-1]
