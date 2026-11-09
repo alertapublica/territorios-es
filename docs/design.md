@@ -382,7 +382,12 @@ Before using each source, its URL, format and licence have to be checked. Alread
   DGC code (`locat`: office and municipality) and its INE code (`loine`), written as numbers
   without leading zeros. For A Coruña it gives 95 municipalities for the INE's 93: it includes
   Cesuras and Oza dos Ríos, merged in 2013, which go to the report. The DGC code differs from the
-  INE code in 61 of the 95.
+  INE code in 61 of the 95. In the first full generation: 7,608 municipalities with a DGC code (all
+  the common-regime ones). Some Catastro offices are not provinces and have their own two digits,
+  which start the DGC code and the rustic references: 51 (Cartagena), 52 (Gijón), 53 (Jerez), 54
+  (Vigo), 55 (Ceuta) and 56 (Melilla). The Catastro cuts names at 30 characters and sometimes puts
+  the article at the end or leaves it out; the name cross-check allows for that and only reports
+  really different names (old names such as «La Bisbal de Falset», or abbreviations).
 - **GISCO boundaries**: they exclude commercial use and carry "© EuroGeographics". Discarded as a
   source.
 - **CartoCiudad**: it does not allow downloading postal codes (agreement with Correos,
