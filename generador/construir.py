@@ -13,6 +13,7 @@ from pathlib import Path
 
 from territorios_es.text import display_name, flip_article, normalize, slugify
 
+from .catastro import FORAL
 from .eurostat import ine_code
 from .wikidata import LANGS
 
@@ -286,6 +287,17 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         else:
             lau_by_ine[code] = lau_code
     lau = inputs.get("lau") or {}
+    # Catastro: the DGC gives both codes, so the link is by code; the name is only a cross-check.
+    dgc_by_ine: dict[str, list[list[str]]] = {}
+    for dgc, ine, dgc_name in inputs.get("catastro") or []:
+        dgc_by_ine.setdefault(ine, []).append([dgc, dgc_name])
+    catastro_provinces = set(inputs.get("catastro_provinces") or [])
+    if dgc_by_ine:
+        expected = set(province_ccaa) - set(FORAL)
+        for code in sorted(expected - catastro_provinces):
+            report.add("Catastro", f"es:provincia:{code} no está en el Catastro")
+        for code in sorted(catastro_provinces - expected):
+            report.add("Catastro", f"El Catastro da la provincia {code}, que no se esperaba")
     area_in_m2 = inputs.get("lau_area_unit", "m2") == "m2"
     municipalities, ine_codes = [], set()
     island_nuts: dict[str, set] = {}
@@ -336,6 +348,21 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                     stats[key] = fields[key]
         elif lau:
             report.add("Eurostat LAU", f"{identity} «{display}» no está en la tabla LAU")
+        entries = dgc_by_ine.get(code, [])
+        if len(entries) > 1:
+            report.add("Catastro", f"{identity}: varios códigos DGC "
+                                   f"({', '.join(e[0] for e in entries)}); no se enlaza")
+        elif entries:
+            dgc, dgc_name = entries[0]
+            codes["dgc:municipio"] = dgc
+            if dgc[:2] != province:
+                report.add("Catastro", f"{identity}: código DGC {dgc} en otra provincia")
+            names_known = known | {normalize(v) for v in names.get("lang", {}).values()} \
+                | {normalize(a["name"]) for a in names.get("aliases", [])}
+            if not all(normalize(part) in names_known for part in dgc_name.split("/")):
+                report.add("Catastro: nombre distinto", f"{identity} «{display}»: «{dgc_name}» ({dgc})")
+        elif province in catastro_provinces:
+            report.add("Catastro", f"{identity} «{display}» no está en el Catastro")
         _attach_wikidata(record, item, qid, report)
         record.update(slug=slugify(display), time_zone=time_zone[ccaa])
         if stats:
@@ -346,6 +373,19 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     for code in sorted(set(lau_by_ine) - ine_codes):
         fields = lau[lau_by_ine[code]]
         report.add("Eurostat LAU", f"{lau_by_ine[code]} «{fields.get('name_national', '')}» no está en el INE")
+    for code in sorted(set(dgc_by_ine) - ine_codes):
+        for dgc, dgc_name in dgc_by_ine[code]:
+            report.add("Catastro: no está en el INE", f"{dgc} «{dgc_name}» (INE {code})")
+    # A DGC code given to two municipalities identifies neither of them.
+    dgc_holders: dict[str, list[dict]] = {}
+    for record in municipalities:
+        if "dgc:municipio" in record["codes"]:
+            dgc_holders.setdefault(record["codes"]["dgc:municipio"], []).append(record)
+    for dgc, records in sorted(dgc_holders.items()):
+        if len(records) > 1:
+            for record in records:
+                del record["codes"]["dgc:municipio"]
+            report.add("Catastro", f"Código DGC {dgc} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
     for code in sorted(set(by_ine) - ine_codes):
         report.add("Wikidata: código INE", f"{code} ({', '.join(sorted(by_ine[code]))}) no está en el INE")
     for province, nuts in sorted(island_nuts.items()):
@@ -387,6 +427,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Provincias": len(provinces), "Municipios": len(municipalities),
         "Municipios con Wikidata": sum("wikidata" in r["codes"] for r in municipalities),
         "Municipios con código LAU": sum("lau" in r["codes"] for r in municipalities),
+        "Municipios con código DGC": sum("dgc:municipio" in r["codes"] for r in municipalities),
         "Municipios con nombre bilingüe": sum("parts" in r["names"] for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
