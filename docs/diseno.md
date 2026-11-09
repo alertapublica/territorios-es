@@ -93,7 +93,7 @@ Asturias), que son decenas de miles.
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
-| LAU | municipio | Tabla anual LAU de Eurostat | En España debería coincidir con el código INE de 5 cifras (por confirmar); ver §4.5 para lo que trae además. |
+| LAU | municipio | Tabla anual LAU de Eurostat | En España es el código INE de 5 cifras (comprobado en los 8.132 municipios); ver §4.5 para lo que trae además. |
 | DGC (Catastro) | municipio | Servicio OVC del Catastro | Navarra y el País Vasco tienen catastro foral y no tienen código DGC: queda vacío, documentado. Segunda versión. |
 | INSPIRE | municipio | IGN (unidades administrativas) | Identificador europeo de la unidad administrativa. Llega con los límites. |
 | Wikidata | todos | SPARQL a partir del código INE | CC0. Aporta nombres por idioma, enlaces a Wikipedia y otros identificadores. |
@@ -158,7 +158,7 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
 - **Mapas simplificados** (TopoJSON de comunidades, provincias y municipios) para dibujar en una
   web, hechos por nosotros a partir de los del IGN.
 - **Población** del padrón del INE y **superficie**: sirven para ordenar candidatos.
-- **De Eurostat**, por municipio (tabla LAU y ficheros de ciudades y áreas urbanas): grado de
+- **De la tabla LAU de Eurostat**, por municipio: grado de
   urbanización (ciudad, intermedio, rural), si es costero y a qué ciudad o área urbana funcional
   pertenece. Por ejemplo, permiten
   filtrar ofertas en el medio rural con un criterio oficial.
@@ -324,6 +324,9 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Traducir este documento y el README al catalán, gallego, euskera y aranés.
 - Revisar las traducciones de la web y de los nombres de comunidades (marcadas como pendientes).
 - Revisar los proyectos que quedan en el apartado 11.
+- Revisar el informe de discrepancias de la primera generación: etiquetas de Wikidata que son el
+  nombre de otro municipio, identificadores repetidos y municipios antiguos con código INE en
+  Wikidata; corregir en Wikidata lo que sea error suyo.
 - Activar GitHub Pages en el repositorio y permitir que Actions abra PR (ajustes del repositorio).
 - Segunda versión: DGC, coordenadas y límites del IGN, `locate`, mapas simplificados, islas,
   comarcas, partidos judiciales, Open Maps For Europe.
@@ -336,9 +339,9 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
 
 - **Tabla LAU de Eurostat**: la validada es `EU-27-LAU-2024-NUTS-2024.xlsx` y hay una de 2025
   «parcialmente validada» ([página](https://ec.europa.eu/eurostat/web/nuts/local-administrative-units)).
-  El grado de urbanización, la costa y las áreas urbanas vienen en ficheros aparte. Falta abrir el
-  fichero para confirmar las columnas y si el código LAU de España es el del INE de 5 cifras. Esto
-  lo hace el generador en Actions.
+  Abierta por el generador en Actions: trae NUTS 3, código LAU (en España, el del INE de 5 cifras,
+  igual en los 8.132 municipios de 2026), nombres, población, superficie, grado de urbanización,
+  costa, ciudad y área urbana funcional.
 - **NUTS 2024**: en vigor desde el 1 de enero de 2024 (Reglamento Delegado (UE) 2023/674); España
   tiene 7 NUTS 1, 19 NUTS 2 y 59 NUTS 3. Falta confirmar si hay cambios respecto a NUTS 2021.
 - **Wikidata**: la propiedad P772 (código INE) admite 2 cifras (provincia), 5 (municipio) y 11

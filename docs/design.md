@@ -95,7 +95,7 @@ Asturias), which number in the tens of thousands.
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
-| LAU | municipality | Annual Eurostat LAU table | In Spain it should match the 5-digit INE code (to be confirmed); see §4.5 for what else it provides. |
+| LAU | municipality | Annual Eurostat LAU table | In Spain it is the 5-digit INE code (checked on all 8,132 municipalities); see §4.5 for what else it provides. |
 | DGC (Catastro) | municipality | Catastro (land registry, DGC) OVC service | Navarre and the Basque Country have a foral land registry and have no DGC code: it is left empty, documented. Second version. |
 | INSPIRE | municipality | IGN (administrative units) | European identifier of the administrative unit. Arrives with the boundaries. |
 | Wikidata | all | SPARQL from the INE code | CC0. Provides names per language, links to Wikipedia and other identifiers. |
@@ -161,7 +161,7 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 - **Simplified maps** (TopoJSON of autonomous communities, provinces and municipalities) for
   drawing on a website, made by us from those of the IGN.
 - **Population** from the INE padrón and **area**: used to order candidates.
-- **From Eurostat**, per municipality (LAU table and files on cities and urban areas): degree of
+- **From the Eurostat LAU table**, per municipality: degree of
   urbanisation (city, intermediate, rural), whether it is coastal and which city or functional
   urban area it belongs to. For example, they make it possible to filter job offers in rural areas
   with an official criterion.
@@ -329,6 +329,9 @@ Taken with the project owner on 9 November 2026:
 - Review the translations of the website and of the names of autonomous communities (marked as
   pending).
 - Review the projects that remain in section 11.
+- Review the discrepancy report of the first generation: Wikidata labels that are the name of
+  another municipality, repeated identifiers and former municipalities with an INE code in
+  Wikidata; fix in Wikidata what is their error.
 - Enable GitHub Pages in the repository and allow Actions to open PRs (repository settings).
 - Second version: DGC, IGN coordinates and boundaries, `locate`, simplified maps, islands,
   comarcas, judicial districts, Open Maps For Europe.
@@ -341,9 +344,9 @@ Before using each source, its URL, format and licence have to be checked. Alread
 
 - **Eurostat LAU table**: the validated one is `EU-27-LAU-2024-NUTS-2024.xlsx` and there is a 2025
   one "partially validated" ([page](https://ec.europa.eu/eurostat/web/nuts/local-administrative-units)).
-  The degree of urbanisation, the coast and the urban areas come in separate files. The file still
-  has to be opened to confirm the columns and whether the LAU code for Spain is the 5-digit INE
-  code. The generator does this in Actions.
+  Opened by the generator in Actions: it has NUTS 3, the LAU code (in Spain, the 5-digit INE code,
+  identical for the 8,132 municipalities of 2026), names, population, area, degree of
+  urbanisation, coast, city and functional urban area.
 - **NUTS 2024**: in force since 1 January 2024 (Commission Delegated Regulation (EU) 2023/674);
   Spain has 7 NUTS 1, 19 NUTS 2 and 59 NUTS 3. It remains to confirm whether there are changes
   with respect to NUTS 2021.
