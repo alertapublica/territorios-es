@@ -1,0 +1,53 @@
+id,ine,autonomia,iso3166_2,nuts3,wikidata,osm_relation,geonames,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,time_zone
+es:provincia:01,01,16,ES-VI,ES211,Q81801,349011,3130717,Araba/Álava,Araba/Álava,Álava,Araba/Álava,Araba/Álava,Araba,Araba/Álava,Araba/Álava,Europe/Madrid
+es:provincia:02,02,08,ES-AB,ES421,Q54889,348989,2522257,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Europe/Madrid
+es:provincia:03,03,10,ES-A,ES521,Q54936,349012,2521976,Alicante/Alacant,Alicante/Alacant,Alicante,Alacant,Alicante/Alacant,Alicante/Alacant,Alicante/Alacant,Alicante/Alacant,Europe/Madrid
+es:provincia:04,04,01,ES-AL,ES611,Q81802,348997,2521883,Almería,Almería,Almería,Almería,Almería,Almería,Almería,Almería,Europe/Madrid
+es:provincia:05,05,07,ES-AV,ES411,Q55288,349009,3129138,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Europe/Madrid
+es:provincia:06,06,11,ES-BA,ES431,Q81803,348994,2521419,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Europe/Madrid
+es:provincia:07,07,04,ES-PM,,,,,"Balears, Illes",Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,Europe/Madrid
+es:provincia:08,08,09,ES-B,ES511,Q81949,349035,3128759,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Europe/Madrid
+es:provincia:09,09,07,ES-BU,ES412,Q55271,349004,3127460,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Europe/Madrid
+es:provincia:10,10,11,ES-CC,ES432,Q81977,1863380,2520610,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Europe/Madrid
+es:provincia:11,11,01,ES-CA,ES612,Q81978,349017,2520597,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Europe/Madrid
+es:provincia:12,12,10,ES-CS,ES522,Q54942,349020,3125881,Castellón/Castelló,Castellón/Castelló,Castellón,Castelló,Castellón/Castelló,Castellón/Castelló,Castellón/Castelló,Castellón/Castelló,Europe/Madrid
+es:provincia:13,13,08,ES-CR,ES422,Q54932,349019,2519401,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Europe/Madrid
+es:provincia:14,14,01,ES-CO,ES613,Q81972,349016,2519239,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Europe/Madrid
+es:provincia:15,15,12,ES-C,ES111,Q82119,349021,3119840,"Coruña, A",A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,Europe/Madrid
+es:provincia:16,16,08,ES-CU,ES423,Q54888,349024,2519034,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Europe/Madrid
+es:provincia:17,17,09,ES-GI,ES512,Q7194,349023,6355230,Girona,Girona,Girona,Girona,Girona,Girona,Girona,Girona,Europe/Madrid
+es:provincia:18,18,01,ES-GR,ES614,Q82142,349026,2517115,Granada,Granada,Granada,Granada,Granada,Granada,Granada,Granada,Europe/Madrid
+es:provincia:19,19,08,ES-GU,ES424,Q54925,349025,3121069,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Europe/Madrid
+es:provincia:20,20,16,ES-SS,ES212,Q95010,349015,3120935,Gipuzkoa,Gipuzkoa,Gipuzkoa,Gipuzkoa,Gipuzkoa,Gipuzkoa,Gipuzkoa,Gipuzkoa,Europe/Madrid
+es:provincia:21,21,01,ES-H,ES615,Q95015,348995,2516547,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Europe/Madrid
+es:provincia:22,22,02,ES-HU,ES241,Q55182,349022,3120513,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Europe/Madrid
+es:provincia:23,23,01,ES-J,ES616,Q95025,348998,2516394,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Europe/Madrid
+es:provincia:24,24,07,ES-LE,ES413,Q71140,349010,3118528,León,León,León,León,León,León,León,León,Europe/Madrid
+es:provincia:25,25,09,ES-L,ES513,Q13904,348990,6355231,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Europe/Madrid
+es:provincia:26,26,17,ES-LO,ES230,,,,"Rioja, La",La Rioja,La Rioja,La Rioja,La Rioja,La Rioja,La Rioja,La Rioja,Europe/Madrid
+es:provincia:27,27,12,ES-LU,ES112,Q95027,348992,3117813,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Europe/Madrid
+es:provincia:28,28,13,ES-M,ES300,Q24004405,,6355233,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Europe/Madrid
+es:provincia:29,29,01,ES-MA,ES617,Q95028,5275848,2514254,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Europe/Madrid
+es:provincia:30,30,14,ES-MU,ES620,Q24271891,6427907,,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Europe/Madrid
+es:provincia:31,31,15,ES-NA,ES220,Q24004404,6429242,6355235,Navarra,Navarra,Navarra,Navarra,Navarra,Navarra,Navarra,Navarra,Europe/Madrid
+es:provincia:32,32,12,ES-OR,ES113,Q95038,348988,3114964,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Europe/Madrid
+es:provincia:33,33,03,ES-O,ES120,Q24004403,6428094,6355236,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,Europe/Madrid
+es:provincia:34,34,07,ES-P,ES414,Q55269,349032,3114530,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Europe/Madrid
+es:provincia:35,35,05,ES-GC,,Q95080,349031,2515271,"Palmas, Las",Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,Atlantic/Canary
+es:provincia:36,36,12,ES-PO,ES114,Q95086,348986,3113208,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Europe/Madrid
+es:provincia:37,37,07,ES-SA,ES415,Q71080,349029,3111107,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Europe/Madrid
+es:provincia:38,38,05,ES-TF,,Q99976,349014,2511173,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Atlantic/Canary
+es:provincia:39,39,06,ES-S,ES130,Q31920747,6426101,3109716,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Europe/Madrid
+es:provincia:40,40,07,ES-SG,ES416,Q55283,349007,3109254,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Europe/Madrid
+es:provincia:41,41,01,ES-SE,ES618,Q95088,349008,2510910,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Europe/Madrid
+es:provincia:42,42,07,ES-SO,ES417,Q55276,349005,3108680,Soria,Soria,Soria,Soria,Soria,Soria,Soria,Soria,Europe/Madrid
+es:provincia:43,43,09,ES-T,ES514,Q98392,348985,3108287,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Europe/Madrid
+es:provincia:44,44,02,ES-TE,ES242,Q54955,349002,3108125,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Europe/Madrid
+es:provincia:45,45,08,ES-TO,ES425,Q54929,348982,2510407,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Europe/Madrid
+es:provincia:46,46,10,ES-V,ES523,Q54939,349000,2509951,Valencia/València,Valencia/València,Valencia,València,Valencia/València,Valencia/València,Valencia/València,Valencia/València,Europe/Madrid
+es:provincia:47,47,07,ES-VA,ES418,Q71097,349001,3106671,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Europe/Madrid
+es:provincia:48,48,16,ES-BI,ES213,Q93366,349034,3104469,Bizkaia,Bizkaia,Bizkaia,Bizkaia,Bizkaia,Bizkaia,Bizkaia,Bizkaia,Europe/Madrid
+es:provincia:49,49,07,ES-ZA,ES419,Q71113,348987,3104341,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Europe/Madrid
+es:provincia:50,50,02,ES-Z,ES243,Q55180,349030,3104323,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Europe/Madrid
+es:provincia:51,51,18,,ES630,,,,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Africa/Ceuta
+es:provincia:52,52,19,,ES640,,,,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Africa/Ceuta

@@ -1,0 +1,250 @@
+id,alpha2,alpha3,numeric,wikidata,in_eu,in_eea,name_es,name_ca,name_gl,name_eu,name_oc,name_en
+pais:AD,AD,AND,020,Q228,,,Andorra,Andorra,Andorra,Andorra,Andòrra,Andorra
+pais:AE,AE,ARE,784,Q878,,,Emiratos Árabes Unidos,Emirats Àrabs Units,Emiratos Árabes Unidos,Arabiar Emirerri Batuak,Emirats Arabis Units,United Arab Emirates
+pais:AF,AF,AFG,004,Q889,,,Afganistán,Afganistan,Afganistán,Afganistan,Afganistan,Afghanistan
+pais:AG,AG,ATG,028,Q781,,,Antigua y Barbuda,Antigua i Barbuda,Antiga e Barbuda,Antigua eta Barbuda,Antigua e Barbuda,Antigua and Barbuda
+pais:AI,AI,AIA,660,Q25228,,,Anguila,Anguilla,Anguila,Angila,Anguilla,Anguilla
+pais:AL,AL,ALB,008,Q222,,,Albania,Albània,Albania,Albania,Albania,Albania
+pais:AM,AM,ARM,051,Q399,,,Armenia,Armènia,Armenia,Armenia,Armenia,Armenia
+pais:AO,AO,AGO,024,Q916,,,Angola,Angola,Angola,Angola,Angòla,Angola
+pais:AQ,AQ,ATA,,Q51,,,Antártida,Antàrtida,Antártida,Antartika,Antartida,Antarctica
+pais:AR,AR,ARG,032,Q414,,,Argentina,Argentina,Arxentina,Argentina,Argentina,Argentina
+pais:AS,AS,ASM,016,Q16641,,,Samoa Americana,Samoa Nord-americana,Samoa Americana,Amerikar Samoa,Samoa Americana,American Samoa
+pais:AT,AT,AUT,040,Q40,1,1,Austria,Àustria,Austria,Austria,Àustria,Austria
+pais:AU,AU,AUS,036,Q408,,,Australia,Austràlia,Australia,Australia,Austràlia,Australia
+pais:AW,AW,ABW,533,Q21203,,,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba
+pais:AX,AX,ALA,248,Q5689,,,Åland,illes Åland,Åland,Åland,Åland,Åland
+pais:AZ,AZ,AZE,031,Q227,,,Azerbaiyán,Azerbaidjan,Azerbaidján,Azerbaijan,Azerbaitjan,Azerbaijan
+pais:BA,BA,BIH,070,Q225,,,Bosnia y Herzegovina,Bòsnia i Hercegovina,Bosnia e Hercegovina,Bosnia-Herzegovina,Bòsnia e Ercegovina,Bosnia and Herzegovina
+pais:BB,BB,BRB,052,Q244,,,Barbados,Barbados,Barbados,Barbados,Barbados,Barbados
+pais:BD,BD,BGD,050,Q902,,,Bangladés,Bangladesh,Bangladesh,Bangladesh,Bangladèsh,Bangladesh
+pais:BE,BE,BEL,056,Q31,1,1,Bélgica,Bèlgica,Bélxica,Belgika,Belgica,Belgium
+pais:BF,BF,BFA,854,Q965,,,Burkina Faso,Burkina Faso,Burkina Faso,Burkina Faso,Burkina Faso,Burkina Faso
+pais:BG,BG,BGR,100,Q219,1,1,Bulgaria,Bulgària,Bulgaria,Bulgaria,Bulgaria,Bulgaria
+pais:BH,BH,BHR,048,Q398,,,Baréin,Bahrain,Bahrain,Bahrain,Bahrain,Bahrain
+pais:BI,BI,BDI,108,Q967,,,Burundi,Burundi,Burundi,Burundi,Burundi,Burundi
+pais:BJ,BJ,BEN,204,Q962,,,Benín,Benín,Benín,Benin,Benin,Benin
+pais:BL,BL,BLM,652,Q25362,,,San Bartolomé,Saint Barthélemy,Saint-Barthélemy,Saint Barthélemy,Sant Bartomieu,Saint Barthélemy
+pais:BM,BM,BMU,060,Q23635,,,Bermudas,Bermudes,Bermudas,Bermuda,Bermudas,Bermuda
+pais:BN,BN,BRN,096,Q921,,,Brunéi,Brunei,Brunei,Brunei,Brunei,Brunei
+pais:BO,BO,BOL,068,Q750,,,Bolivia,Bolívia,Bolivia,Bolivia,Bolívia,Bolivia
+pais:BQ,BQ,BES,535,Q27561,,,Caribe neerlandés,illes BES,Países Baixos Caribeños,Karibeko Herbehereak,Païses Basses Caribencs,Caribbean Netherlands
+pais:BR,BR,BRA,076,Q155,,,Brasil,Brasil,Brasil,Brasil,Brasil,Brazil
+pais:BS,BS,BHS,044,Q778,,,Bahamas,Bahames,Bahamas,Bahamak,Bahamas,The Bahamas
+pais:BT,BT,BTN,064,Q917,,,Bután,Bhutan,Bután,Bhutan,Botan,Bhutan
+pais:BV,BV,BVT,074,Q23408,,,Isla Bouvet,Bouvet,Illa Bouvet,Bouvet uhartea,Illa Bouvet,Bouvet Island
+pais:BW,BW,BWA,072,Q963,,,Botsuana,Botswana,Botswana,Botswana,Botswana,Botswana
+pais:BY,BY,BLR,112,Q184,,,Bielorrusia,Belarús,Belarús,Bielorrusia,Bielorussia,Belarus
+pais:BZ,BZ,BLZ,084,Q242,,,Belice,Belize,Belize,Belize,Belize,Belize
+pais:CA,CA,CAN,124,Q16,,,Canadá,Canadà,Canadá,Kanada,Canadà,Canada
+pais:CC,CC,CCK,166,Q36004,,,islas Cocos,Illes Cocos,Illas Cocos,Cocos (Keeling) uharteak,islas Cocos,Cocos (Keeling) Islands
+pais:CD,CD,COD,180,Q974,,,República Democrática del Congo,República Democràtica del Congo,República Democrática do Congo,Kongoko Errepublika Demokratikoa,Republica Democratica de Còngo,Democratic Republic of the Congo
+pais:CF,CF,CAF,140,Q929,,,República Centroafricana,República Centreafricana,República Centroafricana,Afrika Erdiko Errepublika,Republica Centreafricana,Central African Republic
+pais:CG,CG,COG,178,Q971,,,Congo,República del Congo,República do Congo,Kongoko Errepublika,Republica de Còngo,Republic of the Congo
+pais:CH,CH,CHE,756,Q39,,,Suiza,Suïssa,Suíza,Suitza,Soïssa,Switzerland
+pais:CI,CI,CIV,384,Q1008,,,Costa de Marfil,Costa d'Ivori,Costa do Marfil,Boli Kosta,Còsta d'Evòri,Ivory Coast
+pais:CK,CK,COK,184,Q26988,,,Islas Cook,illes Cook,Illas Cook,Cook Uharteak,Illas Cook,Cook Islands
+pais:CL,CL,CHL,152,Q298,,,Chile,Xile,Chile,Txile,Chile,Chile
+pais:CM,CM,CMR,120,Q1009,,,Camerún,Camerun,Camerún,Kamerun,Cameron,Cameroon
+pais:CN,CN,CHN,156,Q148,,,República Popular China,República Popular de la Xina,República Popular da China,Txinako Herri Errepublika,Republica Populara de China,People's Republic of China
+pais:CO,CO,COL,170,Q739,,,Colombia,Colòmbia,Colombia,Kolonbia,Colómbia,Colombia
+pais:CR,CR,CRI,188,Q800,,,Costa Rica,Costa Rica,Costa Rica,Costa Rica,Còsta Rica,Costa Rica
+pais:CU,CU,CUB,192,Q241,,,Cuba,Cuba,Cuba,Kuba,Cuba,Cuba
+pais:CV,CV,CPV,132,Q1011,,,Cabo Verde,Cap Verd,Cabo Verde,Cabo Verde,Cap Verd,Cape Verde
+pais:CW,CW,CUW,531,Q25279,,,Curazao,Curaçao,Curaçao,Curaçao,Curaçao,Curaçao
+pais:CX,CX,CXR,162,Q31063,,,Isla de Navidad,Illa Christmas,Illa de Nadal,Christmas uhartea,Illa de Nadal,Christmas Island
+pais:CY,CY,CYP,196,Q229,1,1,Chipre,Xipre,Chipre,Zipre,Chipre,Cyprus
+pais:CZ,CZ,CZE,203,Q213,1,1,República Checa,Txèquia,República Checa,Txekia,Republica Chèca,Czech Republic
+pais:DE,DE,DEU,276,Q183,1,1,Alemania,Alemanya,Alemaña,Alemania,Alemanha,Germany
+pais:DJ,DJ,DJI,262,Q977,,,Yibuti,Djibouti,Djibuti,Djibuti,Jiboti,Djibouti
+pais:DK,DK,DNK,208,Q35,1,1,Dinamarca,Dinamarca,Dinamarca,Danimarka,Danemarc,Denmark
+pais:DM,DM,DMA,212,Q784,,,Dominica,Dominica,Dominica,Dominika,Dominica,Dominica
+pais:DO,DO,DOM,214,Q786,,,República Dominicana,República Dominicana,República Dominicana,Dominikar Errepublika,Republica Dominicana,Dominican Republic
+pais:DZ,DZ,DZA,012,Q262,,,Argelia,Algèria,Alxeria,Aljeria,Argeria,Algeria
+pais:EC,EC,ECU,218,Q736,,,Ecuador,Equador,Ecuador,Ekuador,Eqüator,Ecuador
+pais:EE,EE,EST,233,Q191,1,1,Estonia,Estònia,Estonia,Estonia,Estònia,Estonia
+pais:EG,EG,EGY,818,Q79,,,Egipto,Egipte,Exipto,Egipto,Egipte,Egypt
+pais:EH,EH,ESH,732,Q6250,,,Sahara Occidental,Sàhara Occidental,Sáhara Occidental,Mendebaldeko Sahara,Sahara Occidental,Western Sahara
+pais:ER,ER,ERI,232,Q986,,,Eritrea,Eritrea,Eritrea,Eritrea,Eritrèa,Eritrea
+pais:ES,ES,ESP,724,Q29,1,1,España,Espanya,España,Espainia,Espanha,Spain
+pais:ET,ET,ETH,231,Q115,,,Etiopía,Etiòpia,Etiopía,Etiopia,Etiopia,Ethiopia
+pais:FI,FI,FIN,246,Q33,1,1,Finlandia,Finlàndia,Finlandia,Finlandia,Finlàndia,Finland
+pais:FJ,FJ,FJI,242,Q712,,,Fiyi,Fiji,Fiji,Fiji,Fiji,Fiji
+pais:FK,FK,FLK,238,Q9648,,,Islas Malvinas,illes Malvines,Illas Malvinas,Falkland uharteak,Illas Malvinas,Falkland Islands
+pais:FM,FM,FSM,583,Q702,,,Estados Federados de Micronesia,Estats Federats de Micronèsia,Estados Federados de Micronesia,Mikronesia,Micronesia,Federated States of Micronesia
+pais:FO,FO,FRO,234,Q4628,,,Islas Feroe,illes Fèroe,Illas Feroe,Faroeak,Illas Feròe,Faroe Islands
+pais:FR,FR,FRA,250,Q142,1,1,Francia,França,Francia,Frantzia,França,France
+pais:GA,GA,GAB,266,Q1000,,,Gabón,Gabon,Gabón,Gabon,Gabon,Gabon
+pais:GB,GB,GBR,826,Q145,,,Reino Unido,Regne Unit,Reino Unido,Erresuma Batua,Reialme Unit,United Kingdom
+pais:GD,GD,GRD,308,Q769,,,Granada,Grenada,"Granada, Caribe",Grenada,Grenada,Grenada
+pais:GE,GE,GEO,268,Q230,,,Georgia,Geòrgia,Xeorxia,Georgia,Georgia,Georgia
+pais:GF,GF,GUF,254,Q3769,,,Guayana Francesa,Guaiana Francesa,Güiana Francesa,Guyana Frantsesa,Guaiana Francesa,French Guiana
+pais:GG,GG,GGY,831,Q25230,,,Guernsey,Guernsey,Guernsey,Guernesey,Guernesey,Guernsey
+pais:GH,GH,GHA,288,Q117,,,Ghana,Ghana,Ghana,Ghana,Ghana,Ghana
+pais:GI,GI,GIB,292,Q1410,,,Gibraltar,Gibraltar,Xibraltar,Gibraltar,Gibartar,Gibraltar
+pais:GL,GL,GRL,304,Q223,,,Groenlandia,Groenlàndia,Groenlandia,Groenlandia,Groenlàndia,Greenland
+pais:GM,GM,GMB,270,Q1005,,,Gambia,Gàmbia,Gambia,Gambia,Gàmbia,The Gambia
+pais:GN,GN,GIN,324,Q1006,,,Guinea,Guinea,Guinea,Ginea,Guinèa,Guinea
+pais:GP,GP,GLP,312,Q17012,,,Guadalupe,Guadalupe,Guadalupe,Guadalupe,Guadalope,Guadeloupe
+pais:GQ,GQ,GNQ,226,Q983,,,Guinea Ecuatorial,Guinea Equatorial,Guinea Ecuatorial,Ekuatore Ginea,Guinèa Eqüatoriala,Equatorial Guinea
+pais:GR,GR,GRC,300,Q41,1,1,Grecia,Grècia,Grecia,Grezia,Grècia,Greece
+pais:GS,GS,SGS,239,Q35086,,,Islas Georgias del Sur y Sandwich del Sur,illes Geòrgia del Sud i Sandwich del Sud,Illas Xeorxia do Sur e Sandwich do Sur - South Xeorxia and the South Sandwich Islands,Hegoaldeko Georgiak eta Hegoaldeko Sandwich uharteak,Illas Georgia del Sud e Sandwich del Sud,South Georgia and the South Sandwich Islands
+pais:GT,GT,GTM,320,Q774,,,Guatemala,Guatemala,Guatemala,Guatemala,Guatemala,Guatemala
+pais:GU,GU,GUM,316,Q16635,,,Guam,Guam,Guam,Guam,Guam,Guam
+pais:GW,GW,GNB,624,Q1007,,,Guinea-Bisáu,Guinea-Bissau,Guinea-Bissau,Ginea-Bissau,Guinèa Bissau,Guinea-Bissau
+pais:GY,GY,GUY,328,Q734,,,Guyana,Guyana,Güiana,Guyana,Guyana,Guyana
+pais:HK,HK,HKG,344,Q8646,,,Hong Kong,Hong Kong,Hong Kong,Hong Kong,Hong Kong,Hong Kong
+pais:HM,HM,HMD,334,Q131198,,,Islas Heard y McDonald,Illes Heard i McDonald,Illa Heard e Illas McDonald,Heard eta McDonald uharteak,Islas Heard y McDonald,Heard Island and McDonald Islands
+pais:HN,HN,HND,340,Q783,,,Honduras,Hondures,Honduras,Honduras,Honduras,Honduras
+pais:HR,HR,HRV,191,Q224,1,1,Croacia,Croàcia,Croacia,Kroazia,Croàcia,Croatia
+pais:HT,HT,HTI,332,Q790,,,Haití,Haití,Haití,Haiti,Haití,Haiti
+pais:HU,HU,HUN,348,Q28,1,1,Hungría,Hongria,Hungría,Hungaria,Ongria,Hungary
+pais:ID,ID,IDN,360,Q252,,,Indonesia,Indonèsia,Indonesia,Indonesia,Indonesia,Indonesia
+pais:IE,IE,IRL,372,Q27,1,1,Irlanda,Irlanda,Irlanda,Irlandako Errepublika,Irlanda,Ireland
+pais:IL,IL,ISR,376,Q801,,,Israel,Israel,Israel,Israel,Israèl,Israel
+pais:IM,IM,IMN,833,Q9676,,,Isla de Man,Illa de Man,Illa de Man,Man,Illa de Man,Isle of Man
+pais:IN,IN,IND,356,Q668,,,India,Índia,India,India,Índia,India
+pais:IO,IO,IOT,086,Q43448,,,Territorio Británico del Océano Índico,Territori Britànic de l'Oceà Índic,Territorio Británico do Océano Índico,Indiako Ozeanoko Britainiar Lurraldea,Territorio Británico del Océano Índico,British Indian Ocean Territory
+pais:IQ,IQ,IRQ,368,Q796,,,Irak,Iraq,Iraq,Irak,Iraq,Iraq
+pais:IR,IR,IRN,364,Q794,,,Irán,Iran,Irán,Iran,Iran,Iran
+pais:IS,IS,ISL,352,Q189,0,1,Islandia,Islàndia,Islandia,Islandia,Islàndia,Iceland
+pais:IT,IT,ITA,380,Q38,1,1,Italia,Itàlia,Italia,Italia,Itàlia,Italy
+pais:JE,JE,JEY,832,Q785,,,Jersey,Illa de Jersey,Illa de Jersey,Jersey,Bailiá de Jersey,Jersey
+pais:JM,JM,JAM,388,Q766,,,Jamaica,Jamaica,Xamaica,Jamaika,Jamaica,Jamaica
+pais:JO,JO,JOR,400,Q810,,,Jordania,Jordània,Xordania,Jordania,Jordania,Jordan
+pais:JP,JP,JPN,392,Q17,,,Japón,Japó,Xapón,Japonia,Japon,Japan
+pais:KE,KE,KEN,404,Q114,,,Kenia,Kenya,Kenya,Kenya,Kenya,Kenya
+pais:KG,KG,KGZ,417,Q813,,,Kirguistán,Kirguizstan,Kirguizistán,Kirgizistan,Quirguizstan,Kyrgyzstan
+pais:KH,KH,KHM,116,Q424,,,Camboya,Cambodja,Camboxa,Kanbodia,Cambòtja,Cambodia
+pais:KI,KI,KIR,296,Q710,,,Kiribati,Kiribati,Kiribati,Kiribati,Kiribati,Kiribati
+pais:KM,KM,COM,174,Q970,,,Comoras,Comores,Comores,Komoreak,Comòras,Comoros
+pais:KN,KN,KNA,659,Q763,,,San Cristóbal y Nieves,Saint Kitts i Nevis,Saint Kitts e Nevis,Saint Kitts eta Nevis,Sant Cristòl e Nevis,Saint Kitts and Nevis
+pais:KP,KP,PRK,408,Q423,,,Corea del Norte,Corea del Nord,Corea do Norte,Ipar Korea,Corèa del Nòrd,North Korea
+pais:KR,KR,KOR,410,Q884,,,Corea del Sur,Corea del Sud,Corea do Sur,Hego Korea,Corèa del Sud,South Korea
+pais:KW,KW,KWT,414,Q817,,,Kuwait,Kuwait,Kuwait,Kuwait,Kowait,Kuwait
+pais:KY,KY,CYM,136,Q5785,,,Islas Caimán,illes Caiman,Illas Caimán,Kaiman uharteak,Illas Caiman,Cayman Islands
+pais:KZ,KZ,KAZ,398,Q232,,,Kazajistán,Kazakhstan,Kazakhstán,Kazakhstan,Cazacstan,Kazakhstan
+pais:LA,LA,LAO,418,Q819,,,Laos,Laos,Laos,Laos,Laos,Laos
+pais:LB,LB,LBN,422,Q822,,,Líbano,Líban,Líbano,Libano,Liban,Lebanon
+pais:LC,LC,LCA,662,Q760,,,Santa Lucía,Saint Lucia,"Santa Lucía, Caribe",Santa Luzia,Santa Lúcia,Saint Lucia
+pais:LI,LI,LIE,438,Q347,0,1,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein
+pais:LK,LK,LKA,144,Q854,,,Sri Lanka,Sri Lanka,Sri Lanka,Sri Lanka,Sri Lanka,Sri Lanka
+pais:LR,LR,LBR,430,Q1014,,,Liberia,Libèria,Liberia,Liberia,Libèria,Liberia
+pais:LS,LS,LSO,426,Q1013,,,Lesoto,Lesotho,Lesotho,Lesotho,Lesotho,Lesotho
+pais:LT,LT,LTU,440,Q37,1,1,Lituania,Lituània,Lituania,Lituania,Lituània,Lithuania
+pais:LU,LU,LUX,442,Q32,1,1,Luxemburgo,Luxemburg,Luxemburgo,Luxenburgo,Luxemborg,Luxembourg
+pais:LV,LV,LVA,428,Q211,1,1,Letonia,Letònia,Letonia,Letonia,Letònia,Latvia
+pais:LY,LY,LBY,434,Q1016,,,Libia,Líbia,Libia,Libia,Libia,Libya
+pais:MA,MA,MAR,504,Q1028,,,Marruecos,Marroc,Marrocos,Maroko,Marròc,Morocco
+pais:MC,MC,MCO,492,Q235,,,Mónaco,Mònaco,Mónaco,Monako,Mónegue,Monaco
+pais:MD,MD,MDA,498,Q217,,,Moldavia,Moldàvia,Moldova,Moldavia,Moldàvia,Moldova
+pais:ME,ME,MNE,499,Q236,,,Montenegro,Montenegro,Montenegro,Montenegro,Montenegro,Montenegro
+pais:MF,MF,MAF,663,Q126125,,,San Martín,Saint-Martin,San Martiño,Saint Martin,Collectivitat de Sant Martin,Saint-Martin
+pais:MG,MG,MDG,450,Q1019,,,Madagascar,Madagascar,Madagascar,Madagaskar,Madagascar,Madagascar
+pais:MH,MH,MHL,584,Q709,,,Islas Marshall,Illes Marshall,Illas Marshall,Marshall Uharteak,Illas Marshall,Marshall Islands
+pais:MK,MK,MKD,807,Q221,,,Macedonia del Norte,Macedònia del Nord,Macedonia do Norte,Ipar Mazedonia,Macedònia del Nòrd,North Macedonia
+pais:ML,ML,MLI,466,Q912,,,Mali,Mali,Malí,Mali,Mali,Mali
+pais:MM,MM,MMR,104,Q836,,,Birmania,Myanmar,Myanmar,Myanmar,Birmania,Myanmar
+pais:MN,MN,MNG,496,Q711,,,Mongolia,Mongòlia,Mongolia,Mongolia,Mongolia,Mongolia
+pais:MO,MO,MAC,446,Q14773,,,Macao,Macau,Macau,Macao,Macau,Macau
+pais:MP,MP,MNP,580,Q16644,,,Islas Marianas del Norte,illes Mariannes Septentrionals,Illas Marianas do Norte,Ipar Marianak,Illas Mariannas del Nòrd,Northern Mariana Islands
+pais:MQ,MQ,MTQ,474,Q17054,,,Martinica,Martinica,Martinica,Martinika,Martinica,Martinique
+pais:MR,MR,MRT,478,Q1025,,,Mauritania,Mauritània,Mauritania,Mauritania,Mauritània,Mauritania
+pais:MS,MS,MSR,500,Q13353,,,Montserrat,Montserrat,Montserrat,Montserrat,Montserrat,Montserrat
+pais:MT,MT,MLT,470,Q233,1,1,Malta,Malta,Malta,Malta,Malta,Malta
+pais:MU,MU,MUS,480,Q1027,,,Mauricio,Maurici,Mauricio,Maurizio,Maurici,Mauritius
+pais:MV,MV,MDV,462,Q826,,,Maldivas,Maldives,Maldivas,Maldivak,Maldivas,Maldives
+pais:MW,MW,MWI,454,Q1020,,,Malaui,Malawi,Malawi,Malawi,Malawi,Malawi
+pais:MX,MX,MEX,484,Q96,,,México,Mèxic,México,Mexiko,Mexic,Mexico
+pais:MY,MY,MYS,458,Q833,,,Malasia,Malàisia,Malaisia,Malaysia,Malàisia,Malaysia
+pais:MZ,MZ,MOZ,508,Q1029,,,Mozambique,Moçambic,Mozambique,Mozambike,Moçambic,Mozambique
+pais:NA,NA,NAM,516,Q1030,,,Namibia,Namíbia,Namibia,Namibia,Namibia,Namibia
+pais:NC,NC,NCL,540,Q33788,,,Nueva Caledonia,Nova Caledònia,Nova Caledonia,Kaledonia Berria,Nòva Caledònia,New Caledonia
+pais:NE,NE,NER,562,Q1032,,,Níger,Níger,Níxer,Niger,Nigèr,Niger
+pais:NF,NF,NFK,574,Q31057,,,Isla Norfolk,illa Norfolk,Illa Norfolk,Norfolk uhartea,Illa Norfolk,Norfolk Island
+pais:NG,NG,NGA,566,Q1033,,,Nigeria,Nigèria,Nixeria,Nigeria,Nigèria,Nigeria
+pais:NI,NI,NIC,558,Q811,,,Nicaragua,Nicaragua,Nicaragua,Nikaragua,Nicaragua,Nicaragua
+pais:NL,NL,NLD,528,Q29999,1,1,Reino de los Países Bajos,Regne dels Països Baixos,Reino dos Países Baixos,Herbehereetako Erresuma,Reialme dels Païses Basses,Kingdom of the Netherlands
+pais:NO,NO,NOR,578,Q20,0,1,Noruega,Noruega,Noruega,Norvegia,Norvègia,Norway
+pais:NP,NP,NPL,524,Q837,,,Nepal,Nepal,Nepal,Nepal,Nepal,Nepal
+pais:NR,NR,NRU,520,Q697,,,Nauru,Nauru,Nauru,Nauru,Nauru,Nauru
+pais:NU,NU,NIU,570,Q34020,,,Niue,Niue,Niue,Niue,Niue,Niue
+pais:NZ,NZ,NZL,554,Q664,,,Nueva Zelanda,Nova Zelanda,Nova Zelandia,Zeelanda Berria,Aotearoa,New Zealand
+pais:OM,OM,OMN,512,Q842,,,Omán,Oman,Omán,Oman,Oman,Oman
+pais:PA,PA,PAN,591,Q804,,,Panamá,Panamà,Panamá,Panama,Panamà,Panama
+pais:PE,PE,PER,604,Q419,,,Perú,Perú,Perú,Peru,Peró,Peru
+pais:PF,PF,PYF,258,Q30971,,,Polinesia Francesa,Polinèsia Francesa,Polinesia Francesa,Polinesia Frantsesa,Polinesia Francesa,French Polynesia
+pais:PG,PG,PNG,598,Q691,,,Papúa Nueva Guinea,Papua Nova Guinea,Papúa-Nova Guinea,Papua Ginea Berria,Papoa-Nòva Guinèa,Papua New Guinea
+pais:PH,PH,PHL,608,Q928,,,Filipinas,Filipines,Filipinas,Filipinak,Filipinas,Philippines
+pais:PK,PK,PAK,586,Q843,,,Pakistán,Pakistan,Paquistán,Pakistan,Paquistan,Pakistan
+pais:PL,PL,POL,616,Q36,1,1,Polonia,Polònia,Polonia,Polonia,Polonha,Poland
+pais:PM,PM,SPM,666,Q34617,,,San Pedro y Miquelón,Saint-Pierre i Miquelon,San Pedro e Miquelón,Saint-Pierre eta Mikelune,Sant Pèire e Miquelon,Saint Pierre and Miquelon
+pais:PN,PN,PCN,612,Q35672,,,Islas Pitcairn,illes Pitcairn,Illas Pitcairn,Pitcairn uharteak,Pitcairn,Pitcairn Islands
+pais:PR,PR,PRI,630,Q1183,,,Puerto Rico,Puerto Rico,Porto Rico,Puerto Rico,Puerto Rico,Puerto Rico
+pais:PS,PS,PSE,275,Q219060,,,Palestina,Estat de Palestina,Estado de Palestina,Palestina,Estat de Palestina,Palestine
+pais:PT,PT,PRT,620,Q45,1,1,Portugal,Portugal,Portugal,Portugal,Portugal,Portugal
+pais:PW,PW,PLW,585,Q695,,,Palaos,Palau,Palau,Palau,Belau,Palau
+pais:PY,PY,PRY,600,Q733,,,Paraguay,Paraguai,Paraguai,Paraguai,Paraguai,Paraguay
+pais:QA,QA,QAT,634,Q846,,,Catar,Qatar,Qatar,Qatar,Qatar,Qatar
+pais:RE,RE,REU,638,Q17070,,,Reunión,Illa de la Reunió,Reunión,Réunion,Reünion,Réunion
+pais:RO,RO,ROU,642,Q218,1,1,Rumania,Romania,Romanía,Errumania,Romania,Romania
+pais:RS,RS,SRB,688,Q403,,,Serbia,Sèrbia,Serbia,Serbia,Serbia,Serbia
+pais:RU,RU,RUS,643,Q159,,,Rusia,Rússia,Rusia,Errusia,Russia,Russia
+pais:RW,RW,RWA,646,Q1037,,,Ruanda,Ruanda,Ruanda,Ruanda,Rwanda,Rwanda
+pais:SA,SA,SAU,682,Q851,,,Arabia Saudí,Aràbia Saudita,Arabia Saudita,Saudi Arabia,Arabia Saudita,Saudi Arabia
+pais:SB,SB,SLB,090,Q685,,,Islas Salomón,illes Salomó,Illas Salomón,Salomon uharteak,Illas Salamon,Solomon Islands
+pais:SC,SC,SYC,690,Q1042,,,Seychelles,Seychelles,Seychelles,Seychelleak,Seichèlas,Seychelles
+pais:SD,SD,SDN,729,Q1049,,,Sudán,Sudan,Sudán,Sudan,Sodan,Sudan
+pais:SE,SE,SWE,752,Q34,1,1,Suecia,Suècia,Suecia,Suedia,Suècia,Sweden
+pais:SG,SG,SGP,702,Q334,,,Singapur,Singapur,Singapur,Singapur,Singapor,Singapore
+pais:SH,SH,SHN,654,Q192184,,,"Santa Elena, Ascensión y Tristán de Acuña","Santa Helena, Ascensió i Tristan da Cunha",Santa Helena,Santa Helena,Santa Elena,"Saint Helena, Ascension and Tristan da Cunha"
+pais:SI,SI,SVN,705,Q215,1,1,Eslovenia,Eslovènia,Eslovenia,Eslovenia,Eslovènia,Slovenia
+pais:SJ,SJ,SJM,744,Q842829,,,Svalbard y Jan Mayen,Svalbard i Jan Mayen,Svalbard y Jan Mayen,Svalbard eta Jan Mayen,Svalbard e Jan Mayen,Svalbard and Jan Mayen
+pais:SK,SK,SVK,703,Q214,1,1,Eslovaquia,Eslovàquia,Eslovaquia,Eslovakia,Eslovaquia,Slovakia
+pais:SL,SL,SLE,694,Q1044,,,Sierra Leona,Sierra Leone,Serra Leoa,Sierra Leona,Sierra Leone,Sierra Leone
+pais:SM,SM,SMR,674,Q238,,,San Marino,San Marino,San Marino,San Marino,Sant Marin,San Marino
+pais:SN,SN,SEN,686,Q1041,,,Senegal,Senegal,Senegal,Senegal,Senegal,Senegal
+pais:SO,SO,SOM,706,Q1045,,,Somalia,Somàlia,Somalia,Somalia,Somalia,Somalia
+pais:SR,SR,SUR,740,Q730,,,Surinam,Surinam,Suriname,Surinam,Surinam,Suriname
+pais:SS,SS,SSD,728,Q958,,,Sudán del Sur,Sudan del Sud,Sudán do Sur,Hego Sudan,Sodan del Sud,South Sudan
+pais:ST,ST,STP,678,Q1039,,,Santo Tomé y Príncipe,São Tomé i Príncipe,San Tomé e Príncipe,São Tomé eta Príncipe,São Tomé e Príncipe,São Tomé and Príncipe
+pais:SV,SV,SLV,222,Q792,,,El Salvador,El Salvador,O Salvador,El Salvador,Lo Salvador,El Salvador
+pais:SX,SX,SXM,534,Q26273,,,San Martín,Sint Maarten,Sint Maarten,Sint Maarten,Sint Maarten,Sint Maarten
+pais:SY,SY,SYR,760,Q858,,,Siria,Síria,Siria,Siria,Siria,Syria
+pais:SZ,SZ,SWZ,748,Q1050,,,Suazilandia,Eswatini,Eswatini,Eswatini,eSwatini,Eswatini
+pais:TC,TC,TCA,796,Q18221,,,Islas Turcas y Caicos,illes Turks i Caicos,Turks e Caicos,Turks eta Caicos uharteak,Illas Turcas e Caïcas,Turks and Caicos Islands
+pais:TD,TD,TCD,148,Q657,,,Chad,Txad,Chad,Txad,Chad,Chad
+pais:TF,TF,ATF,260,Q129003,,,Tierras Australes y Antárticas Francesas,Terres Australs i Antàrtiques Franceses,Terras Austrais e Antárticas Francesas,Frantziaren lurralde austral eta antartikoak,Tèrras Australas e Antarticas Francesas,French Southern and Antarctic Lands
+pais:TG,TG,TGO,768,Q945,,,Togo,Togo,Togo,Togo,Tògo,Togo
+pais:TH,TH,THA,764,Q869,,,Tailandia,Tailàndia,Tailandia,Thailandia,Tailàndia,Thailand
+pais:TJ,TJ,TJK,762,Q863,,,Tayikistán,Tadjikistan,Tadjiikistán,Tajikistan,Tatgiquistan,Tajikistan
+pais:TK,TK,TKL,772,Q36823,,,Tokelau,Tokelau,Tokelau,Tokelau,Tokelau,Tokelau
+pais:TL,TL,TLS,626,Q574,,,Timor Oriental,Timor Oriental,Timor Leste,Ekialdeko Timor,Timòr Èst,Timor-Leste
+pais:TM,TM,TKM,795,Q874,,,Turkmenistán,Turkmenistan,Turkmenistán,Turkmenistan,Turcmenistan,Turkmenistan
+pais:TN,TN,TUN,788,Q948,,,Túnez,Tunísia,Tunisia,Tunisia,Tunisia,Tunisia
+pais:TO,TO,TON,776,Q678,,,Tonga,Tonga,Tonga,Tonga,Tònga,Tonga
+pais:TR,TR,TUR,792,Q43,,,Turquía,Turquia,Turquía,Turkia,Turquia,Turkey
+pais:TT,TT,TTO,780,Q754,,,Trinidad y Tobago,Trinidad i Tobago,Trinidad e Tobago,Trinidad eta Tobago,Trinitat e Tobago,Trinidad and Tobago
+pais:TV,TV,TUV,798,Q672,,,Tuvalu,Tuvalu,Tuvalu,Tuvalu,Tuvalu,Tuvalu
+pais:TW,TW,TWN,158,Q865,,,República de China,Taiwan,Taiwán,Taiwan,Taiwan,Taiwan
+pais:TZ,TZ,TZA,834,Q924,,,Tanzania,Tanzània,Tanzania,Tanzania,Tanzania,Tanzania
+pais:UA,UA,UKR,804,Q212,,,Ucrania,Ucraïna,Ucraína,Ukraina,Ucraïna,Ukraine
+pais:UG,UG,UGA,800,Q1036,,,Uganda,Uganda,Uganda,Uganda,Oganda,Uganda
+pais:UM,UM,UMI,581,Q16645,,,Islas ultramarinas de Estados Unidos,Illes d'Ultramar Menors dels Estats Units,Illas ultramarinas dos Estados Unidos,Ameriketako Estatu Batuetako itsasoz haraindiko uharteak,Islas ultramarinas de Estados Unidos,United States Minor Outlying Islands
+pais:US,US,USA,840,Q30,,,Estados Unidos,Estats Units,Estados Unidos,Ameriketako Estatu Batuak,Estats Units,United States
+pais:UY,UY,URY,858,Q77,,,Uruguay,Uruguai,Uruguai,Uruguai,Uruguai,Uruguay
+pais:UZ,UZ,UZB,860,Q265,,,Uzbekistán,Uzbekistan,Uzbekistán,Uzbekistan,Ozbequistan,Uzbekistan
+pais:VA,VA,VAT,336,Q237,,,Ciudad del Vaticano,Ciutat del Vaticà,Cidade do Vaticano,Vatikano Hiria,Vatican,Vatican City
+pais:VC,VC,VCT,670,Q757,,,San Vicente y las Granadinas,Saint Vincent i les Grenadines,San Vicente e as Granadinas,Saint Vincent eta Grenadinak,Sant Vincenç e las Grenadinas,Saint Vincent and the Grenadines
+pais:VE,VE,VEN,862,Q717,,,Venezuela,Veneçuela,Venezuela,Venezuela,Veneçuèla,Venezuela
+pais:VG,VG,VGB,092,Q25305,,,Islas Vírgenes Británicas,illes Verges Britàniques,Illas Virxes Británicas,Birjina Uharte britainiarrak,Illas Verges Britanicas,British Virgin Islands
+pais:VI,VI,VIR,850,Q11703,,,Islas Vírgenes de los Estados Unidos,Illes Verges dels Estats Units,Illas Virxes dos Estados Unidos,Birjina Uharte estatubatuarrak,Illas Verges dels Estats Units,United States Virgin Islands
+pais:VN,VN,VNM,704,Q881,,,Vietnam,Vietnam,Vietnam,Vietnam,Vietnam,Vietnam
+pais:VU,VU,VUT,548,Q686,,,Vanuatu,Vanuatu,Vanuatu,Vanuatu,Vanuatu,Vanuatu
+pais:WF,WF,WLF,876,Q35555,,,Wallis y Futuna,Wallis i Futuna,Wallis e Futuna,Wallis eta Futuna,Wallis e Futuna,Wallis and Futuna
+pais:WS,WS,WSM,882,Q683,,,Samoa,Samoa,Samoa,Samoa,Samoa,Samoa
+pais:YE,YE,YEM,887,Q805,,,Yemen,Iemen,Iemen,Yemen,Iemèn,Yemen
+pais:YT,YT,MYT,175,Q17063,,,Mayotte,Mayotte,Mayotte,Mayotte,Maiòta,Mayotte
+pais:ZA,ZA,ZAF,710,Q258,,,Sudáfrica,Sud-àfrica,Suráfrica,Hegoafrika,Sud-Africa,South Africa
+pais:ZM,ZM,ZMB,894,Q953,,,Zambia,Zàmbia,Zambia,Zambia,Zambia,Zambia
+pais:ZW,ZW,ZWE,716,Q954,,,Zimbabue,Zimbàbue,Zimbabwe,Zimbabwe,Zimbabwe,Zimbabwe
