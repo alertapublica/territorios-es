@@ -208,9 +208,15 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
 | `relate_name(text, within, levels)` | Una relación con estado: resuelto (un candidato), pendiente (ninguno o varios) o conflicto. |
 | `combine(relations)` | Une varias relaciones del mismo objeto: si coinciden, resuelto; si se contradicen, conflicto. |
+| `parse_cadastral_reference(text)` | Partes de una referencia catastral de 14, 18 o 20 caracteres: parcela, tipo (rústica o urbana), cargo, letras de control y si son correctas, y, si es rústica, el código DGC del municipio. Sin red. |
+| `relate_cadastral_reference(text)` | El municipio de una referencia catastral: resuelto si es rústica y su código DGC está en el catálogo; pendiente si es urbana (no lleva el municipio), si las letras de control no cuadran o si el código no se conoce. |
 | `locate(lon, lat)` | Segunda versión. El paso de punto a municipio de Voceiro: resuelto, pendiente (a menos de 50 m de otro municipio) o conflicto. Nunca devuelve «el más cercano». |
 
 La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para más adelante.
+
+La librería no llama nunca al Catastro. Situar una referencia urbana o unas coordenadas con sus
+servicios (`Consulta_DNPRC`, `Consulta_RCCOOR`) queda para un módulo aparte y opcional, que
+devolverá una relación con su evidencia como las demás funciones.
 
 **Identificadores**: los de Voceiro, que ya están publicados: `pais:ES`, `es:autonomia:12`,
 `es:provincia:36`, `es:municipio:36038`. Son etiquetas, así que no importa que estén en castellano.

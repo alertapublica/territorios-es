@@ -210,9 +210,15 @@ options go in an object (`search(text, { within, levels })`).
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
 | `relate_name(text, within, levels)` | A relation with status: resolved (one candidate), pending (none or several) or conflict. |
 | `combine(relations)` | Joins several relations of the same object: if they agree, resolved; if they contradict each other, conflict. |
+| `parse_cadastral_reference(text)` | Parts of a 14, 18 or 20-character cadastral reference: parcel, kind (rustic or urban), property, check letters and whether they are right, and, for a rustic parcel, the DGC code of its municipality. Offline. |
+| `relate_cadastral_reference(text)` | The municipality of a cadastral reference: resolved for a rustic parcel whose DGC code is in the catalogue; pending for an urban one (it does not carry the municipality), when the check letters are wrong or when the code is unknown. |
 | `locate(lon, lat)` | Second version. Voceiro's point-to-municipality mapping: resolved, pending (within 50 m of another municipality) or conflict. It never returns "the nearest". |
 
 Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
+
+The library never calls the Catastro. Placing an urban reference or a point with its services
+(`Consulta_DNPRC`, `Consulta_RCCOOR`) is left for a separate, optional module that will return a
+relation with its evidence like the other functions.
 
 **Identifiers**: Voceiro's, which are already published: `pais:ES`, `es:autonomia:12`,
 `es:provincia:36`, `es:municipio:36038`. They are labels, so it does not matter that they are in

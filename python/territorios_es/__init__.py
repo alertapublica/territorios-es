@@ -12,13 +12,16 @@ from functools import lru_cache
 from pathlib import Path
 
 from .catalog import LEVELS, REASONS, Catalog
+from .catastro import check_letters, parse_cadastral_reference
+from .catastro import relate_cadastral_reference as _relate_cadastral_reference
 from .relation import STATUSES, combine, relation
 from .relation import relate_name as _relate_name
 from .text import display_name, normalize, slugify
 
 __all__ = ["Catalog", "LEVELS", "REASONS", "STATUSES", "load", "resolve", "territory", "search",
            "mentions", "name", "children", "normalize", "display_name", "slugify", "relation",
-           "relate_name", "combine", "data_dir"]
+           "relate_name", "combine", "data_dir", "parse_cadastral_reference", "check_letters",
+           "relate_cadastral_reference"]
 
 
 def data_dir() -> Path:
@@ -66,3 +69,7 @@ def children(identity):
 
 def relate_name(text, within=None, levels=None, catalog=None):
     return _relate_name(catalog or load(), text, within=within, levels=levels)
+
+
+def relate_cadastral_reference(text, catalog=None):
+    return _relate_cadastral_reference(catalog or load(), text)

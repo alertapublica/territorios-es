@@ -21,6 +21,8 @@ te.name("es:provincia:03", "ca")                        # 'Alacant'
 te.name("es:autonomia:09", "en")                        # 'Catalonia'
 [c["id"] for c in te.search("Ourense", levels=["municipality"])]   # ['es:municipio:32054']
 te.relate_name("Ourense")["status"]                     # 'pending': provincia y municipio
+te.parse_cadastral_reference("9872023VH5797S0001WX")["valid"]  # True: letras de control correctas
+te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio de una parcela rústica
 ```
 
 ```js
@@ -32,7 +34,9 @@ relateName(te, 'Ourense', { levels: ['municipality'] });  // { status: 'resolved
 ```
 
 Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children`, `normalize`,
-`relate_name` (en JS, `relateName`) y `combine`. Están descritas en el apartado 6 del diseño.
+`relate_name` (en JS, `relateName`), `combine`, `parse_cadastral_reference` y
+`relate_cadastral_reference` (referencias catastrales, sin red). Están descritas en el apartado 6
+del diseño.
 
 Instalación, con la versión fijada:
 
