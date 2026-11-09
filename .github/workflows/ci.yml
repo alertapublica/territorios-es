@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Pruebas de Python
+        run: python -m unittest discover -s pruebas -t . -v
+      - name: Pruebas de JavaScript
+        run: node --test pruebas/*.test.mjs
+      - name: Datos de prueba al día
+        run: |
+          python -m generador --fixture
+          git diff --exit-code pruebas/datos
+      - name: Coherencia de datos/
+        if: hashFiles('datos/manifiesto.json') != ''
+        run: python -m generador --check
+      - name: Paquete de Python instalable
+        if: hashFiles('datos/territorios.json') != ''
+        run: |
+          python -m pip install --quiet .
+          cd /tmp && python -c "import territorios_es as te; print(te.name('es:autonomia:09', 'en'))"

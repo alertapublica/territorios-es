@@ -1,0 +1,31 @@
+id,ine,ine_dc,provincia,autonomia,lau,nuts3,wikidata,osm_relation,geonames,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,population,area_km2,time_zone,slug
+es:municipio:01059,01059,010590,01,16,01059,ES211,,,,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,1000,12.346,Europe/Madrid,vitoria-gasteiz
+es:municipio:03014,03014,030149,03,10,03014,ES521,,,,Alacant/Alicante,Alacant/Alicante,Alicante,Alacant,Alacant/Alicante,Alacant/Alicante,Alacant/Alicante,Alacant/Alicante,1000,12.346,Europe/Madrid,alacant-alicante
+es:municipio:03139,03139,031395,03,10,03139,ES521,,,,"Vila Joiosa, la/Villajoyosa",la Vila Joiosa/Villajoyosa,Villajoyosa,la Vila Joiosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,1000,12.346,Europe/Madrid,la-vila-joiosa-villajoyosa
+es:municipio:04078,04078,040789,04,01,,,,,,Rioja,Rioja,Rioja,Rioja,Rioja,Rioja,Rioja,Rioja,,,Europe/Madrid,rioja
+es:municipio:07040,07040,070407,07,04,07040,ES532,,,,Palma,Palma,Palma,Palma,Palma,Palma,Palma,Palma,429750,12.346,Europe/Madrid,palma
+es:municipio:08101,08101,081017,08,09,08101,ES511,,,,"Hospitalet de Llobregat, L'",L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,1000,12.346,Europe/Madrid,l-hospitalet-de-llobregat
+es:municipio:08184,08184,081846,08,09,08184,ES511,,,,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,1000,12.346,Europe/Madrid,rubi
+es:municipio:12040,12040,120402,12,10,12040,ES522,,,,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castellón de la Plana,Castelló de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,1000,12.346,Europe/Madrid,castello-de-la-plana-castellon-de-la-plana
+es:municipio:15030,15030,150308,15,12,15030,ES111,Q9000014,,,"Coruña, A",A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,1000,12.346,Europe/Madrid,a-coruna
+es:municipio:17079,17079,170792,17,09,17079,ES512,Q9000010,,,Girona,Girona,Girona,Girona,Girona,Girona,Girona,Girona,1000,12.346,Europe/Madrid,girona
+es:municipio:20069,20069,200697,20,16,20069,ES212,,,,Donostia/San Sebastián,Donostia/San Sebastián,San Sebastián,Donostia/San Sebastián,Donostia/San Sebastián,Donostia,Donostia/San Sebastián,Donostia/San Sebastián,1000,12.346,Europe/Madrid,donostia-san-sebastian
+es:municipio:25057,25057,250576,25,09,25057,ES513,,,,"Bòrdes, Es",Es Bòrdes,Es Bòrdes,Es Bòrdes,Es Bòrdes,Es Bòrdes,Es Bòrdes,Es Bòrdes,1000,12.346,Europe/Madrid,es-bordes
+es:municipio:25120,25120,251207,25,09,25120,ES513,,,,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,1000,12.346,Europe/Madrid,lleida
+es:municipio:25243,25243,252430,25,09,25243,ES513,,,,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,1000,12.346,Europe/Madrid,vielha-e-mijaran
+es:municipio:26089,26089,260892,26,17,26089,ES230,,,,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,1000,12.346,Europe/Madrid,logrono
+es:municipio:28079,28079,280796,28,13,28079,ES300,Q9000015,,,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,3422416,12.346,Europe/Madrid,madrid
+es:municipio:31201,31201,312016,31,15,31201,ES220,,,,Pamplona/Iruña,Pamplona/Iruña,Pamplona,Pamplona/Iruña,Pamplona/Iruña,Iruña,Pamplona/Iruña,Pamplona/Iruña,1000,12.346,Europe/Madrid,pamplona-iruna
+es:municipio:32054,32054,320548,32,12,32054,ES113,Q9000009,,3114965,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,1000,12.346,Europe/Madrid,ourense
+es:municipio:33031,33031,330313,33,03,33031,ES120,,,,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,1000,12.346,Europe/Madrid,langreo
+es:municipio:35016,35016,350167,35,05,35016,ES705,,,,"Palmas de Gran Canaria, Las",Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,381223,12.346,Atlantic/Canary,las-palmas-de-gran-canaria
+es:municipio:36038,36038,360388,36,12,36038,ES111,Q9000017,,,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,84000,12.346,Europe/Madrid,pontevedra
+es:municipio:38038,38038,380380,38,05,38038,ES709,,,,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,209194,12.346,Atlantic/Canary,santa-cruz-de-tenerife
+es:municipio:41091,41091,410917,41,01,41091,ES618,Q9000012,,,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,684025,12.346,Europe/Madrid,sevilla
+es:municipio:46171,46171,461712,46,10,46171,ES523,Q9000099,,,Montcada/Moncada,Montcada/Moncada,Moncada,Montcada,Montcada/Moncada,Montcada/Moncada,Montcada/Moncada,Montcada/Moncada,1000,12.346,Europe/Madrid,montcada-moncada
+es:municipio:46220,46220,462205,46,10,46220,ES523,,,,Sagunt/Sagunto,Sagunt/Sagunto,Sagunto,Sagunt,Sagunt/Sagunto,Sagunt/Sagunto,Sagunt/Sagunto,Sagunt/Sagunto,1000,12.346,Europe/Madrid,sagunt-sagunto
+es:municipio:46250,46250,462508,46,10,46250,ES523,Q9000013,,,València,València,València,València,València,València,València,València,1000,12.346,Europe/Madrid,valencia
+es:municipio:48020,48020,480209,48,16,48020,ES213,,,,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,345110,41.6,Europe/Madrid,bilbao
+es:municipio:50297,50297,502973,50,02,50297,ES243,Q9000011,,,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,1000,12.346,Europe/Madrid,zaragoza
+es:municipio:51001,51001,510013,51,18,51001,ES630,,,,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,1000,12.346,Africa/Ceuta,ceuta
+es:municipio:52001,52001,520018,52,19,52001,ES640,,,,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,1000,12.346,Africa/Ceuta,melilla

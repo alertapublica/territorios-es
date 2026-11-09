@@ -1,0 +1,20 @@
+ine,official,display,subtype,iso3166_2,nuts2,time_zone
+01,Andalucía,Andalucía,community,ES-AN,ES61,Europe/Madrid
+02,Aragón,Aragón,community,ES-AR,ES24,Europe/Madrid
+03,"Asturias, Principado de",Principado de Asturias,community,ES-AS,ES12,Europe/Madrid
+04,"Balears, Illes",Illes Balears,community,ES-IB,ES53,Europe/Madrid
+05,Canarias,Canarias,community,ES-CN,ES70,Atlantic/Canary
+06,Cantabria,Cantabria,community,ES-CB,ES13,Europe/Madrid
+07,Castilla y León,Castilla y León,community,ES-CL,ES41,Europe/Madrid
+08,Castilla - La Mancha,Castilla-La Mancha,community,ES-CM,ES42,Europe/Madrid
+09,Cataluña,Cataluña,community,ES-CT,ES51,Europe/Madrid
+10,Comunitat Valenciana,Comunitat Valenciana,community,ES-VC,ES52,Europe/Madrid
+11,Extremadura,Extremadura,community,ES-EX,ES43,Europe/Madrid
+12,Galicia,Galicia,community,ES-GA,ES11,Europe/Madrid
+13,"Madrid, Comunidad de",Comunidad de Madrid,community,ES-MD,ES30,Europe/Madrid
+14,"Murcia, Región de",Región de Murcia,community,ES-MC,ES62,Europe/Madrid
+15,"Navarra, Comunidad Foral de",Comunidad Foral de Navarra,community,ES-NC,ES22,Europe/Madrid
+16,País Vasco,País Vasco,community,ES-PV,ES21,Europe/Madrid
+17,"Rioja, La",La Rioja,community,ES-RI,ES23,Europe/Madrid
+18,Ceuta,Ceuta,city,ES-CE,ES63,Africa/Ceuta
+19,Melilla,Melilla,city,ES-ML,ES64,Africa/Ceuta

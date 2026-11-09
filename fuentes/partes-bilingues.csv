@@ -1,0 +1,135 @@
+id,official,first,second
+es:provincia:01,Araba/Álava,eu,es
+es:provincia:03,Alicante/Alacant,es,ca
+es:provincia:12,Castellón/Castelló,es,ca
+es:provincia:46,Valencia/València,es,ca
+es:municipio:01010,Ayala/Aiara,es,eu
+es:municipio:01011,Baños de Ebro/Mañueta,es,eu
+es:municipio:01017,Campezo/Kanpezu,es,eu
+es:municipio:01021,Elburgo/Burgelu,es,eu
+es:municipio:01023,Elvillar/Bilar,es,eu
+es:municipio:01028,Labastida/Bastida,es,eu
+es:municipio:01032,Lanciego/Lantziego,es,eu
+es:municipio:01036,Laudio/Llodio,eu,es
+es:municipio:01039,Moreda de Álava/Moreda Araba,es,eu
+es:municipio:01046,Erriberagoitia/Ribera Alta,eu,es
+es:municipio:01047,Ribera Baja/Erriberabeitia,es,eu
+es:municipio:01051,Agurain/Salvatierra,eu,es
+es:municipio:01053,San Millán/Donemiliaga,es,eu
+es:municipio:01055,Valdegovía/Gaubea,es,eu
+es:municipio:01056,Harana/Valle de Arana,eu,es
+es:municipio:01057,Villabuena de Álava/Eskuernaga,es,eu
+es:municipio:01060,Yécora/Iekora,es,eu
+es:municipio:01901,Iruña Oka/Iruña de Oca,eu,es
+es:municipio:03009,Alcoi/Alcoy,ca,es
+es:municipio:03014,Alacant/Alicante,ca,es
+es:municipio:03042,"Poble Nou de Benitatxell, el/Benitachell",ca,es
+es:municipio:03051,"Camp de Mirra, el/Campo de Mirra",ca,es
+es:municipio:03065,Elx/Elche,ca,es
+es:municipio:03077,"Fondó de les Neus, el/Hondón de las Nieves",ca,es
+es:municipio:03082,Xàbia/Jávea,ca,es
+es:municipio:03083,Xixona/Jijona,ca,es
+es:municipio:03084,"Orxa, l'/Lorcha",ca,es
+es:municipio:03089,Monòver/Monóvar,ca,es
+es:municipio:03105,"Pinós, el/Pinoso",ca,es
+es:municipio:03122,Sant Vicent del Raspeig/San Vicente del Raspeig,ca,es
+es:municipio:03132,"Torre de les Maçanes, la/Torremanzanas",ca,es
+es:municipio:03139,"Vila Joiosa, la/Villajoyosa",ca,es
+es:municipio:12028,Benicàssim/Benicasim,ca,es
+es:municipio:12032,Borriana/Burriana,ca,es
+es:municipio:12040,Castelló de la Plana/Castellón de la Plana,ca,es
+es:municipio:12053,Chilches/Xilxes,es,ca
+es:municipio:12055,Xodos/Chodos,ca,es
+es:municipio:12072,Llucena/Lucena del Cid,ca,es
+es:municipio:12085,Orpesa/Oropesa del Mar,ca,es
+es:municipio:12089,Peníscola/Peñíscola,ca,es
+es:municipio:12099,Sant Jordi/San Jorge,ca,es
+es:municipio:12108,Suera/Sueras,ca,es
+es:municipio:12122,"Useres, les/Useras",ca,es
+es:municipio:12129,Vilafranca/Villafranca del Cid,ca,es
+es:municipio:12901,"Alqueries, les/Alquerías del Niño Perdido",ca,es
+es:municipio:20055,Arrasate/Mondragón,eu,es
+es:municipio:20069,Donostia/San Sebastián,eu,es
+es:municipio:31002,Abárzuza/Abartzuza,es,eu
+es:municipio:31003,Abaurregaina/Abaurrea Alta,eu,es
+es:municipio:31004,Abaurrepea/Abaurrea Baja,eu,es
+es:municipio:31009,Aibar/Oibar,es,eu
+es:municipio:31010,Altsasu/Alsasua,eu,es
+es:municipio:31011,Allín/Allin,es,eu
+es:municipio:31014,Ancín/Antzin,es,eu
+es:municipio:31016,Ansoáin/Antsoain,es,eu
+es:municipio:31019,Aoiz/Agoitz,es,eu
+es:municipio:31021,Aranarache/Aranaratxe,es,eu
+es:municipio:31028,Arce/Artzi,es,eu
+es:municipio:31041,Ayegui/Aiegi,es,eu
+es:municipio:31058,Auritz/Burguete,eu,es
+es:municipio:31059,Burgui/Burgi,es,eu
+es:municipio:31060,Burlada/Burlata,es,eu
+es:municipio:31071,Castillonuevo/Gazteluberri,es,eu
+es:municipio:31074,Cirauqui/Zirauki,es,eu
+es:municipio:31075,Ciriza/Ziritza,es,eu
+es:municipio:31083,Echarri/Etxarri,es,eu
+es:municipio:31086,Valle de Egüés/Eguesibar,es,eu
+es:municipio:31088,Valle de Elorz/Elortzibar,es,eu
+es:municipio:31089,Enériz/Eneritz,es,eu
+es:municipio:31093,Ezcároz/Ezkaroze,es,eu
+es:municipio:31095,Esparza de Salazar/Espartza Zaraitzu,es,eu
+es:municipio:31110,Gallipienzo/Galipentzu,es,eu
+es:municipio:31111,Gallués/Galoze,es,eu
+es:municipio:31118,Val de Goñi/Goñerri,es,eu
+es:municipio:31119,Güesa/Gorza,es,eu
+es:municipio:31120,Guesálaz/Gesalatz,es,eu
+es:municipio:31122,Huarte/Uharte,es,eu
+es:municipio:31128,Isaba/Izaba,es,eu
+es:municipio:31131,Iza/Itza,es,eu
+es:municipio:31133,Izalzu/Itzaltzu,es,eu
+es:municipio:31136,Juslapeña/Txulapain,es,eu
+es:municipio:31146,Leache/Leatxe,es,eu
+es:municipio:31150,Leoz/Leotz,es,eu
+es:municipio:31156,Lizoain-Arriasgoiti/Lizoainibar-Arriasgoiti,es,eu
+es:municipio:31158,Lónguida/Longida,es,eu
+es:municipio:31172,Monreal/Elo,es,eu
+es:municipio:31181,Navascués/Nabaskoze,es,eu
+es:municipio:31185,Ochagavía/Otsagabia,es,eu
+es:municipio:31189,Olazti/Olazagutía,eu,es
+es:municipio:31191,Olite/Erriberri,es,eu
+es:municipio:31192,Olóriz/Oloritz,es,eu
+es:municipio:31193,Cendea de Olza/Oltza Zendea,es,eu
+es:municipio:31194,Valle de Ollo/Ollaran,es,eu
+es:municipio:31198,Oronz/Orontze,es,eu
+es:municipio:31199,Oroz-Betelu/Orotz-Betelu,es,eu
+es:municipio:31201,Pamplona/Iruña,es,eu
+es:municipio:31202,Peralta/Azkoien,es,eu
+es:municipio:31206,Puente la Reina/Gares,es,eu
+es:municipio:31207,Pueyo/Puiu,es,eu
+es:municipio:31209,Romanzado/Erromantzatua,es,eu
+es:municipio:31210,Roncal/Erronkari,es,eu
+es:municipio:31211,Orreaga/Roncesvalles,eu,es
+es:municipio:31214,Salinas de Oro/Jaitz,es,eu
+es:municipio:31216,Sangüesa/Zangoza,es,eu
+es:municipio:31221,Doneztebe/Santesteban,eu,es
+es:municipio:31222,Sarriés/Sartze,es,eu
+es:municipio:31235,Ujué/Uxue,es,eu
+es:municipio:31238,Unzué/Untzue,es,eu
+es:municipio:31239,Urdazubi/Urdax,eu,es
+es:municipio:31245,Urzainqui/Urzainki,es,eu
+es:municipio:31247,Uztárroz/Uztarroze,es,eu
+es:municipio:31248,Luzaide/Valcarlos,eu,es
+es:municipio:31252,Vidángoz/Bidankoze,es,eu
+es:municipio:31256,Hiriberri/Villanueva de Aezkoa,eu,es
+es:municipio:31258,Villava/Atarrabia,es,eu
+es:municipio:31260,Valle de Yerri/Deierri,es,eu
+es:municipio:31262,Zabalza/Zabaltza,es,eu
+es:municipio:31901,Barañáin/Barañain,es,eu
+es:municipio:31902,Berrioplano/Berriobeiti,es,eu
+es:municipio:31907,Zizur Mayor/Zizur Nagusia,es,eu
+es:municipio:46013,Alboraia/Alboraya,ca,es
+es:municipio:46170,Moixent/Mogente,ca,es
+es:municipio:46171,Montcada/Moncada,ca,es
+es:municipio:46175,Montitxelvo/Montichelvo,ca,es
+es:municipio:46176,Montroi/Montroy,ca,es
+es:municipio:46178,Nàquera/Náquera,ca,es
+es:municipio:46220,Sagunt/Sagunto,ca,es
+es:municipio:46255,Vilallonga/Villalonga,ca,es
+es:municipio:48022,Karrantza Harana/Valle de Carranza,eu,es
+es:municipio:48074,Urduña/Orduña,eu,es

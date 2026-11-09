@@ -1,0 +1,85 @@
+name: Generar datos
+
+# Descarga las fuentes (INE, Eurostat, Wikidata), regenera datos/ y escribe el informe de
+# discrepancias. En una PR solo comprueba que todo se puede descargar y leer (artefacto y
+# resumen); a mano o cada mes, además abre una PR con los datos y actualiza el issue del informe.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 3 * *"
+  pull_request:
+    paths:
+      - "generador/**"
+      - "fuentes/**"
+      - ".github/workflows/generar.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: generar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y generar
+        run: python -m generador --informe informe.md --cache .cache
+      - name: Resumen
+        if: always()
+        run: if [ -f informe.md ]; then cat informe.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Comprobar coherencia
+        run: python -m generador --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: datos
+          path: |
+            datos/
+            informe.md
+          if-no-files-found: ignore
+
+  publicar:
+    needs: generar
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: datos
+      - name: Abrir PR con los datos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add datos
+          if git diff --cached --quiet; then echo "Sin cambios en los datos"; exit 0; fi
+          rama="datos/actualizacion-$(date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$rama"
+          git commit -q -m "datos: regeneración desde las fuentes"
+          git push -q origin "$rama"
+          gh pr create --base main --head "$rama" --title "Datos: regeneración desde las fuentes" --body-file informe.md
+      - name: Actualizar el issue del informe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          titulo="Informe del generador: discrepancias entre fuentes"
+          numero=$(gh issue list --state open --search "in:title \"$titulo\"" --json number --jq '.[0].number')
+          if [ -n "$numero" ]; then
+            gh issue edit "$numero" --body-file informe.md
+          else
+            gh issue create --title "$titulo" --body-file informe.md
+          fi
