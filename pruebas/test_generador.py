@@ -106,6 +106,8 @@ class Build(unittest.TestCase):
         self.assertTrue(any("ES111, su provincia ES114" in m for m in sections["Eurostat LAU"]))
         self.assertIn("osm:relation 340138 en es:municipio:17079, es:municipio:32054; no se usa en ninguno",
                       sections["Wikidata: código repetido"])
+        self.assertIn("es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091",
+                      sections["Wikidata: nombre de otro municipio"])
 
     def test_dissolved_items_and_counts(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

@@ -55,6 +55,8 @@ def load_hand_lists(folder: Path) -> dict:
         "parts": _csv(folder / "partes-bilingues.csv"),
         "aliases": _csv(folder / "alias.csv"),
         "eu": _csv(folder / "paises-ue.csv"),
+        "not_countries": _csv(folder / "paises-excluidos.csv"),
+        "discarded_labels": _csv(folder / "descartes-wikidata.csv"),
         "sources": json.loads((folder / "fuentes.json").read_text(encoding="utf-8")),
     }
 
@@ -67,12 +69,13 @@ def _single(item: dict, key: str, label: str, identity: str, report: Report) -> 
     return values[0] if values else None
 
 
-def _other_names(item: dict | None, known: set[str]) -> dict[str, str]:
-    """Wikidata labels that differ from the names we already have."""
+def _other_names(item: dict | None, known: set[str], identity: str, discarded: set) -> dict[str, str]:
+    """Wikidata labels that differ from the names we already have, minus the ones discarded by
+    hand (fuentes/descartes-wikidata.csv)."""
     if not item:
         return {}
     return {lang: label for lang, label in sorted(item["labels"].items())
-            if lang in LANGS and normalize(label) not in known}
+            if lang in LANGS and normalize(label) not in known and (identity, lang, label) not in discarded}
 
 
 def _attach_wikidata(record: dict, item: dict | None, qid: str | None, report: Report):
@@ -126,8 +129,12 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         for code in item["codes"].get("alpha2", ()):
             by_alpha2.setdefault(code, []).append(qid)
     eu = {row["alpha2"]: row for row in hand["eu"]}
+    not_countries = {row["alpha2"] for row in hand["not_countries"]}
+    discarded = {(row["id"], row["lang"], row["label"]) for row in hand["discarded_labels"]}
     countries = []
     for code in sorted(by_alpha2):
+        if code in not_countries:
+            continue
         if not re.fullmatch(r"[A-Z]{2}", code):
             report.add("Países", f"Código ISO no válido en Wikidata: {code!r}")
             continue
@@ -246,7 +253,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                           "Wikidata: ISO 3166-2"), identity) if row["iso3166_2"] else None
         item = spain_items.get(qid) if qid else None
         known = {normalize(names["official"]), normalize(names["display"]), *map(normalize, parts.values())}
-        lang = _other_names(item, known)
+        lang = _other_names(item, known, identity, discarded)
         if lang:
             names["lang"] = lang
         if aliases.get(identity):
@@ -298,7 +305,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         if item is None and code not in by_ine:
             report.add("Wikidata: sin elemento", f"{identity} «{display}»")
         known = {normalize(official), normalize(display), *map(normalize, parts.values())}
-        lang = _other_names(item, known)
+        lang = _other_names(item, known, identity, discarded)
         if lang:
             names["lang"] = lang
         if aliases.get(identity):
@@ -345,6 +352,20 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Notas", f"es:provincia:{province} reparte sus municipios en las NUTS 3 {', '.join(sorted(nuts))}")
     for identity in sorted(set(parts_by_id) - {r["id"] for r in provinces + municipalities}):
         report.add("Nombres bilingües", f"{identity} está en fuentes/partes-bilingues.csv pero no en el INE")
+    # A Wikidata label that is the name of another municipality is either a real homonym or an
+    # error in Wikidata: listed for review, never removed silently.
+    by_name: dict[str, set[str]] = {}
+    for record in municipalities:
+        by_name.setdefault(normalize(record["names"]["display"]), set()).add(record["id"])
+    for record in municipalities:
+        for lang, label in record["names"].get("lang", {}).items():
+            others = sorted(by_name.get(normalize(label), set()) - {record["id"]})
+            if others:
+                report.add("Wikidata: nombre de otro municipio",
+                           f"{record['id']} «{record['names']['display']}»: {lang} «{label}» es también "
+                           f"{', '.join(others)}")
+    if len(countries) != 249:
+        report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
     for record in countries + communities + provinces + municipalities:

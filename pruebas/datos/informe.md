@@ -4,7 +4,7 @@
 - Comunidades y ciudades autónomas: 19
 - Provincias: 52
 - Municipios: 30
-- Municipios con Wikidata: 8
+- Municipios con Wikidata: 9
 - Municipios con código LAU: 29
 - Municipios con nombre bilingüe: 7
 
@@ -88,6 +88,10 @@
 - es:provincia:35 reparte sus municipios en las NUTS 3 ES705
 - es:provincia:38 reparte sus municipios en las NUTS 3 ES709
 
+## Países (1)
+
+- 34 países en lugar de los 249 códigos asignados de ISO 3166-1
+
 ## Wikidata: código INE (2)
 
 - 08184: varios elementos Q9000018, Q9000019; no se enlaza
@@ -101,7 +105,11 @@
 
 - Q9000003 es a la vez es:autonomia:13 y es:provincia:28; se queda en es:autonomia:13
 
-## Wikidata: sin elemento (36)
+## Wikidata: nombre de otro municipio (1)
+
+- es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091
+
+## Wikidata: sin elemento (35)
 
 - es:autonomia:01 (ES-AN)
 - es:autonomia:02 (ES-AR)
@@ -134,7 +142,6 @@
 - es:municipio:33031 «Langreo»
 - es:municipio:35016 «Las Palmas de Gran Canaria»
 - es:municipio:38038 «Santa Cruz de Tenerife»
-- es:municipio:46171 «Montcada/Moncada»
 - es:municipio:46220 «Sagunt/Sagunto»
 - es:municipio:48020 «Bilbao»
 - es:municipio:51001 «Ceuta»
