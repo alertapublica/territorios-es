@@ -1,0 +1,31 @@
+{
+  "ine_municipios": {
+    "url": "https://www.ine.es/daco/daco42/codmun/diccionario26.xlsx",
+    "reference_date": "2026-01-01",
+    "title_must_contain": "1 de enero de 2026",
+    "publisher": "INE",
+    "licence": "Reutilización citando la fuente (aviso legal del INE)",
+    "attribution": "Fuente: Instituto Nacional de Estadística (INE)"
+  },
+  "ine_provincias": {
+    "url": "https://www.ine.es/daco/daco42/codmun/cod_ccaa_provincia.htm",
+    "publisher": "INE",
+    "licence": "Reutilización citando la fuente (aviso legal del INE)",
+    "attribution": "Fuente: Instituto Nacional de Estadística (INE)"
+  },
+  "eurostat_lau": {
+    "page": "https://ec.europa.eu/eurostat/web/nuts/local-administrative-units",
+    "link_pattern": "EU-27-LAU-2024-NUTS-2024\\.xlsx",
+    "country_sheet": "ES",
+    "reference_date": "2024-01-01",
+    "publisher": "Eurostat",
+    "licence": "CC BY 4.0",
+    "attribution": "© European Union, Eurostat"
+  },
+  "wikidata": {
+    "url": "https://query.wikidata.org/sparql",
+    "publisher": "Wikidata",
+    "licence": "CC0 1.0",
+    "attribution": "Wikidata"
+  }
+}

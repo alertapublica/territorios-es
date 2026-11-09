@@ -1,0 +1,35 @@
+id,alpha2,alpha3,numeric,wikidata,in_eu,in_eea,name_es,name_ca,name_gl,name_eu,name_oc,name_en
+pais:AT,AT,,,Q8000001,1,1,Austria,Austria,Austria,Austria,Austria,Austria
+pais:BE,BE,,,Q8000002,1,1,Bélgica,Bélgica,Bélgica,Bélgica,Bélgica,Bélgica
+pais:BG,BG,,,Q8000003,1,1,Bulgaria,Bulgaria,Bulgaria,Bulgaria,Bulgaria,Bulgaria
+pais:CH,CH,,,Q8000031,,,Suiza,Suiza,Suiza,Suiza,Suiza,Suiza
+pais:CY,CY,,,Q8000004,1,1,Chipre,Chipre,Chipre,Chipre,Chipre,Chipre
+pais:CZ,CZ,,,Q8000005,1,1,Chequia,Chequia,Chequia,Chequia,Chequia,Chequia
+pais:DE,DE,,,Q8000006,1,1,Alemania,Alemania,Alemania,Alemania,Alemania,Alemania
+pais:DK,DK,,,Q8000007,1,1,Dinamarca,Dinamarca,Dinamarca,Dinamarca,Dinamarca,Dinamarca
+pais:EE,EE,,,Q8000008,1,1,Estonia,Estonia,Estonia,Estonia,Estonia,Estonia
+pais:ES,ES,ESP,724,Q8000009,1,1,España,Espanya,España,Espainia,Espanha,Spain
+pais:FI,FI,,,Q8000010,1,1,Finlandia,Finlandia,Finlandia,Finlandia,Finlandia,Finlandia
+pais:FR,FR,,,Q8000011,1,1,Francia,Francia,Francia,Francia,Francia,Francia
+pais:GB,GB,,,Q8000032,,,Reino Unido,Reino Unido,Reino Unido,Reino Unido,Reino Unido,United Kingdom
+pais:GR,GR,,,Q8000012,1,1,Grecia,Grecia,Grecia,Grecia,Grecia,Grecia
+pais:HR,HR,,,Q8000013,1,1,Croacia,Croacia,Croacia,Croacia,Croacia,Croacia
+pais:HU,HU,,,Q8000014,1,1,Hungría,Hungría,Hungría,Hungría,Hungría,Hungría
+pais:IE,IE,,,Q8000015,1,1,Irlanda,Irlanda,Irlanda,Irlanda,Irlanda,Irlanda
+pais:IS,IS,,,Q8000028,0,1,Islandia,Islandia,Islandia,Islandia,Islandia,Islandia
+pais:IT,IT,,,Q8000016,1,1,Italia,Italia,Italia,Italia,Italia,Italia
+pais:LI,LI,,,Q8000029,0,1,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein,Liechtenstein
+pais:LT,LT,,,Q8000017,1,1,Lituania,Lituania,Lituania,Lituania,Lituania,Lituania
+pais:LU,LU,,,Q8000018,1,1,Luxemburgo,Luxemburgo,Luxemburgo,Luxemburgo,Luxemburgo,Luxemburgo
+pais:LV,LV,,,Q8000019,1,1,Letonia,Letonia,Letonia,Letonia,Letonia,Letonia
+pais:MA,MA,,,Q8000033,,,Marruecos,Marruecos,Marruecos,Marruecos,Marruecos,Marruecos
+pais:MT,MT,,,Q8000020,1,1,Malta,Malta,Malta,Malta,Malta,Malta
+pais:NL,NL,,,Q8000021,1,1,Países Bajos,Países Bajos,Países Bajos,Países Bajos,Países Bajos,Países Bajos
+pais:NO,NO,,,Q8000030,0,1,Noruega,Noruega,Noruega,Noruega,Noruega,Noruega
+pais:PL,PL,,,Q8000022,1,1,Polonia,Polonia,Polonia,Polonia,Polonia,Polonia
+pais:PT,PT,,,Q8000023,1,1,Portugal,Portugal,Portugal,Portugal,Portugal,Portugal
+pais:RO,RO,,,Q8000024,1,1,Rumanía,Rumanía,Rumanía,Rumanía,Rumanía,Rumanía
+pais:SE,SE,,,Q8000025,1,1,Suecia,Suecia,Suecia,Suecia,Suecia,Suecia
+pais:SI,SI,,,Q8000026,1,1,Eslovenia,Eslovenia,Eslovenia,Eslovenia,Eslovenia,Eslovenia
+pais:SK,SK,,,Q8000027,1,1,Eslovaquia,Eslovaquia,Eslovaquia,Eslovaquia,Eslovaquia,Eslovaquia
+pais:US,US,,,Q8000034,,,Estados Unidos,Estados Unidos,Estados Unidos,Estados Unidos,Estados Unidos,Estados Unidos

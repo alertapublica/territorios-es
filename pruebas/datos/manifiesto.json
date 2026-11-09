@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "reference_date": "2026-01-01",
+  "sources": {
+    "fixture": {
+      "url": "pruebas/fuentes/entrada.json"
+    }
+  },
+  "files": {
+    "codigos.csv": "1670503a98e466ff4a12d6045325d65a994556acf8e4c1f870e54a578ba737f1",
+    "comunidades.csv": "0f0a51e5ace01e685ac11b1ea83115dff2c30cb340c63b4b8cd49e35aaaec708",
+    "municipios.csv": "291743e6dd403a96315c7fda01c01db143d0e6ae6917d1544875a5cfd153ae69",
+    "nombres.csv": "c6636a3987692991c955d270ddd125a3c1b050b89ad446d6378736afd6c26050",
+    "paises.csv": "8505ba7e79949cd8bde30d6db9c31f53275597477e642a2c4f99da8b35a5b475",
+    "provincias.csv": "fae342c45937714e2e4055f1055a5d58fa0e284ecd67f19f8842e26698762c53",
+    "territorios.json": "f3b8b354a61834a929b03d34bb328a8edc67dd7e2c38d32793251bc24bac9589",
+    "wikipedia.csv": "611acabfc63b6cba5d84d0c1ef33e16a857dba66327e59873e58757b535f45f7"
+  }
+}

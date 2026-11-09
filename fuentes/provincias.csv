@@ -1,0 +1,53 @@
+ine,autonomia,official,display,iso3166_2,nuts3
+01,16,Araba/Álava,Araba/Álava,ES-VI,ES211
+02,08,Albacete,Albacete,ES-AB,ES421
+03,10,Alicante/Alacant,Alicante/Alacant,ES-A,ES521
+04,01,Almería,Almería,ES-AL,ES611
+05,07,Ávila,Ávila,ES-AV,ES411
+06,11,Badajoz,Badajoz,ES-BA,ES431
+07,04,"Balears, Illes",Illes Balears,ES-PM,
+08,09,Barcelona,Barcelona,ES-B,ES511
+09,07,Burgos,Burgos,ES-BU,ES412
+10,11,Cáceres,Cáceres,ES-CC,ES432
+11,01,Cádiz,Cádiz,ES-CA,ES612
+12,10,Castellón/Castelló,Castellón/Castelló,ES-CS,ES522
+13,08,Ciudad Real,Ciudad Real,ES-CR,ES422
+14,01,Córdoba,Córdoba,ES-CO,ES613
+15,12,"Coruña, A",A Coruña,ES-C,ES111
+16,08,Cuenca,Cuenca,ES-CU,ES423
+17,09,Girona,Girona,ES-GI,ES512
+18,01,Granada,Granada,ES-GR,ES614
+19,08,Guadalajara,Guadalajara,ES-GU,ES424
+20,16,Gipuzkoa,Gipuzkoa,ES-SS,ES212
+21,01,Huelva,Huelva,ES-H,ES615
+22,02,Huesca,Huesca,ES-HU,ES241
+23,01,Jaén,Jaén,ES-J,ES616
+24,07,León,León,ES-LE,ES413
+25,09,Lleida,Lleida,ES-L,ES513
+26,17,"Rioja, La",La Rioja,ES-LO,ES230
+27,12,Lugo,Lugo,ES-LU,ES112
+28,13,Madrid,Madrid,ES-M,ES300
+29,01,Málaga,Málaga,ES-MA,ES617
+30,14,Murcia,Murcia,ES-MU,ES620
+31,15,Navarra,Navarra,ES-NA,ES220
+32,12,Ourense,Ourense,ES-OR,ES113
+33,03,Asturias,Asturias,ES-O,ES120
+34,07,Palencia,Palencia,ES-P,ES414
+35,05,"Palmas, Las",Las Palmas,ES-GC,
+36,12,Pontevedra,Pontevedra,ES-PO,ES114
+37,07,Salamanca,Salamanca,ES-SA,ES415
+38,05,Santa Cruz de Tenerife,Santa Cruz de Tenerife,ES-TF,
+39,06,Cantabria,Cantabria,ES-S,ES130
+40,07,Segovia,Segovia,ES-SG,ES416
+41,01,Sevilla,Sevilla,ES-SE,ES618
+42,07,Soria,Soria,ES-SO,ES417
+43,09,Tarragona,Tarragona,ES-T,ES514
+44,02,Teruel,Teruel,ES-TE,ES242
+45,08,Toledo,Toledo,ES-TO,ES425
+46,10,Valencia/València,Valencia/València,ES-V,ES523
+47,07,Valladolid,Valladolid,ES-VA,ES418
+48,16,Bizkaia,Bizkaia,ES-BI,ES213
+49,07,Zamora,Zamora,ES-ZA,ES419
+50,02,Zaragoza,Zaragoza,ES-Z,ES243
+51,18,Ceuta,Ceuta,,ES630
+52,19,Melilla,Melilla,,ES640

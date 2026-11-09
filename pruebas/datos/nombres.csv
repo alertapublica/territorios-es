@@ -1,0 +1,511 @@
+id,kind,lang,name,source
+pais:AT,official,,Austria,wikidata
+pais:AT,display,,Austria,fuentes
+pais:AT,lang,es,Austria,wikidata
+pais:BE,official,,Bélgica,wikidata
+pais:BE,display,,Bélgica,fuentes
+pais:BE,lang,es,Bélgica,wikidata
+pais:BG,official,,Bulgaria,wikidata
+pais:BG,display,,Bulgaria,fuentes
+pais:BG,lang,es,Bulgaria,wikidata
+pais:CH,official,,Suiza,wikidata
+pais:CH,display,,Suiza,fuentes
+pais:CH,lang,es,Suiza,wikidata
+pais:CY,official,,Chipre,wikidata
+pais:CY,display,,Chipre,fuentes
+pais:CY,lang,es,Chipre,wikidata
+pais:CZ,official,,Chequia,wikidata
+pais:CZ,display,,Chequia,fuentes
+pais:CZ,lang,es,Chequia,wikidata
+pais:DE,official,,Alemania,wikidata
+pais:DE,display,,Alemania,fuentes
+pais:DE,lang,es,Alemania,wikidata
+pais:DK,official,,Dinamarca,wikidata
+pais:DK,display,,Dinamarca,fuentes
+pais:DK,lang,es,Dinamarca,wikidata
+pais:EE,official,,Estonia,wikidata
+pais:EE,display,,Estonia,fuentes
+pais:EE,lang,es,Estonia,wikidata
+pais:ES,official,,España,wikidata
+pais:ES,display,,España,fuentes
+pais:ES,lang,es,España,wikidata
+pais:ES,lang,ca,Espanya,wikidata
+pais:ES,lang,gl,España,wikidata
+pais:ES,lang,eu,Espainia,wikidata
+pais:ES,lang,oc,Espanha,wikidata
+pais:ES,lang,en,Spain,wikidata
+pais:ES,lang,ast,España,wikidata
+pais:ES,lang,an,Espanya,wikidata
+pais:FI,official,,Finlandia,wikidata
+pais:FI,display,,Finlandia,fuentes
+pais:FI,lang,es,Finlandia,wikidata
+pais:FR,official,,Francia,wikidata
+pais:FR,display,,Francia,fuentes
+pais:FR,lang,es,Francia,wikidata
+pais:GB,official,,Reino Unido,wikidata
+pais:GB,display,,Reino Unido,fuentes
+pais:GB,lang,es,Reino Unido,wikidata
+pais:GB,lang,en,United Kingdom,wikidata
+pais:GR,official,,Grecia,wikidata
+pais:GR,display,,Grecia,fuentes
+pais:GR,lang,es,Grecia,wikidata
+pais:HR,official,,Croacia,wikidata
+pais:HR,display,,Croacia,fuentes
+pais:HR,lang,es,Croacia,wikidata
+pais:HU,official,,Hungría,wikidata
+pais:HU,display,,Hungría,fuentes
+pais:HU,lang,es,Hungría,wikidata
+pais:IE,official,,Irlanda,wikidata
+pais:IE,display,,Irlanda,fuentes
+pais:IE,lang,es,Irlanda,wikidata
+pais:IS,official,,Islandia,wikidata
+pais:IS,display,,Islandia,fuentes
+pais:IS,lang,es,Islandia,wikidata
+pais:IT,official,,Italia,wikidata
+pais:IT,display,,Italia,fuentes
+pais:IT,lang,es,Italia,wikidata
+pais:LI,official,,Liechtenstein,wikidata
+pais:LI,display,,Liechtenstein,fuentes
+pais:LI,lang,es,Liechtenstein,wikidata
+pais:LT,official,,Lituania,wikidata
+pais:LT,display,,Lituania,fuentes
+pais:LT,lang,es,Lituania,wikidata
+pais:LU,official,,Luxemburgo,wikidata
+pais:LU,display,,Luxemburgo,fuentes
+pais:LU,lang,es,Luxemburgo,wikidata
+pais:LV,official,,Letonia,wikidata
+pais:LV,display,,Letonia,fuentes
+pais:LV,lang,es,Letonia,wikidata
+pais:MA,official,,Marruecos,wikidata
+pais:MA,display,,Marruecos,fuentes
+pais:MA,lang,es,Marruecos,wikidata
+pais:MT,official,,Malta,wikidata
+pais:MT,display,,Malta,fuentes
+pais:MT,lang,es,Malta,wikidata
+pais:NL,official,,Países Bajos,wikidata
+pais:NL,display,,Países Bajos,fuentes
+pais:NL,lang,es,Países Bajos,wikidata
+pais:NO,official,,Noruega,wikidata
+pais:NO,display,,Noruega,fuentes
+pais:NO,lang,es,Noruega,wikidata
+pais:PL,official,,Polonia,wikidata
+pais:PL,display,,Polonia,fuentes
+pais:PL,lang,es,Polonia,wikidata
+pais:PT,official,,Portugal,wikidata
+pais:PT,display,,Portugal,fuentes
+pais:PT,lang,es,Portugal,wikidata
+pais:RO,official,,Rumanía,wikidata
+pais:RO,display,,Rumanía,fuentes
+pais:RO,lang,es,Rumanía,wikidata
+pais:SE,official,,Suecia,wikidata
+pais:SE,display,,Suecia,fuentes
+pais:SE,lang,es,Suecia,wikidata
+pais:SI,official,,Eslovenia,wikidata
+pais:SI,display,,Eslovenia,fuentes
+pais:SI,lang,es,Eslovenia,wikidata
+pais:SK,official,,Eslovaquia,wikidata
+pais:SK,display,,Eslovaquia,fuentes
+pais:SK,lang,es,Eslovaquia,wikidata
+pais:US,official,,Estados Unidos,wikidata
+pais:US,display,,Estados Unidos,fuentes
+pais:US,lang,es,Estados Unidos,wikidata
+es:autonomia:01,official,,Andalucía,fuentes
+es:autonomia:01,display,,Andalucía,fuentes
+es:autonomia:01,lang,ca,Andalusia,fuentes
+es:autonomia:01,lang,en,Andalusia,fuentes
+es:autonomia:01,lang,es,Andalucía,fuentes
+es:autonomia:01,lang,eu,Andaluzia,fuentes
+es:autonomia:01,lang,gl,Andalucía,fuentes
+es:autonomia:01,lang,oc,Andalosia,fuentes
+es:autonomia:02,official,,Aragón,fuentes
+es:autonomia:02,display,,Aragón,fuentes
+es:autonomia:02,lang,ca,Aragó,fuentes
+es:autonomia:02,lang,en,Aragon,fuentes
+es:autonomia:02,lang,es,Aragón,fuentes
+es:autonomia:02,lang,eu,Aragoi,fuentes
+es:autonomia:02,lang,gl,Aragón,fuentes
+es:autonomia:02,lang,oc,Aragon,fuentes
+es:autonomia:03,official,,"Asturias, Principado de",fuentes
+es:autonomia:03,display,,Principado de Asturias,fuentes
+es:autonomia:03,lang,ca,Principat d'Astúries,fuentes
+es:autonomia:03,lang,en,Principality of Asturias,fuentes
+es:autonomia:03,lang,es,Principado de Asturias,fuentes
+es:autonomia:03,lang,eu,Asturiasko Printzerria,fuentes
+es:autonomia:03,lang,gl,Principado de Asturias,fuentes
+es:autonomia:03,lang,oc,Principat d'Astúrias,fuentes
+es:autonomia:03,short,ca,Astúries,fuentes
+es:autonomia:03,short,en,Asturias,fuentes
+es:autonomia:03,short,es,Asturias,fuentes
+es:autonomia:03,short,eu,Asturias,fuentes
+es:autonomia:03,short,gl,Asturias,fuentes
+es:autonomia:03,short,oc,Astúrias,fuentes
+es:autonomia:04,official,,"Balears, Illes",fuentes
+es:autonomia:04,display,,Illes Balears,fuentes
+es:autonomia:04,lang,ca,Illes Balears,fuentes
+es:autonomia:04,lang,en,Balearic Islands,fuentes
+es:autonomia:04,lang,es,Illes Balears,fuentes
+es:autonomia:04,lang,eu,Balear Uharteak,fuentes
+es:autonomia:04,lang,gl,Illas Baleares,fuentes
+es:autonomia:04,lang,oc,Illes Balears,fuentes
+es:autonomia:04,short,ca,Balears,fuentes
+es:autonomia:04,short,es,Baleares,fuentes
+es:autonomia:04,short,gl,Baleares,fuentes
+es:autonomia:04,short,oc,Balears,fuentes
+es:autonomia:04,alias:short,es,Baleares,fuentes
+es:autonomia:04,alias:exonym,es,Islas Baleares,fuentes
+es:autonomia:05,official,,Canarias,fuentes
+es:autonomia:05,display,,Canarias,fuentes
+es:autonomia:05,lang,ca,Canàries,fuentes
+es:autonomia:05,lang,en,Canary Islands,fuentes
+es:autonomia:05,lang,es,Canarias,fuentes
+es:autonomia:05,lang,eu,Kanariak,fuentes
+es:autonomia:05,lang,gl,Canarias,fuentes
+es:autonomia:05,lang,oc,Canàrias,fuentes
+es:autonomia:06,official,,Cantabria,fuentes
+es:autonomia:06,display,,Cantabria,fuentes
+es:autonomia:06,lang,ca,Cantàbria,fuentes
+es:autonomia:06,lang,en,Cantabria,fuentes
+es:autonomia:06,lang,es,Cantabria,fuentes
+es:autonomia:06,lang,eu,Kantabria,fuentes
+es:autonomia:06,lang,gl,Cantabria,fuentes
+es:autonomia:06,lang,oc,Cantàbria,fuentes
+es:autonomia:07,official,,Castilla y León,fuentes
+es:autonomia:07,display,,Castilla y León,fuentes
+es:autonomia:07,lang,ca,Castella i Lleó,fuentes
+es:autonomia:07,lang,en,Castile and León,fuentes
+es:autonomia:07,lang,es,Castilla y León,fuentes
+es:autonomia:07,lang,eu,Gaztela eta Leon,fuentes
+es:autonomia:07,lang,gl,Castela e León,fuentes
+es:autonomia:07,lang,oc,Castelha e Leon,fuentes
+es:autonomia:08,official,,Castilla - La Mancha,fuentes
+es:autonomia:08,display,,Castilla-La Mancha,fuentes
+es:autonomia:08,lang,ca,Castella-la Manxa,fuentes
+es:autonomia:08,lang,en,Castilla–La Mancha,fuentes
+es:autonomia:08,lang,es,Castilla-La Mancha,fuentes
+es:autonomia:08,lang,eu,Gaztela-Mantxa,fuentes
+es:autonomia:08,lang,gl,Castela-A Mancha,fuentes
+es:autonomia:08,lang,oc,Castelha-La Mancha,fuentes
+es:autonomia:09,official,,Cataluña,fuentes
+es:autonomia:09,display,,Cataluña,fuentes
+es:autonomia:09,lang,ca,Catalunya,fuentes
+es:autonomia:09,lang,en,Catalonia,fuentes
+es:autonomia:09,lang,es,Cataluña,fuentes
+es:autonomia:09,lang,eu,Katalunia,fuentes
+es:autonomia:09,lang,gl,Cataluña,fuentes
+es:autonomia:09,lang,oc,Catalonha,fuentes
+es:autonomia:09,alias:other_language,ca,Catalunya,fuentes
+es:autonomia:10,official,,Comunitat Valenciana,fuentes
+es:autonomia:10,display,,Comunitat Valenciana,fuentes
+es:autonomia:10,lang,ca,Comunitat Valenciana,fuentes
+es:autonomia:10,lang,en,Valencian Community,fuentes
+es:autonomia:10,lang,es,Comunitat Valenciana,fuentes
+es:autonomia:10,lang,eu,Valentziako Erkidegoa,fuentes
+es:autonomia:10,lang,gl,Comunidade Valenciana,fuentes
+es:autonomia:10,lang,oc,Comunitat Valenciana,fuentes
+es:autonomia:10,alias:former_official,es,Comunidad Valenciana,fuentes
+es:autonomia:11,official,,Extremadura,fuentes
+es:autonomia:11,display,,Extremadura,fuentes
+es:autonomia:11,lang,ca,Extremadura,fuentes
+es:autonomia:11,lang,en,Extremadura,fuentes
+es:autonomia:11,lang,es,Extremadura,fuentes
+es:autonomia:11,lang,eu,Extremadura,fuentes
+es:autonomia:11,lang,gl,Estremadura,fuentes
+es:autonomia:11,lang,oc,Extremadura,fuentes
+es:autonomia:12,official,,Galicia,fuentes
+es:autonomia:12,display,,Galicia,fuentes
+es:autonomia:12,lang,an,Galicia,wikidata
+es:autonomia:12,lang,ast,Galicia,wikidata
+es:autonomia:12,lang,ca,Galícia,fuentes
+es:autonomia:12,lang,en,Galicia,fuentes
+es:autonomia:12,lang,es,Galicia,fuentes
+es:autonomia:12,lang,eu,Galizia,fuentes
+es:autonomia:12,lang,gl,Galicia,fuentes
+es:autonomia:12,lang,oc,Galícia,fuentes
+es:autonomia:13,official,,"Madrid, Comunidad de",fuentes
+es:autonomia:13,display,,Comunidad de Madrid,fuentes
+es:autonomia:13,lang,ca,Comunitat de Madrid,fuentes
+es:autonomia:13,lang,en,Community of Madrid,fuentes
+es:autonomia:13,lang,es,Comunidad de Madrid,fuentes
+es:autonomia:13,lang,eu,Madrilgo Erkidegoa,fuentes
+es:autonomia:13,lang,gl,Comunidade de Madrid,fuentes
+es:autonomia:13,lang,oc,Comunautat de Madrid,fuentes
+es:autonomia:13,short,ca,Madrid,fuentes
+es:autonomia:13,short,en,Madrid,fuentes
+es:autonomia:13,short,es,Madrid,fuentes
+es:autonomia:13,short,eu,Madril,fuentes
+es:autonomia:13,short,gl,Madrid,fuentes
+es:autonomia:13,short,oc,Madrid,fuentes
+es:autonomia:14,official,,"Murcia, Región de",fuentes
+es:autonomia:14,display,,Región de Murcia,fuentes
+es:autonomia:14,lang,ca,Regió de Múrcia,fuentes
+es:autonomia:14,lang,en,Region of Murcia,fuentes
+es:autonomia:14,lang,es,Región de Murcia,fuentes
+es:autonomia:14,lang,eu,Murtziako Eskualdea,fuentes
+es:autonomia:14,lang,gl,Rexión de Murcia,fuentes
+es:autonomia:14,lang,oc,Region de Múrcia,fuentes
+es:autonomia:14,short,ca,Múrcia,fuentes
+es:autonomia:14,short,en,Murcia,fuentes
+es:autonomia:14,short,es,Murcia,fuentes
+es:autonomia:14,short,eu,Murtzia,fuentes
+es:autonomia:14,short,gl,Murcia,fuentes
+es:autonomia:14,short,oc,Múrcia,fuentes
+es:autonomia:15,official,,"Navarra, Comunidad Foral de",fuentes
+es:autonomia:15,display,,Comunidad Foral de Navarra,fuentes
+es:autonomia:15,lang,ca,Comunitat Foral de Navarra,fuentes
+es:autonomia:15,lang,en,Chartered Community of Navarre,fuentes
+es:autonomia:15,lang,es,Comunidad Foral de Navarra,fuentes
+es:autonomia:15,lang,eu,Nafarroako Foru Komunitatea,fuentes
+es:autonomia:15,lang,gl,Comunidade Foral de Navarra,fuentes
+es:autonomia:15,lang,oc,Comunautat Forau de Navarra,fuentes
+es:autonomia:15,short,ca,Navarra,fuentes
+es:autonomia:15,short,en,Navarre,fuentes
+es:autonomia:15,short,es,Navarra,fuentes
+es:autonomia:15,short,eu,Nafarroa,fuentes
+es:autonomia:15,short,gl,Navarra,fuentes
+es:autonomia:15,short,oc,Navarra,fuentes
+es:autonomia:15,alias:other_language,eu,Nafarroa,fuentes
+es:autonomia:16,official,,País Vasco,fuentes
+es:autonomia:16,display,,País Vasco,fuentes
+es:autonomia:16,lang,ca,País Basc,fuentes
+es:autonomia:16,lang,en,Basque Country,fuentes
+es:autonomia:16,lang,es,País Vasco,fuentes
+es:autonomia:16,lang,eu,Euskadi,fuentes
+es:autonomia:16,lang,gl,País Vasco,fuentes
+es:autonomia:16,lang,oc,País Basc,fuentes
+es:autonomia:16,alias:official_other,es,Euskadi,fuentes
+es:autonomia:17,official,,"Rioja, La",fuentes
+es:autonomia:17,display,,La Rioja,fuentes
+es:autonomia:17,lang,ca,La Rioja,fuentes
+es:autonomia:17,lang,en,La Rioja,fuentes
+es:autonomia:17,lang,es,La Rioja,fuentes
+es:autonomia:17,lang,eu,Errioxa,fuentes
+es:autonomia:17,lang,gl,A Rioxa,fuentes
+es:autonomia:17,lang,oc,La Rioja,fuentes
+es:autonomia:18,official,,Ceuta,fuentes
+es:autonomia:18,display,,Ceuta,fuentes
+es:autonomia:18,lang,ca,Ceuta,fuentes
+es:autonomia:18,lang,en,Ceuta,fuentes
+es:autonomia:18,lang,es,Ceuta,fuentes
+es:autonomia:18,lang,eu,Ceuta,fuentes
+es:autonomia:18,lang,gl,Ceuta,fuentes
+es:autonomia:18,lang,oc,Ceuta,fuentes
+es:autonomia:19,official,,Melilla,fuentes
+es:autonomia:19,display,,Melilla,fuentes
+es:autonomia:19,lang,ca,Melilla,fuentes
+es:autonomia:19,lang,en,Melilla,fuentes
+es:autonomia:19,lang,es,Melilla,fuentes
+es:autonomia:19,lang,eu,Melilla,fuentes
+es:autonomia:19,lang,gl,Melilla,fuentes
+es:autonomia:19,lang,oc,Melilla,fuentes
+es:provincia:01,official,,Araba/Álava,fuentes
+es:provincia:01,display,,Araba/Álava,fuentes
+es:provincia:01,parts,eu,Araba,fuentes
+es:provincia:01,parts,es,Álava,fuentes
+es:provincia:02,official,,Albacete,fuentes
+es:provincia:02,display,,Albacete,fuentes
+es:provincia:03,official,,Alicante/Alacant,fuentes
+es:provincia:03,display,,Alicante/Alacant,fuentes
+es:provincia:03,parts,es,Alicante,fuentes
+es:provincia:03,parts,ca,Alacant,fuentes
+es:provincia:04,official,,Almería,fuentes
+es:provincia:04,display,,Almería,fuentes
+es:provincia:05,official,,Ávila,fuentes
+es:provincia:05,display,,Ávila,fuentes
+es:provincia:06,official,,Badajoz,fuentes
+es:provincia:06,display,,Badajoz,fuentes
+es:provincia:07,official,,"Balears, Illes",fuentes
+es:provincia:07,display,,Illes Balears,fuentes
+es:provincia:07,alias:exonym,es,Baleares,fuentes
+es:provincia:07,alias:exonym,es,Islas Baleares,fuentes
+es:provincia:08,official,,Barcelona,fuentes
+es:provincia:08,display,,Barcelona,fuentes
+es:provincia:09,official,,Burgos,fuentes
+es:provincia:09,display,,Burgos,fuentes
+es:provincia:10,official,,Cáceres,fuentes
+es:provincia:10,display,,Cáceres,fuentes
+es:provincia:11,official,,Cádiz,fuentes
+es:provincia:11,display,,Cádiz,fuentes
+es:provincia:12,official,,Castellón/Castelló,fuentes
+es:provincia:12,display,,Castellón/Castelló,fuentes
+es:provincia:12,parts,es,Castellón,fuentes
+es:provincia:12,parts,ca,Castelló,fuentes
+es:provincia:13,official,,Ciudad Real,fuentes
+es:provincia:13,display,,Ciudad Real,fuentes
+es:provincia:14,official,,Córdoba,fuentes
+es:provincia:14,display,,Córdoba,fuentes
+es:provincia:15,official,,"Coruña, A",fuentes
+es:provincia:15,display,,A Coruña,fuentes
+es:provincia:15,alias:former_official,es,La Coruña,fuentes
+es:provincia:16,official,,Cuenca,fuentes
+es:provincia:16,display,,Cuenca,fuentes
+es:provincia:17,official,,Girona,fuentes
+es:provincia:17,display,,Girona,fuentes
+es:provincia:17,lang,es,Gerona,wikidata
+es:provincia:17,alias:former_official,es,Gerona,fuentes
+es:provincia:18,official,,Granada,fuentes
+es:provincia:18,display,,Granada,fuentes
+es:provincia:19,official,,Guadalajara,fuentes
+es:provincia:19,display,,Guadalajara,fuentes
+es:provincia:20,official,,Gipuzkoa,fuentes
+es:provincia:20,display,,Gipuzkoa,fuentes
+es:provincia:20,alias:former_official,es,Guipúzcoa,fuentes
+es:provincia:21,official,,Huelva,fuentes
+es:provincia:21,display,,Huelva,fuentes
+es:provincia:22,official,,Huesca,fuentes
+es:provincia:22,display,,Huesca,fuentes
+es:provincia:23,official,,Jaén,fuentes
+es:provincia:23,display,,Jaén,fuentes
+es:provincia:24,official,,León,fuentes
+es:provincia:24,display,,León,fuentes
+es:provincia:25,official,,Lleida,fuentes
+es:provincia:25,display,,Lleida,fuentes
+es:provincia:25,alias:former_official,es,Lérida,fuentes
+es:provincia:26,official,,"Rioja, La",fuentes
+es:provincia:26,display,,La Rioja,fuentes
+es:provincia:27,official,,Lugo,fuentes
+es:provincia:27,display,,Lugo,fuentes
+es:provincia:28,official,,Madrid,fuentes
+es:provincia:28,display,,Madrid,fuentes
+es:provincia:29,official,,Málaga,fuentes
+es:provincia:29,display,,Málaga,fuentes
+es:provincia:30,official,,Murcia,fuentes
+es:provincia:30,display,,Murcia,fuentes
+es:provincia:31,official,,Navarra,fuentes
+es:provincia:31,display,,Navarra,fuentes
+es:provincia:31,lang,eu,Nafarroa,wikidata
+es:provincia:31,alias:other_language,eu,Nafarroa,fuentes
+es:provincia:32,official,,Ourense,fuentes
+es:provincia:32,display,,Ourense,fuentes
+es:provincia:32,lang,es,Orense,wikidata
+es:provincia:32,alias:former_official,es,Orense,fuentes
+es:provincia:33,official,,Asturias,fuentes
+es:provincia:33,display,,Asturias,fuentes
+es:provincia:34,official,,Palencia,fuentes
+es:provincia:34,display,,Palencia,fuentes
+es:provincia:35,official,,"Palmas, Las",fuentes
+es:provincia:35,display,,Las Palmas,fuentes
+es:provincia:36,official,,Pontevedra,fuentes
+es:provincia:36,display,,Pontevedra,fuentes
+es:provincia:37,official,,Salamanca,fuentes
+es:provincia:37,display,,Salamanca,fuentes
+es:provincia:38,official,,Santa Cruz de Tenerife,fuentes
+es:provincia:38,display,,Santa Cruz de Tenerife,fuentes
+es:provincia:38,alias:abbreviation,es,Sta. Cruz de Tenerife,fuentes
+es:provincia:39,official,,Cantabria,fuentes
+es:provincia:39,display,,Cantabria,fuentes
+es:provincia:40,official,,Segovia,fuentes
+es:provincia:40,display,,Segovia,fuentes
+es:provincia:41,official,,Sevilla,fuentes
+es:provincia:41,display,,Sevilla,fuentes
+es:provincia:42,official,,Soria,fuentes
+es:provincia:42,display,,Soria,fuentes
+es:provincia:43,official,,Tarragona,fuentes
+es:provincia:43,display,,Tarragona,fuentes
+es:provincia:44,official,,Teruel,fuentes
+es:provincia:44,display,,Teruel,fuentes
+es:provincia:45,official,,Toledo,fuentes
+es:provincia:45,display,,Toledo,fuentes
+es:provincia:46,official,,Valencia/València,fuentes
+es:provincia:46,display,,Valencia/València,fuentes
+es:provincia:46,parts,es,Valencia,fuentes
+es:provincia:46,parts,ca,València,fuentes
+es:provincia:47,official,,Valladolid,fuentes
+es:provincia:47,display,,Valladolid,fuentes
+es:provincia:48,official,,Bizkaia,fuentes
+es:provincia:48,display,,Bizkaia,fuentes
+es:provincia:48,alias:former_official,es,Vizcaya,fuentes
+es:provincia:49,official,,Zamora,fuentes
+es:provincia:49,display,,Zamora,fuentes
+es:provincia:50,official,,Zaragoza,fuentes
+es:provincia:50,display,,Zaragoza,fuentes
+es:provincia:50,lang,ca,Saragossa,wikidata
+es:provincia:51,official,,Ceuta,fuentes
+es:provincia:51,display,,Ceuta,fuentes
+es:provincia:52,official,,Melilla,fuentes
+es:provincia:52,display,,Melilla,fuentes
+es:municipio:01059,official,,Vitoria-Gasteiz,ine
+es:municipio:01059,display,,Vitoria-Gasteiz,derivado
+es:municipio:01059,alias:short,es,Vitoria,fuentes
+es:municipio:01059,alias:short,eu,Gasteiz,fuentes
+es:municipio:03014,official,,Alacant/Alicante,ine
+es:municipio:03014,display,,Alacant/Alicante,derivado
+es:municipio:03014,parts,ca,Alacant,fuentes
+es:municipio:03014,parts,es,Alicante,fuentes
+es:municipio:03139,official,,"Vila Joiosa, la/Villajoyosa",ine
+es:municipio:03139,display,,la Vila Joiosa/Villajoyosa,derivado
+es:municipio:03139,parts,ca,la Vila Joiosa,fuentes
+es:municipio:03139,parts,es,Villajoyosa,fuentes
+es:municipio:04078,official,,Rioja,ine
+es:municipio:04078,display,,Rioja,derivado
+es:municipio:07040,official,,Palma,ine
+es:municipio:07040,display,,Palma,derivado
+es:municipio:08101,official,,"Hospitalet de Llobregat, L'",ine
+es:municipio:08101,display,,L'Hospitalet de Llobregat,derivado
+es:municipio:08184,official,,Rubí,ine
+es:municipio:08184,display,,Rubí,derivado
+es:municipio:12040,official,,Castelló de la Plana/Castellón de la Plana,ine
+es:municipio:12040,display,,Castelló de la Plana/Castellón de la Plana,derivado
+es:municipio:12040,parts,ca,Castelló de la Plana,fuentes
+es:municipio:12040,parts,es,Castellón de la Plana,fuentes
+es:municipio:15030,official,,"Coruña, A",ine
+es:municipio:15030,display,,A Coruña,derivado
+es:municipio:15030,lang,es,La Coruña,wikidata
+es:municipio:15030,alias:former_official,es,La Coruña,fuentes
+es:municipio:17079,official,,Girona,ine
+es:municipio:17079,display,,Girona,derivado
+es:municipio:17079,lang,es,Gerona,wikidata
+es:municipio:17079,alias:former_official,es,Gerona,fuentes
+es:municipio:20069,official,,Donostia/San Sebastián,ine
+es:municipio:20069,display,,Donostia/San Sebastián,derivado
+es:municipio:20069,parts,eu,Donostia,fuentes
+es:municipio:20069,parts,es,San Sebastián,fuentes
+es:municipio:25057,official,,"Bòrdes, Es",ine
+es:municipio:25057,display,,Es Bòrdes,derivado
+es:municipio:25120,official,,Lleida,ine
+es:municipio:25120,display,,Lleida,derivado
+es:municipio:25120,alias:former_official,es,Lérida,fuentes
+es:municipio:25243,official,,Vielha e Mijaran,ine
+es:municipio:25243,display,,Vielha e Mijaran,derivado
+es:municipio:26089,official,,Logroño,ine
+es:municipio:26089,display,,Logroño,derivado
+es:municipio:28079,official,,Madrid,ine
+es:municipio:28079,display,,Madrid,derivado
+es:municipio:31201,official,,Pamplona/Iruña,ine
+es:municipio:31201,display,,Pamplona/Iruña,derivado
+es:municipio:31201,parts,es,Pamplona,fuentes
+es:municipio:31201,parts,eu,Iruña,fuentes
+es:municipio:32054,official,,Ourense,ine
+es:municipio:32054,display,,Ourense,derivado
+es:municipio:32054,lang,es,Orense,wikidata
+es:municipio:32054,alias:former_official,es,Orense,fuentes
+es:municipio:33031,official,,Langreo,ine
+es:municipio:33031,display,,Langreo,derivado
+es:municipio:35016,official,,"Palmas de Gran Canaria, Las",ine
+es:municipio:35016,display,,Las Palmas de Gran Canaria,derivado
+es:municipio:36038,official,,Pontevedra,ine
+es:municipio:36038,display,,Pontevedra,derivado
+es:municipio:38038,official,,Santa Cruz de Tenerife,ine
+es:municipio:38038,display,,Santa Cruz de Tenerife,derivado
+es:municipio:41091,official,,Sevilla,ine
+es:municipio:41091,display,,Sevilla,derivado
+es:municipio:41091,lang,en,Seville,wikidata
+es:municipio:46171,official,,Montcada/Moncada,ine
+es:municipio:46171,display,,Montcada/Moncada,derivado
+es:municipio:46171,parts,ca,Montcada,fuentes
+es:municipio:46171,parts,es,Moncada,fuentes
+es:municipio:46220,official,,Sagunt/Sagunto,ine
+es:municipio:46220,display,,Sagunt/Sagunto,derivado
+es:municipio:46220,parts,ca,Sagunt,fuentes
+es:municipio:46220,parts,es,Sagunto,fuentes
+es:municipio:46250,official,,València,ine
+es:municipio:46250,display,,València,derivado
+es:municipio:48020,official,,Bilbao,ine
+es:municipio:48020,display,,Bilbao,derivado
+es:municipio:48020,alias:other_language,eu,Bilbo,fuentes
+es:municipio:50297,official,,Zaragoza,ine
+es:municipio:50297,display,,Zaragoza,derivado
+es:municipio:50297,lang,ca,Saragossa,wikidata
+es:municipio:51001,official,,Ceuta,ine
+es:municipio:51001,display,,Ceuta,derivado
+es:municipio:52001,official,,Melilla,ine
+es:municipio:52001,display,,Melilla,derivado

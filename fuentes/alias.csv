@@ -1,0 +1,24 @@
+id,alias,lang,kind
+es:autonomia:04,Baleares,es,short
+es:autonomia:04,Islas Baleares,es,exonym
+es:autonomia:09,Catalunya,ca,other_language
+es:autonomia:10,Comunidad Valenciana,es,former_official
+es:autonomia:15,Nafarroa,eu,other_language
+es:autonomia:16,Euskadi,es,official_other
+es:provincia:07,Baleares,es,exonym
+es:provincia:07,Islas Baleares,es,exonym
+es:provincia:15,La Coruña,es,former_official
+es:provincia:17,Gerona,es,former_official
+es:provincia:20,Guipúzcoa,es,former_official
+es:provincia:25,Lérida,es,former_official
+es:provincia:31,Nafarroa,eu,other_language
+es:provincia:32,Orense,es,former_official
+es:provincia:38,Sta. Cruz de Tenerife,es,abbreviation
+es:provincia:48,Vizcaya,es,former_official
+es:municipio:01059,Vitoria,es,short
+es:municipio:01059,Gasteiz,eu,short
+es:municipio:15030,La Coruña,es,former_official
+es:municipio:17079,Gerona,es,former_official
+es:municipio:25120,Lérida,es,former_official
+es:municipio:32054,Orense,es,former_official
+es:municipio:48020,Bilbo,eu,other_language

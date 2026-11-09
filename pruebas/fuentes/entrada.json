@@ -1,0 +1,1391 @@
+{
+ "ine_provinces": [
+  [
+   "01",
+   "16",
+   "Araba/Álava"
+  ],
+  [
+   "02",
+   "08",
+   "Albacete"
+  ],
+  [
+   "03",
+   "10",
+   "Alicante/Alacant"
+  ],
+  [
+   "04",
+   "01",
+   "Almería"
+  ],
+  [
+   "05",
+   "07",
+   "Ávila"
+  ],
+  [
+   "06",
+   "11",
+   "Badajoz"
+  ],
+  [
+   "07",
+   "04",
+   "Balears, Illes"
+  ],
+  [
+   "08",
+   "09",
+   "Barcelona"
+  ],
+  [
+   "09",
+   "07",
+   "Burgos"
+  ],
+  [
+   "10",
+   "11",
+   "Cáceres"
+  ],
+  [
+   "11",
+   "01",
+   "Cádiz"
+  ],
+  [
+   "12",
+   "10",
+   "Castellón/Castelló"
+  ],
+  [
+   "13",
+   "08",
+   "Ciudad Real"
+  ],
+  [
+   "14",
+   "01",
+   "Córdoba"
+  ],
+  [
+   "15",
+   "12",
+   "Coruña, A"
+  ],
+  [
+   "16",
+   "08",
+   "Cuenca"
+  ],
+  [
+   "17",
+   "09",
+   "Girona"
+  ],
+  [
+   "18",
+   "01",
+   "Granada"
+  ],
+  [
+   "19",
+   "08",
+   "Guadalajara"
+  ],
+  [
+   "20",
+   "16",
+   "Gipuzkoa"
+  ],
+  [
+   "21",
+   "01",
+   "Huelva"
+  ],
+  [
+   "22",
+   "02",
+   "Huesca"
+  ],
+  [
+   "23",
+   "01",
+   "Jaén"
+  ],
+  [
+   "24",
+   "07",
+   "León"
+  ],
+  [
+   "25",
+   "09",
+   "Lleida"
+  ],
+  [
+   "26",
+   "17",
+   "Rioja, La"
+  ],
+  [
+   "27",
+   "12",
+   "Lugo"
+  ],
+  [
+   "28",
+   "13",
+   "Madrid"
+  ],
+  [
+   "29",
+   "01",
+   "Málaga"
+  ],
+  [
+   "30",
+   "14",
+   "Murcia"
+  ],
+  [
+   "31",
+   "15",
+   "Navarra"
+  ],
+  [
+   "32",
+   "12",
+   "Ourense (fixture: nombre distinto)"
+  ],
+  [
+   "33",
+   "03",
+   "Asturias"
+  ],
+  [
+   "34",
+   "07",
+   "Palencia"
+  ],
+  [
+   "35",
+   "05",
+   "Palmas, Las"
+  ],
+  [
+   "36",
+   "12",
+   "Pontevedra"
+  ],
+  [
+   "37",
+   "07",
+   "Salamanca"
+  ],
+  [
+   "38",
+   "05",
+   "Santa Cruz de Tenerife"
+  ],
+  [
+   "39",
+   "06",
+   "Cantabria"
+  ],
+  [
+   "40",
+   "07",
+   "Segovia"
+  ],
+  [
+   "41",
+   "01",
+   "Sevilla"
+  ],
+  [
+   "42",
+   "07",
+   "Soria"
+  ],
+  [
+   "43",
+   "09",
+   "Tarragona"
+  ],
+  [
+   "44",
+   "02",
+   "Teruel"
+  ],
+  [
+   "45",
+   "08",
+   "Toledo"
+  ],
+  [
+   "46",
+   "10",
+   "Valencia/València"
+  ],
+  [
+   "47",
+   "07",
+   "Valladolid"
+  ],
+  [
+   "48",
+   "16",
+   "Bizkaia"
+  ],
+  [
+   "49",
+   "07",
+   "Zamora"
+  ],
+  [
+   "50",
+   "02",
+   "Zaragoza"
+  ],
+  [
+   "51",
+   "18",
+   "Ceuta"
+  ],
+  [
+   "52",
+   "19",
+   "Melilla"
+  ]
+ ],
+ "lau": {
+  "01059": {
+   "area": "12345678",
+   "lau": "01059",
+   "name_national": "Vitoria-Gasteiz",
+   "nuts3": "ES211",
+   "population": "1000"
+  },
+  "03014": {
+   "area": "12345678",
+   "lau": "03014",
+   "name_national": "Alacant/Alicante",
+   "nuts3": "ES521",
+   "population": "1000"
+  },
+  "03139": {
+   "area": "12345678",
+   "lau": "03139",
+   "name_national": "Vila Joiosa, la/Villajoyosa",
+   "nuts3": "ES521",
+   "population": "1000"
+  },
+  "07040": {
+   "area": "12345678",
+   "lau": "07040",
+   "name_national": "Palma",
+   "nuts3": "ES532",
+   "population": "429750"
+  },
+  "08101": {
+   "area": "12345678",
+   "lau": "08101",
+   "name_national": "Hospitalet de Llobregat, L'",
+   "nuts3": "ES511",
+   "population": "1000"
+  },
+  "08184": {
+   "area": "12345678",
+   "lau": "08184",
+   "name_national": "Rubí",
+   "nuts3": "ES511",
+   "population": "1000"
+  },
+  "12040": {
+   "area": "12345678",
+   "lau": "12040",
+   "name_national": "Castelló de la Plana/Castellón de la Plana",
+   "nuts3": "ES522",
+   "population": "1000"
+  },
+  "15030": {
+   "area": "12345678",
+   "lau": "15030",
+   "name_national": "Coruña, A",
+   "nuts3": "ES111",
+   "population": "1000"
+  },
+  "17079": {
+   "area": "12345678",
+   "lau": "17079",
+   "name_national": "Girona",
+   "nuts3": "ES512",
+   "population": "1000"
+  },
+  "20069": {
+   "area": "12345678",
+   "lau": "20069",
+   "name_national": "Donostia/San Sebastián",
+   "nuts3": "ES212",
+   "population": "1000"
+  },
+  "25057": {
+   "area": "12345678",
+   "lau": "25057",
+   "name_national": "Bòrdes, Es",
+   "nuts3": "ES513",
+   "population": "1000"
+  },
+  "25120": {
+   "area": "12345678",
+   "lau": "25120",
+   "name_national": "Lleida",
+   "nuts3": "ES513",
+   "population": "1000"
+  },
+  "25243": {
+   "area": "12345678",
+   "lau": "25243",
+   "name_national": "Vielha e Mijaran",
+   "nuts3": "ES513",
+   "population": "1000"
+  },
+  "26089": {
+   "area": "12345678",
+   "lau": "26089",
+   "name_national": "Logroño",
+   "nuts3": "ES230",
+   "population": "1000"
+  },
+  "28079": {
+   "area": "12345678",
+   "lau": "28079",
+   "name_national": "Madrid",
+   "nuts3": "ES300",
+   "population": "3422416"
+  },
+  "31201": {
+   "area": "12345678",
+   "lau": "31201",
+   "name_national": "Pamplona/Iruña",
+   "nuts3": "ES220",
+   "population": "1000"
+  },
+  "32054": {
+   "area": "12345678",
+   "lau": "32054",
+   "name_national": "Ourense",
+   "nuts3": "ES113",
+   "population": "1000"
+  },
+  "33031": {
+   "area": "12345678",
+   "lau": "33031",
+   "name_national": "Langreo",
+   "nuts3": "ES120",
+   "population": "1000"
+  },
+  "35016": {
+   "area": "12345678",
+   "lau": "35016",
+   "name_national": "Palmas de Gran Canaria, Las",
+   "nuts3": "ES705",
+   "population": "381223"
+  },
+  "36038": {
+   "area": "12345678",
+   "lau": "36038",
+   "name_national": "Pontevedra",
+   "nuts3": "ES111",
+   "population": "84000"
+  },
+  "38038": {
+   "area": "12345678",
+   "lau": "38038",
+   "name_national": "Santa Cruz de Tenerife",
+   "nuts3": "ES709",
+   "population": "209194"
+  },
+  "41091": {
+   "area": "12345678",
+   "lau": "41091",
+   "name_national": "Sevilla",
+   "nuts3": "ES618",
+   "population": "684025"
+  },
+  "46171": {
+   "area": "12345678",
+   "lau": "46171",
+   "name_national": "Montcada/Moncada",
+   "nuts3": "ES523",
+   "population": "1000"
+  },
+  "46220": {
+   "area": "12345678",
+   "lau": "46220",
+   "name_national": "Sagunt/Sagunto",
+   "nuts3": "ES523",
+   "population": "1000"
+  },
+  "46250": {
+   "area": "12345678",
+   "lau": "46250",
+   "name_national": "València",
+   "nuts3": "ES523",
+   "population": "1000"
+  },
+  "48020": {
+   "area": "41600000",
+   "lau": "48020",
+   "name_national": "Bilbao",
+   "nuts3": "ES213",
+   "population": "345110"
+  },
+  "50297": {
+   "area": "12345678",
+   "lau": "50297",
+   "name_national": "Zaragoza",
+   "nuts3": "ES243",
+   "population": "1000"
+  },
+  "51001": {
+   "area": "12345678",
+   "lau": "51001",
+   "name_national": "Ceuta",
+   "nuts3": "ES630",
+   "population": "1000"
+  },
+  "52001": {
+   "area": "12345678",
+   "lau": "52001",
+   "name_national": "Melilla",
+   "nuts3": "ES640",
+   "population": "1000"
+  },
+  "99998": {
+   "lau": "99998",
+   "name_national": "LAU inexistente",
+   "nuts3": "ES300"
+  }
+ },
+ "lau_area_unit": "m2",
+ "municipalities": [
+  [
+   "01059",
+   "0",
+   "Vitoria-Gasteiz",
+   "16"
+  ],
+  [
+   "03014",
+   "9",
+   "Alacant/Alicante",
+   "10"
+  ],
+  [
+   "03139",
+   "5",
+   "Vila Joiosa, la/Villajoyosa",
+   "10"
+  ],
+  [
+   "04078",
+   "9",
+   "Rioja",
+   "01"
+  ],
+  [
+   "07040",
+   "7",
+   "Palma",
+   "04"
+  ],
+  [
+   "08101",
+   "7",
+   "Hospitalet de Llobregat, L'",
+   "09"
+  ],
+  [
+   "08184",
+   "6",
+   "Rubí",
+   "09"
+  ],
+  [
+   "12040",
+   "2",
+   "Castelló de la Plana/Castellón de la Plana",
+   "10"
+  ],
+  [
+   "15030",
+   "8",
+   "Coruña, A",
+   "12"
+  ],
+  [
+   "17079",
+   "2",
+   "Girona",
+   "09"
+  ],
+  [
+   "20069",
+   "7",
+   "Donostia/San Sebastián",
+   "16"
+  ],
+  [
+   "25057",
+   "6",
+   "Bòrdes, Es",
+   "09"
+  ],
+  [
+   "25120",
+   "7",
+   "Lleida",
+   "09"
+  ],
+  [
+   "25243",
+   "0",
+   "Vielha e Mijaran",
+   "09"
+  ],
+  [
+   "26089",
+   "2",
+   "Logroño",
+   "17"
+  ],
+  [
+   "28079",
+   "6",
+   "Madrid",
+   "13"
+  ],
+  [
+   "31201",
+   "6",
+   "Pamplona/Iruña",
+   "15"
+  ],
+  [
+   "32054",
+   "8",
+   "Ourense",
+   "12"
+  ],
+  [
+   "33031",
+   "3",
+   "Langreo",
+   "03"
+  ],
+  [
+   "35016",
+   "7",
+   "Palmas de Gran Canaria, Las",
+   "05"
+  ],
+  [
+   "36038",
+   "8",
+   "Pontevedra",
+   "12"
+  ],
+  [
+   "38038",
+   "0",
+   "Santa Cruz de Tenerife",
+   "05"
+  ],
+  [
+   "41091",
+   "7",
+   "Sevilla",
+   "01"
+  ],
+  [
+   "46171",
+   "2",
+   "Montcada/Moncada",
+   "10"
+  ],
+  [
+   "46220",
+   "5",
+   "Sagunt/Sagunto",
+   "10"
+  ],
+  [
+   "46250",
+   "8",
+   "València",
+   "10"
+  ],
+  [
+   "48020",
+   "9",
+   "Bilbao",
+   "16"
+  ],
+  [
+   "50297",
+   "3",
+   "Zaragoza",
+   "02"
+  ],
+  [
+   "51001",
+   "3",
+   "Ceuta",
+   "18"
+  ],
+  [
+   "52001",
+   "8",
+   "Melilla",
+   "19"
+  ]
+ ],
+ "wikidata_countries": {
+  "Q8000001": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "AT"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Austria"
+   }
+  },
+  "Q8000002": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "BE"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Bélgica"
+   }
+  },
+  "Q8000003": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "BG"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Bulgaria"
+   }
+  },
+  "Q8000004": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "CY"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Chipre"
+   }
+  },
+  "Q8000005": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "CZ"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Chequia"
+   }
+  },
+  "Q8000006": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "DE"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Alemania"
+   }
+  },
+  "Q8000007": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "DK"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Dinamarca"
+   }
+  },
+  "Q8000008": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "EE"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Estonia"
+   }
+  },
+  "Q8000009": {
+   "articles": {
+    "es": "España"
+   },
+   "codes": {
+    "alpha2": [
+     "ES"
+    ],
+    "alpha3": [
+     "ESP"
+    ],
+    "numeric": [
+     "724"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "an": "Espanya",
+    "ast": "España",
+    "ca": "Espanya",
+    "en": "Spain",
+    "es": "España",
+    "eu": "Espainia",
+    "gl": "España",
+    "oc": "Espanha"
+   }
+  },
+  "Q8000010": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "FI"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Finlandia"
+   }
+  },
+  "Q8000011": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "FR"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Francia"
+   }
+  },
+  "Q8000012": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "GR"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Grecia"
+   }
+  },
+  "Q8000013": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "HR"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Croacia"
+   }
+  },
+  "Q8000014": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "HU"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Hungría"
+   }
+  },
+  "Q8000015": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "IE"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Irlanda"
+   }
+  },
+  "Q8000016": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "IT"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Italia"
+   }
+  },
+  "Q8000017": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "LT"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Lituania"
+   }
+  },
+  "Q8000018": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "LU"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Luxemburgo"
+   }
+  },
+  "Q8000019": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "LV"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Letonia"
+   }
+  },
+  "Q8000020": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "MT"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Malta"
+   }
+  },
+  "Q8000021": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "NL"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Países Bajos"
+   }
+  },
+  "Q8000022": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "PL"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Polonia"
+   }
+  },
+  "Q8000023": {
+   "articles": {
+    "es": "Portugal"
+   },
+   "codes": {
+    "alpha2": [
+     "PT"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Portugal"
+   }
+  },
+  "Q8000024": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "RO"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Rumanía"
+   }
+  },
+  "Q8000025": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "SE"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Suecia"
+   }
+  },
+  "Q8000026": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "SI"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Eslovenia"
+   }
+  },
+  "Q8000027": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "SK"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Eslovaquia"
+   }
+  },
+  "Q8000028": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "IS"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Islandia"
+   }
+  },
+  "Q8000029": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "LI"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Liechtenstein"
+   }
+  },
+  "Q8000030": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "NO"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Noruega"
+   }
+  },
+  "Q8000031": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "CH"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Suiza"
+   }
+  },
+  "Q8000032": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "GB"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "en": "United Kingdom",
+    "es": "Reino Unido"
+   }
+  },
+  "Q8000033": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "MA"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Marruecos"
+   }
+  },
+  "Q8000034": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "US"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Estados Unidos"
+   }
+  },
+  "Q8999999": {
+   "articles": {},
+   "codes": {
+    "alpha2": [
+     "CS"
+    ]
+   },
+   "dissolved": true,
+   "labels": {
+    "es": "Serbia y Montenegro"
+   }
+  }
+ },
+ "wikidata_spain": {
+  "Q9000001": {
+   "articles": {
+    "es": "Galicia",
+    "gl": "Galicia"
+   },
+   "codes": {
+    "iso": [
+     "ES-GA"
+    ],
+    "nuts": [
+     "ES11"
+    ],
+    "osm": [
+     "349036"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "an": "Galicia",
+    "ast": "Galicia",
+    "es": "Galicia"
+   }
+  },
+  "Q9000002": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-CT"
+    ],
+    "nuts": [
+     "ES51"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "Catalunya",
+    "es": "Cataluña"
+   }
+  },
+  "Q9000003": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-M",
+     "ES-MD"
+    ],
+    "nuts": [
+     "ES30"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Comunidad de Madrid"
+   }
+  },
+  "Q9000004": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-PV"
+    ],
+    "nuts": [
+     "ES21"
+    ]
+   },
+   "dissolved": false,
+   "labels": {}
+  },
+  "Q9000005": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-OR"
+    ],
+    "nuts": [
+     "ES113"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Orense",
+    "gl": "Ourense"
+   }
+  },
+  "Q9000006": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-GI"
+    ],
+    "nuts": [
+     "ES512"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "Girona",
+    "es": "Gerona"
+   }
+  },
+  "Q9000007": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-Z"
+    ],
+    "nuts": [
+     "ES243",
+     "ES999"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "Saragossa",
+    "en": "Zaragoza"
+   }
+  },
+  "Q9000008": {
+   "articles": {},
+   "codes": {
+    "iso": [
+     "ES-NA"
+    ],
+    "nuts": [
+     "ES220"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "eu": "Nafarroa"
+   }
+  },
+  "Q9000009": {
+   "articles": {
+    "es": "Orense",
+    "gl": "Ourense"
+   },
+   "codes": {
+    "geonames": [
+     "3114965"
+    ],
+    "ine": [
+     "32054"
+    ],
+    "osm": [
+     "340138"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Orense",
+    "gl": "Ourense"
+   }
+  },
+  "Q9000010": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "17079"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "Girona",
+    "es": "Gerona"
+   }
+  },
+  "Q9000011": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "50297"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "Saragossa",
+    "es": "Zaragoza"
+   }
+  },
+  "Q9000012": {
+   "articles": {
+    "en": "Seville"
+   },
+   "codes": {
+    "ine": [
+     "41091"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "en": "Seville",
+    "es": "Sevilla"
+   }
+  },
+  "Q9000013": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "46250"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "ca": "València",
+    "es": "Valencia"
+   }
+  },
+  "Q9000014": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "15030"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "La Coruña"
+   }
+  },
+  "Q9000015": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "28079"
+    ],
+    "osm": [
+     "5326784",
+     "999"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Madrid"
+   }
+  },
+  "Q9000016": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "36038"
+    ]
+   },
+   "dissolved": true,
+   "labels": {
+    "es": "Pontevedra antigua"
+   }
+  },
+  "Q9000017": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "36038"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Pontevedra"
+   }
+  },
+  "Q9000018": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "08184"
+    ]
+   },
+   "dissolved": false,
+   "labels": {}
+  },
+  "Q9000019": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "08184"
+    ]
+   },
+   "dissolved": false,
+   "labels": {}
+  },
+  "Q9000020": {
+   "articles": {},
+   "codes": {
+    "ine": [
+     "99999"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Municipio inexistente"
+   }
+  }
+ }
+}

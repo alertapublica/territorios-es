@@ -1,0 +1,115 @@
+ine,lang,name,short,status
+01,es,Andalucía,,revisado
+01,ca,Andalusia,,pendiente
+01,gl,Andalucía,,pendiente
+01,eu,Andaluzia,,pendiente
+01,oc,Andalosia,,pendiente
+01,en,Andalusia,,pendiente
+02,es,Aragón,,revisado
+02,ca,Aragó,,pendiente
+02,gl,Aragón,,pendiente
+02,eu,Aragoi,,pendiente
+02,oc,Aragon,,pendiente
+02,en,Aragon,,pendiente
+03,es,Principado de Asturias,Asturias,revisado
+03,ca,Principat d'Astúries,Astúries,pendiente
+03,gl,Principado de Asturias,Asturias,pendiente
+03,eu,Asturiasko Printzerria,Asturias,pendiente
+03,oc,Principat d'Astúrias,Astúrias,pendiente
+03,en,Principality of Asturias,Asturias,pendiente
+04,es,Illes Balears,Baleares,revisado
+04,ca,Illes Balears,Balears,pendiente
+04,gl,Illas Baleares,Baleares,pendiente
+04,eu,Balear Uharteak,,pendiente
+04,oc,Illes Balears,Balears,pendiente
+04,en,Balearic Islands,,pendiente
+05,es,Canarias,,revisado
+05,ca,Canàries,,pendiente
+05,gl,Canarias,,pendiente
+05,eu,Kanariak,,pendiente
+05,oc,Canàrias,,pendiente
+05,en,Canary Islands,,pendiente
+06,es,Cantabria,,revisado
+06,ca,Cantàbria,,pendiente
+06,gl,Cantabria,,pendiente
+06,eu,Kantabria,,pendiente
+06,oc,Cantàbria,,pendiente
+06,en,Cantabria,,pendiente
+07,es,Castilla y León,,revisado
+07,ca,Castella i Lleó,,pendiente
+07,gl,Castela e León,,pendiente
+07,eu,Gaztela eta Leon,,pendiente
+07,oc,Castelha e Leon,,pendiente
+07,en,Castile and León,,pendiente
+08,es,Castilla-La Mancha,,revisado
+08,ca,Castella-la Manxa,,pendiente
+08,gl,Castela-A Mancha,,pendiente
+08,eu,Gaztela-Mantxa,,pendiente
+08,oc,Castelha-La Mancha,,pendiente
+08,en,Castilla–La Mancha,,pendiente
+09,es,Cataluña,,revisado
+09,ca,Catalunya,,pendiente
+09,gl,Cataluña,,pendiente
+09,eu,Katalunia,,pendiente
+09,oc,Catalonha,,pendiente
+09,en,Catalonia,,pendiente
+10,es,Comunitat Valenciana,,revisado
+10,ca,Comunitat Valenciana,,pendiente
+10,gl,Comunidade Valenciana,,pendiente
+10,eu,Valentziako Erkidegoa,,pendiente
+10,oc,Comunitat Valenciana,,pendiente
+10,en,Valencian Community,,pendiente
+11,es,Extremadura,,revisado
+11,ca,Extremadura,,pendiente
+11,gl,Estremadura,,pendiente
+11,eu,Extremadura,,pendiente
+11,oc,Extremadura,,pendiente
+11,en,Extremadura,,pendiente
+12,es,Galicia,,revisado
+12,ca,Galícia,,pendiente
+12,gl,Galicia,,pendiente
+12,eu,Galizia,,pendiente
+12,oc,Galícia,,pendiente
+12,en,Galicia,,pendiente
+13,es,Comunidad de Madrid,Madrid,revisado
+13,ca,Comunitat de Madrid,Madrid,pendiente
+13,gl,Comunidade de Madrid,Madrid,pendiente
+13,eu,Madrilgo Erkidegoa,Madril,pendiente
+13,oc,Comunautat de Madrid,Madrid,pendiente
+13,en,Community of Madrid,Madrid,pendiente
+14,es,Región de Murcia,Murcia,revisado
+14,ca,Regió de Múrcia,Múrcia,pendiente
+14,gl,Rexión de Murcia,Murcia,pendiente
+14,eu,Murtziako Eskualdea,Murtzia,pendiente
+14,oc,Region de Múrcia,Múrcia,pendiente
+14,en,Region of Murcia,Murcia,pendiente
+15,es,Comunidad Foral de Navarra,Navarra,revisado
+15,ca,Comunitat Foral de Navarra,Navarra,pendiente
+15,gl,Comunidade Foral de Navarra,Navarra,pendiente
+15,eu,Nafarroako Foru Komunitatea,Nafarroa,pendiente
+15,oc,Comunautat Forau de Navarra,Navarra,pendiente
+15,en,Chartered Community of Navarre,Navarre,pendiente
+16,es,País Vasco,,revisado
+16,ca,País Basc,,pendiente
+16,gl,País Vasco,,pendiente
+16,eu,Euskadi,,pendiente
+16,oc,País Basc,,pendiente
+16,en,Basque Country,,pendiente
+17,es,La Rioja,,revisado
+17,ca,La Rioja,,pendiente
+17,gl,A Rioxa,,pendiente
+17,eu,Errioxa,,pendiente
+17,oc,La Rioja,,pendiente
+17,en,La Rioja,,pendiente
+18,es,Ceuta,,revisado
+18,ca,Ceuta,,pendiente
+18,gl,Ceuta,,pendiente
+18,eu,Ceuta,,pendiente
+18,oc,Ceuta,,pendiente
+18,en,Ceuta,,pendiente
+19,es,Melilla,,revisado
+19,ca,Melilla,,pendiente
+19,gl,Melilla,,pendiente
+19,eu,Melilla,,pendiente
+19,oc,Melilla,,pendiente
+19,en,Melilla,,pendiente

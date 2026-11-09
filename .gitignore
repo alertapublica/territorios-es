@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+_site/
+.cache/
+/informe.md
+node_modules/
+dist/
+build/
+*.egg-info/
