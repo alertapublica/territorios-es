@@ -135,6 +135,15 @@ class Readers(unittest.TestCase):
         self.assertRaises(ValueError, ign.parse_units, b"not a zip")
         self.assertRaises(ValueError, ign.check_zip, b"<html>")
 
+    def test_simplify(self):
+        from territorios_es import geo
+        # 1 m of noise on a 1 km side disappears with a 5 m tolerance; a tiny ring is kept as it is.
+        side = [0, 0, 0.005, 0.000009, 0.01, 0, 0.01, 0.01, 0, 0.01, 0, 0]
+        self.assertEqual(geo.simplify_ring(side, 5), [0, 0, 0.01, 0, 0.01, 0.01, 0, 0.01, 0, 0])
+        self.assertEqual(geo.simplify_ring(side, 0.5), side)
+        tiny = [0, 0, 0.00001, 0, 0.00001, 0.00001, 0.000005, 0.000012, 0, 0.00001, 0, 0]
+        self.assertEqual(geo.simplify_ring(tiny, 5), tiny)
+
     def test_limits_file(self):
         square = [0, 0, 0.5, 0.00001, 1, 0, 1, 1, 0, 1, 0, 0]
         units = [["34100303075", "Municipio", "el Castell de Guadalest", [[square]]],

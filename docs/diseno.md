@@ -96,7 +96,7 @@ Asturias), que son decenas de miles.
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
 | LAU | municipio | Tabla anual LAU de Eurostat | En España es el código INE de 5 cifras (comprobado en los 8.132 municipios); ver §4.5 para lo que trae además. |
 | DGC (Catastro) | municipio (`dgc:municipio`, 5 cifras: delegación 2 + municipio 3) | Servicios web libres del Catastro (`OVCCallejero`, `ConsultaProvincia` y `ConsultaMunicipio`), que dan el código DGC y el del INE de cada municipio | Distinto del INE en muchos municipios (A Coruña: INE `15030`, DGC `15900`). El enlace es por código, no por nombre; el nombre solo se contrasta. Álava, Gipuzkoa, Navarra y Bizkaia tienen catastro foral y quedan sin código DGC. |
-| INSPIRE | municipio | IGN (unidades administrativas) | Identificador europeo de la unidad administrativa. Llega con los límites. |
+| BDDAE (INSPIRE) | municipio (`ign:bddae`, 11 cifras: 34 + comunidad 2 + provincia 2 + INE 5) | Límites del IGN (BDLJE) | Código de la unidad administrativa del IGN y `localId` de su identificador INSPIRE (espacio de nombres `ES.IGN.BDDAE`). Se enlaza si coinciden el código INE, la provincia y la comunidad. |
 | Wikidata | todos | SPARQL a partir del código INE | CC0. Aporta nombres por idioma, enlaces a Wikipedia y otros identificadores. |
 | OpenStreetMap | todos | Identificador de la relación, desde Wikidata y contrastado con OSM | El identificador de Wikidata es CC0; lo que se copie de OSM va aparte con ODbL (§7). |
 | GeoNames | todos | Desde Wikidata | CC BY 4.0. Muy usado por otras herramientas. |
@@ -150,12 +150,18 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
 
 ### 4.5 Geografía, población y clasificaciones
 
-- **Punto de referencia del municipio** (su capital): Nomenclátor Geográfico de Municipios y
-  Entidades de Población del IGN/CNIG, contrastado con Wikidata y OSM.
-- **Límites municipales**: IGN, unidades administrativas INSPIRE (BDDAE), CC BY 4.0. Ocupan unos
-  33 MB comprimidos, así que no van en git: se publican como ficheros de cada versión en GitHub
-  Releases, con su huella en un manifiesto, y se descargan por provincia la primera vez que hacen
-  falta.
+- **Punto de referencia del municipio** (su capital): el núcleo de población que el IGN marca como
+  capital del municipio en su API de entidades (colección `nuc`, producto IGR Poblaciones, CC BY
+  4.0), con longitud, latitud y altitud. Se contrasta con los límites: una capital fuera de su
+  término va al informe. El Nomenclátor de Municipios y Entidades de Población traería lo mismo,
+  pero su descarga exige un formulario con firma del navegador; si el CNIG da un enlace directo,
+  se puede cambiar de fuente.
+- **Límites municipales**: IGN, Base de Datos de Límites Jurisdiccionales (BDLJE), CC BY 4.0. El
+  zip pesa 66 MB y los municipios, 145 MB en GML, así que no van en git ni en el paquete: cada
+  versión de GitHub lleva adjunto `limites-municipios.geojson.gz`, simplificado a 5 m (muy por
+  debajo de la incertidumbre de unos 40 m de los propios límites) y con nuestros identificadores.
+  Incluye las zonas comunes que no son de ningún municipio (comunidades jurisdiccionales), sin
+  identificador.
 - **Mapas simplificados** (TopoJSON de comunidades, provincias y municipios) para dibujar en una
   web, hechos por nosotros a partir de los del IGN.
 - **Población** del padrón del INE y **superficie**: sirven para ordenar candidatos.
@@ -211,7 +217,7 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 | `combine(relations)` | Une varias relaciones del mismo objeto: si coinciden, resuelto; si se contradicen, conflicto. |
 | `parse_cadastral_reference(text)` | Partes de una referencia catastral de 14, 18 o 20 caracteres: parcela, tipo (rústica o urbana), cargo, letras de control y si son correctas, y, si es rústica, el código DGC del municipio. Sin red. |
 | `relate_cadastral_reference(text)` | El municipio de una referencia catastral: resuelto si es rústica y su código DGC está en el catálogo; pendiente si es urbana (no lleva el municipio), si las letras de control no cuadran o si el código no se conoce. |
-| `locate(lon, lat)` | Segunda versión. El paso de punto a municipio de Voceiro: resuelto, pendiente (a menos de 50 m de otro municipio) o conflicto. Nunca devuelve «el más cercano». |
+| `locate(lon, lat, limits)` | El paso de punto a municipio de Voceiro, con el fichero de límites de la versión (`load_limits`; en JS, `loadLimits` en Node o `createLimits` en el navegador): resuelto dentro de un municipio y a más de 50 m de cualquier otro; pendiente cerca de un límite, en una zona común o fuera de todos (el mar, el extranjero); conflicto si cae en dos. Nunca devuelve «el más cercano». |
 
 La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para más adelante.
 
@@ -256,6 +262,10 @@ evidencias. Cada proyecto conserva solo lo suyo (por ejemplo, la cobertura de un
   - el código, MIT;
   - cada dato conserva la licencia de su fuente: INE (reutilización citando la fuente), IGN/CNIG
     (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - IGN: la licencia (Orden FOM/2807/2015) pide citar cada producto con la fórmula de la tabla del
+    Sistema Cartográfico Nacional: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» para las capitales y,
+    como los límites se simplifican, «Obra derivada de BDLJE Continua CC-BY 4.0 ign.es», que va
+    también dentro del fichero de límites (la licencia la pide en los metadatos);
   - Catastro: su licencia (julio de 2016) permite el uso público y comercial solo de la
     información transformada y prohíbe difundir la original o presentarla como «información
     catastral». Publicamos el cruce de códigos con nuestros identificadores, citando la fuente; las
@@ -353,8 +363,8 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Segunda versión: coordenadas y límites del IGN, `locate`, mapas simplificados, islas,
-  comarcas, partidos judiciales, Open Maps For Europe.
+- Segunda versión: mapas simplificados, islas, comarcas, partidos judiciales, Open Maps For
+  Europe. Ya están las coordenadas, los límites del IGN y `locate`.
 - Más adelante: entidades de población, variaciones históricas del INE, búsqueda aproximada.
 
 ## 14. Por verificar
@@ -387,15 +397,21 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
   fuente.
 - **CartoCiudad**: no permite descargar los códigos postales (convenio con Correos,
   BOE-A-2023-11522). Descartado para los códigos postales.
-- **Nomenclátor Geográfico de Municipios y Entidades de Población (CNIG)**: se descarga en formato
-  Access (`.mdb`) y trae nombres, coordenadas y población. Falta confirmar la licencia y si trae
-  nombres por idioma.
+- **IGN**: licencia CC BY 4.0 (Orden FOM/2807/2015 y condiciones del CNIG), con la fórmula de
+  atribución de cada producto en la tabla del Sistema Cartográfico Nacional. Los límites (BDLJE)
+  se descargan de un enlace directo del feed Atom del IGN: un zip de 66 MB, actualizado el 10 de
+  agosto de 2026, con 8.220 unidades municipales en GML (EPSG:4258, latitud y longitud) y una
+  incertidumbre de unos 40 m. El servidor de descargas del CNIG corta la conexión TLS desde
+  algunas redes; desde Actions funciona. El Nomenclátor de Municipios y Entidades de Población
+  (CSV y Access, marzo de 2026) trae capital, coordenadas, altitud, superficie oficial y número del
+  Registro de Entidades Locales, pero solo se descarga con un formulario firmado por el navegador
+  (403 sin él), así que las capitales salen de la API de entidades del IGN (colección `nuc`,
+  37.497 núcleos con código INE, coordenadas, altitud y `capital`: una cifra por nivel, Estado,
+  comunidad, provincia y municipio). Ninguno trae nombres por idioma.
 
 Por comprobar:
 
 - callejero del censo electoral del INE: si trae el código postal y se puede reutilizar;
 - INE: fichero de cifras oficiales de población por municipio (a 1 de enero de 2025) y
   condiciones de reutilización;
-- límites del IGN: si se pueden redistribuir como ficheros de versión en GitHub Releases (CC BY
-  4.0 lo permite citando la fuente);
 - licencias de codeforspain, CLDR, iso-codes, EU Vocabularies y Open Maps For Europe.
