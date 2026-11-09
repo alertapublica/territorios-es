@@ -27,5 +27,12 @@
     "publisher": "Wikidata",
     "licence": "CC0 1.0",
     "attribution": "Wikidata"
+  },
+  "catastro": {
+    "provinces_url": "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/ConsultaProvincia",
+    "municipalities_url": "https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/ConsultaMunicipio",
+    "publisher": "Dirección General del Catastro",
+    "licence": "Licencia de la DGC (julio de 2016): uso público y comercial de la información transformada; no se redistribuye la original",
+    "attribution": "Fuente: Dirección General del Catastro"
   }
 }

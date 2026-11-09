@@ -45,6 +45,9 @@
     ["wikidata", "Q9000009", "es:municipio:32054", ["es:provincia:32", "es:autonomia:12", "pais:ES"]],
     ["osm:relation", "340138", null, null],
     ["geonames", "3114965", "es:municipio:32054", ["es:provincia:32", "es:autonomia:12", "pais:ES"]],
+    ["dgc:municipio", "15900", "es:municipio:15030", ["es:provincia:15", "es:autonomia:12", "pais:ES"]],
+    ["dgc:municipio", "15030", null, null],
+    ["dgc:municipio", "41900", null, null],
     ["sistema:inventado", "36038", null, null]
   ],
   "name": [

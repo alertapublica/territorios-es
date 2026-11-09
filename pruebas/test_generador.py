@@ -5,8 +5,8 @@ import unittest
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import eurostat, exportar, ine, wikidata
-from generador.construir import build
+from generador import catastro, eurostat, exportar, ine, wikidata
+from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
 
@@ -66,6 +66,51 @@ class Readers(unittest.TestCase):
         self.assertEqual(eurostat.find_link(page, r"LAU-2024-NUTS-2024\.xlsx", "https://ec.europa.eu"),
                          "https://ec.europa.eu/eurostat/documents/1/2/EU-27-LAU-2024-NUTS-2024.xlsx/abc?t=1")
 
+    def test_catastro(self):
+        # Same shape as the OVCCallejero answers (seen on 2026-11-09); the values are invented.
+        ns = 'xmlns="http://www.catastro.meh.es/"'
+        provinces = (f'<consulta_provinciero {ns}><control><cuprov>2</cuprov></control><provinciero>'
+                     '<prov><cpine>15</cpine><np>A CORUÑA</np></prov><prov><cpine>03</cpine><np>ALACANT</np></prov>'
+                     '</provinciero></consulta_provinciero>').encode()
+        self.assertEqual(catastro.parse_provinces(provinces), [["03", "ALACANT"], ["15", "A CORUÑA"]])
+        muni = ('<muni><nm>{}</nm><locat><cd>15</cd><cmc>{}</cmc></locat>'
+                '<loine><cp>15</cp><cm>{}</cm></loine></muni>')
+        answer = (f'<consulta_municipiero {ns}><control><cumun>{{}}</cumun></control><municipiero>'
+                  + muni.format("A BAÑA", "7", "7") + muni.format("A CORUÑA", "900", "30")
+                  + '</municipiero></consulta_municipiero>')
+        self.assertEqual(catastro.parse_municipalities(answer.format(2).encode()),
+                         [["15007", "15007", "A BAÑA"], ["15900", "15030", "A CORUÑA"]])
+        self.assertRaises(ValueError, catastro.parse_municipalities, answer.format(3).encode())
+        error = (f'<consulta_municipiero {ns}><control><cuerr>1</cuerr></control><lerr><err><cod>1</cod>'
+                 '<des>LA PROVINCIA NO EXISTE</des></err></lerr></consulta_municipiero>').encode()
+        self.assertRaisesRegex(ValueError, "NO EXISTE", catastro.parse_municipalities, error)
+        self.assertRaises(ValueError, catastro.parse_municipalities, b"<html>")
+        self.assertRaises(ValueError, catastro.parse_municipalities, provinces)
+        self.assertEqual(catastro.municipalities_url("A CORUÑA"),
+                         catastro.SERVICE + "/ConsultaMunicipio?Provincia=A%20CORU%C3%91A&Municipio=")
+
+    def test_catastro_names(self):
+        """Real names from the first generation (2026-11-09): cut at 30 characters, article at the
+        end or missing are the same name; an old or shortened name is not."""
+        from territorios_es.text import display_name
+
+        def names(official, parts=None):
+            return {"official": official, "display": display_name(official), **({"parts": parts} if parts else {})}
+        same = [("BENITACHELL/EL POBLE NOU DE BE", names("Poble Nou de Benitatxell, el/Benitachell",
+                                                         {"ca": "el Poble Nou de Benitatxell", "es": "Benitachell"})),
+                ("TORREMANZANAS/LA TORRE DE LES", names("Torre de les Maçanes, la/Torremanzanas",
+                                                        {"ca": "la Torre de les Maçanes", "es": "Torremanzanas"})),
+                ("COVES DE VINROMA LES", names("Coves de Vinromà, les")), ("BLAZQUEZ", names("Blázquez, Los")),
+                ("PUEBLA DE ALFINDEN, LA", names("Puebla de Alfindén, La")), ("A CORUÑA", names("Coruña, A")),
+                ("MANJABALAGO Y ORTIGOSA DE RIOA", names("Manjabálago y Ortigosa de Rioalmar"))]
+        different = [("LA BISBAL DE FALSET", names("Bisbal de Montsant, La")), ("MAO-MAHON", names("Maó")),
+                     ("CARBALLEDA", names("Carballeda de Valdeorras")),
+                     ("LOS POZUELOS DE CVA", names("Pozuelos de Calatrava, Los"))]
+        for dgc_name, known in same:
+            self.assertTrue(catastro_name_matches(dgc_name, known), dgc_name)
+        for dgc_name, known in different:
+            self.assertFalse(catastro_name_matches(dgc_name, known), dgc_name)
+
     def test_wikidata_parse(self):
         def results(rows):
             return json.dumps({"results": {"bindings": rows}}).encode()
@@ -108,6 +153,24 @@ class Build(unittest.TestCase):
                       sections["Wikidata: código repetido"])
         self.assertIn("es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091",
                       sections["Wikidata: nombre de otro municipio"])
+        self.assertIn("15026 «CESURAS» (INE 15026)", sections["Catastro: no está en el INE"])
+        self.assertIn("es:municipio:28079: varios códigos DGC (28900, 28901); no se enlaza", sections["Catastro"])
+        self.assertIn("Código DGC 41900 en es:municipio:41091, es:municipio:46250; no se usa en ninguno",
+                      sections["Catastro"])
+        self.assertIn("es:provincia:52 no está en el Catastro", sections["Catastro"])
+        self.assertIn("es:municipio:38038 «Santa Cruz de Tenerife» no está en el Catastro", sections["Catastro"])
+        self.assertEqual(sections["Catastro: nombre distinto"],
+                         ["es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET» (08102)"])
+        self.assertIn("es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro", sections["Notas"])
+
+    def test_catastro_codes(self):
+        dgc = {t["id"]: t["codes"].get("dgc:municipio") for t in self.data["territories"]}
+        self.assertEqual(dgc["es:municipio:15030"], "15900")
+        self.assertEqual(dgc["es:municipio:03014"], "03015")
+        self.assertIsNone(dgc["es:municipio:28079"])
+        self.assertIsNone(dgc["es:municipio:41091"])
+        self.assertIsNone(dgc["es:municipio:31201"])  # Navarra: foral cadastre
+        self.assertEqual(dgc["es:municipio:51001"], "55101")  # Ceuta: Catastro office 55
 
     def test_dissolved_items_and_counts(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

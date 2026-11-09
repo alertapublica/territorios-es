@@ -94,7 +94,7 @@ Asturias), que son decenas de miles.
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
 | LAU | municipio | Tabla anual LAU de Eurostat | En España es el código INE de 5 cifras (comprobado en los 8.132 municipios); ver §4.5 para lo que trae además. |
-| DGC (Catastro) | municipio | Servicio OVC del Catastro | Navarra y el País Vasco tienen catastro foral y no tienen código DGC: queda vacío, documentado. Segunda versión. |
+| DGC (Catastro) | municipio (`dgc:municipio`, 5 cifras: delegación 2 + municipio 3) | Servicios web libres del Catastro (`OVCCallejero`, `ConsultaProvincia` y `ConsultaMunicipio`), que dan el código DGC y el del INE de cada municipio | Distinto del INE en muchos municipios (A Coruña: INE `15030`, DGC `15900`). El enlace es por código, no por nombre; el nombre solo se contrasta. Álava, Gipuzkoa, Navarra y Bizkaia tienen catastro foral y quedan sin código DGC. |
 | INSPIRE | municipio | IGN (unidades administrativas) | Identificador europeo de la unidad administrativa. Llega con los límites. |
 | Wikidata | todos | SPARQL a partir del código INE | CC0. Aporta nombres por idioma, enlaces a Wikipedia y otros identificadores. |
 | OpenStreetMap | todos | Identificador de la relación, desde Wikidata y contrastado con OSM | El identificador de Wikidata es CC0; lo que se copie de OSM va aparte con ODbL (§7). |
@@ -200,7 +200,7 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 | Función | Qué hace |
 |---|---|
-| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
 | `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Por defecto, solo comunidades y provincias. |
@@ -236,8 +236,13 @@ evidencias. Cada proyecto conserva solo lo suyo (por ejemplo, la cobertura de un
   nuevos; mayor, cambiar identificadores o quitar campos. Cada consumidor fija la versión exacta.
 - **Licencias**:
   - el código, MIT;
-  - cada dato conserva la licencia de su fuente: INE y Catastro (reutilización citando la
-    fuente), IGN/CNIG (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - cada dato conserva la licencia de su fuente: INE (reutilización citando la fuente), IGN/CNIG
+    (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - Catastro: su licencia (julio de 2016) permite el uso público y comercial solo de la
+    información transformada y prohíbe difundir la original o presentarla como «información
+    catastral». Publicamos el cruce de códigos con nuestros identificadores, citando la fuente; las
+    respuestas originales se quedan en la caché de Actions y nunca entran en el repo (las pruebas
+    usan respuestas inventadas con la misma forma);
   - lo que se copie de OpenStreetMap va en ficheros aparte con ODbL, porque esa licencia obliga a
     publicar con ODbL cualquier base de datos que mezcle sus datos.
 
@@ -330,7 +335,7 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Segunda versión: DGC, coordenadas y límites del IGN, `locate`, mapas simplificados, islas,
+- Segunda versión: coordenadas y límites del IGN, `locate`, mapas simplificados, islas,
   comarcas, partidos judiciales, Open Maps For Europe.
 - Más adelante: entidades de población, variaciones históricas del INE, búsqueda aproximada.
 
@@ -349,6 +354,17 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
 - **Wikidata**: la propiedad P772 (código INE) admite 2 cifras (provincia), 5 (municipio) y 11
   (entidad de población), así que hay que filtrar por longitud. P782 (LAU) lleva el prefijo del
   país. No hay propiedad para el código del Catastro.
+- **Catastro**: `ConsultaProvincia` da las 48 provincias de régimen común (sin Álava, Gipuzkoa,
+  Navarra ni Bizkaia) y `ConsultaMunicipio`, por provincia, cada municipio con su código DGC
+  (`locat`: delegación y municipio) y su código del INE (`loine`), escritos como números sin ceros
+  a la izquierda. En A Coruña da 95 municipios para los 93 del INE: incluye Cesuras y Oza dos Ríos,
+  fusionados en 2013, que van al informe. El código DGC no coincide con el del INE en 61 de los 95.
+  En la primera generación completa: 7.608 municipios con código DGC (todos los de régimen común).
+  Algunas gerencias del Catastro no son provincias y tienen sus propias dos cifras, que encabezan
+  el código DGC y las referencias rústicas: 51 (Cartagena), 52 (Gijón), 53 (Jerez), 54 (Vigo), 55
+  (Ceuta) y 56 (Melilla). El Catastro corta los nombres a 30 caracteres y a veces pone el artículo
+  al final o lo omite; el contraste de nombres lo tiene en cuenta y solo informa de los distintos
+  de verdad (nombres antiguos como «La Bisbal de Falset» o abreviaturas).
 - **Límites de GISCO**: excluyen el uso comercial y llevan «© EuroGeographics». Descartados como
   fuente.
 - **CartoCiudad**: no permite descargar los códigos postales (convenio con Correos,
@@ -359,8 +375,6 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
 
 Por comprobar:
 
-- servicio OVC del Catastro (`ConsultaMunicipioCodigos`): URL exacta y qué devuelve para territorio
-  común y foral;
 - callejero del censo electoral del INE: si trae el código postal y se puede reutilizar;
 - INE: fichero de cifras oficiales de población por municipio (a 1 de enero de 2025) y
   condiciones de reutilización;

@@ -292,6 +292,7 @@ es:municipio:01059,lau,01059,eurostat
 es:municipio:03014,ine:municipio,03014,ine
 es:municipio:03014,ine:municipio:dc,030149,ine
 es:municipio:03014,lau,03014,eurostat
+es:municipio:03014,dgc:municipio,03015,catastro
 es:municipio:03139,ine:municipio,03139,ine
 es:municipio:03139,ine:municipio:dc,031395,ine
 es:municipio:03139,lau,03139,eurostat
@@ -303,6 +304,7 @@ es:municipio:07040,lau,07040,eurostat
 es:municipio:08101,ine:municipio,08101,ine
 es:municipio:08101,ine:municipio:dc,081017,ine
 es:municipio:08101,lau,08101,eurostat
+es:municipio:08101,dgc:municipio,08102,catastro
 es:municipio:08184,ine:municipio,08184,ine
 es:municipio:08184,ine:municipio:dc,081846,ine
 es:municipio:08184,lau,08184,eurostat
@@ -312,6 +314,7 @@ es:municipio:12040,lau,12040,eurostat
 es:municipio:15030,ine:municipio,15030,ine
 es:municipio:15030,ine:municipio:dc,150308,ine
 es:municipio:15030,lau,15030,eurostat
+es:municipio:15030,dgc:municipio,15900,catastro
 es:municipio:15030,wikidata,Q9000014,wikidata
 es:municipio:17079,ine:municipio,17079,ine
 es:municipio:17079,ine:municipio:dc,170792,ine
@@ -342,6 +345,7 @@ es:municipio:31201,lau,31201,eurostat
 es:municipio:32054,ine:municipio,32054,ine
 es:municipio:32054,ine:municipio:dc,320548,ine
 es:municipio:32054,lau,32054,eurostat
+es:municipio:32054,dgc:municipio,32054,catastro
 es:municipio:32054,wikidata,Q9000009,wikidata
 es:municipio:32054,geonames,3114965,wikidata
 es:municipio:33031,ine:municipio,33031,ine
@@ -353,6 +357,7 @@ es:municipio:35016,lau,35016,eurostat
 es:municipio:36038,ine:municipio,36038,ine
 es:municipio:36038,ine:municipio:dc,360388,ine
 es:municipio:36038,lau,36038,eurostat
+es:municipio:36038,dgc:municipio,36041,catastro
 es:municipio:36038,wikidata,Q9000017,wikidata
 es:municipio:38038,ine:municipio,38038,ine
 es:municipio:38038,ine:municipio:dc,380380,ine
@@ -382,6 +387,7 @@ es:municipio:50297,wikidata,Q9000011,wikidata
 es:municipio:51001,ine:municipio,51001,ine
 es:municipio:51001,ine:municipio:dc,510013,ine
 es:municipio:51001,lau,51001,eurostat
+es:municipio:51001,dgc:municipio,55101,catastro
 es:municipio:52001,ine:municipio,52001,ine
 es:municipio:52001,ine:municipio:dc,520018,ine
 es:municipio:52001,lau,52001,eurostat

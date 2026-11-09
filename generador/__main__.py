@@ -7,6 +7,7 @@ Downloads go to third-party servers: run it in GitHub Actions, not on a personal
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -14,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import descargas, eurostat, ine, wikidata  # noqa: E402
+from . import catastro, descargas, eurostat, ine, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 
@@ -50,6 +51,25 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     print("Columnas LAU:", header, file=sys.stderr)
     records["eurostat_lau"] = got.record(reference_date=c["reference_date"], licence=c["licence"],
                                          attribution=c["attribution"], columns=header)
+
+    c = config["catastro"]
+    got = descargas.fetch(c["provinces_url"], cache=cache, cache_name="catastro_provincias.xml",
+                          validate=catastro.parse_provinces)
+    provinces = catastro.parse_provinces(got.content)
+    answers = [got]
+    inputs["catastro"] = []
+    for code, name in provinces:
+        got = descargas.fetch(catastro.municipalities_url(name), cache=cache,
+                              cache_name=f"catastro_municipios_{code}.xml", validate=catastro.parse_municipalities)
+        answers.append(got)
+        inputs["catastro"] += catastro.parse_municipalities(got.content)
+    inputs["catastro_provinces"] = [code for code, _ in provinces]
+    # One manifest entry for the 1 + N answers: the digest covers all of them, in order.
+    records["catastro"] = {
+        "url": c["municipalities_url"] + f" ({len(provinces)} provincias)",
+        "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
+        "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
+        "licence": c["licence"], "attribution": c["attribution"]}
 
     c = config["wikidata"]
     raw = {}

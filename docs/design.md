@@ -96,7 +96,7 @@ Asturias), which number in the tens of thousands.
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
 | LAU | municipality | Annual Eurostat LAU table | In Spain it is the 5-digit INE code (checked on all 8,132 municipalities); see §4.5 for what else it provides. |
-| DGC (Catastro) | municipality | Catastro (land registry, DGC) OVC service | Navarre and the Basque Country have a foral land registry and have no DGC code: it is left empty, documented. Second version. |
+| DGC (Catastro) | municipality (`dgc:municipio`, 5 digits: office 2 + municipality 3) | Free Catastro web services (`OVCCallejero`, `ConsultaProvincia` and `ConsultaMunicipio`), which give the DGC and the INE code of each municipality | Different from the INE code in many municipalities (A Coruña: INE `15030`, DGC `15900`). The link is by code, not by name; the name is only cross-checked. Álava, Gipuzkoa, Navarre and Biscay have a foral land registry and have no DGC code. |
 | INSPIRE | municipality | IGN (administrative units) | European identifier of the administrative unit. Arrives with the boundaries. |
 | Wikidata | all | SPARQL from the INE code | CC0. Provides names per language, links to Wikipedia and other identifiers. |
 | OpenStreetMap | all | Relation identifier, from Wikidata and cross-checked with OSM | The Wikidata identifier is CC0; whatever is copied from OSM goes separately under ODbL (§7). |
@@ -202,7 +202,7 @@ options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
-| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
 | `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. By default, only autonomous communities and provinces. |
@@ -239,8 +239,13 @@ evidence. Each project keeps only what is its own (for example, the coverage of 
   major, changing identifiers or removing fields. Each consumer pins the exact version.
 - **Licences**:
   - the code, MIT;
-  - each datum keeps the licence of its source: INE and Catastro (reuse citing the source),
-    IGN/CNIG (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - each datum keeps the licence of its source: INE (reuse citing the source), IGN/CNIG
+    (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - Catastro: its licence (July 2016) allows public and commercial use only of transformed
+    information and forbids spreading the original or presenting it as "información catastral".
+    We publish the crosswalk of codes with our identifiers, citing the source; the original answers
+    stay in the Actions cache and never enter the repository (tests use invented answers of the
+    same shape);
   - whatever is copied from OpenStreetMap goes in separate files under ODbL, because that licence
     requires publishing under ODbL any database that mixes its data.
 
@@ -335,7 +340,7 @@ Taken with the project owner on 9 November 2026:
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Second version: DGC, IGN coordinates and boundaries, `locate`, simplified maps, islands,
+- Second version: IGN coordinates and boundaries, `locate`, simplified maps, islands,
   comarcas, judicial districts, Open Maps For Europe.
 - Later: population entities, historical INE changes, fuzzy search.
 
@@ -355,6 +360,17 @@ Before using each source, its URL, format and licence have to be checked. Alread
 - **Wikidata**: property P772 (INE code) admits 2 digits (province), 5 (municipality) and 11
   (population entity), so it has to be filtered by length. P782 (LAU) carries the country prefix.
   There is no property for the Catastro code.
+- **Catastro**: `ConsultaProvincia` gives the 48 common-regime provinces (without Álava,
+  Gipuzkoa, Navarre or Biscay) and `ConsultaMunicipio`, per province, each municipality with its
+  DGC code (`locat`: office and municipality) and its INE code (`loine`), written as numbers
+  without leading zeros. For A Coruña it gives 95 municipalities for the INE's 93: it includes
+  Cesuras and Oza dos Ríos, merged in 2013, which go to the report. The DGC code differs from the
+  INE code in 61 of the 95. In the first full generation: 7,608 municipalities with a DGC code (all
+  the common-regime ones). Some Catastro offices are not provinces and have their own two digits,
+  which start the DGC code and the rustic references: 51 (Cartagena), 52 (Gijón), 53 (Jerez), 54
+  (Vigo), 55 (Ceuta) and 56 (Melilla). The Catastro cuts names at 30 characters and sometimes puts
+  the article at the end or leaves it out; the name cross-check allows for that and only reports
+  really different names (old names such as «La Bisbal de Falset», or abbreviations).
 - **GISCO boundaries**: they exclude commercial use and carry "© EuroGeographics". Discarded as a
   source.
 - **CartoCiudad**: it does not allow downloading postal codes (agreement with Correos,
@@ -365,8 +381,6 @@ Before using each source, its URL, format and licence have to be checked. Alread
 
 To be checked:
 
-- Catastro OVC service (`ConsultaMunicipioCodigos`): exact URL and what it returns for common and
-  foral territory;
 - INE electoral roll street directory: whether it includes the postal code and can be reused;
 - INE: file of official population figures per municipality (as of 1 January 2025) and conditions
   of reuse;

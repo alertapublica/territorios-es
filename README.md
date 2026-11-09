@@ -4,9 +4,10 @@
 
 Territorios de España —comunidades y ciudades autónomas, provincias y municipios— y países del
 mundo, con todos sus nombres (el oficial; en castellano, catalán, gallego, euskera, aranés e
-inglés; y alias) y sus códigos (INE, ISO, NUTS, LAU, Wikidata, OpenStreetMap, GeoNames…),
-regenerables desde las fuentes oficiales y abiertas. Incluye una librería pequeña en Python y
-JavaScript para resolver códigos, buscar nombres y elegir el nombre que se muestra en cada idioma.
+inglés; y alias) y sus códigos (INE, Catastro, ISO, NUTS, LAU, Wikidata, OpenStreetMap,
+GeoNames…), regenerables desde las fuentes oficiales y abiertas. Incluye una librería pequeña en
+Python y JavaScript para resolver códigos, buscar nombres y elegir el nombre que se muestra en
+cada idioma.
 
 **En desarrollo.** El planteamiento está en [`docs/diseno.md`](docs/diseno.md).
 
@@ -65,6 +66,7 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 |---|---|---|
 | INE | códigos y nombres oficiales de municipios | reutilización citando la fuente |
 | Eurostat | LAU, NUTS 3 de cada municipio, población y superficie | CC BY 4.0 |
+| Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Wikidata | nombres por idioma, enlaces, identificadores | CC0 |
 | GeoNames (vía Wikidata) | identificador | CC BY 4.0 |
 | Listas revisadas a mano (`fuentes/`) | nombres de comunidades, alias, ISO 3166-2, NUTS | MIT |
@@ -75,9 +77,9 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 
 Spanish territories —autonomous communities and cities, provinces and municipalities— and the
 countries of the world, with all their names (official; in Spanish, Catalan, Galician, Basque,
-Aranese and English; aliases) and their codes (INE, ISO, NUTS, LAU, Wikidata, OpenStreetMap,
-GeoNames…), rebuilt from official and open sources. It ships a small Python and JavaScript library
-to resolve codes, search names and pick the display name for each language.
+Aranese and English; aliases) and their codes (INE, Catastro, ISO, NUTS, LAU, Wikidata,
+OpenStreetMap, GeoNames…), rebuilt from official and open sources. It ships a small Python and
+JavaScript library to resolve codes, search names and pick the display name for each language.
 
 **Work in progress.** The design is in [`docs/design.md`](docs/design.md). Usage, data, tests and
 licences are described in the Spanish section above; code and field names are in English. The

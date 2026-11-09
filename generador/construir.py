@@ -11,8 +11,9 @@ import json
 import re
 from pathlib import Path
 
-from territorios_es.text import display_name, flip_article, normalize, slugify
+from territorios_es.text import ARTICLES, display_name, drop_article, flip_article, normalize, slugify
 
+from .catastro import FORAL
 from .eurostat import ine_code
 from .wikidata import LANGS
 
@@ -67,6 +68,36 @@ def _single(item: dict, key: str, label: str, identity: str, report: Report) -> 
         report.add("Wikidata: varios valores", f"{identity}: {label} {', '.join(values)}")
         return None
     return values[0] if values else None
+
+
+# The Catastro services cut names at 30 characters and often write the article at the end
+# («COVES DE VINROMA LES») or leave it out («BLAZQUEZ»).
+CATASTRO_NAME_LENGTH = 30
+_LOWER_ARTICLES = {a.lower() for group in ARTICLES.values() for a in group}
+
+
+def _catastro_key(text: str) -> str:
+    key = normalize(text.lower())  # lower case first, so that «PUEBLA, LA» flips its article
+    key = drop_article(key) or key
+    words = key.split(" ")
+    return " ".join(words[:-1]) if len(words) > 1 and words[-1] in _LOWER_ARTICLES else key
+
+
+def catastro_name_matches(dgc_name: str, names: dict) -> bool:
+    """Whether the Catastro writes one of the names we have, allowing for its cut and its
+    articles. Only a cross-check: the link itself is by code."""
+    forms = [names["official"], names["display"], *names.get("lang", {}).values(),
+             *(a["name"] for a in names.get("aliases", []))]
+    parts = list(names.get("parts", {}).values())
+    if len(parts) == 2:
+        forms += [f"{parts[0]}/{parts[1]}", f"{parts[1]}/{parts[0]}", *parts]
+    target = _catastro_key(dgc_name)
+    keys = {_catastro_key(form) for form in forms}
+    if len(dgc_name) >= CATASTRO_NAME_LENGTH - 1:  # a cut on a space loses the space
+        cut = normalize(dgc_name.lower())
+        return any(normalize(form.lower()).startswith(cut) or key.startswith(target) for form, key in
+                   zip(forms, map(_catastro_key, forms)))
+    return target in keys
 
 
 def _other_names(item: dict | None, known: set[str], identity: str, discarded: set) -> dict[str, str]:
@@ -286,6 +317,17 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         else:
             lau_by_ine[code] = lau_code
     lau = inputs.get("lau") or {}
+    # Catastro: the DGC gives both codes, so the link is by code; the name is only a cross-check.
+    dgc_by_ine: dict[str, list[list[str]]] = {}
+    for dgc, ine, dgc_name in inputs.get("catastro") or []:
+        dgc_by_ine.setdefault(ine, []).append([dgc, dgc_name])
+    catastro_provinces = set(inputs.get("catastro_provinces") or [])
+    if dgc_by_ine:
+        expected = set(province_ccaa) - set(FORAL)
+        for code in sorted(expected - catastro_provinces):
+            report.add("Catastro", f"es:provincia:{code} no está en el Catastro")
+        for code in sorted(catastro_provinces - expected):
+            report.add("Catastro", f"El Catastro da la provincia {code}, que no se esperaba")
     area_in_m2 = inputs.get("lau_area_unit", "m2") == "m2"
     municipalities, ine_codes = [], set()
     island_nuts: dict[str, set] = {}
@@ -336,6 +378,17 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                     stats[key] = fields[key]
         elif lau:
             report.add("Eurostat LAU", f"{identity} «{display}» no está en la tabla LAU")
+        entries = dgc_by_ine.get(code, [])
+        if len(entries) > 1:
+            report.add("Catastro", f"{identity}: varios códigos DGC "
+                                   f"({', '.join(e[0] for e in entries)}); no se enlaza")
+        elif entries:
+            dgc, dgc_name = entries[0]
+            codes["dgc:municipio"] = dgc
+            if not catastro_name_matches(dgc_name, names):
+                report.add("Catastro: nombre distinto", f"{identity} «{display}»: «{dgc_name}» ({dgc})")
+        elif province in catastro_provinces:
+            report.add("Catastro", f"{identity} «{display}» no está en el Catastro")
         _attach_wikidata(record, item, qid, report)
         record.update(slug=slugify(display), time_zone=time_zone[ccaa])
         if stats:
@@ -346,6 +399,29 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     for code in sorted(set(lau_by_ine) - ine_codes):
         fields = lau[lau_by_ine[code]]
         report.add("Eurostat LAU", f"{lau_by_ine[code]} «{fields.get('name_national', '')}» no está en el INE")
+    for code in sorted(set(dgc_by_ine) - ine_codes):
+        for dgc, dgc_name in dgc_by_ine[code]:
+            report.add("Catastro: no está en el INE", f"{dgc} «{dgc_name}» (INE {code})")
+    # A DGC code given to two municipalities identifies neither of them.
+    dgc_holders: dict[str, list[dict]] = {}
+    for record in municipalities:
+        if "dgc:municipio" in record["codes"]:
+            dgc_holders.setdefault(record["codes"]["dgc:municipio"], []).append(record)
+    for dgc, records in sorted(dgc_holders.items()):
+        if len(records) > 1:
+            for record in records:
+                del record["codes"]["dgc:municipio"]
+            report.add("Catastro", f"Código DGC {dgc} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
+    # Some Catastro offices (gerencias) are not provinces: Jerez, Cartagena, Gijón, Vigo, Ceuta and
+    # Melilla have their own two digits, which start the DGC code and the rustic references.
+    offices: dict[tuple[str, str], int] = {}
+    for record in municipalities:
+        dgc = record["codes"].get("dgc:municipio")
+        if dgc and dgc[:2] != record["codes"]["ine:municipio"][:2]:
+            key = (record["codes"]["ine:municipio"][:2], dgc[:2])
+            offices[key] = offices.get(key, 0) + 1
+    for (province, office), count in sorted(offices.items()):
+        report.add("Notas", f"es:provincia:{province}: {count} municipio(s) con la delegación {office} del Catastro")
     for code in sorted(set(by_ine) - ine_codes):
         report.add("Wikidata: código INE", f"{code} ({', '.join(sorted(by_ine[code]))}) no está en el INE")
     for province, nuts in sorted(island_nuts.items()):
@@ -387,6 +463,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Provincias": len(provinces), "Municipios": len(municipalities),
         "Municipios con Wikidata": sum("wikidata" in r["codes"] for r in municipalities),
         "Municipios con código LAU": sum("lau" in r["codes"] for r in municipalities),
+        "Municipios con código DGC": sum("dgc:municipio" in r["codes"] for r in municipalities),
         "Municipios con nombre bilingüe": sum("parts" in r["names"] for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
