@@ -71,7 +71,9 @@ jobs:
           git switch -c "$rama"
           git commit -q -m "datos: regeneración desde las fuentes"
           git push -q origin "$rama"
-          gh pr create --base main --head "$rama" --title "Datos: regeneración desde las fuentes" --body-file informe.md
+          # La organización puede no permitir que Actions abra PR: entonces queda la rama y un aviso.
+          gh pr create --base main --head "$rama" --title "Datos: regeneración desde las fuentes" --body-file informe.md \
+            || echo "::warning::No se pudo abrir la PR. Ábrela a mano: https://github.com/$GITHUB_REPOSITORY/compare/$rama?expand=1"
       - name: Actualizar el issue del informe
         env:
           GH_TOKEN: ${{ github.token }}

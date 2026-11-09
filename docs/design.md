@@ -332,7 +332,9 @@ Taken with the project owner on 9 November 2026:
 - Review the discrepancy report of the first generation: Wikidata labels that are the name of
   another municipality, repeated identifiers and former municipalities with an INE code in
   Wikidata; fix in Wikidata what is their error.
-- Enable GitHub Pages in the repository and allow Actions to open PRs (repository settings).
+- Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
+  Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
+  link to open the PR by hand. GitHub Pages is already enabled.
 - Second version: DGC, IGN coordinates and boundaries, `locate`, simplified maps, islands,
   comarcas, judicial districts, Open Maps For Europe.
 - Later: population entities, historical INE changes, fuzzy search.

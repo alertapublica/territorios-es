@@ -327,7 +327,9 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Revisar el informe de discrepancias de la primera generación: etiquetas de Wikidata que son el
   nombre de otro municipio, identificadores repetidos y municipios antiguos con código INE en
   Wikidata; corregir en Wikidata lo que sea error suyo.
-- Activar GitHub Pages en el repositorio y permitir que Actions abra PR (ajustes del repositorio).
+- Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
+  Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
+  avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
 - Segunda versión: DGC, coordenadas y límites del IGN, `locate`, mapas simplificados, islas,
   comarcas, partidos judiciales, Open Maps For Europe.
 - Más adelante: entidades de población, variaciones históricas del INE, búsqueda aproximada.
