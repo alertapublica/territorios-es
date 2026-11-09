@@ -6,7 +6,7 @@ from zipfile import ZipFile
 
 from pruebas import ROOT
 from generador import catastro, eurostat, exportar, ine, wikidata
-from generador.construir import build
+from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
 
@@ -89,6 +89,28 @@ class Readers(unittest.TestCase):
         self.assertEqual(catastro.municipalities_url("A CORUÑA"),
                          catastro.SERVICE + "/ConsultaMunicipio?Provincia=A%20CORU%C3%91A&Municipio=")
 
+    def test_catastro_names(self):
+        """Real names from the first generation (2026-11-09): cut at 30 characters, article at the
+        end or missing are the same name; an old or shortened name is not."""
+        from territorios_es.text import display_name
+
+        def names(official, parts=None):
+            return {"official": official, "display": display_name(official), **({"parts": parts} if parts else {})}
+        same = [("BENITACHELL/EL POBLE NOU DE BE", names("Poble Nou de Benitatxell, el/Benitachell",
+                                                         {"ca": "el Poble Nou de Benitatxell", "es": "Benitachell"})),
+                ("TORREMANZANAS/LA TORRE DE LES", names("Torre de les Maçanes, la/Torremanzanas",
+                                                        {"ca": "la Torre de les Maçanes", "es": "Torremanzanas"})),
+                ("COVES DE VINROMA LES", names("Coves de Vinromà, les")), ("BLAZQUEZ", names("Blázquez, Los")),
+                ("PUEBLA DE ALFINDEN, LA", names("Puebla de Alfindén, La")), ("A CORUÑA", names("Coruña, A")),
+                ("MANJABALAGO Y ORTIGOSA DE RIOA", names("Manjabálago y Ortigosa de Rioalmar"))]
+        different = [("LA BISBAL DE FALSET", names("Bisbal de Montsant, La")), ("MAO-MAHON", names("Maó")),
+                     ("CARBALLEDA", names("Carballeda de Valdeorras")),
+                     ("LOS POZUELOS DE CVA", names("Pozuelos de Calatrava, Los"))]
+        for dgc_name, known in same:
+            self.assertTrue(catastro_name_matches(dgc_name, known), dgc_name)
+        for dgc_name, known in different:
+            self.assertFalse(catastro_name_matches(dgc_name, known), dgc_name)
+
     def test_wikidata_parse(self):
         def results(rows):
             return json.dumps({"results": {"bindings": rows}}).encode()
@@ -138,7 +160,8 @@ class Build(unittest.TestCase):
         self.assertIn("es:provincia:52 no está en el Catastro", sections["Catastro"])
         self.assertIn("es:municipio:38038 «Santa Cruz de Tenerife» no está en el Catastro", sections["Catastro"])
         self.assertEqual(sections["Catastro: nombre distinto"],
-                         ["es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET DE LLOBREGAT» (08102)"])
+                         ["es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET» (08102)"])
+        self.assertIn("es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro", sections["Notas"])
 
     def test_catastro_codes(self):
         dgc = {t["id"]: t["codes"].get("dgc:municipio") for t in self.data["territories"]}
@@ -147,6 +170,7 @@ class Build(unittest.TestCase):
         self.assertIsNone(dgc["es:municipio:28079"])
         self.assertIsNone(dgc["es:municipio:41091"])
         self.assertIsNone(dgc["es:municipio:31201"])  # Navarra: foral cadastre
+        self.assertEqual(dgc["es:municipio:51001"], "55101")  # Ceuta: Catastro office 55
 
     def test_dissolved_items_and_counts(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

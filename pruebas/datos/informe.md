@@ -6,10 +6,10 @@
 - Municipios: 30
 - Municipios con Wikidata: 9
 - Municipios con código LAU: 29
-- Municipios con código DGC: 5
+- Municipios con código DGC: 6
 - Municipios con nombre bilingüe: 7
 
-## Catastro (21)
+## Catastro (19)
 
 - Código DGC 41900 en es:municipio:41091, es:municipio:46250; no se usa en ninguno
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa» no está en el Catastro
@@ -28,9 +28,7 @@
 - es:municipio:38038 «Santa Cruz de Tenerife» no está en el Catastro
 - es:municipio:46171 «Montcada/Moncada» no está en el Catastro
 - es:municipio:46220 «Sagunt/Sagunto» no está en el Catastro
-- es:municipio:46250: código DGC 41900 en otra provincia
 - es:municipio:50297 «Zaragoza» no está en el Catastro
-- es:municipio:51001 «Ceuta» no está en el Catastro
 - es:provincia:52 no está en el Catastro
 
 ## Catastro: no está en el INE (1)
@@ -39,7 +37,7 @@
 
 ## Catastro: nombre distinto (1)
 
-- es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET DE LLOBREGAT» (08102)
+- es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET» (08102)
 
 ## Eurostat LAU (3)
 
@@ -115,11 +113,12 @@
 - es:municipio:31074 está en fuentes/partes-bilingues.csv pero no en el INE
 - … y 63 más
 
-## Notas (3)
+## Notas (4)
 
 - es:provincia:07 reparte sus municipios en las NUTS 3 ES532
 - es:provincia:35 reparte sus municipios en las NUTS 3 ES705
 - es:provincia:38 reparte sus municipios en las NUTS 3 ES709
+- es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro
 
 ## Países (1)
 

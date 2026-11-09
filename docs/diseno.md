@@ -365,6 +365,12 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
   (`locat`: delegación y municipio) y su código del INE (`loine`), escritos como números sin ceros
   a la izquierda. En A Coruña da 95 municipios para los 93 del INE: incluye Cesuras y Oza dos Ríos,
   fusionados en 2013, que van al informe. El código DGC no coincide con el del INE en 61 de los 95.
+  En la primera generación completa: 7.608 municipios con código DGC (todos los de régimen común).
+  Algunas gerencias del Catastro no son provincias y tienen sus propias dos cifras, que encabezan
+  el código DGC y las referencias rústicas: 51 (Cartagena), 52 (Gijón), 53 (Jerez), 54 (Vigo), 55
+  (Ceuta) y 56 (Melilla). El Catastro corta los nombres a 30 caracteres y a veces pone el artículo
+  al final o lo omite; el contraste de nombres lo tiene en cuenta y solo informa de los distintos
+  de verdad (nombres antiguos como «La Bisbal de Falset» o abreviaturas).
 - **Límites de GISCO**: excluyen el uso comercial y llevan «© EuroGeographics». Descartados como
   fuente.
 - **CartoCiudad**: no permite descargar los códigos postales (convenio con Correos,
