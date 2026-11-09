@@ -195,7 +195,8 @@ y cambios de nombre). La primera versión es una foto a 1 de enero de 2026. Desp
 ## 6. Interfaz
 
 La misma en Python y en JavaScript, en inglés, con unos mismos casos de prueba para los dos
-lenguajes. Los campos de los datos también van en inglés.
+lenguajes. Los campos de los datos también van en inglés. En JavaScript, los nombres compuestos van
+en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within, levels })`).
 
 | Función | Qué hace |
 |---|---|

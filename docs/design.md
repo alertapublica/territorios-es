@@ -197,7 +197,8 @@ mergers and name changes). The first version is a snapshot as of 1 January 2026.
 ## 6. Interface
 
 The same in Python and in JavaScript, in English, with the same test cases for both languages. The
-data fields are also in English.
+data fields are also in English. In JavaScript, compound names are camelCase (`relateName`) and
+options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
