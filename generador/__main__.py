@@ -1,6 +1,7 @@
 """python -m generador [--salida datos] [--informe informe.md] [--cache DIR]
 python -m generador --check [--salida datos]
 python -m generador --fixture   (rebuilds pruebas/datos from pruebas/fuentes, offline)
+python -m generador --limites limites-municipios.geojson.gz [--salida datos] [--cache DIR]
 
 Downloads go to third-party servers: run it in GitHub Actions, not on a personal connection.
 """
@@ -15,9 +16,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import catastro, descargas, eurostat, ine, wikidata  # noqa: E402
+from . import catastro, descargas, eurostat, ign, ine, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
+from .limites import build_limits  # noqa: E402
 
 FUENTES = ROOT / "fuentes"
 
@@ -71,6 +73,33 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
         "licence": c["licence"], "attribution": c["attribution"]}
 
+    c = config["ign_poblaciones"]
+    answers, rows, offset = [], [], 0
+    while True:
+        got = descargas.fetch(ign.populations_url(offset), cache=cache, cache_name=f"ign_poblaciones_{offset}.json",
+                              validate=ign.parse_populations)
+        page, matched = ign.parse_populations(got.content)
+        answers.append(got)
+        rows += page
+        offset += ign.PAGE
+        if offset >= matched:
+            break
+        if not page:
+            raise ValueError(f"IGN: página vacía en {offset} de {matched}")
+    if len(rows) != matched:
+        raise ValueError(f"IGN: {len(rows)} núcleos de {matched}")
+    inputs["ign_capitals"] = ign.municipal_capitals(rows)
+    records["ign_poblaciones"] = {
+        "url": ign.POPULATIONS_URL + f" ({len(answers)} páginas, {matched} núcleos)",
+        "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
+        "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
+        "licence": c["licence"], "attribution": c["attribution"]}
+
+    c = config["ign_limites"]
+    got = download_limits(cache)
+    inputs["ign_units"] = ign.parse_units(got.content)
+    records["ign_limites"] = got.record(licence=c["licence"], attribution=c["attribution"])
+
     c = config["wikidata"]
     raw = {}
     for key, query in wikidata.queries().items():
@@ -82,6 +111,21 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     inputs["wikidata_spain"] = wikidata.parse(raw, "spain")
     inputs["wikidata_countries"] = wikidata.parse(raw, "country")
     return inputs, records
+
+
+def download_limits(cache: Path | None):
+    return descargas.fetch(ign.LIMITS_URL, cache=cache, cache_name="ign_limites.zip",
+                           validate=ign.check_zip)
+
+
+def limits_file(path: Path, salida: Path, cache: Path | None):
+    """Boundaries file for a release, linked with the identifiers of salida/territorios.json."""
+    config = load_hand_lists(FUENTES)["sources"]["ign_limites"]
+    got = download_limits(cache)
+    data = json.loads((salida / "territorios.json").read_text(encoding="utf-8"))
+    content, counts = build_limits(ign.parse_units(got.content), data, got.record(attribution=config["attribution"]))
+    path.write_bytes(content)
+    print(json.dumps({**counts, "bytes_gzip": len(content)}, ensure_ascii=False))
 
 
 def fixture():
@@ -101,7 +145,11 @@ def main(argv=None):
     parser.add_argument("--cache", type=Path)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--fixture", action="store_true")
+    parser.add_argument("--limites", type=Path)
     args = parser.parse_args(argv)
+    if args.limites:
+        limits_file(args.limites, args.salida, args.cache)
+        return 0
     if args.check:
         problems = check(args.salida)
         for problem in problems:

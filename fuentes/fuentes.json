@@ -34,5 +34,17 @@
     "publisher": "Dirección General del Catastro",
     "licence": "Licencia de la DGC (julio de 2016): uso público y comercial de la información transformada; no se redistribuye la original",
     "attribution": "Fuente: Dirección General del Catastro"
+  },
+  "ign_poblaciones": {
+    "url": "https://api-features.ign.es/collections/nuc/items",
+    "publisher": "Instituto Geográfico Nacional",
+    "licence": "CC BY 4.0 (Orden FOM/2807/2015)",
+    "attribution": "IGR_POBLACIONES 2024 CC-BY 4.0 scne.es"
+  },
+  "ign_limites": {
+    "url": "https://centrodedescargas.cnig.es/CentroDescargas/documentos/atom/au/lineas_limite_gml.zip",
+    "publisher": "Instituto Geográfico Nacional",
+    "licence": "CC BY 4.0 (Orden FOM/2807/2015)",
+    "attribution": "BDLJE Continua CC-BY 4.0 ign.es"
   }
 }

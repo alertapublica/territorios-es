@@ -16,7 +16,7 @@ from .construir import UI_LANGS
 CODE_SOURCES = {
     "ine:autonomia": "ine", "ine:provincia": "ine", "ine:municipio": "ine", "ine:municipio:dc": "ine",
     "iso3166-1:alpha2": "wikidata", "iso3166-1:alpha3": "wikidata", "iso3166-1:numeric": "wikidata",
-    "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro",
+    "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro", "ign:bddae": "ign",
     "wikidata": "wikidata", "osm:relation": "wikidata", "geonames": "wikidata",
 }
 
@@ -72,12 +72,15 @@ def tables(data: dict) -> dict[str, str]:
           code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"],
           t["names"]["display"], *names(t), t["time_zone"]] for t in by_level.get("province", [])])
     files["municipios.csv"] = _table(
-        ["id", "ine", "ine_dc", "dgc", "provincia", "autonomia", "lau", "nuts3", "wikidata", "osm_relation",
-         "geonames", "official", "display", *name_cols, "population", "area_km2", "time_zone", "slug"],
+        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "lau", "nuts3", "wikidata",
+         "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
+         "lon", "lat", "altitude", "time_zone", "slug"],
         [[t["id"], code(t, "ine:municipio"), code(t, "ine:municipio:dc"), code(t, "dgc:municipio"),
-          t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1], code(t, "lau"),
-          t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"], t["names"]["display"], *names(t),
-          t.get("stats", {}).get("population"), t.get("stats", {}).get("area_km2"), t["time_zone"], t["slug"]]
+          code(t, "ign:bddae"), t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1],
+          code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
+          t["names"]["official"], t["names"]["display"], *names(t), t.get("stats", {}).get("population"),
+          t.get("stats", {}).get("area_km2"), *[t.get("capital", {}).get(k) for k in ("name", "lon", "lat", "altitude")],
+          t["time_zone"], t["slug"]]
          for t in by_level.get("municipality", [])])
     files["codigos.csv"] = _table(
         ["id", "system", "code", "source"],

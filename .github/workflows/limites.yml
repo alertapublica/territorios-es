@@ -1,0 +1,29 @@
+name: Límites de la versión
+
+# Al publicar una versión, genera limites-municipios.geojson.gz (límites del IGN simplificados, con
+# nuestros identificadores) y lo adjunta a la versión. No va en el repo ni en el paquete por tamaño.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  limites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generar el fichero de límites
+        run: python -m generador --limites limites-municipios.geojson.gz
+      - name: Adjuntarlo a la versión
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" limites-municipios.geojson.gz --clobber

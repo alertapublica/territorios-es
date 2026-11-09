@@ -38,6 +38,7 @@
     ["nuts", "ES111", "es:provincia:15", ["es:autonomia:12", "pais:ES"]],
     ["nuts", "ES531", null, null],
     ["lau", "28079", "es:municipio:28079", ["es:provincia:28", "es:autonomia:13", "pais:ES"]],
+    ["ign:bddae", "34121515030", "es:municipio:15030", ["es:provincia:15", "es:autonomia:12", "pais:ES"]],
     ["iso3166-1:alpha2", "ES", "pais:ES", []],
     ["iso3166-1:alpha2", "es", null, null],
     ["iso3166-1:alpha3", "ESP", "pais:ES", []],

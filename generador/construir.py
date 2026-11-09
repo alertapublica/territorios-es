@@ -11,6 +11,7 @@ import json
 import re
 from pathlib import Path
 
+from territorios_es import geo
 from territorios_es.text import ARTICLES, display_name, drop_article, flip_article, normalize, slugify
 
 from .catastro import FORAL
@@ -128,6 +129,50 @@ def _pick(qids: list[str], items: dict, key: str, report: Report, section: str) 
     if len(current) > 1:
         report.add(section, f"{key}: varios elementos {', '.join(sorted(current))}; no se enlaza")
     return None
+
+
+def ign_name_matches(label: str, names: dict) -> bool:
+    """Whether the IGN writes one of the names we have (it puts the article in front)."""
+    forms = [names["official"], names["display"], *names.get("parts", {}).values()]
+    parts = list(names.get("parts", {}).values())
+    if len(parts) == 2:
+        forms += [f"{parts[0]}/{parts[1]}", f"{parts[1]}/{parts[0]}"]
+    return normalize(label) in {normalize(form) for form in forms}
+
+
+def _attach_ign(record: dict, ccaa: str, units: list[list], capitals: list[list], have_units: bool,
+                have_capitals: bool, report: Report):
+    """BDDAE code and capital of a municipality, cross-checked with each other."""
+    identity, display = record["id"], record["names"]["display"]
+    code = record["codes"]["ine:municipio"]
+    unit = None
+    if len(units) > 1:
+        report.add("IGN: límites", f"{identity}: varias unidades ({', '.join(u[0] for u in units)}); no se enlaza")
+    elif units:
+        unit = units[0]
+        if unit[0][2:6] != ccaa + code[:2]:
+            report.add("IGN: límites", f"{identity}: la unidad {unit[0]} no es de la comunidad {ccaa}; no se enlaza")
+            unit = None
+        else:
+            record["codes"]["ign:bddae"] = unit[0]
+            if not ign_name_matches(unit[2], record["names"]):
+                report.add("IGN: nombre distinto", f"{identity} «{display}»: «{unit[2]}» ({unit[0]})")
+    elif have_units:
+        report.add("IGN: límites", f"{identity} «{display}» no está en los límites del IGN")
+    if len(capitals) > 1:
+        report.add("IGN: capitales", f"{identity}: varias capitales "
+                                     f"({', '.join(c[1] for c in capitals)}); no se usa ninguna")
+    elif capitals:
+        _, entity, label, lon, lat, altitude = capitals[0]
+        record["capital"] = {"name": label, "ine": entity, "lon": lon, "lat": lat}
+        if altitude is not None:
+            record["capital"]["altitude"] = altitude
+        if unit and not geo.contains(unit[3], lon, lat):
+            report.add("IGN: capital fuera del término",
+                       f"{identity} «{display}»: «{label}» ({entity}) a {geo.distance(unit[3], lon, lat):.0f} m "
+                       f"del límite")
+    elif have_capitals:
+        report.add("IGN: capitales", f"{identity} «{display}» sin capital en el IGN")
 
 
 def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Report, list[list[str]]]:
@@ -328,6 +373,13 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("Catastro", f"es:provincia:{code} no está en el Catastro")
         for code in sorted(catastro_provinces - expected):
             report.add("Catastro", f"El Catastro da la provincia {code}, que no se esperaba")
+    # IGN: capital of each municipality (núcleos marked as such) and municipal units of the BDLJE.
+    capitals_by_ine: dict[str, list[list]] = {}
+    for row in inputs.get("ign_capitals") or []:
+        capitals_by_ine.setdefault(row[0], []).append(row)
+    units_by_ine: dict[str, list[list]] = {}
+    for unit in inputs.get("ign_units") or []:
+        units_by_ine.setdefault(unit[0][-5:], []).append(unit)
     area_in_m2 = inputs.get("lau_area_unit", "m2") == "m2"
     municipalities, ine_codes = [], set()
     island_nuts: dict[str, set] = {}
@@ -390,6 +442,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         elif province in catastro_provinces:
             report.add("Catastro", f"{identity} «{display}» no está en el Catastro")
         _attach_wikidata(record, item, qid, report)
+        _attach_ign(record, ccaa, units_by_ine.get(code, []), capitals_by_ine.get(code, []),
+                    bool(units_by_ine), bool(capitals_by_ine), report)
         record.update(slug=slugify(display), time_zone=time_zone[ccaa])
         if stats:
             record["stats"] = stats
@@ -422,6 +476,12 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             offices[key] = offices.get(key, 0) + 1
     for (province, office), count in sorted(offices.items()):
         report.add("Notas", f"es:provincia:{province}: {count} municipio(s) con la delegación {office} del Catastro")
+    for code in sorted(set(units_by_ine) - ine_codes):
+        for unit_code, kind, label, _ in units_by_ine[code]:
+            report.add("IGN: límites", f"{unit_code} «{label}» ({kind or 'sin tipo'}) no es un municipio del INE")
+    for code in sorted(set(capitals_by_ine) - ine_codes):
+        for _, entity, label, *_ in capitals_by_ine[code]:
+            report.add("IGN: capitales", f"{entity} «{label}» es capital de {code}, que no está en el INE")
     for code in sorted(set(by_ine) - ine_codes):
         report.add("Wikidata: código INE", f"{code} ({', '.join(sorted(by_ine[code]))}) no está en el INE")
     for province, nuts in sorted(island_nuts.items()):
@@ -465,6 +525,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Municipios con código LAU": sum("lau" in r["codes"] for r in municipalities),
         "Municipios con código DGC": sum("dgc:municipio" in r["codes"] for r in municipalities),
         "Municipios con nombre bilingüe": sum("parts" in r["names"] for r in municipalities),
+        "Municipios con capital (IGN)": sum("capital" in r for r in municipalities),
+        "Municipios con límites (IGN)": sum("ign:bddae" in r["codes"] for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
             "territories": countries + communities + provinces + municipalities}
