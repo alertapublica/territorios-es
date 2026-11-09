@@ -26,11 +26,15 @@ te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio 
 ```
 
 ```js
-import { loadCatalog, relateName } from 'territorios-es';   // en el navegador: createCatalog(datos)
+import { loadCatalog, relateName, relateCadastralReference } from 'territorios-es';   // en el navegador: createCatalog(datos)
 const te = loadCatalog();
 te.name('es:municipio:20069', 'eu');                      // 'Donostia'
 te.search('Orense', { within: 'es:autonomia:12' });
 relateName(te, 'Ourense', { levels: ['municipality'] });  // { status: 'resolved', … }
+relateCadastralReference(te, '13096A001001920000YY');     // sin red
+
+import { locateReference } from 'territorios-es/catastro-online';  // con red; también en el navegador
+await locateReference(te, '9872023VH5797S0001WX');        // { status: 'resolved', territory: 'es:municipio:13077', … }
 ```
 
 Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children`, `normalize`,

@@ -34,4 +34,12 @@ jobs:
         if: hashFiles('datos/territorios.json') != ''
         run: |
           python -m pip install --quiet .
-          cd /tmp && python -c "import territorios_es as te; print(te.name('es:autonomia:09', 'en'))"
+          cd /tmp && python -c "import territorios_es as te; from territorios_es.catastro_online import locate_reference; print(te.name('es:autonomia:09', 'en'))"
+      - name: Paquete de JavaScript instalable
+        if: hashFiles('datos/territorios.json') != ''
+        run: |
+          mkdir /tmp/consumidor
+          npm pack --silent --pack-destination /tmp/consumidor
+          cd /tmp/consumidor && npm init -y > /dev/null
+          npm install --silent --no-audit --no-fund ./territorios-es-*.tgz
+          node --input-type=module -e "import { loadCatalog } from 'territorios-es'; import { locateReference } from 'territorios-es/catastro-online'; console.log(loadCatalog().name('es:autonomia:09', 'en'))"

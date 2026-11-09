@@ -1,7 +1,7 @@
 // Optional: places a cadastral reference or a point with the Catastro's free web services.
 // Mirrors python/territorios_es/catastro_online.py. The only module that uses the network, and only
-// when called; one request per call (two for a point). Works in Node; in a browser it depends on
-// the Catastro allowing cross-origin requests.
+// when called; one request per call (two for a point). Works in Node and in the browser: the
+// Catastro answers with Access-Control-Allow-Origin: * (checked 2026-11-09).
 import { parseCadastralReference, relateCadastralReference } from './catastro.js';
 import { combine, relation } from './relation.js';
 

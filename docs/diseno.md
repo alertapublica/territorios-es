@@ -217,8 +217,9 @@ La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para 
 
 El resto de la librería no llama nunca al Catastro. Para situar una referencia urbana o unas
 coordenadas está el módulo aparte y opcional `catastro_online` (en JS, la subruta
-`territorios-es/catastro-online`, asíncrona). Usa los servicios libres del Catastro y no guarda
-nada:
+`territorios-es/catastro-online`, asíncrona, que funciona también en el navegador porque el
+Catastro responde con `Access-Control-Allow-Origin: *`). Usa los servicios libres del Catastro y
+no guarda nada:
 
 | Función | Qué hace |
 |---|---|

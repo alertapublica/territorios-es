@@ -219,8 +219,9 @@ Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
 
 The rest of the library never calls the Catastro. To place an urban reference or a point there is
 the separate, optional module `catastro_online` (in JS, the subpath
-`territorios-es/catastro-online`, asynchronous). It uses the Catastro's free services and stores
-nothing:
+`territorios-es/catastro-online`, asynchronous, which also works in the browser because the
+Catastro answers with `Access-Control-Allow-Origin: *`). It uses the Catastro's free services and
+stores nothing:
 
 | Function | What it does |
 |---|---|
