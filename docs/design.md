@@ -66,7 +66,8 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
 - **Identifiers are stable.** A municipality born from a merger receives a new identifier and a
   succession link, and the old one is not reused.
 - **The network is not used at run time.** The catalogue ships with the package; the boundaries,
-  because of their size, are downloaded separately when needed.
+  because of their size, are downloaded separately when needed. The only exception is the optional
+  `catastro_online` module, which calls the Catastro only when asked to (§6).
 - **Everything is deterministic, no AI.** Fuzzy search is an optional add-on.
 - **All useful sources are used, related with their provenance** (see section 5).
 
@@ -216,9 +217,19 @@ options go in an object (`search(text, { within, levels })`).
 
 Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
 
-The library never calls the Catastro. Placing an urban reference or a point with its services
-(`Consulta_DNPRC`, `Consulta_RCCOOR`) is left for a separate, optional module that will return a
-relation with its evidence like the other functions.
+The rest of the library never calls the Catastro. To place an urban reference or a point there is
+the separate, optional module `catastro_online` (in JS, the subpath
+`territorios-es/catastro-online`, asynchronous). It uses the Catastro's free services and stores
+nothing:
+
+| Function | What it does |
+|---|---|
+| `locate_reference(text)` | The municipality of an urban or rustic cadastral reference according to `Consulta_DNPRC` (one request). A rustic one is cross-checked with the offline reading: if they differ, conflict. |
+| `locate_point(lon, lat, srs)` | The parcel at a point (`Consulta_RCCOOR`) and its municipality (`Consulta_DNPRC`): two requests. Pending when there is no parcel (the sea or the foral territories). The parcel goes into the evidence. |
+
+Both return a relation with status and evidence, like the other functions, and accept their own
+`fetch` (for tests, caching or pauses). A network error or an unreadable answer raises
+`CatastroError`. They should not be run in a loop without a pause.
 
 **Identifiers**: Voceiro's, which are already published: `pais:ES`, `es:autonomia:12`,
 `es:provincia:36`, `es:municipio:36038`. They are labels, so it does not matter that they are in
