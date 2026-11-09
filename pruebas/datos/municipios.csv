@@ -27,5 +27,5 @@ es:municipio:46220,46220,462205,,46,10,46220,ES523,,,,Sagunt/Sagunto,Sagunt/Sagu
 es:municipio:46250,46250,462508,,46,10,46250,ES523,Q9000013,,,València,València,València,València,València,València,València,València,1000,12.346,Europe/Madrid,valencia
 es:municipio:48020,48020,480209,,48,16,48020,ES213,,,,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,345110,41.6,Europe/Madrid,bilbao
 es:municipio:50297,50297,502973,,50,02,50297,ES243,Q9000011,,,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,1000,12.346,Europe/Madrid,zaragoza
-es:municipio:51001,51001,510013,,51,18,51001,ES630,,,,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,1000,12.346,Africa/Ceuta,ceuta
+es:municipio:51001,51001,510013,55101,51,18,51001,ES630,,,,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,1000,12.346,Africa/Ceuta,ceuta
 es:municipio:52001,52001,520018,,52,19,52001,ES640,,,,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,1000,12.346,Africa/Ceuta,melilla
