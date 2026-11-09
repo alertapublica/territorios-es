@@ -98,7 +98,7 @@ Asturias), which number in the tens of thousands.
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
 | LAU | municipality | Annual Eurostat LAU table | In Spain it is the 5-digit INE code (checked on all 8,132 municipalities); see §4.5 for what else it provides. |
 | DGC (Catastro) | municipality (`dgc:municipio`, 5 digits: office 2 + municipality 3) | Free Catastro web services (`OVCCallejero`, `ConsultaProvincia` and `ConsultaMunicipio`), which give the DGC and the INE code of each municipality | Different from the INE code in many municipalities (A Coruña: INE `15030`, DGC `15900`). The link is by code, not by name; the name is only cross-checked. Álava, Gipuzkoa, Navarre and Biscay have a foral land registry and have no DGC code. |
-| INSPIRE | municipality | IGN (administrative units) | European identifier of the administrative unit. Arrives with the boundaries. |
+| BDDAE (INSPIRE) | municipality (`ign:bddae`, 11 digits: 34 + community 2 + province 2 + INE 5) | IGN boundaries (BDLJE) | Code of the IGN administrative unit and `localId` of its INSPIRE identifier (namespace `ES.IGN.BDDAE`). Linked when the INE code, the province and the community match. |
 | Wikidata | all | SPARQL from the INE code | CC0. Provides names per language, links to Wikipedia and other identifiers. |
 | OpenStreetMap | all | Relation identifier, from Wikidata and cross-checked with OSM | The Wikidata identifier is CC0; whatever is copied from OSM goes separately under ODbL (§7). |
 | GeoNames | all | From Wikidata | CC BY 4.0. Widely used by other tools. |
@@ -153,12 +153,18 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 ### 4.5 Geography, population and classifications
 
-- **Reference point of the municipality** (its capital): Nomenclátor Geográfico de Municipios y
-  Entidades de Población of the IGN/CNIG, cross-checked with Wikidata and OSM.
-- **Municipal boundaries**: IGN, INSPIRE administrative units (BDDAE), CC BY 4.0. They take up
-  about 33 MB compressed, so they do not go in git: they are published as files of each release in
-  GitHub Releases, with their hash in a manifest, and are downloaded per province the first time
-  they are needed.
+- **Reference point of the municipality** (its capital): the population nucleus that the IGN
+  marks as the capital of the municipality in its features API (collection `nuc`, product IGR
+  Poblaciones, CC BY 4.0), with longitude, latitude and altitude. It is cross-checked with the
+  boundaries: a capital outside its municipality goes to the report. The Nomenclátor de Municipios
+  y Entidades de Población would give the same, but its download needs a form signed by the
+  browser; if the CNIG gives a direct link, the source can change.
+- **Municipal boundaries**: IGN, Base de Datos de Límites Jurisdiccionales (BDLJE), CC BY 4.0. The
+  zip weighs 66 MB and the municipalities 145 MB of GML, so they go neither in git nor in the
+  package: each GitHub release carries `limites-municipios.geojson.gz`, simplified to 5 m (far
+  below the boundaries' own uncertainty of about 40 m) and with our identifiers. It includes the
+  shared areas that belong to no municipality (comunidades jurisdiccionales), without an
+  identifier.
 - **Simplified maps** (TopoJSON of autonomous communities, provinces and municipalities) for
   drawing on a website, made by us from those of the IGN.
 - **Population** from the INE padrón and **area**: used to order candidates.
@@ -213,7 +219,7 @@ options go in an object (`search(text, { within, levels })`).
 | `combine(relations)` | Joins several relations of the same object: if they agree, resolved; if they contradict each other, conflict. |
 | `parse_cadastral_reference(text)` | Parts of a 14, 18 or 20-character cadastral reference: parcel, kind (rustic or urban), property, check letters and whether they are right, and, for a rustic parcel, the DGC code of its municipality. Offline. |
 | `relate_cadastral_reference(text)` | The municipality of a cadastral reference: resolved for a rustic parcel whose DGC code is in the catalogue; pending for an urban one (it does not carry the municipality), when the check letters are wrong or when the code is unknown. |
-| `locate(lon, lat)` | Second version. Voceiro's point-to-municipality mapping: resolved, pending (within 50 m of another municipality) or conflict. It never returns "the nearest". |
+| `locate(lon, lat, limits)` | Voceiro's point-to-municipality mapping, with the release boundaries file (`load_limits`; in JS, `loadLimits` in Node or `createLimits` in the browser): resolved inside one municipality and more than 50 m from any other; pending near a boundary, in a shared area or outside all of them (the sea, abroad); conflict if it falls in two. It never returns "the nearest". |
 
 Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
 
@@ -259,6 +265,10 @@ evidence. Each project keeps only what is its own (for example, the coverage of 
   - the code, MIT;
   - each datum keeps the licence of its source: INE (reuse citing the source), IGN/CNIG
     (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
+  - IGN: the licence (Orden FOM/2807/2015) asks to cite each product with the formula of the
+    Sistema Cartográfico Nacional table: "IGR_POBLACIONES 2024 CC-BY 4.0 scne.es" for the capitals
+    and, since the boundaries are simplified, "Obra derivada de BDLJE Continua CC-BY 4.0 ign.es",
+    which also goes inside the boundaries file (the licence asks for it in the metadata);
   - Catastro: its licence (July 2016) allows public and commercial use only of transformed
     information and forbids spreading the original or presenting it as "información catastral".
     We publish the crosswalk of codes with our identifiers, citing the source; the original answers
@@ -358,8 +368,8 @@ Taken with the project owner on 9 November 2026:
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Second version: IGN coordinates and boundaries, `locate`, simplified maps, islands,
-  comarcas, judicial districts, Open Maps For Europe.
+- Second version: simplified maps, islands, comarcas, judicial districts, Open Maps For Europe.
+  The coordinates, the IGN boundaries and `locate` are done.
 - Later: population entities, historical INE changes, fuzzy search.
 
 ## 14. To verify
@@ -393,15 +403,21 @@ Before using each source, its URL, format and licence have to be checked. Alread
   source.
 - **CartoCiudad**: it does not allow downloading postal codes (agreement with Correos,
   BOE-A-2023-11522). Discarded for postal codes.
-- **Nomenclátor Geográfico de Municipios y Entidades de Población (CNIG)**: it is downloaded in
-  Access format (`.mdb`) and includes names, coordinates and population. It remains to confirm the
-  licence and whether it includes names per language.
+- **IGN**: CC BY 4.0 licence (Orden FOM/2807/2015 and the CNIG conditions), with the attribution
+  formula of each product in the Sistema Cartográfico Nacional table. The boundaries (BDLJE) are
+  downloaded from a direct link in the IGN Atom feed: a 66 MB zip, updated on 10 August 2026, with
+  8,220 municipal units in GML (EPSG:4258, latitude and longitude) and an uncertainty of about
+  40 m. The CNIG download server cuts the TLS connection from some networks; from Actions it
+  works. The Nomenclátor de Municipios y Entidades de Población (CSV and Access, March 2026) has
+  capital, coordinates, altitude, official area and Registro de Entidades Locales number, but it
+  can only be downloaded through a form signed by the browser (403 without it), so the capitals
+  come from the IGN features API (collection `nuc`, 37,497 nuclei with INE code, coordinates,
+  altitude and `capital`: one digit per level, State, community, province and municipality). None
+  of them has names per language.
 
 To be checked:
 
 - INE electoral roll street directory: whether it includes the postal code and can be reused;
 - INE: file of official population figures per municipality (as of 1 January 2025) and conditions
   of reuse;
-- IGN boundaries: whether they can be redistributed as release files in GitHub Releases (CC BY 4.0
-  allows it citing the source);
 - licences of codeforspain, CLDR, iso-codes, EU Vocabularies and Open Maps For Europe.

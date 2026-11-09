@@ -296,6 +296,7 @@ es:municipio:03014,dgc:municipio,03015,catastro
 es:municipio:03139,ine:municipio,03139,ine
 es:municipio:03139,ine:municipio:dc,031395,ine
 es:municipio:03139,lau,03139,eurostat
+es:municipio:03139,ign:bddae,34100303139,ign
 es:municipio:04078,ine:municipio,04078,ine
 es:municipio:04078,ine:municipio:dc,040789,ine
 es:municipio:07040,ine:municipio,07040,ine
@@ -305,6 +306,7 @@ es:municipio:08101,ine:municipio,08101,ine
 es:municipio:08101,ine:municipio:dc,081017,ine
 es:municipio:08101,lau,08101,eurostat
 es:municipio:08101,dgc:municipio,08102,catastro
+es:municipio:08101,ign:bddae,34090808101,ign
 es:municipio:08184,ine:municipio,08184,ine
 es:municipio:08184,ine:municipio:dc,081846,ine
 es:municipio:08184,lau,08184,eurostat
@@ -316,6 +318,7 @@ es:municipio:15030,ine:municipio:dc,150308,ine
 es:municipio:15030,lau,15030,eurostat
 es:municipio:15030,dgc:municipio,15900,catastro
 es:municipio:15030,wikidata,Q9000014,wikidata
+es:municipio:15030,ign:bddae,34121515030,ign
 es:municipio:17079,ine:municipio,17079,ine
 es:municipio:17079,ine:municipio:dc,170792,ine
 es:municipio:17079,lau,17079,eurostat
@@ -339,6 +342,7 @@ es:municipio:28079,ine:municipio,28079,ine
 es:municipio:28079,ine:municipio:dc,280796,ine
 es:municipio:28079,lau,28079,eurostat
 es:municipio:28079,wikidata,Q9000015,wikidata
+es:municipio:28079,ign:bddae,34132828079,ign
 es:municipio:31201,ine:municipio,31201,ine
 es:municipio:31201,ine:municipio:dc,312016,ine
 es:municipio:31201,lau,31201,eurostat
@@ -348,6 +352,7 @@ es:municipio:32054,lau,32054,eurostat
 es:municipio:32054,dgc:municipio,32054,catastro
 es:municipio:32054,wikidata,Q9000009,wikidata
 es:municipio:32054,geonames,3114965,wikidata
+es:municipio:32054,ign:bddae,34123232054,ign
 es:municipio:33031,ine:municipio,33031,ine
 es:municipio:33031,ine:municipio:dc,330313,ine
 es:municipio:33031,lau,33031,eurostat

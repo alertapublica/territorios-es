@@ -14,6 +14,7 @@ from pathlib import Path
 from .catalog import LEVELS, REASONS, Catalog
 from .catastro import check_letters, parse_cadastral_reference
 from .catastro import relate_cadastral_reference as _relate_cadastral_reference
+from .limits import Limits, load_limits, locate
 from .relation import STATUSES, combine, relation
 from .relation import relate_name as _relate_name
 from .text import display_name, normalize, slugify
@@ -21,7 +22,7 @@ from .text import display_name, normalize, slugify
 __all__ = ["Catalog", "LEVELS", "REASONS", "STATUSES", "load", "resolve", "territory", "search",
            "mentions", "name", "children", "normalize", "display_name", "slugify", "relation",
            "relate_name", "combine", "data_dir", "parse_cadastral_reference", "check_letters",
-           "relate_cadastral_reference"]
+           "relate_cadastral_reference", "Limits", "load_limits", "locate"]
 
 
 def data_dir() -> Path:

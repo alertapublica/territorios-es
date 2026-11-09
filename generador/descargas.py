@@ -10,7 +10,7 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
-USER_AGENT = "territorios-es/0.1 (+https://github.com/alertapublica/territorios-es)"
+USER_AGENT = "territorios-es/0.3 (+https://github.com/alertapublica/territorios-es)"
 PAUSE = 2.0
 
 

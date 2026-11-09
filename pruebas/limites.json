@@ -1,0 +1,12 @@
+{"type":"FeatureCollection",
+"attribution":"Obra derivada de BDLJE Continua CC-BY 4.0 ign.es",
+"licence":"CC BY 4.0",
+"reference_date":"2026-01-01",
+"simplification_m":5,
+"features":[
+{"type":"Feature","id":"es:municipio:15030","properties":{"bddae":"34121515030","kind":"Municipio","name":"A"},"geometry":{"type":"MultiPolygon","coordinates":[[[[0,0],[1,0],[1,1],[0,1],[0,0]]]]}},
+{"type":"Feature","id":"es:municipio:32054","properties":{"bddae":"34123232054","kind":"Municipio","name":"B"},"geometry":{"type":"MultiPolygon","coordinates":[[[[1,0],[2,0],[2,1],[1,1],[1,0]],[[1.4,0.4],[1.6,0.4],[1.6,0.6],[1.4,0.6],[1.4,0.4]]]]}},
+{"type":"Feature","properties":{"bddae":"34151531999","kind":"Condominio","name":"C"},"geometry":{"type":"MultiPolygon","coordinates":[[[[0,1],[1,1],[1,2],[0,2],[0,1]]]]}},
+{"type":"Feature","id":"es:municipio:28079","properties":{"bddae":"34132828079","kind":"Municipio","name":"D"},"geometry":{"type":"MultiPolygon","coordinates":[[[[3,0],[4,0],[4,1],[3,1],[3,0]]],[[[5,0],[6,0],[6,1],[5,1],[5,0]]]]}},
+{"type":"Feature","id":"es:municipio:36038","properties":{"bddae":"34123636038","kind":"Municipio","name":"E"},"geometry":{"type":"MultiPolygon","coordinates":[[[[3.5,0],[4.5,0],[4.5,1],[3.5,1],[3.5,0]]]]}}
+]}

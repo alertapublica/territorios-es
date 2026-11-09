@@ -8,6 +8,8 @@
 - Municipios con código LAU: 29
 - Municipios con código DGC: 6
 - Municipios con nombre bilingüe: 7
+- Municipios con capital (IGN): 3
+- Municipios con límites (IGN): 5
 
 ## Catastro (19)
 
@@ -44,6 +46,75 @@
 - 99998 «LAU inexistente» no está en el INE
 - es:municipio:04078 «Rioja» no está en la tabla LAU
 - es:municipio:36038: NUTS 3 ES111, su provincia ES114
+
+## IGN: capital fuera del término (2)
+
+- es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite
+- es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite
+
+## IGN: capitales (28)
+
+- 15026000101 «Cesuras» es capital de 15026, que no está en el INE
+- es:municipio:01059 «Vitoria-Gasteiz» sin capital en el IGN
+- es:municipio:03014 «Alacant/Alicante» sin capital en el IGN
+- es:municipio:03139 «la Vila Joiosa/Villajoyosa» sin capital en el IGN
+- es:municipio:04078 «Rioja» sin capital en el IGN
+- es:municipio:07040 «Palma» sin capital en el IGN
+- es:municipio:08101 «L'Hospitalet de Llobregat» sin capital en el IGN
+- es:municipio:08184 «Rubí» sin capital en el IGN
+- es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» sin capital en el IGN
+- es:municipio:17079 «Girona» sin capital en el IGN
+- es:municipio:20069 «Donostia/San Sebastián» sin capital en el IGN
+- es:municipio:25057 «Es Bòrdes» sin capital en el IGN
+- es:municipio:25120 «Lleida» sin capital en el IGN
+- es:municipio:25243 «Vielha e Mijaran» sin capital en el IGN
+- es:municipio:26089 «Logroño» sin capital en el IGN
+- es:municipio:31201 «Pamplona/Iruña» sin capital en el IGN
+- es:municipio:33031 «Langreo» sin capital en el IGN
+- es:municipio:35016 «Las Palmas de Gran Canaria» sin capital en el IGN
+- es:municipio:36038: varias capitales (36038000101, 36038009901); no se usa ninguna
+- es:municipio:38038 «Santa Cruz de Tenerife» sin capital en el IGN
+- es:municipio:41091 «Sevilla» sin capital en el IGN
+- es:municipio:46171 «Montcada/Moncada» sin capital en el IGN
+- es:municipio:46220 «Sagunt/Sagunto» sin capital en el IGN
+- es:municipio:46250 «València» sin capital en el IGN
+- es:municipio:48020 «Bilbao» sin capital en el IGN
+- es:municipio:50297 «Zaragoza» sin capital en el IGN
+- es:municipio:51001 «Ceuta» sin capital en el IGN
+- es:municipio:52001 «Melilla» sin capital en el IGN
+
+## IGN: límites (26)
+
+- 34151531999 «Zona común inventada» (Condominio) no es un municipio del INE
+- es:municipio:01059 «Vitoria-Gasteiz» no está en los límites del IGN
+- es:municipio:03014: la unidad 34030303014 no es de la comunidad 10; no se enlaza
+- es:municipio:04078 «Rioja» no está en los límites del IGN
+- es:municipio:07040 «Palma» no está en los límites del IGN
+- es:municipio:08184 «Rubí» no está en los límites del IGN
+- es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» no está en los límites del IGN
+- es:municipio:17079 «Girona» no está en los límites del IGN
+- es:municipio:20069 «Donostia/San Sebastián» no está en los límites del IGN
+- es:municipio:25057 «Es Bòrdes» no está en los límites del IGN
+- es:municipio:25120 «Lleida» no está en los límites del IGN
+- es:municipio:25243 «Vielha e Mijaran» no está en los límites del IGN
+- es:municipio:26089 «Logroño» no está en los límites del IGN
+- es:municipio:31201 «Pamplona/Iruña» no está en los límites del IGN
+- es:municipio:33031 «Langreo» no está en los límites del IGN
+- es:municipio:35016 «Las Palmas de Gran Canaria» no está en los límites del IGN
+- es:municipio:36038 «Pontevedra» no está en los límites del IGN
+- es:municipio:38038 «Santa Cruz de Tenerife» no está en los límites del IGN
+- es:municipio:41091 «Sevilla» no está en los límites del IGN
+- es:municipio:46171 «Montcada/Moncada» no está en los límites del IGN
+- es:municipio:46220 «Sagunt/Sagunto» no está en los límites del IGN
+- es:municipio:46250 «València» no está en los límites del IGN
+- es:municipio:48020 «Bilbao» no está en los límites del IGN
+- es:municipio:50297 «Zaragoza» no está en los límites del IGN
+- es:municipio:51001 «Ceuta» no está en los límites del IGN
+- es:municipio:52001 «Melilla» no está en los límites del IGN
+
+## IGN: nombre distinto (1)
+
+- es:municipio:08101 «L'Hospitalet de Llobregat»: «Hospitalet» (34090808101)
 
 ## INE: provincias (1)
 

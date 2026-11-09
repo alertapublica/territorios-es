@@ -1,11 +1,13 @@
 """Generator: readers and the build on the fixture inputs (pruebas/fuentes/entrada.json)."""
+import gzip
 import io
 import json
 import unittest
+import zipfile
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import catastro, eurostat, exportar, ine, wikidata
+from generador import catastro, eurostat, exportar, ign, ine, limites, wikidata
 from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -89,6 +91,75 @@ class Readers(unittest.TestCase):
         self.assertEqual(catastro.municipalities_url("A CORUÑA"),
                          catastro.SERVICE + "/ConsultaMunicipio?Provincia=A%20CORU%C3%91A&Municipio=")
 
+    def test_ign_populations(self):
+        # Same shape as the IGN features API (collection nuc, seen on 2026-11-09); values invented.
+        def page(features, matched=3):
+            return json.dumps({"numberMatched": matched, "features": [
+                {"type": "Feature", "geometry": None, "properties": p} for p in features]}).encode()
+        rows, matched = ign.parse_populations(page([
+            {"codine": "32054000101", "nombre": "Ourense", "capital": "001100", "longitud": -7.86, "latitud": 42.33, "altitud": 136.24},
+            {"codine": "32054000201", "nombre": "Aldea", "capital": "000000", "longitud": -7.8, "latitud": 42.3, "altitud": None},
+            {"codine": "28079000101", "nombre": "Madrid", "capital": "111100", "longitud": -3.7, "latitud": 40.4, "altitud": 657}]))
+        self.assertEqual(matched, 3)
+        self.assertEqual(ign.municipal_capitals(rows), [["28079", "28079000101", "Madrid", -3.7, 40.4, 657.0],
+                                                        ["32054", "32054000101", "Ourense", -7.86, 42.33, 136.2]])
+        self.assertRaises(ValueError, ign.parse_populations, page([{"codine": "3205", "capital": "0011"}]))
+        self.assertRaises(ValueError, ign.parse_populations, page([{"codine": "32054000101", "capital": "0011"}]))
+        self.assertRaises(ValueError, ign.parse_populations, b"<html>")
+        self.assertIn("skipGeometry=true", ign.populations_url(5000))
+        self.assertIn("offset=5000", ign.populations_url(5000))
+
+    def test_ign_units(self):
+        # Same shape as au_AdministrativeUnit_4thOrder0.gml in the BDLJE zip (seen on 2026-11-09).
+        gml = """<?xml version='1.0' encoding='UTF-8'?>
+<wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2">
+ <wfs:member><au:AdministrativeUnit xmlns:au="http://inspire.ec.europa.eu/schemas/au/4.0" gml:id="X">
+  <au:geometry><gml:MultiSurface><gml:surfaceMember><gml:Polygon>
+   <gml:exterior><gml:LinearRing><gml:posList>40 1 40 2 41 2 41 1 40 1</gml:posList></gml:LinearRing></gml:exterior>
+   <gml:interior><gml:LinearRing><gml:posList>40.4 1.4 40.4 1.6 40.6 1.6 40.4 1.4</gml:posList></gml:LinearRing></gml:interior>
+  </gml:Polygon></gml:surfaceMember></gml:MultiSurface></au:geometry>
+  <au:nationalCode>34100303075</au:nationalCode>
+  <au:nationalLevelName><gmd:LocalisedCharacterString xmlns:gmd="http://www.isotc211.org/2005/gmd">Municipio</gmd:LocalisedCharacterString></au:nationalLevelName>
+  <au:name><gn:GeographicalName xmlns:gn="http://inspire.ec.europa.eu/schemas/gn/4.0"><gn:spelling><gn:SpellingOfName>
+   <gn:text>el Castell de Guadalest</gn:text></gn:SpellingOfName></gn:spelling></gn:GeographicalName></au:name>
+ </au:AdministrativeUnit></wfs:member>
+</wfs:FeatureCollection>"""
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr("au_AdministrativeUnit_4thOrder0.gml", gml)
+            archive.writestr("au_AdministrativeUnit_3rdOrder0.gml", "<x/>")
+        [[code, kind, name, polygons]] = ign.parse_units(buffer.getvalue())
+        self.assertEqual((code, kind, name), ("34100303075", "Municipio", "el Castell de Guadalest"))
+        self.assertEqual(list(polygons[0][0]), [1, 40, 2, 40, 2, 41, 1, 41, 1, 40])  # lon, lat
+        self.assertEqual(len(polygons[0]), 2)
+        self.assertRaises(ValueError, ign.parse_units, b"not a zip")
+        self.assertRaises(ValueError, ign.check_zip, b"<html>")
+
+    def test_simplify(self):
+        from territorios_es import geo
+        # 1 m of noise on a 1 km side disappears with a 5 m tolerance; a tiny ring is kept as it is.
+        side = [0, 0, 0.005, 0.000009, 0.01, 0, 0.01, 0.01, 0, 0.01, 0, 0]
+        self.assertEqual(geo.simplify_ring(side, 5), [0, 0, 0.01, 0, 0.01, 0.01, 0, 0.01, 0, 0])
+        self.assertEqual(geo.simplify_ring(side, 0.5), side)
+        tiny = [0, 0, 0.00001, 0, 0.00001, 0.00001, 0.000005, 0.000012, 0, 0.00001, 0, 0]
+        self.assertEqual(geo.simplify_ring(tiny, 5), tiny)
+
+    def test_limits_file(self):
+        square = [0, 0, 0.5, 0.00001, 1, 0, 1, 1, 0, 1, 0, 0]
+        units = [["34100303075", "Municipio", "el Castell de Guadalest", [[square]]],
+                 ["34151531999", "Condominio", "Zona común", [[square]]]]
+        data = {"reference_date": "2026-01-01",
+                "territories": [{"id": "es:municipio:03075", "codes": {"ign:bddae": "34100303075"}}]}
+        content, counts = limites.build_limits(units, data, {"url": "u"})
+        collection = json.loads(gzip.decompress(content))
+        self.assertEqual(collection["attribution"], "Obra derivada de BDLJE Continua CC-BY 4.0 ign.es")
+        first, second = collection["features"]
+        self.assertEqual(first["id"], "es:municipio:03075")
+        self.assertNotIn("id", second)
+        self.assertEqual(second["properties"], {"bddae": "34151531999", "kind": "Condominio", "name": "Zona común"})
+        self.assertEqual(first["geometry"]["coordinates"], [[[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]])
+        self.assertEqual((counts["points_before"], counts["points_after"]), (12, 10))
+
     def test_catastro_names(self):
         """Real names from the first generation (2026-11-09): cut at 30 characters, article at the
         end or missing are the same name; an old or shortened name is not."""
@@ -162,6 +233,26 @@ class Build(unittest.TestCase):
         self.assertEqual(sections["Catastro: nombre distinto"],
                          ["es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET» (08102)"])
         self.assertIn("es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro", sections["Notas"])
+        self.assertEqual(sections["IGN: capital fuera del término"], [
+            "es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite",
+            "es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite"])  # in a hole
+        self.assertIn("15026000101 «Cesuras» es capital de 15026, que no está en el INE", sections["IGN: capitales"])
+        self.assertIn("es:municipio:36038: varias capitales (36038000101, 36038009901); no se usa ninguna",
+                      sections["IGN: capitales"])
+        self.assertIn("34151531999 «Zona común inventada» (Condominio) no es un municipio del INE", sections["IGN: límites"])
+        self.assertIn("es:municipio:03014: la unidad 34030303014 no es de la comunidad 10; no se enlaza",
+                      sections["IGN: límites"])
+        self.assertEqual(sections["IGN: nombre distinto"],
+                         ["es:municipio:08101 «L'Hospitalet de Llobregat»: «Hospitalet» (34090808101)"])
+
+    def test_ign_codes_and_capitals(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        self.assertEqual(by_id["es:municipio:15030"]["codes"]["ign:bddae"], "34121515030")
+        self.assertEqual(by_id["es:municipio:15030"]["capital"],
+                         {"name": "A Coruña", "ine": "15030000101", "lon": -8.4, "lat": 43.36, "altitude": 20.5})
+        self.assertEqual(by_id["es:municipio:03139"]["codes"]["ign:bddae"], "34100303139")  # bilingual name
+        self.assertNotIn("ign:bddae", by_id["es:municipio:03014"]["codes"])
+        self.assertNotIn("capital", by_id["es:municipio:36038"])
 
     def test_catastro_codes(self):
         dgc = {t["id"]: t["codes"].get("dgc:municipio") for t in self.data["territories"]}

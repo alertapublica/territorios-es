@@ -1,12 +1,15 @@
 // Shared cases (casos.json) for the JavaScript library; pruebas/test_casos.py runs the same ones.
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { test } from 'node:test';
 import {
-  checkLetters, combine, createCatalog, displayName, normalize, parseCadastralReference, relateCadastralReference,
-  relateName, relation,
+  checkLetters, combine, createCatalog, createLimits, displayName, locate, normalize, parseCadastralReference,
+  relateCadastralReference, relateName, relation,
 } from '../js/index.js';
-import { loadCatalog } from '../js/node.js';
+import { loadCatalog, loadLimits } from '../js/node.js';
+import { gzipSync } from 'node:zlib';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const CASES = read('./casos.json');
@@ -63,6 +66,24 @@ test('relateCadastralReference', () => {
     const found = relateCadastralReference(CATALOG, text);
     assert.deepEqual([found.status, found.territory, found.reason], [status, territory, reason], text);
   }
+});
+
+test('locate', () => {
+  const limits = createLimits(read('./limites.json'));
+  for (const [lon, lat, status, territory, candidates, reason] of CASES.locate) {
+    const found = locate(limits, lon, lat);
+    assert.deepEqual([found.status, found.territory, found.candidates, found.reason], [status, territory, candidates, reason], `${lon} ${lat}`);
+  }
+  const found = locate(limits, 0.9999, 0.5);
+  assert.deepEqual(found.evidence.map((e) => [e.territory, e.inside, e.distance_m]),
+    [['es:municipio:15030', true, 11.1], ['es:municipio:32054', false, 11.1]]);
+  assert.equal(locate(limits, 0.9999, 0.5, { margin: 5 }).status, 'resolved');
+  for (const [lon, lat] of [[NaN, 0], [200, 0], ['1', 0]]) assert.throws(() => locate(limits, lon, lat));
+  const folder = mkdtempSync(join(tmpdir(), 'limites-'));
+  const path = join(folder, 'limites-municipios.geojson.gz');
+  writeFileSync(path, gzipSync(readFileSync(new URL('./limites.json', import.meta.url))));
+  assert.equal(locate(loadLimits(path), 0.5, 0.5).territory, 'es:municipio:15030');
+  assert.equal(limits.attribution, 'Obra derivada de BDLJE Continua CC-BY 4.0 ign.es');
 });
 
 test('combine', () => {

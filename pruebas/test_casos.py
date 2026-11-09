@@ -1,9 +1,10 @@
 """Shared cases (casos.json), run against the fixture data. js/*.test.mjs runs the same cases."""
 import json
 import unittest
+from pathlib import Path
 
 from pruebas import ROOT
-from territorios_es import Catalog, combine, relation
+from territorios_es import Catalog, combine, load_limits, locate, relation
 from territorios_es.catastro import check_letters, parse_cadastral_reference, relate_cadastral_reference
 from territorios_es.relation import relate_name
 from territorios_es.text import display_name, normalize
@@ -58,6 +59,31 @@ class SharedCases(unittest.TestCase):
         for text, status, territory, reason in CASES["relate_cadastral_reference"]:
             found = relate_cadastral_reference(CATALOG, text)
             self.assertEqual((found["status"], found["territory"], found["reason"]), (status, territory, reason), text)
+
+
+class Locate(unittest.TestCase):
+    LIMITS = load_limits(ROOT / "pruebas" / "limites.json")
+
+    def test_locate(self):
+        for lon, lat, status, territory, candidates, reason in CASES["locate"]:
+            found = locate(lon, lat, self.LIMITS)
+            self.assertEqual((found["status"], found["territory"], found["candidates"], found["reason"]),
+                             (status, territory, candidates, reason), (lon, lat))
+
+    def test_evidence_and_files(self):
+        import gzip
+        import tempfile
+        found = locate(0.9999, 0.5, self.LIMITS)
+        self.assertEqual([(e["territory"], e["inside"], e["distance_m"]) for e in found["evidence"]],
+                         [("es:municipio:15030", True, 11.1), ("es:municipio:32054", False, 11.1)])
+        self.assertEqual(self.LIMITS.attribution, "Obra derivada de BDLJE Continua CC-BY 4.0 ign.es")
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "limites-municipios.geojson.gz"
+            path.write_bytes(gzip.compress((ROOT / "pruebas" / "limites.json").read_bytes()))
+            self.assertEqual(locate(0.5, 0.5, path)["territory"], "es:municipio:15030")
+        for bad in ((float("nan"), 0), (200, 0), ("1", 0)):
+            self.assertRaises(ValueError, locate, *bad, self.LIMITS)
+        self.assertEqual(locate(0.9999, 0.5, self.LIMITS, margin=5)["status"], "resolved")
 
 
 class Relations(unittest.TestCase):
