@@ -6,9 +6,9 @@
   "type": "module",
   "exports": {
     ".": { "node": "./js/node.js", "default": "./js/index.js" },
-    "./datos/*": "./datos/*"
+    "./territorios.json": "./datos/territorios.json"
   },
-  "files": ["js", "datos"],
+  "files": ["js", "datos/territorios.json"],
   "engines": { "node": ">=20" },
   "scripts": { "test": "node --test pruebas/*.test.mjs" },
   "repository": { "type": "git", "url": "git+https://github.com/alertapublica/territorios-es.git" }

@@ -18,4 +18,4 @@ Repository = "https://github.com/alertapublica/territorios-es"
 packages = ["python/territorios_es"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"datos" = "territorios_es/datos"
+"datos/territorios.json" = "territorios_es/datos/territorios.json"
