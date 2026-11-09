@@ -2,10 +2,11 @@
 
 Territorios de España —comunidades y ciudades autónomas, provincias y municipios— con todos sus
 nombres y códigos (INE, Catastro y otros), coordenadas y límites, regenerables desde fuentes
-oficiales y abiertas. Es la base común de [empleo-publico-abierto](https://github.com/alertapublica/empleo-publico-abierto),
-Voceiro y boletines-es.
+oficiales y abiertas. Está pensada para [empleo-publico-abierto](https://github.com/alertapublica/empleo-publico-abierto)
+y otros proyectos.
 
-**En diseño.** Todavía no hay código ni datos: el planteamiento está en [`docs/diseno.md`](docs/diseno.md).
+**En diseño.** Todavía no hay código ni datos: el planteamiento está en [`docs/diseno.md`](docs/diseno.md)
+(en inglés, [`docs/design.md`](docs/design.md)).
 
 ## Licencia
 
