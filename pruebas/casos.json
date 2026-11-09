@@ -107,5 +107,25 @@
     ["Ourense", null, ["municipality"], "resolved", "es:municipio:32054", ["es:municipio:32054"], "name"],
     ["Ourense", null, null, "pending", null, ["es:municipio:32054", "es:provincia:32"], "ambiguous"],
     ["Atlántida", null, null, "pending", null, [], "not_found"]
+  ],
+  "cadastral_reference": [
+    ["9872023VH5797S0001WX", {"reference": "9872023VH5797S0001WX", "parcel": "9872023VH5797S", "kind": "urban", "property": "0001", "check": "WX", "valid": true, "dgc": null}],
+    ["13096A001001920000YY", {"reference": "13096A001001920000YY", "parcel": "13096A00100192", "kind": "rustic", "property": "0000", "check": "YY", "valid": true, "dgc": "13096"}],
+    ["13096a00100192 0000 yy", {"reference": "13096A001001920000YY", "parcel": "13096A00100192", "kind": "rustic", "property": "0000", "check": "YY", "valid": true, "dgc": "13096"}],
+    ["13096A001001920000YX", {"reference": "13096A001001920000YX", "parcel": "13096A00100192", "kind": "rustic", "property": "0000", "check": "YX", "valid": false, "dgc": "13096"}],
+    ["13096A00100192", {"reference": "13096A00100192", "parcel": "13096A00100192", "kind": "rustic", "property": null, "check": null, "valid": null, "dgc": "13096"}],
+    ["13096A001001920000", {"reference": "13096A001001920000", "parcel": "13096A00100192", "kind": "rustic", "property": "0000", "check": null, "valid": null, "dgc": "13096"}],
+    ["ABCDEFGHIJKLMN", {"reference": "ABCDEFGHIJKLMN", "parcel": "ABCDEFGHIJKLMN", "kind": "other", "property": null, "check": null, "valid": null, "dgc": null}],
+    ["13096A0010019200", null],
+    ["13096A00100192AB00YY", null],
+    ["1234", null]
+  ],
+  "relate_cadastral_reference": [
+    ["15900A00100192", "resolved", "es:municipio:15030", "cadastral_reference"],
+    ["13096A001001920000YY", "pending", null, "not_found"],
+    ["9872023VH5797S0001WX", "pending", null, "urban"],
+    ["13096A001001920000YX", "pending", null, "invalid_check"],
+    ["ABCDEFGHIJKLMN", "pending", null, "other"],
+    ["hola", "pending", null, "not_a_reference"]
   ]
 }

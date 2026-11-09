@@ -2,7 +2,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { combine, createCatalog, displayName, normalize, relateName, relation } from '../js/index.js';
+import {
+  checkLetters, combine, createCatalog, displayName, normalize, parseCadastralReference, relateCadastralReference,
+  relateName, relation,
+} from '../js/index.js';
 import { loadCatalog } from '../js/node.js';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
@@ -46,6 +49,19 @@ test('relateName', () => {
   for (const [text, within, levels, status, territory, candidates, reason] of CASES.relate_name) {
     const found = relateName(CATALOG, text, { within, levels });
     assert.deepEqual([found.status, found.territory, found.candidates, found.reason], [status, territory, candidates, reason], text);
+  }
+});
+
+test('parseCadastralReference', () => {
+  for (const [text, expected] of CASES.cadastral_reference) assert.deepEqual(parseCadastralReference(text), expected, text);
+  assert.equal(parseCadastralReference(null), null);
+  assert.throws(() => checkLetters('13096A00100192'));
+});
+
+test('relateCadastralReference', () => {
+  for (const [text, status, territory, reason] of CASES.relate_cadastral_reference) {
+    const found = relateCadastralReference(CATALOG, text);
+    assert.deepEqual([found.status, found.territory, found.reason], [status, territory, reason], text);
   }
 });
 

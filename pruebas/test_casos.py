@@ -4,6 +4,7 @@ import unittest
 
 from pruebas import ROOT
 from territorios_es import Catalog, combine, relation
+from territorios_es.catastro import check_letters, parse_cadastral_reference, relate_cadastral_reference
 from territorios_es.relation import relate_name
 from territorios_es.text import display_name, normalize
 
@@ -46,6 +47,17 @@ class SharedCases(unittest.TestCase):
             found = relate_name(CATALOG, text, within=within, levels=levels)
             self.assertEqual((found["status"], found["territory"], found["candidates"], found["reason"]),
                              (status, territory, candidates, reason), text)
+
+    def test_cadastral_reference(self):
+        for text, expected in CASES["cadastral_reference"]:
+            self.assertEqual(parse_cadastral_reference(text), expected, text)
+        self.assertIsNone(parse_cadastral_reference(None))
+        self.assertRaises(ValueError, check_letters, "13096A00100192")
+
+    def test_relate_cadastral_reference(self):
+        for text, status, territory, reason in CASES["relate_cadastral_reference"]:
+            found = relate_cadastral_reference(CATALOG, text)
+            self.assertEqual((found["status"], found["territory"], found["reason"]), (status, territory, reason), text)
 
 
 class Relations(unittest.TestCase):
