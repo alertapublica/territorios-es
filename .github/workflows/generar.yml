@@ -1,18 +1,15 @@
 name: Generar datos
 
-# Descarga las fuentes (INE, Eurostat, Wikidata), regenera datos/ y escribe el informe de
-# discrepancias. En una PR solo comprueba que todo se puede descargar y leer (artefacto y
-# resumen); a mano o cada mes, además abre una PR con los datos y actualiza el issue del informe.
+# Descarga las fuentes (INE, Eurostat, Catastro, Wikidata), regenera datos/ y escribe el informe de
+# discrepancias. No se lanza en las PR: la CI ya prueba el código sin red, y cada descarga son
+# ~20 minutos y unas 80 peticiones a terceros. Para probar un lector nuevo, una vez y a mano sobre
+# la rama: gh workflow run generar.yml --ref <rama> (deja el artefacto y el resumen, no publica).
+# En main, a mano o cada mes, además abre una PR con los datos y actualiza el issue del informe.
 
 on:
   workflow_dispatch:
   schedule:
     - cron: "17 5 3 * *"
-  pull_request:
-    paths:
-      - "generador/**"
-      - "fuentes/**"
-      - ".github/workflows/generar.yml"
 
 permissions:
   contents: read
@@ -48,7 +45,7 @@ jobs:
 
   publicar:
     needs: generar
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
