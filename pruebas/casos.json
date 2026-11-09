@@ -43,7 +43,8 @@
     ["iso3166-1:alpha3", "ESP", "pais:ES", []],
     ["iso3166-1:alpha2", "CS", null, null],
     ["wikidata", "Q9000009", "es:municipio:32054", ["es:provincia:32", "es:autonomia:12", "pais:ES"]],
-    ["osm:relation", "340138", "es:municipio:32054", ["es:provincia:32", "es:autonomia:12", "pais:ES"]],
+    ["osm:relation", "340138", null, null],
+    ["geonames", "3114965", "es:municipio:32054", ["es:provincia:32", "es:autonomia:12", "pais:ES"]],
     ["sistema:inventado", "36038", null, null]
   ],
   "name": [

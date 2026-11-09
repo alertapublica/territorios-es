@@ -345,6 +345,18 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Notas", f"es:provincia:{province} reparte sus municipios en las NUTS 3 {', '.join(sorted(nuts))}")
     for identity in sorted(set(parts_by_id) - {r["id"] for r in provinces + municipalities}):
         report.add("Nombres bilingües", f"{identity} está en fuentes/partes-bilingues.csv pero no en el INE")
+    # A code from Wikidata that two territories share identifies neither of them.
+    holders: dict[tuple[str, str], list[dict]] = {}
+    for record in countries + communities + provinces + municipalities:
+        for system in ("osm:relation", "geonames"):
+            if system in record["codes"]:
+                holders.setdefault((system, record["codes"][system]), []).append(record)
+    for (system, value), records in sorted(holders.items()):
+        if len(records) > 1:
+            for record in records:
+                del record["codes"][system]
+            report.add("Wikidata: código repetido",
+                       f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
     known_ids = {r["id"] for r in countries + communities + provinces + municipalities}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")

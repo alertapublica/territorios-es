@@ -93,6 +93,10 @@
 - 08184: varios elementos Q9000018, Q9000019; no se enlaza
 - 99999 (Q9000020) no está en el INE
 
+## Wikidata: código repetido (1)
+
+- osm:relation 340138 en es:municipio:17079, es:municipio:32054; no se usa en ninguno
+
 ## Wikidata: elemento compartido (1)
 
 - Q9000003 es a la vez es:autonomia:13 y es:provincia:28; se queda en es:autonomia:13

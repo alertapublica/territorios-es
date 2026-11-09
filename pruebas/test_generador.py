@@ -46,10 +46,16 @@ class Readers(unittest.TestCase):
         self.assertEqual(ine.parse_provinces(page), [["15", "12", "Coruña, A"]])
 
     def test_lau_sheet_and_codes(self):
-        content = xlsx({"BE": [["x"]], "ES": [["Notes"], ["NUTS 3 CODE", "LAU CODE", "LAU NAME NATIONAL", "POPULATION", "TOTAL AREA (m2)"],
-                                              ["ES114", "36038", "Pontevedra", "84000", "118000000"]]})
+        # Header as in EU-27-LAU-2024-NUTS-2024.xlsx (seen in Actions on 2026-11-09).
+        header = ["NUTS3", "LAU CODE", "EU LAU CODE", "LAU NAME NATIONAL", "LAU NAME LATIN", "CHANGE", "POPULATION",
+                  "TOTAL AREA (m2)", "DEGURBA", "COASTAL AREA", "CITY ID", "CITY NAME", "FUA ID", "FUA_NAME"]
+        content = xlsx({"BE": [["x"]], "ES": [header, ["ES114", "36038", "ES_36038", "Pontevedra", "Pontevedra", "no",
+                                                        "84000", "118000000", "2", "yes", "ES013C", "Pontevedra", "ES013L", "x"]]})
         rows, header = eurostat.parse_lau(content, "ES")
         self.assertEqual(rows["36038"]["nuts3"], "ES114")
+        self.assertEqual({k: rows["36038"][k] for k in ("lau", "area", "degurba", "coastal", "city", "fua")},
+                         {"lau": "36038", "area": "118000000", "degurba": "2", "coastal": "yes", "city": "ES013C",
+                          "fua": "ES013L"})
         self.assertEqual(header[1], "LAU CODE")
         self.assertEqual(read_rows(content, "BE"), [["x"]])
         self.assertEqual([eurostat.ine_code(c) for c in ("36038", "ES36038", "ES_36038", "3603", "PT1601")],
@@ -96,6 +102,8 @@ class Build(unittest.TestCase):
         self.assertTrue(any("es:provincia:32" in m for m in sections["INE: provincias"]))
         self.assertIn("es:municipio:28079: OSM 5326784, 999", sections["Wikidata: varios valores"])
         self.assertTrue(any("ES111, su provincia ES114" in m for m in sections["Eurostat LAU"]))
+        self.assertIn("osm:relation 340138 en es:municipio:17079, es:municipio:32054; no se usa en ninguno",
+                      sections["Wikidata: código repetido"])
 
     def test_dissolved_items_and_counts(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

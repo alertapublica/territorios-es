@@ -1254,6 +1254,9 @@
    "codes": {
     "ine": [
      "17079"
+    ],
+    "osm": [
+     "340138"
     ]
    },
    "dissolved": false,
