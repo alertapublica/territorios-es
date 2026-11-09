@@ -64,7 +64,8 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
 - **Los identificadores son estables.** Un municipio que nace de una fusión recibe un
   identificador nuevo y un enlace de sucesión, y el antiguo no se reutiliza.
 - **No se usa la red al ejecutar.** El catálogo viaja con el paquete; los límites, por su tamaño,
-  se descargan aparte cuando hacen falta.
+  se descargan aparte cuando hacen falta. La única excepción es el módulo opcional
+  `catastro_online`, que solo llama al Catastro cuando se le pide (§6).
 - **Todo es determinista, sin IA.** La búsqueda aproximada es un añadido opcional.
 - **Se usan todas las fuentes que sirvan, relacionadas con su procedencia** (ver el apartado 5).
 
@@ -214,9 +215,19 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para más adelante.
 
-La librería no llama nunca al Catastro. Situar una referencia urbana o unas coordenadas con sus
-servicios (`Consulta_DNPRC`, `Consulta_RCCOOR`) queda para un módulo aparte y opcional, que
-devolverá una relación con su evidencia como las demás funciones.
+El resto de la librería no llama nunca al Catastro. Para situar una referencia urbana o unas
+coordenadas está el módulo aparte y opcional `catastro_online` (en JS, la subruta
+`territorios-es/catastro-online`, asíncrona). Usa los servicios libres del Catastro y no guarda
+nada:
+
+| Función | Qué hace |
+|---|---|
+| `locate_reference(text)` | El municipio de una referencia catastral, urbana o rústica, según `Consulta_DNPRC` (una petición). En una rústica se contrasta con la lectura sin red: si no coinciden, conflicto. |
+| `locate_point(lon, lat, srs)` | La parcela que hay en un punto (`Consulta_RCCOOR`) y su municipio (`Consulta_DNPRC`): dos peticiones. Pendiente si no hay parcela (el mar o los territorios forales). La parcela queda en la evidencia. |
+
+Las dos devuelven una relación con estado y evidencias, como las demás, y aceptan un `fetch`
+propio (para pruebas, caché o pausas). Un error de red o una respuesta ilegible lanza
+`CatastroError`. No conviene usarlas en bucle sin pausa.
 
 **Identificadores**: los de Voceiro, que ya están publicados: `pais:ES`, `es:autonomia:12`,
 `es:provincia:36`, `es:municipio:36038`. Son etiquetas, así que no importa que estén en castellano.

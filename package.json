@@ -6,6 +6,7 @@
   "type": "module",
   "exports": {
     ".": { "node": "./js/node.js", "default": "./js/index.js" },
+    "./catastro-online": "./js/catastro_online.js",
     "./territorios.json": "./datos/territorios.json"
   },
   "files": ["js", "datos/territorios.json"],

@@ -38,6 +38,16 @@ Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children`, `no
 `relate_cadastral_reference` (referencias catastrales, sin red). Están descritas en el apartado 6
 del diseño.
 
+Opcional y con red (una o dos peticiones al Catastro por llamada), para referencias urbanas y
+coordenadas:
+
+```python
+from territorios_es.catastro_online import locate_reference, locate_point
+
+locate_reference("9872023VH5797S0001WX")["territory"]   # 'es:municipio:13077'
+locate_point(-3.6, 39.2)["territory"]                   # 'es:municipio:13096'
+```
+
 Instalación, con la versión fijada:
 
 ```sh
