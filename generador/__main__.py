@@ -198,8 +198,8 @@ class _Seen:
         self.sha256, self.bytes, self.retrieved = got.sha256, len(got.content), got.retrieved
 
 
-def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, dict, set | None, dict]:
-    """(counts by source, manifest records, INE pairs to compare or None, timings). The Catastro
+def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, dict, dict]:
+    """(counts by source, manifest records, timings). The Catastro
     server is slow: a few connections at a time, each with the usual pause between requests."""
     config = load_hand_lists(FUENTES)["sources"]
     counts, records, timings = {}, {}, {}
@@ -275,39 +275,79 @@ def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, d
     timings["Eustat"] = _minutes(time.monotonic() - begin)
 
     begin = time.monotonic()
-    c, ine_pairs = config["ine_callejero"], None
+    c = config["icgc_direcciones"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_icgc_directorio.html",
+                          validate=lambda content: codigos_postales.icgc_zip_url(content, c["url"]))
+    url = codigos_postales.icgc_zip_url(got.content, c["url"])
+    got = descargas.fetch(url, cache=cache, cache_name="cp_icgc_" + url.rsplit("/", 1)[1],
+                          validate=lambda content: codigos_postales.check_zip(content, ".csv"))
+    counts["icgc"] = codigos_postales.parse_icgc(got.content)
+    records["icgc_direcciones"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    timings["ICGC"] = _minutes(time.monotonic() - begin)
+
+    begin = time.monotonic()
+    c = config["madrid_direcciones"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_madrid_catalogo.json",
+                          validate=lambda content: codigos_postales.madrid_csv_url(content, c["resource"]))
+    url = codigos_postales.madrid_csv_url(got.content, c["resource"])
+    got = descargas.fetch(url, cache=cache, cache_name="cp_madrid_" + url.rsplit("/", 1)[1],
+                          validate=codigos_postales.check_madrid)
+    counts["madrid"] = codigos_postales.parse_madrid(got.content)
+    records["madrid_direcciones"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    timings["Madrid"] = _minutes(time.monotonic() - begin)
+
+    begin = time.monotonic()
+    c = config["ideib_portales"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_ideib.csv", validate=codigos_postales.check_ideib)
+    counts["ideib"] = codigos_postales.parse_ideib(got.content)
+    records["ideib_portales"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    timings["IDEIB"] = _minutes(time.monotonic() - begin)
+
+    begin = time.monotonic()
+    c = config["cdau_portales"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_cdau.zip",
+                          validate=lambda content: codigos_postales.check_zip(content, ".csv"))
+    counts["cdau"] = codigos_postales.parse_cdau(got.content)
+    records["cdau_portales"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    del got
+    timings["CDAU"] = _minutes(time.monotonic() - begin)
+
+    # The INE register: the newest edition that answers (it comes out in January and July).
+    begin, c, errors = time.monotonic(), config["ine_callejero"], []
     for url in codigos_postales.ine_street_urls(c["url"], date.today().isoformat()):
         try:
             got = descargas.fetch(url, cache=cache, cache_name="cp_ine_" + url.rsplit("/", 1)[1],
                                   validate=lambda content: codigos_postales.check_zip(content, ""))
-            ine_pairs = codigos_postales.parse_ine_streets(got.content)
+            counts["ine"] = codigos_postales.parse_ine_streets(got.content)
         except (RuntimeError, ValueError) as error:
-            print(f"Aviso: {error}", file=sys.stderr)
+            errors.append(f"{url.rsplit('/', 1)[1]}: {error}")
             continue
-        timings["INE (contraste)"] = f"{_minutes(time.monotonic() - begin)} ({url.rsplit('/', 1)[1]})"
+        records["ine_callejero"] = got.record(licence=c["licence"], attribution=c["attribution"])
+        timings["INE"] = f"{_minutes(time.monotonic() - begin)} ({url.rsplit('/', 1)[1]})"
         break
+    else:
+        failed.append("INE: " + "; ".join(errors))
     timings["total"] = _minutes(time.monotonic() - start)
     if failed:
         timings["descargas fallidas"] = f"{len(failed)}: " + "; ".join(sorted(failed)[:20])
-    return counts, records, ine_pairs, timings
+    return counts, records, timings
 
 
 def postal_codes_file(salida: Path, informe: Path | None, cache: Path | None) -> int:
-    """datos/codigos-postales.csv and its report, linked with the identifiers of salida/territorios.json."""
-    counts, records, ine_pairs, timings = download_postal_codes(cache)
+    """datos/codigos-postales.csv, its observations and its report, linked with the identifiers of
+    salida/territorios.json. Nothing is written if a download failed: the previous table stays."""
+    counts, records, timings = download_postal_codes(cache)
     data = json.loads((salida / "territorios.json").read_text(encoding="utf-8"))
     previous = codigos_postales.read_table(salida / codigos_postales.FILE)
-    rows, report = codigos_postales.build(counts, data, previous, ine_pairs)
+    rows, observations, report = codigos_postales.build(counts, data, previous)
     problems = codigos_postales.check_cases(rows)
     for problem in problems:
         report.add("Códigos postales: casos fijos que fallan", problem)
-    if ine_pairs is None:
-        report.add("Códigos postales: aviso", "no se pudo descargar el callejero del INE para contrastar")
     for key, value in timings.items():
         report.summary[f"tiempo: {key}" if key != "descargas fallidas" else key] = value
     write_postal = "descargas fallidas" not in timings
     if write_postal:
-        codigos_postales.write(salida, rows, records)
+        codigos_postales.write(salida, rows, observations, records)
     text = report.markdown().replace("# Informe del generador", "# Informe de códigos postales", 1)
     if informe:
         informe.write_text(text, encoding="utf-8")
@@ -325,11 +365,9 @@ def fixture():
     (ROOT / "pruebas" / "datos" / "informe.md").write_text(report.markdown(), encoding="utf-8")
     # Postal codes: invented counts in the shape of the readers' output.
     raw = json.loads((folder / "codigos-postales.json").read_text(encoding="utf-8"))
-    counts = {source: Counter({(code, number): n for code, number, n in raw[source]})
-              for source in codigos_postales.SOURCES}
-    ine_pairs = {(code, number) for code, number in raw["ine"]}
-    rows, report = codigos_postales.build(counts, data, None, ine_pairs)
-    codigos_postales.write(ROOT / "pruebas" / "datos", rows, {"fixture_codigos_postales": {
+    counts = {source: Counter({(code, number): n for code, number, n in raw[source]}) for source in raw}
+    rows, observations, report = codigos_postales.build(counts, data)
+    codigos_postales.write(ROOT / "pruebas" / "datos", rows, observations, {"fixture_codigos_postales": {
         "url": "pruebas/fuentes/codigos-postales.json"}})
     text = report.markdown().replace("# Informe del generador", "# Informe de códigos postales", 1)
     (ROOT / "pruebas" / "datos" / "informe-codigos-postales.md").write_text(text, encoding="utf-8")

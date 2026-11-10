@@ -133,9 +133,10 @@ def write(folder: Path, data: dict, articles: list[list[str]], sources: dict):
     path = folder / "manifiesto.json"
     if path.exists() and (folder / codigos_postales.FILE).exists():
         old = json.loads(path.read_text(encoding="utf-8"))
-        sources = {**sources, **{k: v for k, v in old["sources"].items() if k in codigos_postales.SOURCES.values()}}
-        if codigos_postales.FILE in old["files"]:
-            files[codigos_postales.FILE] = old["files"][codigos_postales.FILE]
+        sources = {**sources, **{k: v for k, v in old["sources"].items() if k in codigos_postales.ENTRIES}}
+        for name in (codigos_postales.FILE, codigos_postales.OBSERVATIONS):
+            if name in old["files"]:
+                files[name] = old["files"][name]
     manifest = {"schema": data["schema"], "reference_date": data["reference_date"], "sources": sources,
                 "files": dict(sorted(files.items()))}
     (folder / "manifiesto.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
@@ -156,8 +157,10 @@ def check(folder: Path) -> list[str]:
     for name, digest in manifest["files"].items():
         if _sha((folder / name).read_text(encoding="utf-8")) != digest:
             problems.append(f"{name} does not match manifiesto.json")
-    if (folder / codigos_postales.FILE).exists():
-        if codigos_postales.FILE not in manifest["files"]:
-            problems.append(f"{codigos_postales.FILE} is not in manifiesto.json")
-        problems += codigos_postales.check(folder / codigos_postales.FILE)
+    for name, header in ((codigos_postales.FILE, codigos_postales.HEADER),
+                         (codigos_postales.OBSERVATIONS, codigos_postales.OBSERVATION_HEADER)):
+        if (folder / name).exists():
+            if name not in manifest["files"]:
+                problems.append(f"{name} is not in manifiesto.json")
+            problems += codigos_postales.check(folder / name, header)
     return problems

@@ -1,40 +1,44 @@
 # Informe de códigos postales
 
-- direcciones (catastro): 4.365; sin código postal: 5
-- direcciones (idena): 1.510; sin código postal: 0
-- direcciones (eustat): 2.651; sin código postal: 0
-- pares con 1 dirección: 1 (0 también en el INE)
-- pares con 2 direcciones: 2 (0 también en el INE)
-- pares con 4 direcciones: 1 (0 también en el INE)
-- pares con más de 50 direcciones: 12 (9 también en el INE)
-- pares publicados: 14
-- códigos postales: 13
-- municipios con código: 9 de 33
-- contraste con el INE: coinciden 9 pares; 5 solo en nuestra tabla; 1 solo en el INE, en 1 municipio(s)
+- fuente madrid: 802 direcciones; sin código postal: 0; 3 pares
+- fuente icgc: 1.303 direcciones; sin código postal: 0; 3 pares
+- fuente idena: 1.510 direcciones; sin código postal: 0; 2 pares
+- fuente eustat: 2.656 portales; sin código postal: 0; 5 pares
+- fuente ideib: 1.540 portales; sin código postal: 0; 2 pares
+- fuente ine: 242 tramos; sin código postal: 0; 16 pares
+- fuente cdau: 930 portales; sin código postal: 0; 2 pares
+- fuente catastro: 4.148 direcciones; sin código postal: 5; 9 pares
+- pares publicados: 23
+- pares que tiene también otra fuente: 14 (60,9%)
+- códigos postales: 21
+- códigos con municipios de fuentes de distinta unidad (por tramos del INE): 1
+- municipios con código: 12 de 33
+- municipios que decide madrid: 1
+- municipios que decide icgc: 1
+- municipios que decide idena: 1
+- municipios que decide eustat: 3
+- municipios que decide ideib: 1
+- municipios que decide ine: 4
+- municipios que decide catastro: 1
+- pares de otras fuentes que no se publican: 3
 
-## Contraste INE: municipios con códigos que solo están en el INE (sin el código) (1)
+## Códigos postales: código de otra provincia (2)
 
-- Pamplona/Iruña (es:municipio:31201): 1
+- 15001 Pontevedra (es:municipio:36038): catastro, 40 direcciones
+- 48001 Donostia/San Sebastián (es:municipio:20069): eustat, 5 portales
 
-## Contraste INE: pares solo en nuestra tabla (5)
+## Códigos postales: código de relleno XX000 (no se publica) (2)
 
-- 01002 Vitoria-Gasteiz (es:municipio:01059): 650 direcciones
-- 08902 L'Hospitalet de Llobregat (es:municipio:08101): 400 direcciones
-- 15001 Pontevedra (es:municipio:36038): 4 direcciones
-- 32001 Ourense (es:municipio:32054): 2 direcciones
-- 51001 Ceuta (es:municipio:51001): 300 direcciones
-
-## Códigos postales: código de otra provincia (1)
-
-- 15001 Pontevedra (es:municipio:36038): 4 direcciones
+- catastro: 51000 en Ceuta (es:municipio:51001), 9 direcciones
+- ine: 28000 en Madrid (es:municipio:28079), 1 tramo
 
 ## Códigos postales: código no válido (no se publica) (1)
 
-- «0» en Ourense (es:municipio:32054): 1 dirección
+- catastro: «0» en Ourense (es:municipio:32054), 1 dirección
 
-## Códigos postales: municipio que no es de esta fuente (no se publica) (1)
+## Códigos postales: municipio fuera del ámbito de la fuente (no se publica) (1)
 
-- eustat: A Coruña (es:municipio:15030), 1 dirección
+- eustat: A Coruña (es:municipio:15030), 1 portal
 
 ## Códigos postales: municipio sin cruce en catastro (no se publica) (1)
 
@@ -44,34 +48,50 @@
 
 - 31999: 10 direcciones
 
-## Códigos postales: municipios sin código postal (24)
+## Códigos postales: municipio sin cruce en ine (no se publica) (1)
 
-- Alacant/Alicante (es:municipio:03014): sin direcciones en la fuente
-- Cangas de Morrazo (es:municipio:36008): sin direcciones en la fuente
-- Castelló de la Plana/Castellón de la Plana (es:municipio:12040): sin direcciones en la fuente
-- Eivissa (es:municipio:07026): sin direcciones en la fuente
-- Es Bòrdes (es:municipio:25057): sin direcciones en la fuente
-- Formentera (es:municipio:07024): sin direcciones en la fuente
-- Girona (es:municipio:17079): sin direcciones en la fuente
-- Langreo (es:municipio:33031): sin direcciones en la fuente
-- Las Palmas de Gran Canaria (es:municipio:35016): sin direcciones en la fuente
-- Lleida (es:municipio:25120): sin direcciones en la fuente
-- Logroño (es:municipio:26089): sin direcciones en la fuente
-- Madrid (es:municipio:28079): sin direcciones en la fuente
-- Melilla (es:municipio:52001): sin direcciones en la fuente
-- Montcada/Moncada (es:municipio:46171): sin direcciones en la fuente
-- Palma (es:municipio:07040): sin direcciones en la fuente
-- Rioja (es:municipio:04078): sin direcciones en la fuente
-- Rubí (es:municipio:08184): sin direcciones en la fuente
-- Sagunt/Sagunto (es:municipio:46220): sin direcciones en la fuente
-- Santa Cruz de Tenerife (es:municipio:38038): sin direcciones en la fuente
-- Sevilla (es:municipio:41091): sin direcciones en la fuente
-- València (es:municipio:46250): sin direcciones en la fuente
-- Vielha e Mijaran (es:municipio:25243): sin direcciones en la fuente
-- Zaragoza (es:municipio:50297): sin direcciones en la fuente
-- la Vila Joiosa/Villajoyosa (es:municipio:03139): sin direcciones en la fuente
+- 99999: 1 tramo
 
-## Códigos postales: pares con menos de 3 direcciones (no se publican) (2)
+## Códigos postales: municipio sin datos en su fuente (decide la siguiente) (1)
 
-- 15003 A Coruña (es:municipio:15030): 2
-- 51002 Ceuta (es:municipio:51001): 1
+- Pontevedra (es:municipio:36038): decide catastro; sin datos en ine
+
+## Códigos postales: municipios sin código postal (21)
+
+- Alacant/Alicante (es:municipio:03014)
+- Cangas de Morrazo (es:municipio:36008)
+- Castelló de la Plana/Castellón de la Plana (es:municipio:12040)
+- Es Bòrdes (es:municipio:25057)
+- Formentera (es:municipio:07024)
+- Girona (es:municipio:17079)
+- Langreo (es:municipio:33031)
+- Las Palmas de Gran Canaria (es:municipio:35016)
+- Lleida (es:municipio:25120)
+- Logroño (es:municipio:26089)
+- Melilla (es:municipio:52001)
+- Montcada/Moncada (es:municipio:46171)
+- Palma (es:municipio:07040)
+- Rioja (es:municipio:04078)
+- Rubí (es:municipio:08184)
+- Sagunt/Sagunto (es:municipio:46220)
+- Santa Cruz de Tenerife (es:municipio:38038)
+- València (es:municipio:46250)
+- Vielha e Mijaran (es:municipio:25243)
+- Zaragoza (es:municipio:50297)
+- la Vila Joiosa/Villajoyosa (es:municipio:03139)
+
+## Códigos postales: pares de dos o más fuentes que no se publican (1)
+
+- 08240 L'Hospitalet de Llobregat (es:municipio:08101): ine 1 tramo; catastro 139 direcciones
+
+## Códigos postales: pares publicados que no tiene ninguna otra fuente (9)
+
+- 01002 Vitoria-Gasteiz (es:municipio:01059): eustat, 650 portales
+- 07817 Eivissa (es:municipio:07026): ideib, 40 portales
+- 08903 L'Hospitalet de Llobregat (es:municipio:08101): icgc, 3 direcciones
+- 15001 Pontevedra (es:municipio:36038): catastro, 40 direcciones
+- 28050 Madrid (es:municipio:28079): madrid, 300 direcciones
+- 28906 Madrid (es:municipio:28079): madrid, 2 direcciones
+- 31002 Pamplona/Iruña (es:municipio:31201): idena, 600 direcciones
+- 36001 Pontevedra (es:municipio:36038): catastro, 700 direcciones
+- 48001 Donostia/San Sebastián (es:municipio:20069): eustat, 5 portales

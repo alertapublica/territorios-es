@@ -1,15 +1,24 @@
-"""Postal codes (códigos postales) of each municipality, with the number of addresses of each pair,
-from the address registers that can be republished. Writes datos/codigos-postales.csv.
+"""Postal codes (códigos postales) of each municipality, gathered from what the public administrations
+publish, with the source of each pair. Writes datos/codigos-postales.csv (the pairs published) and
+datos/codigos-postales-fuentes.csv (what each source says: to compare, and to answer claims).
 
-- Catastro, INSPIRE Addresses (AD): the common regime (all but Navarre and the Basque Country), one
-  GML per municipality, numbered with its DGC code, which goes to INE with the crosswalk that is
-  already in territorios.json.
-- IDENA (Gobierno de Navarra): the address points of Navarre (CC BY 4.0).
-- Eustat / Gobierno Vasco, NORA street register: the portals of Álava, Gipuzkoa and Bizkaia (CC BY 4.0).
+Sources (SOURCES), the most trusted first:
+- Ayuntamiento de Madrid, official street directory: the city of Madrid only.
+- Regional registers that carry the code of Correos on each address: ICGC (Catalonia), IDENA
+  (Navarre), Eustat / NORA (Basque Country) and IDEIB (Balearic Islands).
+- INE, street register of the electoral roll: street sections of all Spain.
+- CDAU (Andalusia), portals: contrast only, behind the INE (a fifth of its pairs are in no other
+  source).
+- Catastro, INSPIRE Addresses (AD): the common regime, one GML per municipality, numbered with its
+  DGC code, which goes to INE with the crosswalk of territorios.json (and MERGED_DGC).
 
-The postal code is Correos's; each register carries it on its addresses under its own licence. The
-INE electoral street register has it too, but the INE licence excludes data of third parties: it is
-downloaded only to compare, and the report never writes a code that only the INE has.
+In each municipality decides the first source whose scope covers it and that has data for it: all
+its pairs there are published, with no threshold, and no other source fills in single pairs (that
+would bring back the old codes of the Catastro). Fixed rules for every source: five digits with a
+province (01–52), and no XX000 (filler: neither the ICGC nor the Madrid city council use one). The
+other sources stay as observations; the column `also` of each pair says which of them have it too.
+Each pair carries the count of its own source, in its own unit: counts in different units are never
+added up.
 
 Catastro licence (DGC, July 2016): public and commercial use of transformed information only, citing
 the DGC and the access date. The originals stay in the Actions cache and are never committed; the
@@ -26,26 +35,43 @@ import xml.etree.ElementTree as ET
 import zipfile
 from collections import Counter
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urljoin
 
 from . import xlsx
 from .construir import Report
 
 FILE = "codigos-postales.csv"
-HEADER = ["postal_code", "id", "ine", "addresses", "source"]
-# Source in the table → its entry in fuentes.json and in the manifest.
-SOURCES = {"catastro": "catastro_direcciones", "idena": "idena_direcciones", "eustat": "eustat_portales"}
+OBSERVATIONS = "codigos-postales-fuentes.csv"
+OBSERVATION_HEADER = ["postal_code", "id", "ine", "source", "count", "unit"]
+HEADER = OBSERVATION_HEADER + ["also"]
 NAVARRA = "31"
 EUSKADI = ("01", "20", "48")
-# A pair with fewer addresses is left out (and goes to the report), unless it is the municipality's
-# most used code: every municipality with addresses keeps at least one.
-MIN_ADDRESSES = 3
+ANDALUCIA = ("04", "11", "14", "18", "21", "23", "29", "41")
+# Name in the tables → its entry in fuentes.json and the manifest, the unit it counts and its scope
+# (INE code prefixes; None: all Spain). In this order of precedence; the scopes of the regional
+# sources never overlap.
+SOURCES = {
+    "madrid": {"entry": "madrid_direcciones", "unit": "addresses", "scope": ("28079",)},
+    "icgc": {"entry": "icgc_direcciones", "unit": "addresses", "scope": ("08", "17", "25", "43")},
+    "idena": {"entry": "idena_direcciones", "unit": "addresses", "scope": (NAVARRA,)},
+    "eustat": {"entry": "eustat_portales", "unit": "portals", "scope": EUSKADI},
+    "ideib": {"entry": "ideib_portales", "unit": "portals", "scope": ("07",)},
+    "ine": {"entry": "ine_callejero", "unit": "street_sections", "scope": None},
+    # Contrast only, behind the INE: a fifth of its pairs are in no other source (2026-11).
+    "cdau": {"entry": "cdau_portales", "unit": "portals", "scope": ANDALUCIA},
+    "catastro": {"entry": "catastro_direcciones", "unit": "addresses", "scope": None},
+}
+ENTRIES = [s["entry"] for s in SOURCES.values()]
+UNITS = {"addresses": ("dirección", "direcciones"), "portals": ("portal", "portales"),
+         "street_sections": ("tramo", "tramos")}
+# Merged municipalities whose addresses the Catastro still files under the old DGC codes.
+MERGED_DGC = {"15026": "15902", "15064": "15902", "36011": "36902", "36012": "36902"}
 CHANGE_WARNING = 0.05  # share of pairs that may change from one run to the next without a warning
 # Fixed cases of the real data, checked on every run and by --check (not on the test fixture).
 CASES = {
     "includes": {"es:municipio:08019": [f"080{n:02d}" for n in range(1, 43)]},
-    "first": {"29620": ["es:municipio:29901", "es:municipio:29067"], "31001": ["es:municipio:31201"],
-              "01001": ["es:municipio:01059"], "02250": ["es:municipio:02001"]},
+    "first": {"29620": ["es:municipio:29901"], "28760": ["es:municipio:28903", "es:municipio:28079"],
+              "31001": ["es:municipio:31201"], "01001": ["es:municipio:01059"], "02250": ["es:municipio:02001"]},
 }
 
 CATASTRO = "https://www.catastro.hacienda.gob.es/INSPIRE/Addresses"
@@ -243,7 +269,132 @@ def check_euskadi(content: bytes):
         raise ValueError("Eustat: no es el CSV de portales")
 
 
-# INE (only to compare) ---------------------------------------------------------------------------
+# Cataluña (ICGC) y Madrid ------------------------------------------------------------------------
+
+def parse_icgc(content: bytes) -> Counter:
+    """Counter{(postal code, INE code): addresses} of the ICGC «Adreces simplificat» ZIP (all
+    Catalonia): CSV files «;» in UTF-8; the two address tables (adrecavia, adrecaedi) carry `codmuni`
+    (INE code and check digit) and `codpostal`, whose content its specification attributes to Correos."""
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(content))
+    except zipfile.BadZipFile:
+        raise ValueError("ICGC: no es un ZIP completo") from None
+    names = sorted(n for n in archive.namelist() if re.search(r"-(adrecavia|adrecaedi)-.*\.csv$", n))
+    if len(names) != 2:
+        raise ValueError(f"ICGC: se esperaban las tablas adrecavia y adrecaedi; hay {archive.namelist()}")
+    counts: Counter = Counter()
+    for name in names:
+        with archive.open(name) as stream:
+            reader = csv.DictReader(io.TextIOWrapper(stream, encoding="utf-8-sig", newline=""), delimiter=";")
+            if not {"codmuni", "codpostal"} <= set(reader.fieldnames or ()):
+                raise ValueError(f"ICGC: faltan columnas en {name}: {reader.fieldnames}")
+            for row in reader:
+                municipality = (row["codmuni"] or "").strip()
+                if not re.fullmatch(r"[0-9]{6}", municipality):
+                    raise ValueError(f"ICGC: municipio no válido {municipality!r}")
+                counts[postal_code(row["codpostal"]), municipality[:5]] += 1
+    return counts
+
+
+def icgc_zip_url(listing: bytes, base: str) -> str:
+    """The newest ZIP of the ICGC directory (adreces-simplificat-v1r0-YYYYMMDD.zip): its name carries
+    the date of the edition."""
+    found = re.findall(r'href="([^"]*/adreces-simplificat-v[0-9]+r[0-9]+-([0-9]{8})\.zip)"',
+                       listing.decode("utf-8", "replace"), re.IGNORECASE)
+    if not found:
+        raise ValueError("ICGC: el directorio no trae ningún ZIP de direcciones")
+    return urljoin(base, max(found, key=lambda f: f[1])[0])
+
+
+MADRID = "28079"
+
+
+def madrid_csv_url(content: bytes, resource: str) -> str:
+    """URL of the CSV of current addresses in the answer of the datos.madrid.es catalogue (CKAN
+    package_show): its file name carries the date."""
+    try:
+        resources = json.loads(content)["result"]["resources"]
+    except (ValueError, KeyError, TypeError):
+        raise ValueError("Madrid: respuesta no válida del catálogo") from None
+    url = next((r.get("url") for r in resources if r.get("id") == resource), None)
+    if not url:
+        raise ValueError(f"Madrid: el catálogo no trae el recurso {resource}")
+    return url
+
+
+def check_madrid(content: bytes):
+    if b"COD_POSTAL" not in content[:2000]:
+        raise ValueError("Madrid: no es el CSV de direcciones")
+
+
+def parse_madrid(content: bytes) -> Counter:
+    """Counter{(postal code, "28079"): addresses} of the official street directory of the Madrid city
+    council (CSV «;» in Windows-1252, one row per address, with `COD_POSTAL`)."""
+    reader = csv.DictReader(io.StringIO(content.decode("cp1252"), newline=""), delimiter=";")
+    if "COD_POSTAL" not in (reader.fieldnames or ()):
+        raise ValueError(f"Madrid: falta COD_POSTAL; columnas {reader.fieldnames}")
+    counts: Counter = Counter()
+    for row in reader:
+        counts[postal_code(row["COD_POSTAL"]), MADRID] += 1
+    return counts
+
+
+# Illes Balears (IDEIB) ---------------------------------------------------------------------------
+
+_IDEIB_CODE = re.compile(r"\s([0-9]{5})\s")
+_IDEIB_PORTAL = re.compile(r"/ ID_PORTAL:7([0-9]{3})[0-9]{7}$")
+
+
+def parse_ideib(content: bytes) -> Counter:
+    """Counter{(postal code, INE code): portals} of the portals of the Balearic Islands (IDEIB): a CSV
+    of one column, ADRECA_DET, «street number  postal code locality municipality / INE_VIA:… /
+    ID_VIAL:… / ID_PORTAL:7MMMNNNNNNN», where MMM is the INE number of the municipality."""
+    rows = csv.reader(io.StringIO(content.decode("utf-8-sig"), newline=""))
+    if next(rows, None) != ["ADRECA_DET"]:
+        raise ValueError("IDEIB: no es el CSV de portales (ADRECA_DET)")
+    counts: Counter = Counter()
+    for row in rows:
+        if not row:
+            continue
+        text = row[0].strip()
+        portal = _IDEIB_PORTAL.search(text)
+        if not portal:
+            raise ValueError(f"IDEIB: portal sin municipio {text!r}")
+        code = _IDEIB_CODE.search(text.split(" / ")[0] + " ")
+        counts[code.group(1) if code else "", "07" + portal.group(1)] += 1
+    return counts
+
+
+def check_ideib(content: bytes):
+    if not content[:20].decode("utf-8-sig", "replace").lstrip('"').startswith("ADRECA_DET"):
+        raise ValueError("IDEIB: no es el CSV de portales")
+
+
+# Andalucía (CDAU) --------------------------------------------------------------------------------
+
+def parse_cdau(content: bytes) -> Counter:
+    """Counter{(postal code, INE code): portals} of the portals of the Callejero Digital de Andalucía
+    Unificado: a ZIP with one CSV «;» in UTF-8 (700 MB, read as a stream), with `ine_mun` and
+    `cod_postal`."""
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(content))
+        name = next(n for n in archive.namelist() if n.lower().endswith(".csv"))
+    except (zipfile.BadZipFile, StopIteration):
+        raise ValueError("CDAU: el ZIP no trae el CSV de portales") from None
+    counts: Counter = Counter()
+    with archive.open(name) as stream:
+        reader = csv.DictReader(io.TextIOWrapper(stream, encoding="utf-8-sig", newline=""), delimiter=";")
+        if not {"ine_mun", "cod_postal"} <= set(reader.fieldnames or ()):
+            raise ValueError(f"CDAU: faltan columnas; hay {reader.fieldnames}")
+        for row in reader:
+            municipality = (row["ine_mun"] or "").strip()
+            if not re.fullmatch(r"[0-9]{5}", municipality):
+                raise ValueError(f"CDAU: municipio no válido {municipality!r}")
+            counts[postal_code(row["cod_postal"]), municipality] += 1
+    return counts
+
+
+# INE ---------------------------------------------------------------------------------------------
 
 def ine_street_urls(template: str, today: str) -> list[str]:
     """The electoral street register comes out in January and July: the last three, newest first."""
@@ -252,10 +403,10 @@ def ine_street_urls(template: str, today: str) -> list[str]:
     return [template.format(month=f"{m:02d}", year=y) for y, m in periods if (y, m) <= (year, month)][:3]
 
 
-def parse_ine_streets(content: bytes) -> set[tuple[str, str]]:
-    """{(postal code, INE code)} of the INE electoral street register: the sections file (TRAM…, at
-    times inside a second ZIP), fixed width, with the municipality at 0–5 and the postal code at
-    42–47. Only to compare: never published."""
+def parse_ine_streets(content: bytes) -> Counter:
+    """Counter{(postal code, INE code): street sections} of the INE electoral street register: the
+    sections file (TRAM…, at times inside a second ZIP), fixed width, with the municipality at 0–5
+    and the postal code at 42–47 (the code of each section comes from Correos)."""
     try:
         archive = zipfile.ZipFile(io.BytesIO(content))
         name = next(n for n in archive.namelist() if "TRAM" in n.upper())
@@ -264,14 +415,14 @@ def parse_ine_streets(content: bytes) -> set[tuple[str, str]]:
             name = next(n for n in archive.namelist() if "TRAM" in n.upper())
     except (zipfile.BadZipFile, StopIteration):
         raise ValueError("INE: el ZIP del callejero no trae el fichero de tramos") from None
-    pairs, lines, odd = set(), 0, 0
+    pairs, lines, odd = Counter(), 0, 0
     with archive.open(name) as stream:
         for raw in stream:
             lines += 1
             line = raw.decode("cp1252")
             municipality, code = line[0:5], line[42:47]
             if re.fullmatch(r"[0-9]{5}", municipality) and re.fullmatch(r"[0-9]{5}", code):
-                pairs.add((code, municipality))
+                pairs[code, municipality] += 1
             else:
                 odd += 1
     if not lines or odd > lines * 0.01:
@@ -285,175 +436,218 @@ def _fmt(n: int) -> str:
     return f"{n:,}".replace(",", ".")
 
 
-def _addresses(n: int) -> str:
-    return "1 dirección" if n == 1 else f"{_fmt(n)} direcciones"
+def _count(n: int, unit: str) -> str:
+    one, many = UNITS[unit]
+    return f"1 {one}" if n == 1 else f"{_fmt(n)} {many}"
 
 
-def build(counts: dict[str, Counter], data: dict, previous: list[list[str]] | None = None,
-          ine_pairs: set | None = None, min_addresses: int = MIN_ADDRESSES) -> tuple[list[list], Report]:
-    """(rows of the table, report). `counts` has a Counter{(postal code, municipality code): n} per
-    source: DGC codes for «catastro», INE codes for «idena» and «eustat». `data` is territorios.json,
-    `previous` the rows of the table published before, `ine_pairs` the INE register to compare."""
+def covers(source: str, ine: str) -> bool:
+    scope = SOURCES[source]["scope"]
+    return scope is None or ine.startswith(scope)
+
+
+def ordered(items: list[dict]) -> list[dict]:
+    """The municipalities of a code, as the API gives them: by count when all have the same unit;
+    otherwise in the order of the table, which build() sets by the street sections of the INE (counts
+    in different units are never compared)."""
+    if len({i["unit"] for i in items}) == 1:
+        return sorted(items, key=lambda i: (-i["count"], i["id"]))
+    return list(items)
+
+
+def _canonical(rows: list[list]) -> list[list]:
+    """Rows by code and, within a code of a single unit, by count; a code with several units keeps
+    the order it has."""
+    units: dict[str, set] = {}
+    for row in rows:
+        units.setdefault(row[0], set()).add(row[5])
+    return sorted(rows, key=lambda r: (r[0], (-int(r[4]), r[1]) if len(units[r[0]]) == 1 else (0, "")))
+
+
+def build(counts: dict[str, Counter], data: dict, previous: list[list[str]] | None = None
+          ) -> tuple[list[list], list[list], Report]:
+    """(rows of the table, observations, report). `counts` has a Counter{(postal code, municipality
+    code): n} per source (DGC codes for «catastro», INE codes for the rest), `data` is
+    territorios.json and `previous` the rows of the table published before."""
     report = Report()
     towns = {t["id"]: t for t in data["territories"] if t["level"] == "municipality"}
     name = lambda identity: f'{towns[identity]["names"]["display"]} ({identity})'
-    by_dgc = {t["codes"]["dgc:municipio"]: i for i, t in towns.items() if "dgc:municipio" in t["codes"]}
+    ine_of = lambda identity: towns[identity]["codes"]["ine:municipio"]
     by_ine = {t["codes"]["ine:municipio"]: i for i, t in towns.items()}
-    province = lambda identity: towns[identity]["parent"].rsplit(":", 1)[1]
+    by_dgc = {**{dgc: by_ine[ine] for dgc, ine in MERGED_DGC.items() if ine in by_ine},
+              **{t["codes"]["dgc:municipio"]: i for i, t in towns.items() if "dgc:municipio" in t["codes"]}}
+    order = list(SOURCES)
 
-    def owner(identity: str) -> str:
-        p = province(identity)
-        return "idena" if p == NAVARRA else "eustat" if p in EUSKADI else "catastro"
-
-    pairs: dict[str, Counter] = {}
-    with_addresses: Counter = Counter()
-    for source in SOURCES:
-        lookup = by_dgc if source == "catastro" else by_ine
-        unknown: Counter = Counter()
-        total = empty = 0
-        for (code, number), n in sorted(counts.get(source, Counter()).items()):
+    # What each source says, harmonised: valid codes of known municipalities within its scope.
+    seen: dict[str, dict[tuple, int]] = {}
+    for source in order:
+        if source not in counts:
+            continue
+        unit, lookup = SOURCES[source]["unit"], by_dgc if source == "catastro" else by_ine
+        found = seen[source] = {}
+        unknown, outside, total, empty = Counter(), Counter(), 0, 0
+        for (code, number), n in sorted(counts[source].items()):
             total += n
             identity = lookup.get(number)
             if identity is None:
                 unknown[number] += n
-                continue
-            if owner(identity) != source:
-                report.add("Códigos postales: municipio que no es de esta fuente (no se publica)",
-                           f"{source}: {name(identity)}, {_addresses(n)}")
-                continue
-            with_addresses[identity] += n
-            if not code:
+            elif not covers(source, ine_of(identity)):
+                outside[identity] += n
+            elif not code:
                 empty += n
             elif not valid(code):
                 report.add("Códigos postales: código no válido (no se publica)",
-                           f"«{code}» en {name(identity)}: {_addresses(n)}")
+                           f"{source}: «{code}» en {name(identity)}, {_count(n, unit)}")
+            elif code.endswith("000"):
+                report.add("Códigos postales: código de relleno XX000 (no se publica)",
+                           f"{source}: {code} en {name(identity)}, {_count(n, unit)}")
             else:
-                pairs.setdefault(identity, Counter())[code] += n
+                found[code, identity] = found.get((code, identity), 0) + n
         for number, n in unknown.items():
             report.add(f"Códigos postales: municipio sin cruce en {source} (no se publica)",
-                       f"{number}: {_addresses(n)}")
-        report.summary[f"direcciones ({source})"] = f"{_fmt(total)}; sin código postal: {_fmt(empty)}"
+                       f"{number}: {_count(n, unit)}")
+        for identity, n in outside.items():
+            report.add("Códigos postales: municipio fuera del ámbito de la fuente (no se publica)",
+                       f"{source}: {name(identity)}, {_count(n, unit)}")
+        report.summary[f"fuente {source}"] = (f"{_count(total, unit)}; sin código postal: {_fmt(empty)}; "
+                                              f"{_fmt(len(found))} pares")
 
-    ine_by_id = None
-    if ine_pairs is not None:
-        ine_by_id = {(code, by_ine[number]) for code, number in ine_pairs if number in by_ine}
+    by_town: dict[str, dict[str, dict[str, int]]] = {}
+    for source, found in seen.items():
+        for (code, identity), n in found.items():
+            by_town.setdefault(identity, {}).setdefault(source, {})[code] = n
 
-    rows, buckets = [], {}
-    limits = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 10), (11, 20), (21, 50), (51, None)]
-    for identity, counter in sorted(pairs.items()):
-        top = max(counter.values())
-        for code, n in sorted(counter.items()):
-            low, high = next(b for b in limits if n >= b[0] and (b[1] is None or n <= b[1]))
-            bucket = buckets.setdefault((low, high), [0, 0])
-            bucket[0] += 1
-            bucket[1] += bool(ine_by_id and (code, identity) in ine_by_id)
-            if n >= min_addresses or n == top:
-                rows.append([code, identity, towns[identity]["codes"]["ine:municipio"], n, owner(identity)])
-            else:
-                report.add(f"Códigos postales: pares con menos de {min_addresses} direcciones (no se publican)",
-                           f"{code} {name(identity)}: {n}")
-    rows.sort(key=lambda r: (r[0], r[1]))
-    for (low, high), (n, in_ine) in sorted(buckets.items()):
-        label = _addresses(low) if low == high else f"{low}–{high} direcciones" if high else f"más de {low - 1} direcciones"
-        extra = f" ({_fmt(in_ine)} también en el INE)" if ine_by_id is not None else ""
-        report.summary[f"pares con {label}"] = _fmt(n) + extra
+    rows, decided = [], Counter()
+    for identity, have in sorted(by_town.items()):
+        decider = next(s for s in order if s in have)
+        decided[decider] += 1
+        missing = [s for s in order[:order.index(decider)] if covers(s, ine_of(identity))]
+        if missing:
+            report.add("Códigos postales: municipio sin datos en su fuente (decide la siguiente)",
+                       f"{name(identity)}: decide {decider}; sin datos en {', '.join(missing)}")
+        for code, n in sorted(have[decider].items()):
+            also = " ".join(s for s in order if s != decider and code in have.get(s, {}))
+            rows.append([code, identity, ine_of(identity), decider, n, SOURCES[decider]["unit"], also])
+    # A code whose municipalities have different units goes by the street sections of the INE, the
+    # source that covers all Spain (0 if it does not have the pair); then by identifier.
+    ine = seen.get("ine", {})
+    rows = _canonical(sorted(rows, key=lambda r: (r[0], -ine.get((r[0], r[1]), 0), r[1])))
+    units: dict[str, set] = {}
+    for row in rows:
+        units.setdefault(row[0], set()).add(row[5])
+    observations = sorted(([code, identity, ine_of(identity), source, n, SOURCES[source]["unit"]]
+                           for source, found in seen.items() for (code, identity), n in found.items()),
+                          key=lambda r: (r[0], r[1], order.index(r[3])))
 
-    published = {identity for _, identity, *_ in rows}
+    published = {(r[0], r[1]) for r in rows}
+    alone = [r for r in rows if not r[6]]
     report.summary["pares publicados"] = _fmt(len(rows))
+    backed = len(rows) - len(alone)
+    share = f"{backed / max(len(rows), 1):.1%}".replace(".", ",")
+    report.summary["pares que tiene también otra fuente"] = f"{_fmt(backed)} ({share})"
     report.summary["códigos postales"] = _fmt(len({r[0] for r in rows}))
-    report.summary["municipios con código"] = f"{_fmt(len(published))} de {_fmt(len(towns))}"
-    for code, identity, _, n, _ in rows:
-        if code[:2] != province(identity):
-            report.add("Códigos postales: código de otra provincia", f"{code} {name(identity)}: {_addresses(n)}")
-    for identity in sorted(towns.keys() - published):
-        why = f"{_addresses(with_addresses[identity])}, ninguna con código válido" \
-            if with_addresses[identity] else "sin direcciones en la fuente"
-        report.add("Códigos postales: municipios sin código postal", f"{name(identity)}: {why}")
+    report.summary["códigos con municipios de fuentes de distinta unidad (por tramos del INE)"] = _fmt(
+        sum(len(u) > 1 for u in units.values()))
+    report.summary["municipios con código"] = f"{_fmt(len({r[1] for r in rows}))} de {_fmt(len(towns))}"
+    for source in order:
+        if decided[source]:
+            report.summary[f"municipios que decide {source}"] = _fmt(decided[source])
+    for code, identity, _, source, n, unit, _ in alone:
+        report.add("Códigos postales: pares publicados que no tiene ninguna otra fuente",
+                   f"{code} {name(identity)}: {source}, {_count(n, unit)}")
+    others: dict[tuple, list[str]] = {}
+    for code, identity, _, source, n, unit in observations:
+        if (code, identity) not in published:
+            others.setdefault((code, identity), []).append(f"{source} {_count(n, unit)}")
+    for (code, identity), said in sorted(others.items()):
+        if len(said) > 1:
+            report.add("Códigos postales: pares de dos o más fuentes que no se publican",
+                       f"{code} {name(identity)}: {'; '.join(said)}")
+    report.summary["pares de otras fuentes que no se publican"] = _fmt(len(others))
+    for code, identity, _, source, n, unit, _ in rows:
+        if code[:2] != ine_of(identity)[:2]:
+            report.add("Códigos postales: código de otra provincia", f"{code} {name(identity)}: {source}, {_count(n, unit)}")
+    for identity in sorted(towns.keys() - by_town.keys()):
+        report.add("Códigos postales: municipios sin código postal", name(identity))
 
     if previous is not None:
         before = {(r[0], r[1]) for r in previous}
-        now = {(r[0], r[1]) for r in rows}
-        for code, identity in sorted(now - before):
-            report.add("Códigos postales: pares nuevos", f"{code} {name(identity) if identity in towns else identity}")
-        for code, identity in sorted(before - now):
-            report.add("Códigos postales: pares que desaparecen", f"{code} {name(identity) if identity in towns else identity}")
-        share = len(now ^ before) / max(len(before), 1)
+        label = lambda identity: name(identity) if identity in towns else identity
+        for code, identity in sorted(published - before):
+            report.add("Códigos postales: pares nuevos", f"{code} {label(identity)}")
+        for code, identity in sorted(before - published):
+            report.add("Códigos postales: pares que desaparecen", f"{code} {label(identity)}")
+        share = len(published ^ before) / max(len(before), 1)
         report.summary["cambio respecto a la tabla anterior"] = f"{share:.1%}".replace(".", ",")
         if share > CHANGE_WARNING:
             report.add("Códigos postales: aviso", f"cambia el {share:.1%} de los pares (más del "
                        f"{CHANGE_WARNING:.0%}): revisar antes de publicar".replace(".", ","))
-
-    if ine_by_id is not None:
-        ours = {(r[0], r[1]): r[3] for r in rows}
-        only_ine = Counter(identity for code, identity in ine_by_id - ours.keys())
-        report.summary["contraste con el INE"] = (
-            f"coinciden {_fmt(len(ours.keys() & ine_by_id))} pares; {_fmt(len(ours.keys() - ine_by_id))} solo en "
-            f"nuestra tabla; {_fmt(sum(only_ine.values()))} solo en el INE, en {_fmt(len(only_ine))} municipio(s)")
-        for (code, identity), n in sorted(ours.items()):
-            if (code, identity) not in ine_by_id:
-                report.add("Contraste INE: pares solo en nuestra tabla", f"{code} {name(identity)}: {_addresses(n)}")
-        # The INE codes are Correos's: only the municipality and how many, never the code.
-        for identity, n in sorted(only_ine.items()):
-            report.add("Contraste INE: municipios con códigos que solo están en el INE (sin el código)",
-                       f"{name(identity)}: {n}")
-    return rows, report
+    return rows, observations, report
 
 
 def check_cases(rows: list[list]) -> list[str]:
     """The fixed cases (CASES) that the rows do not meet."""
     problems = []
     by_code: dict[str, list] = {}
-    for code, identity, _, n, _ in rows:
-        by_code.setdefault(code, []).append((-int(n), identity))
+    for code, identity, _, _, n, unit, *_ in rows:
+        by_code.setdefault(code, []).append({"id": identity, "count": int(n), "unit": unit})
     for identity, codes in CASES["includes"].items():
         have = {code for code, other, *_ in rows if other == identity}
         missing = [c for c in codes if c not in have]
         if missing:
             problems.append(f"{identity} no tiene {', '.join(missing)}")
     for code, expected in CASES["first"].items():
-        found = [identity for _, identity in sorted(by_code.get(code, []))][:len(expected)]
+        found = [i["id"] for i in ordered(by_code.get(code, []))][:len(expected)]
         if found != expected:
             problems.append(f"{code} da {found}, se esperaba {expected}")
     return problems
 
 
-def table(rows: list[list]) -> str:
+def table(rows: list[list], header: list[str] = HEADER) -> str:
     out = io.StringIO()
     writer = csv.writer(out, lineterminator="\n")
-    writer.writerow(HEADER)
+    writer.writerow(header)
     writer.writerows(rows)
     return out.getvalue()
 
 
-def read_table(path: Path) -> list[list[str]] | None:
+def read_table(path: Path, header: list[str] = HEADER) -> list[list[str]] | None:
     if not path.exists():
         return None
     with path.open(encoding="utf-8", newline="") as file:
         rows = list(csv.reader(file))
-    if not rows or rows[0] != HEADER:
+    if not rows or rows[0] != header:
         raise ValueError(f"{path}: cabecera inesperada")
     return rows[1:]
 
 
-def check(path: Path) -> list[str]:
-    """Problems of a published table (empty if it is consistent). Municipalities that no longer
-    exist are not a problem here: they go to the generator's report (orphans)."""
+def check(path: Path, header: list[str] = HEADER) -> list[str]:
+    """Problems of a published table or of its observations (empty if it is consistent).
+    Municipalities that no longer exist are not a problem here: they go to the generator's report
+    (orphans)."""
     try:
-        rows = read_table(path)
+        rows = read_table(path, header)
     except ValueError as error:
         return [str(error)]
+    order = list(SOURCES)
+    key = (lambda r: (r[0], r[1])) if header == HEADER else (lambda r: (r[0], r[1], order.index(r[3])))
+    canonical = _canonical if header == HEADER else lambda rows: sorted(rows, key=key)
     problems, seen = [], set()
     for row in rows:
-        if len(row) != len(HEADER):
-            problems.append(f"{FILE}: fila con {len(row)} campos: {row}")
+        if len(row) != len(header):
+            problems.append(f"{path.name}: fila con {len(row)} campos: {row}")
             continue
-        code, identity, ine, n, source = row
-        if not valid(code) or identity != f"es:municipio:{ine}" or not re.fullmatch(r"[0-9]{5}", ine) \
-                or not n.isdigit() or int(n) < 1 or source not in SOURCES or (code, identity) in seen:
-            problems.append(f"{FILE}: fila no válida o repetida: {row}")
-        seen.add((code, identity))
-    if not problems and path.read_text(encoding="utf-8") != table(sorted(rows, key=lambda r: (r[0], r[1]))):
-        problems.append(f"{FILE} no está en forma canónica")
+        code, identity, ine, source, n, unit = row[:6]
+        also = row[6].split(" ") if header == HEADER and row[6] else []
+        if not valid(code) or code.endswith("000") or identity != f"es:municipio:{ine}" \
+                or not re.fullmatch(r"[0-9]{5}", ine) or not n.isdigit() or int(n) < 1 \
+                or source not in SOURCES or unit != SOURCES[source]["unit"] or key(row) in seen \
+                or any(s not in SOURCES or s == source for s in also) or also != sorted(also, key=order.index):
+            problems.append(f"{path.name}: fila no válida o repetida: {row}")
+            continue
+        seen.add(key(row))
+    if not problems and path.read_text(encoding="utf-8") != table(canonical(rows), header):
+        problems.append(f"{path.name} no está en forma canónica")
     return problems
 
 
@@ -465,13 +659,14 @@ def orphans(path: Path, data: dict) -> list[str]:
     return sorted({f"{identity}: relanzar codigos-postales.yml" for _, identity, *_ in rows if identity not in known})
 
 
-def write(folder: Path, rows: list[list], records: dict):
-    """The table and its entries in manifiesto.json (the rest of the manifest is generar.yml's)."""
-    text = table(rows)
-    (folder / FILE).write_text(text, encoding="utf-8")
+def write(folder: Path, rows: list[list], observations: list[list], records: dict):
+    """The table, its observations and their entries in manifiesto.json (the rest of the manifest is
+    generar.yml's)."""
     path = folder / "manifiesto.json"
     manifest = json.loads(path.read_text(encoding="utf-8"))
+    for name, text in ((FILE, table(rows)), (OBSERVATIONS, table(observations, OBSERVATION_HEADER))):
+        (folder / name).write_text(text, encoding="utf-8")
+        manifest["files"][name] = hashlib.sha256(text.encode("utf-8")).hexdigest()
     manifest["sources"].update(records)
-    manifest["files"][FILE] = hashlib.sha256(text.encode("utf-8")).hexdigest()
     manifest["files"] = dict(sorted(manifest["files"].items()))
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

@@ -1,12 +1,12 @@
 name: Códigos postales
 
-# Descarga las direcciones del Catastro (INSPIRE Addresses, un ZIP por municipio), de IDENA
-# (Navarra) y de Eustat (País Vasco), regenera datos/codigos-postales.csv y escribe su informe, con
-# el contraste con el callejero del INE (que no se publica). Va aparte de generar.yml porque son unas
-# 7.700 descargas a un servidor lento y tarda horas; los datos cambian poco, así que basta con dos
-# veces al año, después de la tirada mensual de enero y de julio. Lee el cruce DGC→INE del
-# datos/territorios.json publicado. Sobre una rama deja el artefacto y el resumen y no publica; en
-# main, además, abre una PR con la tabla.
+# Recopila los códigos postales que publican las administraciones (Ayuntamiento de Madrid, ICGC,
+# IDENA, Eustat, IDEIB, callejero del INE, CDAU y Catastro), regenera datos/codigos-postales.csv y
+# datos/codigos-postales-fuentes.csv y escribe su informe. Va aparte de generar.yml porque el Catastro
+# son unas 7.700 descargas a un servidor lento y tarda horas; los datos cambian poco, así que basta
+# con dos veces al año, después de la tirada mensual de enero y de julio. Lee el cruce DGC→INE del
+# datos/territorios.json publicado. Si falla alguna descarga no escribe nada y se queda la tabla
+# anterior. Sobre una rama deja el artefacto y el resumen y no publica; en main, además, abre una PR.
 
 on:
   workflow_dispatch:
@@ -64,6 +64,7 @@ jobs:
           name: codigos-postales
           path: |
             datos/codigos-postales.csv
+            datos/codigos-postales-fuentes.csv
             datos/manifiesto.json
             informe.md
           if-no-files-found: ignore
@@ -93,5 +94,6 @@ jobs:
           git commit -q -m "datos: códigos postales desde las fuentes"
           git push -q origin "$rama"
           # La organización puede no permitir que Actions abra PR: entonces queda la rama y un aviso.
-          gh pr create --base main --head "$rama" --title "Datos: códigos postales" --body-file informe.md \
+          head -c 60000 informe.md > cuerpo.md  # GitHub no admite cuerpos de más de 65.536 caracteres
+          gh pr create --base main --head "$rama" --title "Datos: códigos postales" --body-file cuerpo.md \
             || echo "::warning::No se pudo abrir la PR. Ábrela a mano: https://github.com/$GITHUB_REPOSITORY/compare/$rama?expand=1"

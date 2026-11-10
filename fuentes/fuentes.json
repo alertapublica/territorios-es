@@ -86,7 +86,33 @@
   "ine_callejero": {
     "url": "https://www.ine.es/prodyser/callejero/caj_esp/caj_esp_{month}{year}.zip",
     "publisher": "INE (callejero del censo electoral)",
-    "note": "Solo para contrastar los códigos postales: su código postal viene de Correos y la licencia del INE no lo cubre. No se publica."
+    "licence": "CC BY 4.0 (aviso legal del INE)",
+    "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es (callejero del censo electoral)"
+  },
+  "icgc_direcciones": {
+    "url": "https://datacloud.icgc.cat/datacloud/adreces-simplificat/csv/",
+    "publisher": "Institut Cartogràfic i Geològic de Catalunya (Adreces, versión simplificada)",
+    "licence": "CC BY 4.0",
+    "attribution": "Institut Cartogràfic i Geològic de Catalunya (ICGC)"
+  },
+  "madrid_direcciones": {
+    "url": "https://datos.madrid.es/api/3/action/package_show?id=213605-0-callejero-oficial-madrid",
+    "resource": "213605-4-callejero-oficial-madrid-csv",
+    "publisher": "Ayuntamiento de Madrid (callejero oficial, direcciones vigentes)",
+    "licence": "CC BY 4.0",
+    "attribution": "Ayuntamiento de Madrid"
+  },
+  "cdau_portales": {
+    "url": "https://www.juntadeandalucia.es/institutodeestadisticaycartografia/cdau/portales/portal_Andalucia.zip",
+    "publisher": "Junta de Andalucía, Instituto de Estadística y Cartografía (Callejero Digital de Andalucía Unificado)",
+    "licence": "CC BY 4.0",
+    "attribution": "Fuente: CDAU (Entidades Locales-Junta de Andalucía- IGN)"
+  },
+  "ideib_portales": {
+    "url": "https://intranet.caib.es/opendatacataleg/files/dataset/portals/portals.csv",
+    "publisher": "Govern de les Illes Balears (IDEIB, portals d'adreces)",
+    "licence": "CC BY",
+    "attribution": "Govern de les Illes Balears, IDEIB"
   },
   "ign_limites": {
     "url": "https://centrodedescargas.cnig.es/CentroDescargas/documentos/atom/au/lineas_limite_gml.zip",

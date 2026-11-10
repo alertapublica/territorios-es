@@ -121,7 +121,7 @@ test('postalCodes', () => {
 
 test('municipalities', () => {
   for (const [code, expected] of CASES.municipalities) {
-    assert.deepEqual(POSTAL.municipalities(code).map((i) => [i.id, i.addresses]), expected, String(code));
+    assert.deepEqual(POSTAL.municipalities(code).map((i) => [i.id, i.count, i.unit]), expected, String(code));
   }
 });
 
@@ -131,10 +131,17 @@ test('relatePostalCode', () => {
     assert.deepEqual([found.status, found.territory, found.candidates, found.reason], [status, territory, candidates, reason], String(code));
   }
   const found = POSTAL.relate('15001');
-  assert.deepEqual(found.evidence.map((e) => [e.territory, e.addresses]), [['es:municipio:15030', 1200], ['es:municipio:36038', 4]]);
+  assert.deepEqual(found.evidence.map((e) => [e.territory, e.origin, e.count, e.unit, e.also]), [
+    ['es:municipio:15030', 'ine', 30, 'street_sections', ['catastro']],
+    ['es:municipio:36038', 'catastro', 40, 'addresses', []]]);
   assert.equal(combine(found, relateName(CATALOG, 'A Coruña', { levels: ['municipality'] })).territory, 'es:municipio:15030');
-  POSTAL.municipalities('15001')[0].addresses = 0;
-  assert.equal(POSTAL.municipalities('15001')[0].addresses, 1200);
-  assert.equal(POSTAL.size, 14);
+  const first = POSTAL.municipalities('15001')[0];
+  assert.deepEqual([first.source, first.also], ['ine', ['catastro']]);
+  first.count = 0;
+  first.also[0] = 'x';
+  assert.deepEqual(POSTAL.municipalities('15001')[0], {
+    postal_code: '15001', id: 'es:municipio:15030', source: 'ine', count: 30, unit: 'street_sections', also: ['catastro'],
+  });
+  assert.equal(POSTAL.size, 23);
   assert.throws(() => createPostalCodes('codigo,municipio\n'));
 });
