@@ -3155,38 +3155,38 @@ es:provincia:51,official,,Ceuta,fuentes
 es:provincia:51,display,,Ceuta,fuentes
 es:provincia:52,official,,Melilla,fuentes
 es:provincia:52,display,,Melilla,fuentes
-es:isla:eivissa,official,,Eivissa,fuentes
-es:isla:eivissa,display,,Eivissa,fuentes
-es:isla:eivissa,lang,ast,Ibiza,wikidata
-es:isla:eivissa,lang,en,Ibiza,wikidata
-es:isla:eivissa,lang,es,Ibiza,wikidata
-es:isla:eivissa,lang,eu,Eivissa uhartea,wikidata
-es:isla:eivissa,lang,gl,Eivisa,wikidata
-es:isla:formentera,official,,Formentera,fuentes
-es:isla:formentera,display,,Formentera,fuentes
-es:isla:mallorca,official,,Mallorca,fuentes
-es:isla:mallorca,display,,Mallorca,fuentes
-es:isla:mallorca,lang,oc,Malhòrca,wikidata
-es:isla:menorca,official,,Menorca,fuentes
-es:isla:menorca,display,,Menorca,fuentes
-es:isla:fuerteventura,official,,Fuerteventura,fuentes
-es:isla:fuerteventura,display,,Fuerteventura,fuentes
-es:isla:gran-canaria,official,,Gran Canaria,fuentes
-es:isla:gran-canaria,display,,Gran Canaria,fuentes
-es:isla:gran-canaria,lang,eu,Kanaria Handia,wikidata
-es:isla:gran-canaria,lang,oc,Grand Canària,wikidata
-es:isla:lanzarote,official,,Lanzarote,fuentes
-es:isla:lanzarote,display,,Lanzarote,fuentes
-es:isla:el-hierro,official,,El Hierro,fuentes
-es:isla:el-hierro,display,,El Hierro,fuentes
-es:isla:el-hierro,lang,eu,Hierro,wikidata
-es:isla:la-gomera,official,,La Gomera,fuentes
-es:isla:la-gomera,display,,La Gomera,fuentes
-es:isla:la-gomera,lang,eu,Gomera,wikidata
-es:isla:la-palma,official,,La Palma,fuentes
-es:isla:la-palma,display,,La Palma,fuentes
-es:isla:tenerife,official,,Tenerife,fuentes
-es:isla:tenerife,display,,Tenerife,fuentes
+es:isla:071,official,,Formentera,ine
+es:isla:071,display,,Formentera,derivado
+es:isla:072,official,,Ibiza,ine
+es:isla:072,display,,Ibiza,derivado
+es:isla:072,lang,an,Eivissa,wikidata
+es:isla:072,lang,ca,Eivissa,wikidata
+es:isla:072,lang,eu,Eivissa uhartea,wikidata
+es:isla:072,lang,gl,Eivisa,wikidata
+es:isla:072,lang,oc,Eivissa,wikidata
+es:isla:073,official,,Mallorca,ine
+es:isla:073,display,,Mallorca,derivado
+es:isla:073,lang,oc,Malhòrca,wikidata
+es:isla:074,official,,Menorca,ine
+es:isla:074,display,,Menorca,derivado
+es:isla:351,official,,Fuerteventura,ine
+es:isla:351,display,,Fuerteventura,derivado
+es:isla:352,official,,Gran Canaria,ine
+es:isla:352,display,,Gran Canaria,derivado
+es:isla:352,lang,eu,Kanaria Handia,wikidata
+es:isla:352,lang,oc,Grand Canària,wikidata
+es:isla:353,official,,Lanzarote,ine
+es:isla:353,display,,Lanzarote,derivado
+es:isla:381,official,,"Gomera, La",ine
+es:isla:381,display,,La Gomera,derivado
+es:isla:381,lang,eu,Gomera,wikidata
+es:isla:382,official,,"Hierro, El",ine
+es:isla:382,display,,El Hierro,derivado
+es:isla:382,lang,eu,Hierro,wikidata
+es:isla:383,official,,"Palma, La",ine
+es:isla:383,display,,La Palma,derivado
+es:isla:384,official,,Tenerife,ine
+es:isla:384,display,,Tenerife,derivado
 es:municipio:01001,official,,Alegría-Dulantzi,ine
 es:municipio:01001,display,,Alegría-Dulantzi,derivado
 es:municipio:01001,lang,an,Dulantzi,wikidata
@@ -8373,16 +8373,10 @@ es:municipio:15069,lang,es,Puentedeume,wikidata
 es:municipio:15070,official,,"Pontes de García Rodríguez, As",ine
 es:municipio:15070,display,,As Pontes de García Rodríguez,derivado
 es:municipio:15070,lang,es,Puentes de García Rodríguez,wikidata
-es:municipio:15071,official,,Porto do Son,ine
-es:municipio:15071,display,,Porto do Son,derivado
-es:municipio:15071,lang,an,O Porto do Son,wikidata
-es:municipio:15071,lang,ast,O Porto do Son,wikidata
-es:municipio:15071,lang,ca,O Porto do Son,wikidata
-es:municipio:15071,lang,en,O Porto do Son,wikidata
+es:municipio:15071,official,,"Porto do Son, O",ine
+es:municipio:15071,display,,O Porto do Son,derivado
 es:municipio:15071,lang,es,Puerto del Son,wikidata
-es:municipio:15071,lang,eu,O Porto do Son,wikidata
-es:municipio:15071,lang,gl,O Porto do Son,wikidata
-es:municipio:15071,lang,oc,O Porto do Son,wikidata
+es:municipio:15071,alias:former_official,,Porto do Son,ine
 es:municipio:15072,official,,Rianxo,ine
 es:municipio:15072,display,,Rianxo,derivado
 es:municipio:15072,lang,es,Rianjo,wikidata
@@ -8440,8 +8434,9 @@ es:municipio:15093,official,,Zas,ine
 es:municipio:15093,display,,Zas,derivado
 es:municipio:15901,official,,Cariño,ine
 es:municipio:15901,display,,Cariño,derivado
-es:municipio:15902,official,,Oza-Cesuras,ine
-es:municipio:15902,display,,Oza-Cesuras,derivado
+es:municipio:15902,official,,Oza Cesuras,ine
+es:municipio:15902,display,,Oza Cesuras,derivado
+es:municipio:15902,alias:former_official,,Oza-Cesuras,ine
 es:municipio:16001,official,,Abia de la Obispalía,ine
 es:municipio:16001,display,,Abia de la Obispalía,derivado
 es:municipio:16002,official,,"Acebrón, El",ine
@@ -9236,11 +9231,14 @@ es:municipio:17116,official,,Osor,ine
 es:municipio:17116,display,,Osor,derivado
 es:municipio:17117,official,,Palafrugell,ine
 es:municipio:17117,display,,Palafrugell,derivado
-es:municipio:17118,official,,Palamós,ine
-es:municipio:17118,display,,Palamós,derivado
-es:municipio:17118,lang,ca,Palamós i Sant Joan,wikidata
-es:municipio:17118,lang,en,Palamós i Sant Joan,wikidata
-es:municipio:17118,lang,eu,Palamós i Sant Joan,wikidata
+es:municipio:17118,official,,Palamós i Sant Joan,ine
+es:municipio:17118,display,,Palamós i Sant Joan,derivado
+es:municipio:17118,lang,an,Palamós,wikidata
+es:municipio:17118,lang,ast,Palamós,wikidata
+es:municipio:17118,lang,es,Palamós,wikidata
+es:municipio:17118,lang,gl,Palamós,wikidata
+es:municipio:17118,lang,oc,Palamós,wikidata
+es:municipio:17118,alias:former_official,,Palamós,ine
 es:municipio:17119,official,,Palau de Santa Eulàlia,ine
 es:municipio:17119,display,,Palau de Santa Eulàlia,derivado
 es:municipio:17120,official,,Palau-saverdera,ine
@@ -13252,15 +13250,10 @@ es:municipio:26183,official,,Zorraquín,ine
 es:municipio:26183,display,,Zorraquín,derivado
 es:municipio:27001,official,,Abadín,ine
 es:municipio:27001,display,,Abadín,derivado
-es:municipio:27002,official,,Alfoz,ine
-es:municipio:27002,display,,Alfoz,derivado
-es:municipio:27002,lang,an,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,ast,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,ca,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,en,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,eu,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,gl,Alfoz do Castrodouro,wikidata
-es:municipio:27002,lang,oc,Alfoz do Castrodouro,wikidata
+es:municipio:27002,official,,Alfoz do Castrodouro,ine
+es:municipio:27002,display,,Alfoz do Castrodouro,derivado
+es:municipio:27002,lang,es,Alfoz,wikidata
+es:municipio:27002,alias:former_official,,Alfoz,ine
 es:municipio:27003,official,,Antas de Ulla,ine
 es:municipio:27003,display,,Antas de Ulla,derivado
 es:municipio:27004,official,,Baleira,ine
@@ -13353,16 +13346,9 @@ es:municipio:27042,display,,Paradela,derivado
 es:municipio:27043,official,,"Páramo, O",ine
 es:municipio:27043,display,,O Páramo,derivado
 es:municipio:27043,lang,es,Páramo,wikidata
-es:municipio:27044,official,,"Pastoriza, A",ine
-es:municipio:27044,display,,A Pastoriza,derivado
-es:municipio:27044,lang,an,Pastoriza,wikidata
-es:municipio:27044,lang,ast,Pastoriza,wikidata
-es:municipio:27044,lang,ca,Pastoriza,wikidata
-es:municipio:27044,lang,en,Pastoriza,wikidata
-es:municipio:27044,lang,es,Pastoriza,wikidata
-es:municipio:27044,lang,eu,Pastoriza,wikidata
-es:municipio:27044,lang,gl,Pastoriza,wikidata
-es:municipio:27044,lang,oc,Pastoriza,wikidata
+es:municipio:27044,official,,Pastoriza,ine
+es:municipio:27044,display,,Pastoriza,derivado
+es:municipio:27044,alias:former_official,,A Pastoriza,ine
 es:municipio:27045,official,,Pedrafita do Cebreiro,ine
 es:municipio:27045,display,,Pedrafita do Cebreiro,derivado
 es:municipio:27045,lang,es,Piedrafita,wikidata
@@ -13384,11 +13370,15 @@ es:municipio:27051,display,,Ribadeo,derivado
 es:municipio:27052,official,,Ribas de Sil,ine
 es:municipio:27052,display,,Ribas de Sil,derivado
 es:municipio:27052,lang,es,Ribas del Sil,wikidata
-es:municipio:27053,official,,Ribeira de Piquín,ine
-es:municipio:27053,display,,Ribeira de Piquín,derivado
-es:municipio:27053,lang,en,A Ribeira de Piquín,wikidata
+es:municipio:27053,official,,"Ribeira de Piquín, A",ine
+es:municipio:27053,display,,A Ribeira de Piquín,derivado
+es:municipio:27053,lang,an,Ribeira de Piquín,wikidata
+es:municipio:27053,lang,ast,Ribeira de Piquín,wikidata
+es:municipio:27053,lang,ca,Ribeira de Piquín,wikidata
 es:municipio:27053,lang,es,Ribera de Piquín,wikidata
-es:municipio:27053,lang,gl,A Ribeira de Piquín,wikidata
+es:municipio:27053,lang,eu,Ribeira de Piquín,wikidata
+es:municipio:27053,lang,oc,Ribeira de Piquín,wikidata
+es:municipio:27053,alias:former_official,,Ribeira de Piquín,ine
 es:municipio:27054,official,,Riotorto,ine
 es:municipio:27054,display,,Riotorto,derivado
 es:municipio:27055,official,,Samos,ine
@@ -14987,14 +14977,12 @@ es:municipio:31242,lang,an,Urraúl Baixa,wikidata
 es:municipio:31242,lang,ca,Urraulbeiti,wikidata
 es:municipio:31242,lang,eu,Urraulbeiti,wikidata
 es:municipio:31242,lang,oc,Urraulbeiti,wikidata
-es:municipio:31243,official,,Urroz-Villa,ine
-es:municipio:31243,display,,Urroz-Villa,derivado
+es:municipio:31243,official,,Urroz Villa/Urrotz,ine
+es:municipio:31243,display,,Urroz Villa/Urrotz,derivado
+es:municipio:31243,parts,es,Urroz Villa,fuentes
+es:municipio:31243,parts,eu,Urrotz,fuentes
 es:municipio:31243,lang,an,Urroz,wikidata
-es:municipio:31243,lang,ast,Urrotz,wikidata
-es:municipio:31243,lang,ca,Urrotz,wikidata
-es:municipio:31243,lang,eu,Urrotz,wikidata
-es:municipio:31243,lang,gl,Urrotz,wikidata
-es:municipio:31243,lang,oc,Urrotz,wikidata
+es:municipio:31243,alias:former_official,,Urroz-Villa,ine
 es:municipio:31244,official,,Urroz,ine
 es:municipio:31244,display,,Urroz,derivado
 es:municipio:31244,lang,ca,Urrotz,wikidata
@@ -15156,15 +15144,10 @@ es:municipio:32021,display,,Castrelo do Val,derivado
 es:municipio:32021,lang,es,Castrelo del Valle,wikidata
 es:municipio:32022,official,,Castrelo de Miño,ine
 es:municipio:32022,display,,Castrelo de Miño,derivado
-es:municipio:32023,official,,Castro Caldelas,ine
-es:municipio:32023,display,,Castro Caldelas,derivado
-es:municipio:32023,lang,an,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,ast,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,ca,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,en,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,eu,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,gl,O Castro de Caldelas,wikidata
-es:municipio:32023,lang,oc,O Castro de Caldelas,wikidata
+es:municipio:32023,official,,"Castro de Caldelas, O",ine
+es:municipio:32023,display,,O Castro de Caldelas,derivado
+es:municipio:32023,lang,es,Castro Caldelas,wikidata
+es:municipio:32023,alias:former_official,,Castro Caldelas,ine
 es:municipio:32024,official,,Celanova,ine
 es:municipio:32024,display,,Celanova,derivado
 es:municipio:32025,official,,Cenlle,ine
@@ -15281,10 +15264,15 @@ es:municipio:32069,display,,Ribadavia,derivado
 es:municipio:32070,official,,San Xoán de Río,ine
 es:municipio:32070,display,,San Xoán de Río,derivado
 es:municipio:32070,lang,es,Río,wikidata
-es:municipio:32071,official,,Riós,ine
-es:municipio:32071,display,,Riós,derivado
-es:municipio:32071,lang,en,O Riós,wikidata
-es:municipio:32071,lang,gl,O Riós,wikidata
+es:municipio:32071,official,,"Riós, O",ine
+es:municipio:32071,display,,O Riós,derivado
+es:municipio:32071,lang,an,Riós,wikidata
+es:municipio:32071,lang,ast,Riós,wikidata
+es:municipio:32071,lang,ca,Riós,wikidata
+es:municipio:32071,lang,es,Riós,wikidata
+es:municipio:32071,lang,eu,Riós,wikidata
+es:municipio:32071,lang,oc,Riós,wikidata
+es:municipio:32071,alias:former_official,,Riós,ine
 es:municipio:32072,official,,"Rúa, A",ine
 es:municipio:32072,display,,A Rúa,derivado
 es:municipio:32072,lang,en,A Rúa de Valdeorras,wikidata
@@ -16156,20 +16144,25 @@ es:municipio:36005,official,,Caldas de Reis,ine
 es:municipio:36005,display,,Caldas de Reis,derivado
 es:municipio:36006,official,,Cambados,ine
 es:municipio:36006,display,,Cambados,derivado
-es:municipio:36007,official,,Campo Lameiro,ine
-es:municipio:36007,display,,Campo Lameiro,derivado
-es:municipio:36007,lang,ca,O Campo Lameiro,wikidata
-es:municipio:36007,lang,en,O Campo Lameiro,wikidata
-es:municipio:36007,lang,gl,O Campo Lameiro,wikidata
-es:municipio:36008,official,,Cangas,ine
-es:municipio:36008,display,,Cangas,derivado
-es:municipio:36008,lang,an,Cangas de Morrazo,wikidata
-es:municipio:36008,lang,en,Cangas de Morrazo,wikidata
-es:municipio:36008,lang,es,Cangas de Morrazo,wikidata
-es:municipio:36008,lang,gl,Cangas de Morrazo,wikidata
-es:municipio:36009,official,,"Cañiza, A",ine
-es:municipio:36009,display,,A Cañiza,derivado
+es:municipio:36007,official,,"Campo Lameiro, O",ine
+es:municipio:36007,display,,O Campo Lameiro,derivado
+es:municipio:36007,lang,an,Campo Lameiro,wikidata
+es:municipio:36007,lang,ast,Campo Lameiro,wikidata
+es:municipio:36007,lang,es,Campo Lameiro,wikidata
+es:municipio:36007,lang,eu,Campo Lameiro,wikidata
+es:municipio:36007,lang,oc,Campo Lameiro,wikidata
+es:municipio:36007,alias:former_official,,Campo Lameiro,ine
+es:municipio:36008,official,,Cangas de Morrazo,ine
+es:municipio:36008,display,,Cangas de Morrazo,derivado
+es:municipio:36008,lang,ast,Cangas,wikidata
+es:municipio:36008,lang,ca,Cangas,wikidata
+es:municipio:36008,lang,eu,Cangas,wikidata
+es:municipio:36008,lang,oc,Cangas,wikidata
+es:municipio:36008,alias:former_official,,Cangas,ine
+es:municipio:36009,official,,"Caniza, A",ine
+es:municipio:36009,display,,A Caniza,derivado
 es:municipio:36009,lang,es,La Cañiza,wikidata
+es:municipio:36009,alias:former_official,,A Cañiza,ine
 es:municipio:36010,official,,Catoira,ine
 es:municipio:36010,display,,Catoira,derivado
 es:municipio:36010,lang,es,Catoria,wikidata
@@ -16218,8 +16211,9 @@ es:municipio:36029,official,,Moaña,ine
 es:municipio:36029,display,,Moaña,derivado
 es:municipio:36030,official,,Mondariz,ine
 es:municipio:36030,display,,Mondariz,derivado
-es:municipio:36031,official,,Mondariz-Balneario,ine
-es:municipio:36031,display,,Mondariz-Balneario,derivado
+es:municipio:36031,official,,Mondariz Balneario,ine
+es:municipio:36031,display,,Mondariz Balneario,derivado
+es:municipio:36031,alias:former_official,,Mondariz-Balneario,ine
 es:municipio:36032,official,,Moraña,ine
 es:municipio:36032,display,,Moraña,derivado
 es:municipio:36033,official,,Mos,ine
@@ -16299,8 +16293,9 @@ es:municipio:36061,lang,es,Villanueva de Arosa,wikidata
 es:municipio:36901,official,,"Illa de Arousa, A",ine
 es:municipio:36901,display,,A Illa de Arousa,derivado
 es:municipio:36901,lang,es,Isla de Arosa,wikidata
-es:municipio:36902,official,,Cerdedo-Cotobade,ine
-es:municipio:36902,display,,Cerdedo-Cotobade,derivado
+es:municipio:36902,official,,Cerdedo Cotobade,ine
+es:municipio:36902,display,,Cerdedo Cotobade,derivado
+es:municipio:36902,alias:former_official,,Cerdedo-Cotobade,ine
 es:municipio:37001,official,,Abusejo,ine
 es:municipio:37001,display,,Abusejo,derivado
 es:municipio:37002,official,,Agallas,ine
@@ -20625,13 +20620,12 @@ es:municipio:46208,official,,Rafelcofer,ine
 es:municipio:46208,display,,Rafelcofer,derivado
 es:municipio:46209,official,,Rafelguaraf,ine
 es:municipio:46209,display,,Rafelguaraf,derivado
-es:municipio:46210,official,,Ráfol de Salem,ine
-es:municipio:46210,display,,Ráfol de Salem,derivado
-es:municipio:46210,lang,an,El Ràfol de Salem,wikidata
-es:municipio:46210,lang,ca,el Ràfol de Salem,wikidata
-es:municipio:46210,lang,en,El Ràfol de Salem,wikidata
-es:municipio:46210,lang,eu,El Ràfol de Salem,wikidata
-es:municipio:46210,lang,gl,El Ràfol de Salem,wikidata
+es:municipio:46210,official,,"Ràfol de Salem, el",ine
+es:municipio:46210,display,,el Ràfol de Salem,derivado
+es:municipio:46210,lang,ast,Ráfol de Salem,wikidata
+es:municipio:46210,lang,es,Ráfol de Salem,wikidata
+es:municipio:46210,lang,oc,Ráfol de Salem,wikidata
+es:municipio:46210,alias:former_official,,Ráfol de Salem,ine
 es:municipio:46211,official,,"Real de Gandia, el",ine
 es:municipio:46211,display,,el Real de Gandia,derivado
 es:municipio:46211,lang,an,Real de Gandia,wikidata
