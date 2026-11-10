@@ -229,7 +229,7 @@ options go in an object (`search(text, { within, levels })`).
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
 | `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province or an island. |
 | `children(id)` | The territories whose parent is this one; for an island, its municipalities. Those of a Balearic or Canary province include its islands and its municipalities. |
-| `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. By default, only autonomous communities and provinces. |
+| `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
 | `relate_name(text, within, levels)` | A relation with status: resolved (one candidate), pending (none or several) or conflict. |

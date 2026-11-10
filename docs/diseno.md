@@ -226,7 +226,7 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
 | `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia o a una isla. |
 | `children(id)` | Los territorios cuyo padre es este; en una isla, sus municipios. Los de una provincia de Baleares o Canarias incluyen sus islas y sus municipios. |
-| `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Por defecto, solo comunidades y provincias. |
+| `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
 | `relate_name(text, within, levels)` | Una relación con estado: resuelto (un candidato), pendiente (ninguno o varios) o conflicto. |
