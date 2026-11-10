@@ -135,6 +135,13 @@
 
 - es:municipio:36008: «Cangas» → «Cangas de Morrazo» (REL, 2026-06-15)
 
+## INE: población (4)
+
+- 28999: población del INE (5) de un municipio que no está en el diccionario
+- Provincias sin población del INE: 02, 04, 05, 06, 09, 10, 11, 13, 14, 16, 18, 19, 21, 22, 23, 24, 27, 29, 30, 34, 37, 39, 40, 42, 43, 44, 45, 47, 49
+- es:municipio:04078 «Rioja» sin población del INE
+- es:provincia:41: sus municipios suman 684025 y el total del INE es 684026
+
 ## INE: provincias (1)
 
 - es:provincia:32: fuentes/ dice 12 «Ourense», el INE 12 «Ourense (fixture: nombre distinto)»

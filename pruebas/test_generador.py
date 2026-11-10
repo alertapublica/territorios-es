@@ -56,6 +56,40 @@ class Readers(unittest.TestCase):
             self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": sheet(title, [row])}))
         self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": [["Sin cabecera"]]}))
 
+    def test_ine_population(self):
+        tables = [{"Id": 2855, "Nombre": "Albacete: Población por municipios y sexo.", "Codigo": "PROV-MUN"},
+                  {"Id": 2854, "Nombre": "Araba/Álava: Población por municipios y sexo. ", "Codigo": "PROV-MUN"},
+                  {"Id": 2853, "Nombre": "Población por comunidades y ciudades autónomas y sexo.", "Codigo": "NAC-CCAA"}]
+        self.assertEqual(ine.population_tables(json.dumps(tables).encode(), "PROV-MUN"), [2854, 2855])
+        self.assertRaises(ValueError, ine.population_tables, b"[]", "PROV-MUN")
+        self.assertRaises(ValueError, ine.population_tables, b"<html>", "PROV-MUN")
+
+        # Shape of DATOS_TABLA/2854?nult=1&tip=AM (seen on 2026-11-10).
+        def series(variable, name, code, sex, value, date="2025-01-01T00:00:00.000+01:00"):
+            return {"COD": "DPOP7", "Nombre": f"{name}. Total. Total habitantes. Personas. ",
+                    "MetaData": [{"Id": 6080, "T3_Variable": variable, "Nombre": name, "Codigo": code},
+                                 {"Id": 451 + int(sex), "T3_Variable": "Sexo", "Nombre": "Total", "Codigo": sex},
+                                 {"Id": 8677, "T3_Variable": "Tamaño de los municipios", "Nombre": "Total habitantes",
+                                  "Codigo": "0"}],
+                    "Data": [{"Fecha": date, "T3_TipoDato": "Definitivo", "T3_Periodo": "A", "Anyo": 2025,
+                              "Valor": value}]}
+        table = [series("Provincias", "Araba/Álava", "01", "0", 342161.0),
+                 series("Provincias", "Araba/Álava", "01", "1", 168459.0),
+                 series("Municipios", "Alegría-Dulantzi", "01001", "0", 2955.0),
+                 series("Municipios", "Alegría-Dulantzi", "01001", "2", 1500.0),
+                 series("Municipios", "Vitoria-Gasteiz", "01059", "0", 260699.0)]
+        self.assertEqual(ine.parse_population(json.dumps(table).encode()),
+                         ({"01": 342161, "01001": 2955, "01059": 260699}, "2025-01-01"))
+        for broken in ([*table, series("Municipios", "Burgos", "09059", "0", 1.0)],  # another province
+                       [*table, series("Provincias", "Burgos", "09", "0", 1.0)],
+                       table[2:],  # no province total
+                       [*table, series("Municipios", "Vitoria-Gasteiz", "01059", "0", 1.0)],  # repeated
+                       [*table, series("Municipios", "Otro", "01902", "0", None)],  # no value
+                       [*table, series("Municipios", "Otro", "01902", "0", 1.0, "2024-01-01T00:00:00.000+01:00")]):
+            self.assertRaises(ValueError, ine.parse_population, json.dumps(broken).encode())
+        self.assertRaises(ValueError, ine.parse_population, b'{"status": "error"}')
+        self.assertRaises(ValueError, ine.parse_population, b"<html>")
+
     def test_ine_changes_html(self):
         def page(*rows):
             body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
@@ -338,6 +372,20 @@ class Build(unittest.TestCase):
         self.assertNotIn("island", by_id["es:municipio:36038"])
         self.assertIn("074 está en fuentes/islas.csv pero no en la tabla de islas del INE", self.report.sections["Islas"])
         self.assertIn("es:isla:073 «Mallorca» (Q8828)", self.report.sections["Wikidata: sin elemento"])
+
+    def test_population(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        self.assertEqual(by_id["es:municipio:28079"]["stats"], {"population": 3422416, "area_km2": 12.346})
+        self.assertEqual(by_id["es:provincia:36"]["stats"], {"population": 85000})
+        self.assertNotIn("stats", by_id["es:provincia:02"])
+        self.assertNotIn("stats", by_id["es:municipio:04078"])  # in neither the INE nor the LAU table
+        self.assertNotIn("stats", by_id["es:autonomia:12"])
+        self.assertEqual(self.report.sections["INE: población"], [
+            "es:municipio:04078 «Rioja» sin población del INE",
+            "Provincias sin población del INE: 02, 04, 05, 06, 09, 10, 11, 13, 14, 16, 18, 19, 21, 22, 23, 24, 27, 29, "
+            "30, 34, 37, 39, 40, 42, 43, 44, 45, 47, 49",
+            "28999: población del INE (5) de un municipio que no está en el diccionario",
+            "es:provincia:41: sus municipios suman 684025 y el total del INE es 684026"])
 
     def test_name_changes_of_the_year(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

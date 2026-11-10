@@ -25,6 +25,14 @@
     "licence": "CC BY 4.0 (aviso legal del INE)",
     "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es"
   },
+  "ine_poblacion": {
+    "tables_url": "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/22",
+    "table_code": "PROV-MUN",
+    "data_url": "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/{table}?nult=1&tip=AM",
+    "publisher": "INE",
+    "licence": "CC BY 4.0 (aviso legal del INE)",
+    "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es"
+  },
   "eurostat_lau": {
     "page": "https://ec.europa.eu/eurostat/web/nuts/local-administrative-units",
     "link_pattern": "EU-27-LAU-2024-NUTS-2024\\.xlsx",

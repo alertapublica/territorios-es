@@ -314,6 +314,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     ine_provinces = {p: (c, n) for p, c, n in inputs.get("ine_provinces") or []}
     if not ine_provinces:
         report.add("INE: provincias", "No se pudo leer la tabla de provincias del INE para contrastarla")
+    # Official population (INE, padrón at 1 January): province totals and municipalities.
+    population = (inputs.get("ine_population") or {}).get("values") or {}
     provinces, province_ccaa, province_nuts = [], {}, {}
     for row in hand["provinces"]:
         identity = f"es:provincia:{row['ine']}"
@@ -347,6 +349,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                   "codes": codes, "names": names}
         _attach_wikidata(record, item, qid, report)
         record.update(slug=slugify(row["display"]), time_zone=time_zone[row["autonomia"]])
+        if row["ine"] in population:
+            record["stats"] = {"population": population[row["ine"]]}
         province_ccaa[row["ine"]] = row["autonomia"]
         province_nuts[row["ine"]] = row["nuts3"]
         provinces.append(record)
@@ -506,6 +510,10 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         record = {"id": identity, "level": "municipality", "parent": f"es:provincia:{province}",
                   "codes": codes, "names": names}
         stats = {}
+        if code in population:
+            stats["population"] = population[code]
+        else:
+            report.add("INE: población", f"{identity} «{display}» sin población del INE")
         if code in lau_by_ine:
             fields = lau[lau_by_ine[code]]
             codes["lau"] = lau_by_ine[code]
@@ -516,8 +524,6 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                     report.add("Eurostat LAU", f"{identity}: NUTS 3 {nuts3}, su provincia {province_nuts[province]}")
                 if not province_nuts[province]:
                     island_nuts.setdefault(province, set()).add(nuts3)
-            if fields.get("population", "").replace(".", "", 1).isdigit():
-                stats["population"] = int(float(fields["population"]))
             try:
                 area = float(fields["area"])
                 stats["area_km2"] = round(area / 1_000_000 if area_in_m2 else area, 3)
@@ -559,6 +565,17 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         municipalities.append(record)
         add_articles(identity, item)
 
+    missing = [row["ine"] for row in hand["provinces"] if row["ine"] not in population]
+    if missing:
+        report.add("INE: población", f"Provincias sin población del INE: {', '.join(missing)}")
+    for code in sorted(c for c in population if len(c) == 5 and c not in ine_codes):
+        report.add("INE: población", f"{code}: población del INE ({population[code]}) de un municipio que no está "
+                                     f"en el diccionario")
+    for province in sorted(c for c in population if len(c) == 2):
+        total = sum(v for c, v in population.items() if len(c) == 5 and c[:2] == province)
+        if total != population[province]:
+            report.add("INE: población", f"es:provincia:{province}: sus municipios suman {total} y el total del "
+                                         f"INE es {population[province]}")
     for code in sorted(set(lau_by_ine) - ine_codes):
         fields = lau[lau_by_ine[code]]
         report.add("Eurostat LAU", f"{lau_by_ine[code]} «{fields.get('name_national', '')}» no está en el INE")

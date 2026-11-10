@@ -68,10 +68,11 @@ def tables(data: dict) -> dict[str, str]:
           t["time_zone"]] for t in by_level.get("autonomous_community", [])])
     files["provincias.csv"] = _table(
         ["id", "ine", "autonomia", "iso3166_2", "nuts3", "wikidata", "osm_relation", "geonames",
-         "official", "display", *name_cols, "time_zone"],
+         "official", "display", *name_cols, "population", "time_zone"],
         [[t["id"], code(t, "ine:provincia"), t["parent"].rsplit(":", 1)[1], code(t, "iso3166-2"), code(t, "nuts"),
           code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"],
-          t["names"]["display"], *names(t), t["time_zone"]] for t in by_level.get("province", [])])
+          t["names"]["display"], *names(t), t.get("stats", {}).get("population"), t["time_zone"]]
+         for t in by_level.get("province", [])])
     files["islas.csv"] = _table(
         ["id", "ine", "provincia", "nuts3", "wikidata", "osm_relation", "geonames", "official", "display", *name_cols,
          "time_zone"],

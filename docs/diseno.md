@@ -175,7 +175,11 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
   identificador.
 - **Mapas simplificados** (TopoJSON de comunidades, provincias y municipios) para dibujar en una
   web, hechos por nosotros a partir de los del IGN.
-- **Población** del padrón del INE y **superficie**: sirven para ordenar candidatos.
+- **Población oficial** del INE (padrón a 1 de enero) de provincias y municipios, de su API JSON:
+  una tabla por provincia con su total y el de cada municipio. Se comprueba que los municipios
+  suman el total de su provincia. Las tablas del INE de comunidades e islas acaban en 2021; su
+  población sería la suma de sus provincias o municipios. Con la **superficie** de la tabla LAU,
+  sirven para ordenar candidatos.
 - **De la tabla LAU de Eurostat**, por municipio: grado de
   urbanización (ciudad, intermedio, rural), si es costero y a qué ciudad o área urbana funcional
   pertenece. Por ejemplo, permiten
@@ -349,7 +353,7 @@ Revisados el 10 de noviembre de 2026:
   oficiales que ya usamos, con licencias mezcladas. No aportan nada.
 - es-atlas: TopoJSON hecho con los ficheros del IGN, como nuestros límites.
 - API JSON del INE (`servicios.ine.es/wstempus`): da, por ejemplo, la población oficial de cada
-  municipio con su código, en una tabla por provincia. Útil para la población (§13).
+  municipio con su código, en una tabla por provincia. Se usa para la población (§4.5).
 - Nomenclátor Geográfico Básico (colección `namedplace` de la API del IGN): 1,19 millones de nombres
   de lugar, sin indicar el idioma. No sirve para los nombres por idioma.
 
@@ -385,8 +389,8 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Versión 0.4, por orden: población oficial del INE a 1 de enero (API JSON, una tabla por provincia)
-  en lugar de la de Eurostat; códigos postales del callejero del censo electoral (cada tramo lleva
+- Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
+  códigos postales del callejero del censo electoral (cada tramo lleva
   su distrito postal; antes hay que aclarar si la licencia del INE cubre ese dato, cuyo origen es
   Correos); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
   Locales anota islas, comarcas y mancomunidades); nombres de países desde CLDR; acciones de
@@ -451,6 +455,12 @@ Comprobado el 10 de noviembre de 2026:
   de ellos con dos, que quedan sin capital) y en las demás colecciones no hay ninguna.
 - **Callejero del censo electoral (INE)**: ficheros nacionales y provinciales en enero y julio, con
   el distrito postal de cada tramo de vía.
+- **Población oficial del INE**: operación 22 (`DPOP`) de la API JSON. `TABLAS_OPERACION/22` da 52
+  tablas con el código `PROV-MUN` («Población por municipios y sexo», una por provincia, con Ceuta y
+  Melilla) y `DATOS_TABLA/{id}?nult=1&tip=AM`, el último año con el código del INE en los metadatos
+  de cada serie: 1 de enero de 2025, definitivo, publicado el 11 de diciembre de 2025. Las tablas
+  de comunidades (2853) e islas (2910) acaban en 2021. La tabla nacional por municipio (29005)
+  pasa de 10 MB.
 
 Por comprobar:
 

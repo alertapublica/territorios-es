@@ -1,9 +1,11 @@
 """INE: dictionary of municipalities (XLSX), islands with their municipalities (XLSX), the changes
-registered in the Registro de Entidades Locales since the dictionary (HTML) and the list of
-provinces by community (HTML)."""
+registered in the Registro de Entidades Locales since the dictionary (HTML), the list of
+provinces by community (HTML) and the official population of provinces and municipalities (JSON
+API)."""
 from __future__ import annotations
 
 import html
+import json
 import re
 
 from .xlsx import read_rows, sheet_names
@@ -143,3 +145,42 @@ def parse_provinces(content: bytes) -> list[list[str]]:
         if len(cells) >= 4 and re.fullmatch(r"[0-9]{2}", cells[0]) and re.fullmatch(r"[0-9]{2}", cells[2]):
             result.append([cells[2], cells[0], cells[3]])
     return sorted(result)
+
+
+def population_tables(content: bytes, table_code: str) -> list[int]:
+    """Ids of the tables of an operation (TABLAS_OPERACION of the JSON API) with that code. In the
+    operation of the official population («DPOP»), «PROV-MUN» is one table per province."""
+    try:
+        ids = sorted(int(t["Id"]) for t in json.loads(content) if t.get("Codigo") == table_code)
+    except (TypeError, KeyError, AttributeError) as error:
+        raise ValueError(f"Unexpected INE table list: {error}") from error
+    if not ids:
+        raise ValueError(f"No INE tables with code {table_code!r}")
+    return ids
+
+
+def parse_population(content: bytes) -> tuple[dict[str, int], str]:
+    """({province code2 or municipality code5: population}, reference date «YYYY-MM-DD») of one
+    province table (DATOS_TABLA with nult=1 and tip=AM): its total and each of its municipalities,
+    both sexes. Codes come from the series metadata, not from the names."""
+    values, dates = {}, set()
+    try:
+        for series in json.loads(content):
+            meta = {m["T3_Variable"]: m["Codigo"] for m in series["MetaData"]}
+            if meta.get("Sexo") != "0":
+                continue
+            code = meta.get("Municipios") or meta.get("Provincias") or ""
+            data = series["Data"]
+            if (not re.fullmatch(r"[0-9]{2}|[0-9]{5}", code) or code in values or len(data) != 1
+                    or not isinstance(data[0]["Valor"], (int, float))):
+                raise ValueError(f"Unexpected INE population series: {series.get('Nombre')!r}")
+            values[code] = int(data[0]["Valor"])
+            dates.add(data[0]["Fecha"][:10])
+    except (TypeError, KeyError, AttributeError) as error:
+        raise ValueError(f"Unexpected INE population table: {error}") from error
+    provinces = [code for code in values if len(code) == 2]
+    if len(provinces) != 1 or any(code[:2] != provinces[0] for code in values) or len(values) < 2:
+        raise ValueError(f"INE population table without one province and its municipalities: {provinces}")
+    if len(dates) != 1 or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", next(iter(dates))):
+        raise ValueError(f"INE population table with dates {sorted(dates)}")
+    return values, dates.pop()

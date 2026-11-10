@@ -179,7 +179,11 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
   identifier.
 - **Simplified maps** (TopoJSON of autonomous communities, provinces and municipalities) for
   drawing on a website, made by us from those of the IGN.
-- **Population** from the INE padrón and **area**: used to order candidates.
+- **Official population** of provinces and municipalities from the INE (padrón at 1 January),
+  from its JSON API: one table per province with its total and that of each municipality. The
+  municipalities are checked to add up to their province's total. The INE tables for communities
+  and islands end in 2021; their population would be the sum of their provinces or
+  municipalities. Together with the **area** from the LAU table, used to order candidates.
 - **From the Eurostat LAU table**, per municipality: degree of
   urbanisation (city, intermediate, rural), whether it is coastal and which city or functional
   urban area it belongs to. For example, they make it possible to filter job offers in rural areas
@@ -354,7 +358,7 @@ Reviewed on 10 November 2026:
   sources we already use, with mixed licences. They add nothing.
 - es-atlas: TopoJSON built from the IGN files, like our boundaries.
 - INE JSON API (`servicios.ine.es/wstempus`): gives, for example, the official population of each
-  municipality with its code, in one table per province. Useful for population (§13).
+  municipality with its code, in one table per province. Used for population (§4.5).
 - Nomenclátor Geográfico Básico (collection `namedplace` of the IGN API): 1.19 million place names,
   without their language. Not useful for names per language.
 
@@ -391,8 +395,8 @@ Taken with the project owner on 9 November 2026:
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Version 0.4, in order: official INE population as of 1 January (JSON API, one table per province)
-  instead of Eurostat's; postal codes from the electoral roll street directory (each street section
+- Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
+  postal codes from the electoral roll street directory (each street section
   carries its postal district; first, clarify whether the INE licence covers that datum, which
   comes from Correos); judicial districts and official comarcas (find a source: the Registro de
   Entidades Locales records islands, comarcas and associations of municipalities); country names
@@ -459,6 +463,12 @@ Checked on 10 November 2026:
   54 (two of them with two, which stay without a capital) and the other collections have none.
 - **Electoral roll street directory (INE)**: national and provincial files in January and July,
   with the postal district of each street section.
+- **Official INE population**: operation 22 (`DPOP`) of the JSON API. `TABLAS_OPERACION/22` gives
+  52 tables with the code `PROV-MUN` («Población por municipios y sexo», one per province,
+  including Ceuta and Melilla) and `DATOS_TABLA/{id}?nult=1&tip=AM` the latest year, with the INE
+  code in each series' metadata: 1 January 2025, final, published on 11 December 2025. The tables
+  for communities (2853) and islands (2910) end in 2021. The national table by municipality
+  (29005) is over 10 MB.
 
 To be checked:
 
