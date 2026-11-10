@@ -83,7 +83,17 @@ First version:
   belong to the EU or the European Economic Area. It is useful, for example, for the nationality
   requirement in job calls.
 
-Second version: islands (cabildos and consells), official comarcas and judicial districts.
+Second version: islands (cabildos and consells), official comarcas and judicial districts. The
+islands are done (version 0.3):
+
+- **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
+  with level `island` and an identifier with the INE island code (`es:isla:384` is Tenerife;
+  `es:isla:072`, Ibiza). Their parent is the province. Municipalities keep their parent and also
+  carry the field `island`. The code, the official name and the municipalities of each island come
+  from the INE island table (`26codislas.xlsx`); `fuentes/islas.csv` adds the Wikidata item and the
+  NUTS 3, which is only used to cross-check (Eivissa and Formentera share ES531). Smaller islands go
+  with the municipality they belong to (La Graciosa with Teguise, in Lanzarote; Cabrera with Palma,
+  in Mallorca). The name is the INE's official one (§4.4); the others come from Wikidata.
 
 Later: population entities from the INE Nomenclátor (núcleos, and parishes in Galicia and
 Asturias), which number in the tens of thousands.
@@ -92,7 +102,7 @@ Asturias), which number in the tens of thousands.
 
 | Code | Levels | Source | Notes |
 |---|---|---|---|
-| INE | autonomous community (2 digits), province (2), municipality (5 + check digit) | Annual INE dictionary | Official; it is the basis of identity. |
+| INE | autonomous community (2 digits), province (2), island (3), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
@@ -145,7 +155,7 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 - **Autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
   "Cataluña").
-- **Provinces and municipalities**: the official one. If it is bilingual, only the part in the
+- **Provinces, islands and municipalities**: the official one. If it is bilingual, only the part in the
   language of the page ("Alacant" in Catalan, "San Sebastián" in Spanish) and the full name in the
   others. In Spanish "Girona" is shown, not "Gerona".
 - The usual names in other languages ("Gerona", "Seville", "Saragossa") are used for searching and
@@ -155,7 +165,9 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 - **Reference point of the municipality** (its capital): the population nucleus that the IGN
   marks as the capital of the municipality in its features API (collection `nuc`, product IGR
-  Poblaciones, CC BY 4.0), with longitude, latitude and altitude. It is cross-checked with the
+  Poblaciones, CC BY 4.0), with longitude, latitude and altitude. Some capitals are not nuclei for
+  the INE: they are in the collection `opob` of the same product, read only for the places marked
+  as municipal capitals. It is cross-checked with the
   boundaries: a capital outside its municipality goes to the report. The Nomenclátor de Municipios
   y Entidades de Población would give the same, but its download needs a form signed by the
   browser; if the CNIG gives a direct link, the source can change.
@@ -181,7 +193,11 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 ### 4.6 Changes over time
 
 The INE publishes a new dictionary every year and the list of changes (additions, removals,
-mergers and name changes). The first version is a snapshot as of 1 January 2026. Afterwards:
+mergers and name changes), and during the year, the changes registered in the Registro de
+Entidades Locales. The data start from the dictionary as of 1 January 2026 and apply the name
+changes registered since then: the new name becomes the official one and the previous one stays
+as an alias (`former_official`, with the date of the resolution in `until`). Additions and
+removals of the year go to the report and come in with the next dictionary. Afterwards:
 
 - a name change keeps the identifier and stores the previous name as an alias with dates;
 - a merger or segregation creates new identities and succession links;
@@ -211,7 +227,8 @@ options go in an object (`search(text, { within, levels })`).
 |---|---|
 | `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province or an island. |
+| `children(id)` | The territories whose parent is this one; for an island, its municipalities. Those of a Balearic or Canary province include its islands and its municipalities. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -263,7 +280,7 @@ evidence. Each project keeps only what is its own (for example, the coverage of 
   major, changing identifiers or removing fields. Each consumer pins the exact version.
 - **Licences**:
   - the code, MIT;
-  - each datum keeps the licence of its source: INE (reuse citing the source), IGN/CNIG
+  - each datum keeps the licence of its source: INE (CC BY 4.0), IGN/CNIG
     (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
   - IGN: the licence (Orden FOM/2807/2015) asks to cite each product with the formula of the
     Sistema Cartográfico Nacional table: "IGR_POBLACIONES 2024 CC-BY 4.0 scne.es" for the capitals
@@ -321,18 +338,25 @@ the source), but several are useful for cross-checking or as inspiration:
 
 | Project | What it provides | Intended use |
 |---|---|---|
-| [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Autonomous communities, provinces, current and historical municipalities and islands with INE codes, in CSV and JSON; updated with the 2026 INE. | Cross-checking, especially for islands and historical municipalities. Licence to be confirmed. |
+| [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Autonomous communities, provinces, current and historical municipalities (INE dictionaries since 2004) and islands, in CSV and JSON. | Cross-checking only: the repository has no licence. On 10 November 2026 it matched our data in all 8,132 municipalities and 52 provinces. Its sources are the INE's, which we read directly. |
 | [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Mapping of INE and Catastro codes taken from the OVC service. | Cross-checking of the Catastro mapping that we will make. |
 | EU Vocabularies: ATU and Country authority tables (Publications Office) | Administrative units of the Member States, current and past, with stable URIs. | Cross-checking and linking, if its coverage of Spain reaches municipalities. |
 | Eurostat GISCO | LAU–NUTS tables and boundaries. | The tables and the codes, yes. The boundaries, no: their licence excludes commercial use. |
-| EuroGeographics, Open Maps For Europe | European boundaries (EuroBoundaryMap 2025, with NUTS 2024) with their own open licence. | Cross-checking of boundaries and names, after reading their specification. |
-| Unicode CLDR and Debian iso-codes | Translated names of countries and of ISO 3166-2 subdivisions. | Cross-checking of the names of countries and autonomous communities; licences to be confirmed. |
+| EuroGeographics, Open Maps For Europe | European boundaries. | Discarded: EuroGeographics' own licence, EuroBoundaryMap is not open, and the data for Spain come from the IGN, which we use directly. |
+| Unicode CLDR and Debian iso-codes | Translated names of countries and of ISO 3166-2 subdivisions. | Candidate for country names per language (today from Wikidata); Unicode licence for CLDR. |
 | mapSpain and giscoR (R packages) | Maps of Spain and dictionaries of codes and names. | Inspiration. |
 | datos.gob.es | URIs of autonomous communities and provinces. | Additional identifier (§4.2). |
 | Base de datos general de entidades locales (Ministry of Finance) | Local entities with INE code and NIF. | For the sibling repo of public bodies. |
 
-Still to be reviewed: Who's On First, geoBoundaries, Overture Maps, es-atlas, the INE JSON API and
-the Nomenclátor Geográfico Básico (place names per language).
+Reviewed on 10 November 2026:
+
+- Who's On First, geoBoundaries and Overture Maps: derived from OpenStreetMap or from the official
+  sources we already use, with mixed licences. They add nothing.
+- es-atlas: TopoJSON built from the IGN files, like our boundaries.
+- INE JSON API (`servicios.ine.es/wstempus`): gives, for example, the official population of each
+  municipality with its code, in one table per province. Useful for population (§13).
+- Nomenclátor Geográfico Básico (collection `namedplace` of the IGN API): 1.19 million place names,
+  without their language. Not useful for names per language.
 
 ## 12. Decisions
 
@@ -361,16 +385,20 @@ Taken with the project owner on 9 November 2026:
 - Translate this document and the README into Catalan, Galician, Basque and Aranese.
 - Review the translations of the website and of the names of autonomous communities (marked as
   pending).
-- Review the projects that remain in section 11.
 - Review the discrepancy report of the first generation: Wikidata labels that are the name of
   another municipality, repeated identifiers and former municipalities with an INE code in
   Wikidata; fix in Wikidata what is their error.
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Second version: simplified maps, islands, comarcas, judicial districts, Open Maps For Europe.
-  The coordinates, the IGN boundaries and `locate` are done.
-- Later: population entities, historical INE changes, fuzzy search.
+- Version 0.4, in order: official INE population as of 1 January (JSON API, one table per province)
+  instead of Eurostat's; postal codes from the electoral roll street directory (each street section
+  carries its postal district; first, clarify whether the INE licence covers that datum, which
+  comes from Correos); judicial districts and official comarcas (find a source: the Registro de
+  Entidades Locales records islands, comarcas and associations of municipalities); country names
+  from CLDR; GitHub actions still on Node 20.
+- Later: population entities, historical INE changes (annual dictionaries since 2004 and each
+  year's page of changes), fuzzy search.
 
 ## 14. To verify
 
@@ -415,9 +443,25 @@ Before using each source, its URL, format and licence have to be checked. Alread
   altitude and `capital`: one digit per level, State, community, province and municipality). None
   of them has names per language.
 
+Checked on 10 November 2026:
+
+- **INE licence**: CC BY 4.0 (legal notice). For processed data the attribution is «Elaboración
+  propia con datos extraídos del sitio web del INE: www.ine.es», with the update date of the
+  original.
+- **INE codes operation**: besides the dictionary and the province table, it publishes the island
+  table (`26codislas.xlsx`, with the municipalities of each island; its title says «a 1 de enero
+  de 2025», but it matches the 2026 dictionary), each year's changes
+  (`codmunNN/NNcodmunmod.htm`), those registered so far this year (`codmun_anual.htm`; 15 name
+  changes on 10 November) and the number of municipalities per province, community and island.
+- **Eurostat LAU table**: 2024 is still the latest validated one; 2025 and 2026 are «partially
+  validated».
+- **IGN capitals**: 79 municipalities without a capital in `nuc`; the collection `opob` marks it for
+  54 (two of them with two, which stay without a capital) and the other collections have none.
+- **Electoral roll street directory (INE)**: national and provincial files in January and July,
+  with the postal district of each street section.
+
 To be checked:
 
-- INE electoral roll street directory: whether it includes the postal code and can be reused;
-- INE: file of official population figures per municipality (as of 1 January 2025) and conditions
-  of reuse;
-- licences of codeforspain, CLDR, iso-codes, EU Vocabularies and Open Maps For Europe.
+- electoral roll street directory: whether the INE licence covers the postal code (it comes from
+  Correos);
+- licences of iso-codes and EU Vocabularies.

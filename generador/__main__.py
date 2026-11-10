@@ -35,6 +35,21 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     records["ine_municipios"] = got.record(reference_date=c["reference_date"], licence=c["licence"],
                                            attribution=c["attribution"])
 
+    c = config["ine_islas"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="ine_islas.xlsx")
+    inputs["ine_islands"], date = ine.parse_islands(got.content)
+    records["ine_islas"] = got.record(reference_date=date, licence=c["licence"], attribution=c["attribution"])
+
+    c = config["ine_cambios"]
+    try:
+        got = descargas.fetch(c["url"], cache=cache, cache_name="ine_cambios.htm")
+        since, changes = ine.parse_changes(got.content)
+        inputs["ine_changes"] = {"since": since, "changes": changes}
+        records["ine_cambios"] = got.record(reference_date=since, licence=c["licence"], attribution=c["attribution"])
+    except (RuntimeError, ValueError) as error:
+        print(f"Aviso: {error}", file=sys.stderr)
+        inputs["ine_changes"] = None
+
     c = config["ine_provincias"]
     try:
         got = descargas.fetch(c["url"], cache=cache, cache_name="ine_provincias.htm")
@@ -74,23 +89,28 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         "licence": c["licence"], "attribution": c["attribution"]}
 
     c = config["ign_poblaciones"]
-    answers, rows, offset = [], [], 0
-    while True:
-        got = descargas.fetch(ign.populations_url(offset), cache=cache, cache_name=f"ign_poblaciones_{offset}.json",
-                              validate=ign.parse_populations)
-        page, matched = ign.parse_populations(got.content)
-        answers.append(got)
-        rows += page
-        offset += ign.PAGE
-        if offset >= matched:
-            break
-        if not page:
-            raise ValueError(f"IGN: página vacía en {offset} de {matched}")
-    if len(rows) != matched:
-        raise ValueError(f"IGN: {len(rows)} núcleos de {matched}")
+    answers, rows, counts = [], [], []
+    for other, name in ((False, "ign_poblaciones"), (True, "ign_otras_capitales")):
+        found, offset = [], 0
+        while True:
+            got = descargas.fetch(ign.populations_url(offset, other=other), cache=cache,
+                                  cache_name=f"{name}_{offset}.json", validate=ign.parse_populations)
+            page, matched = ign.parse_populations(got.content)
+            answers.append(got)
+            found += page
+            offset += ign.PAGE
+            if offset >= matched:
+                break
+            if not page:
+                raise ValueError(f"IGN: página vacía en {offset} de {matched}")
+        if len(found) != matched:
+            raise ValueError(f"IGN: {len(found)} poblaciones de {matched}")
+        rows += found
+        counts.append(matched)
     inputs["ign_capitals"] = ign.municipal_capitals(rows)
     records["ign_poblaciones"] = {
-        "url": ign.POPULATIONS_URL + f" ({len(answers)} páginas, {matched} núcleos)",
+        "url": f"{ign.POPULATIONS_URL} ({counts[0]} núcleos) y {ign.OTHER_POPULATIONS_URL}?capital="
+               f"{ign.OTHER_CAPITALS} ({counts[1]} capitales que no son núcleos); {len(answers)} páginas",
         "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
         "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
         "licence": c["licence"], "attribution": c["attribution"]}
@@ -102,7 +122,8 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
 
     c = config["wikidata"]
     raw = {}
-    for key, query in wikidata.queries().items():
+    islands = [row["wikidata"] for row in load_hand_lists(FUENTES)["islands"] if row["wikidata"]]
+    for key, query in wikidata.queries(islands).items():
         got = descargas.fetch(c["url"], data={"query": query}, accept="application/sparql-results+json",
                               cache=cache, cache_name=f"wikidata_{key}.json", validate=json.loads)
         raw[key] = got.content

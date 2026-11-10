@@ -1,7 +1,7 @@
 // Catalogue of territories built from datos/territorios.json. Mirrors python/territorios_es/catalog.py.
 import { dropArticle, normalize } from './text.js';
 
-export const LEVELS = ['country', 'autonomous_community', 'province', 'municipality'];
+export const LEVELS = ['country', 'autonomous_community', 'province', 'island', 'municipality'];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -47,6 +47,12 @@ export function createCatalog(data) {
       if (!childrenOf.has(record.parent)) childrenOf.set(record.parent, []);
       childrenOf.get(record.parent).push(id);
     }
+    // An island groups municipalities of its province; their parent stays the province.
+    if (record.island != null) {
+      if (byId.get(record.island)?.level !== 'island') throw new Error(`Unknown island ${record.island} of ${id}`);
+      if (!childrenOf.has(record.island)) childrenOf.set(record.island, []);
+      childrenOf.get(record.island).push(id);
+    }
   }
 
   const ancestors = (id) => {
@@ -88,7 +94,7 @@ export function createCatalog(data) {
   };
   const accept = (id, within, levels) => {
     if (levels != null && !levels.includes(byId.get(id).level)) return false;
-    return within == null || ancestors(id).includes(within);
+    return within == null || ancestors(id).includes(within) || byId.get(id).island === within;
   };
   const territory = (id) => {
     const record = typeof id === 'string' ? byId.get(id) : undefined;

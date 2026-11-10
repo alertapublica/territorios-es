@@ -81,7 +81,17 @@ Primera versión:
   o al Espacio Económico Europeo. Sirve, por ejemplo, para el requisito de nacionalidad de las
   convocatorias.
 
-Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales.
+Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
+ya están (versión 0.3):
+
+- **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
+  `island` e identificador con el código de isla del INE (`es:isla:384` es Tenerife; `es:isla:072`,
+  Ibiza). Su padre es la provincia. Los municipios no cambian de padre: llevan además el campo
+  `island`. El código, el nombre oficial y los municipios de cada isla salen de la tabla de islas
+  del INE (`26codislas.xlsx`); `fuentes/islas.csv` añade el elemento de Wikidata y el NUTS 3, que
+  solo sirve para contrastar (Eivissa y Formentera comparten la ES531). Las islas menores van con
+  el municipio al que pertenecen (La Graciosa con Teguise, en Lanzarote; Cabrera con Palma, en
+  Mallorca). El nombre es el oficial del INE (§4.4) y los demás salen de Wikidata.
 
 Más adelante: entidades de población del Nomenclátor del INE (núcleos, y parroquias en Galicia y
 Asturias), que son decenas de miles.
@@ -90,7 +100,7 @@ Asturias), que son decenas de miles.
 
 | Código | Niveles | Fuente | Notas |
 |---|---|---|---|
-| INE | comunidad (2 cifras), provincia (2), municipio (5 + dígito de control) | Diccionario anual del INE | Oficial; es la base de la identidad. |
+| INE | comunidad (2 cifras), provincia (2), isla (3), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
@@ -142,7 +152,7 @@ nombres oficiales, sino alias.
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
 
 - **Comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
-- **Provincias y municipios**: el oficial. Si es bilingüe, solo la parte del idioma de la página
+- **Provincias, islas y municipios**: el oficial. Si es bilingüe, solo la parte del idioma de la página
   («Alacant» en catalán, «San Sebastián» en castellano) y el nombre completo en los demás.
   En castellano se muestra «Girona», no «Gerona».
 - Los nombres habituales en otros idiomas («Gerona», «Seville», «Saragossa») sirven para buscar y
@@ -152,7 +162,8 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
 
 - **Punto de referencia del municipio** (su capital): el núcleo de población que el IGN marca como
   capital del municipio en su API de entidades (colección `nuc`, producto IGR Poblaciones, CC BY
-  4.0), con longitud, latitud y altitud. Se contrasta con los límites: una capital fuera de su
+  4.0), con longitud, latitud y altitud. Algunas capitales no son núcleos para el INE: están en la
+  colección `opob` del mismo producto, de la que se leen solo las marcadas como capital municipal. Se contrasta con los límites: una capital fuera de su
   término va al informe. El Nomenclátor de Municipios y Entidades de Población traería lo mismo,
   pero su descarga exige un formulario con firma del navegador; si el CNIG da un enlace directo,
   se puede cambiar de fuente.
@@ -178,7 +189,11 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
 ### 4.6 Cambios en el tiempo
 
 El INE publica cada año un diccionario nuevo y la relación de variaciones (altas, bajas, fusiones
-y cambios de nombre). La primera versión es una foto a 1 de enero de 2026. Después:
+y cambios de nombre), y durante el año, los cambios que se van anotando en el Registro de
+Entidades Locales. Los datos parten del diccionario a 1 de enero de 2026 y aplican los cambios de
+nombre anotados desde entonces: el nombre nuevo pasa a ser el oficial y el anterior queda como
+alias (`former_official`, con la fecha de la resolución en `until`). Las altas y bajas del año van
+al informe y entran con el diccionario siguiente. Después:
 
 - un cambio de nombre conserva el identificador y guarda el nombre anterior como alias con fechas;
 - una fusión o segregación crea identidades nuevas y enlaces de sucesión;
@@ -209,7 +224,8 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 |---|---|
 | `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia o a una isla. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla, sus municipios. Los de una provincia de Baleares o Canarias incluyen sus islas y sus municipios. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -260,7 +276,7 @@ evidencias. Cada proyecto conserva solo lo suyo (por ejemplo, la cobertura de un
   nuevos; mayor, cambiar identificadores o quitar campos. Cada consumidor fija la versión exacta.
 - **Licencias**:
   - el código, MIT;
-  - cada dato conserva la licencia de su fuente: INE (reutilización citando la fuente), IGN/CNIG
+  - cada dato conserva la licencia de su fuente: INE (CC BY 4.0), IGN/CNIG
     (CC BY 4.0), Eurostat (CC BY 4.0), GeoNames (CC BY 4.0), Wikidata (CC0);
   - IGN: la licencia (Orden FOM/2807/2015) pide citar cada producto con la fórmula de la tabla del
     Sistema Cartográfico Nacional: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» para las capitales y,
@@ -317,18 +333,25 @@ fuente), pero varios sirven para contrastar o como inspiración:
 
 | Proyecto | Qué aporta | Uso previsto |
 |---|---|---|
-| [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Comunidades, provincias, municipios actuales e históricos e islas con códigos INE, en CSV y JSON; actualizado con el INE de 2026. | Contraste, sobre todo para islas y municipios históricos. Licencia por confirmar. |
+| [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Comunidades, provincias, municipios actuales e históricos (diccionarios del INE desde 2004) e islas, en CSV y JSON. | Solo contraste: el repositorio no tiene licencia. El 10 de noviembre de 2026 coincidía con nuestros datos en los 8.132 municipios y las 52 provincias. Sus fuentes son las del INE, que leemos directamente. |
 | [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Cruce de códigos INE y Catastro sacado del servicio OVC. | Contraste del cruce con el Catastro que haremos nosotros. |
 | EU Vocabularies: tablas de autoridad ATU y Country (Oficina de Publicaciones) | Unidades administrativas de los Estados miembros, actuales y pasadas, con URIs estables. | Contraste y enlace, si su cobertura de España llega a municipios. |
 | Eurostat GISCO | Tablas LAU–NUTS y límites. | Las tablas y los códigos, sí. Los límites no: su licencia excluye el uso comercial. |
-| EuroGeographics, Open Maps For Europe | Límites europeos (EuroBoundaryMap 2025, con NUTS 2024) con licencia abierta propia. | Contraste de límites y nombres, tras leer su especificación. |
-| Unicode CLDR y Debian iso-codes | Nombres traducidos de países y de subdivisiones ISO 3166-2. | Contraste de los nombres de países y comunidades; licencias por confirmar. |
+| EuroGeographics, Open Maps For Europe | Límites europeos. | Descartado: la licencia es propia de EuroGeographics, EuroBoundaryMap no es abierto y los datos de España salen del IGN, que usamos directamente. |
+| Unicode CLDR y Debian iso-codes | Nombres traducidos de países y de subdivisiones ISO 3166-2. | Candidato para los nombres de países por idioma (hoy, de Wikidata); licencia de Unicode para CLDR. |
 | mapSpain y giscoR (paquetes de R) | Mapas de España y diccionarios de códigos y nombres. | Inspiración. |
 | datos.gob.es | URIs de comunidades y provincias. | Identificador adicional (§4.2). |
 | Base de datos general de entidades locales (Ministerio de Hacienda) | Entidades locales con código INE y NIF. | Para el repo hermano de organismos. |
 
-Quedan por revisar: Who's On First, geoBoundaries, Overture Maps, es-atlas, la API JSON del INE y
-el Nomenclátor Geográfico Básico (nombres de lugar por idioma).
+Revisados el 10 de noviembre de 2026:
+
+- Who's On First, geoBoundaries y Overture Maps: derivan de OpenStreetMap o de las fuentes
+  oficiales que ya usamos, con licencias mezcladas. No aportan nada.
+- es-atlas: TopoJSON hecho con los ficheros del IGN, como nuestros límites.
+- API JSON del INE (`servicios.ine.es/wstempus`): da, por ejemplo, la población oficial de cada
+  municipio con su código, en una tabla por provincia. Útil para la población (§13).
+- Nomenclátor Geográfico Básico (colección `namedplace` de la API del IGN): 1,19 millones de nombres
+  de lugar, sin indicar el idioma. No sirve para los nombres por idioma.
 
 ## 12. Decisiones
 
@@ -356,16 +379,20 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 
 - Traducir este documento y el README al catalán, gallego, euskera y aranés.
 - Revisar las traducciones de la web y de los nombres de comunidades (marcadas como pendientes).
-- Revisar los proyectos que quedan en el apartado 11.
 - Revisar el informe de discrepancias de la primera generación: etiquetas de Wikidata que son el
   nombre de otro municipio, identificadores repetidos y municipios antiguos con código INE en
   Wikidata; corregir en Wikidata lo que sea error suyo.
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Segunda versión: mapas simplificados, islas, comarcas, partidos judiciales, Open Maps For
-  Europe. Ya están las coordenadas, los límites del IGN y `locate`.
-- Más adelante: entidades de población, variaciones históricas del INE, búsqueda aproximada.
+- Versión 0.4, por orden: población oficial del INE a 1 de enero (API JSON, una tabla por provincia)
+  en lugar de la de Eurostat; códigos postales del callejero del censo electoral (cada tramo lleva
+  su distrito postal; antes hay que aclarar si la licencia del INE cubre ese dato, cuyo origen es
+  Correos); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
+  Locales anota islas, comarcas y mancomunidades); nombres de países desde CLDR; acciones de
+  GitHub que aún usan Node 20.
+- Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde
+  2004 y páginas de modificaciones de cada año), búsqueda aproximada.
 
 ## 14. Por verificar
 
@@ -409,9 +436,24 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
   37.497 núcleos con código INE, coordenadas, altitud y `capital`: una cifra por nivel, Estado,
   comunidad, provincia y municipio). Ninguno trae nombres por idioma.
 
+Comprobado el 10 de noviembre de 2026:
+
+- **Licencia del INE**: CC BY 4.0 (aviso legal). Para datos tratados, la cita es «Elaboración propia
+  con datos extraídos del sitio web del INE: www.ine.es», con la fecha de actualización del original.
+- **Operación de códigos del INE**: además del diccionario y de la tabla de provincias, publica la
+  tabla de islas (`26codislas.xlsx`, con el municipio de cada isla; su título dice «a 1 de enero de
+  2025», pero coincide con el diccionario de 2026), las modificaciones de cada año
+  (`codmunNN/NNcodmunmod.htm`), las anotadas en lo que va de año (`codmun_anual.htm`; el 10 de
+  noviembre, 15 cambios de nombre) y el número de municipios por provincia, comunidad e isla.
+- **Tabla LAU de Eurostat**: la de 2024 sigue siendo la última validada; las de 2025 y 2026 están
+  «parcialmente validadas».
+- **Capitales del IGN**: 79 municipios sin capital en `nuc`; la colección `opob` marca la de 54 (dos
+  de ellos con dos, que quedan sin capital) y en las demás colecciones no hay ninguna.
+- **Callejero del censo electoral (INE)**: ficheros nacionales y provinciales en enero y julio, con
+  el distrito postal de cada tramo de vía.
+
 Por comprobar:
 
-- callejero del censo electoral del INE: si trae el código postal y se puede reutilizar;
-- INE: fichero de cifras oficiales de población por municipio (a 1 de enero de 2025) y
-  condiciones de reutilización;
-- licencias de codeforspain, CLDR, iso-codes, EU Vocabularies y Open Maps For Europe.
+- callejero del censo electoral: si la licencia del INE cubre el código postal (su origen es
+  Correos);
+- licencias de iso-codes y EU Vocabularies.

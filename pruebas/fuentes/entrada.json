@@ -283,6 +283,20 @@
    "nuts3": "ES521",
    "population": "1000"
   },
+  "07024": {
+   "area": "12345678",
+   "lau": "07024",
+   "name_national": "Formentera",
+   "nuts3": "ES531",
+   "population": "1000"
+  },
+  "07026": {
+   "area": "12345678",
+   "lau": "07026",
+   "name_national": "Eivissa",
+   "nuts3": "ES531",
+   "population": "1000"
+  },
   "07040": {
    "area": "12345678",
    "lau": "07040",
@@ -395,6 +409,13 @@
    "nuts3": "ES705",
    "population": "381223"
   },
+  "36008": {
+   "area": "12345678",
+   "lau": "36008",
+   "name_national": "Cangas",
+   "nuts3": "ES114",
+   "population": "1000"
+  },
   "36038": {
    "area": "12345678",
    "lau": "36038",
@@ -498,6 +519,18 @@
    "01"
   ],
   [
+   "07024",
+   "4",
+   "Formentera",
+   "04"
+  ],
+  [
+   "07026",
+   "0",
+   "Eivissa",
+   "04"
+  ],
+  [
    "07040",
    "7",
    "Palma",
@@ -592,6 +625,12 @@
    "7",
    "Palmas de Gran Canaria, Las",
    "05"
+  ],
+  [
+   "36008",
+   "4",
+   "Cangas",
+   "12"
   ],
   [
    "36038",
@@ -1095,6 +1134,30 @@
   }
  },
  "wikidata_spain": {
+  "Q40846": {
+   "articles": {},
+   "codes": {
+    "nuts": [
+     "ES709"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Tenerife"
+   }
+  },
+  "Q52631": {
+   "articles": {
+    "ca": "Eivissa"
+   },
+   "codes": {},
+   "dissolved": false,
+   "labels": {
+    "ca": "Eivissa",
+    "en": "Ibiza",
+    "es": "Ibiza"
+   }
+  },
   "Q9000001": {
    "articles": {
     "es": "Galicia",
@@ -1720,5 +1783,58 @@
     ]
    ]
   ]
- ]
+ ],
+ "ine_islands": [
+  [
+   "071",
+   "Formentera",
+   "07024",
+   "4"
+  ],
+  [
+   "072",
+   "Ibiza",
+   "07026",
+   "0"
+  ],
+  [
+   "073",
+   "Mallorca",
+   "07040",
+   "7"
+  ],
+  [
+   "352",
+   "Gran Canaria",
+   "35016",
+   "7"
+  ],
+  [
+   "384",
+   "Tenerife",
+   "38038",
+   "0"
+  ]
+ ],
+ "ine_changes": {
+  "since": "2026-01-01",
+  "changes": [
+   {
+    "kind": "renamed",
+    "code": "36008",
+    "check": "4",
+    "name": "Cangas de Morrazo",
+    "previous": "Cangas",
+    "date": "2026-06-15"
+   },
+   {
+    "kind": "created",
+    "code": "15903",
+    "check": "1",
+    "name": "Concello novo",
+    "other": "15 030 8 Coruña, A",
+    "date": "2026-09-01"
+   }
+  ]
+ }
 }

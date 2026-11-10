@@ -14,7 +14,8 @@ from .construir import UI_LANGS
 
 # Where each kind of datum comes from (design §5). Used for the provenance columns.
 CODE_SOURCES = {
-    "ine:autonomia": "ine", "ine:provincia": "ine", "ine:municipio": "ine", "ine:municipio:dc": "ine",
+    "ine:autonomia": "ine", "ine:provincia": "ine", "ine:isla": "ine", "ine:municipio": "ine",
+    "ine:municipio:dc": "ine",
     "iso3166-1:alpha2": "wikidata", "iso3166-1:alpha3": "wikidata", "iso3166-1:numeric": "wikidata",
     "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro", "ign:bddae": "ign",
     "wikidata": "wikidata", "osm:relation": "wikidata", "geonames": "wikidata",
@@ -23,9 +24,9 @@ CODE_SOURCES = {
 
 def _name_source(level: str, kind: str, lang: str | None = None) -> str:
     if kind == "official":
-        return "wikidata" if level == "country" else ("ine" if level == "municipality" else "fuentes")
+        return "wikidata" if level == "country" else ("ine" if level in ("island", "municipality") else "fuentes")
     if kind in ("display", "parts", "short", "aliases"):
-        return "derivado" if kind == "display" and level == "municipality" else "fuentes"
+        return "derivado" if kind == "display" and level in ("island", "municipality") else "fuentes"
     return "fuentes" if level == "autonomous_community" and lang in UI_LANGS else "wikidata"
 
 
@@ -71,12 +72,20 @@ def tables(data: dict) -> dict[str, str]:
         [[t["id"], code(t, "ine:provincia"), t["parent"].rsplit(":", 1)[1], code(t, "iso3166-2"), code(t, "nuts"),
           code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"],
           t["names"]["display"], *names(t), t["time_zone"]] for t in by_level.get("province", [])])
+    files["islas.csv"] = _table(
+        ["id", "ine", "provincia", "nuts3", "wikidata", "osm_relation", "geonames", "official", "display", *name_cols,
+         "time_zone"],
+        [[t["id"], code(t, "ine:isla"), t["parent"].rsplit(":", 1)[1], t.get("nuts3"), code(t, "wikidata"),
+          code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"], t["names"]["display"], *names(t),
+          t["time_zone"]]
+         for t in by_level.get("island", [])])
     files["municipios.csv"] = _table(
-        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "lau", "nuts3", "wikidata",
+        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "lau", "nuts3", "wikidata",
          "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
          "lon", "lat", "altitude", "time_zone", "slug"],
         [[t["id"], code(t, "ine:municipio"), code(t, "ine:municipio:dc"), code(t, "dgc:municipio"),
           code(t, "ign:bddae"), t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1],
+          t["island"].rsplit(":", 1)[1] if "island" in t else None,
           code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
           t["names"]["official"], t["names"]["display"], *names(t), t.get("stats", {}).get("population"),
           t.get("stats", {}).get("area_km2"), *[t.get("capital", {}).get(k) for k in ("name", "lon", "lat", "altitude")],
@@ -95,7 +104,8 @@ def tables(data: dict) -> dict[str, str]:
             for lang, value in n.get(kind, {}).items():
                 rows.append([t["id"], kind, lang, value, _name_source(level, kind, lang)])
         for alias in n.get("aliases", []):
-            rows.append([t["id"], f"alias:{alias['kind']}", alias["lang"], alias["name"], "fuentes"])
+            source = alias.get("source", "fuentes")
+            rows.append([t["id"], f"alias:{alias['kind']}", alias["lang"], alias["name"], source])
     files["nombres.csv"] = _table(["id", "kind", "lang", "name", "source"], rows)
     return files
 

@@ -30,6 +30,10 @@ test('resolve', () => {
   }
 });
 
+test('children', () => {
+  for (const [id, expected] of CASES.children) assert.deepEqual(CATALOG.children(id), expected, id);
+});
+
 test('name', () => {
   for (const [id, lang, short, expected] of CASES.name) assert.equal(CATALOG.name(id, lang, short), expected, `${id} ${lang}`);
 });

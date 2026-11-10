@@ -2,7 +2,7 @@
 
 *[English below](#english)*
 
-Territorios de España —comunidades y ciudades autónomas, provincias y municipios— y países del
+Territorios de España —comunidades y ciudades autónomas, provincias, islas y municipios— y países del
 mundo, con todos sus nombres (el oficial; en castellano, catalán, gallego, euskera, aranés e
 inglés; y alias), sus códigos (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata, OpenStreetMap,
 GeoNames…), la capital de cada municipio con sus coordenadas y los límites municipales,
@@ -10,7 +10,8 @@ regenerables desde las fuentes oficiales y abiertas. Incluye una librería peque
 Python y JavaScript para resolver códigos, buscar nombres y elegir el nombre que se muestra en
 cada idioma.
 
-**En desarrollo.** El planteamiento está en [`docs/diseno.md`](docs/diseno.md).
+Los identificadores (`es:municipio:36038`) solo cambian en una versión mayor; los campos y niveles
+nuevos llegan en versiones menores. El planteamiento está en [`docs/diseno.md`](docs/diseno.md).
 
 ## Uso
 
@@ -22,6 +23,7 @@ te.name("es:provincia:03", "ca")                        # 'Alacant'
 te.name("es:autonomia:09", "en")                        # 'Catalonia'
 [c["id"] for c in te.search("Ourense", levels=["municipality"])]   # ['es:municipio:32054']
 te.relate_name("Ourense")["status"]                     # 'pending': provincia y municipio
+te.children("es:isla:071")                              # ['es:municipio:07024']: municipios de Formentera
 te.parse_cadastral_reference("9872023VH5797S0001WX")["valid"]  # True: letras de control correctas
 te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio de una parcela rústica
 ```
@@ -38,7 +40,8 @@ import { locateReference } from 'territorios-es/catastro-online';  // con red; t
 await locateReference(te, '9872023VH5797S0001WX');        // { status: 'resolved', territory: 'es:municipio:13077', … }
 ```
 
-Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children`, `normalize`,
+Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children` (en una isla, sus
+municipios), `normalize`,
 `relate_name` (en JS, `relateName`), `combine`, `parse_cadastral_reference` y
 `relate_cadastral_reference` (referencias catastrales, sin red) y `locate` (de un punto a su
 municipio). Están descritas en el apartado 6 del diseño.
@@ -97,20 +100,20 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 
 | Fuente | Datos | Licencia |
 |---|---|---|
-| INE | códigos y nombres oficiales de municipios | reutilización citando la fuente |
+| INE | códigos y nombres oficiales de municipios e islas, y cambios de nombre del año | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» (fecha de cada fichero en el manifiesto) |
 | Eurostat | LAU, NUTS 3 de cada municipio, población y superficie | CC BY 4.0 |
 | Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
 | Instituto Geográfico Nacional | código BDDAE y límites municipales (fichero adjunto a cada versión, simplificado) | CC BY 4.0: «Obra derivada de BDLJE Continua CC-BY 4.0 ign.es» |
 | Wikidata | nombres por idioma, enlaces, identificadores | CC0 |
 | GeoNames (vía Wikidata) | identificador | CC BY 4.0 |
-| Listas revisadas a mano (`fuentes/`) | nombres de comunidades, alias, ISO 3166-2, NUTS | MIT |
+| Listas revisadas a mano (`fuentes/`) | nombres de comunidades, alias, ISO 3166-2, NUTS, elemento de Wikidata de cada isla | MIT |
 
 ---
 
 ## English
 
-Spanish territories —autonomous communities and cities, provinces and municipalities— and the
+Spanish territories —autonomous communities and cities, provinces, islands and municipalities— and the
 countries of the world, with all their names (official; in Spanish, Catalan, Galician, Basque,
 Aranese and English; aliases), their codes (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata,
 OpenStreetMap, GeoNames…), the capital of each municipality with its coordinates and the municipal
@@ -118,6 +121,7 @@ boundaries, rebuilt from official and open sources. It ships a small Python and 
 to resolve codes, search names, pick the display name for each language and place a point in its
 municipality.
 
-**Work in progress.** The design is in [`docs/design.md`](docs/design.md). Usage, data, tests and
+Identifiers (`es:municipio:36038`) only change in a major version; new fields and levels come in
+minor versions. The design is in [`docs/design.md`](docs/design.md). Usage, data, tests and
 licences are described in the Spanish section above; code and field names are in English. The
 code is MIT-licensed; each datum keeps its source's licence.

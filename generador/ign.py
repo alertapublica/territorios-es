@@ -4,7 +4,9 @@ boundaries. Both CC BY 4.0 (Orden FOM/2807/2015).
 - Capitals: the IGN features API (OGC API Features), collection «nuc» (Núcleos de población, from
   the IGR Poblaciones product). Each núcleo has its INE entity code (11 digits, the first 5 are the
   municipality), coordinates, altitude and `capital`, one digit per level (State, community,
-  province, municipality): Madrid 1111…, Ourense 0011…, Santiago de Compostela 0101….
+  province, municipality): Madrid 1111…, Ourense 0011…, Santiago de Compostela 0101…. Some
+  capitals are not núcleos for the INE: they are in the collection «opob» (Otras poblaciones) of
+  the same product, read only for the places marked as municipal capitals (`capital=000100`).
 - Boundaries: Base de Datos de Límites Jurisdiccionales de España (BDLJE), a zip of INSPIRE GML
   files. Each municipal unit has a national code: 34 + community (2) + province (2) + INE (5).
 """
@@ -19,6 +21,8 @@ from array import array
 from urllib.parse import urlencode
 
 POPULATIONS_URL = "https://api-features.ign.es/collections/nuc/items"
+OTHER_POPULATIONS_URL = "https://api-features.ign.es/collections/opob/items"
+OTHER_CAPITALS = "000100"
 POPULATION_FIELDS = "codine,nombre,capital,longitud,latitud,altitud"
 PAGE = 5000
 LIMITS_URL = "https://centrodedescargas.cnig.es/CentroDescargas/documentos/atom/au/lineas_limite_gml.zip"
@@ -29,9 +33,12 @@ _GN = "{http://inspire.ec.europa.eu/schemas/gn/4.0}"
 _GMD = "{http://www.isotc211.org/2005/gmd}"
 
 
-def populations_url(offset: int, limit: int = PAGE) -> str:
-    return POPULATIONS_URL + "?" + urlencode({"f": "json", "skipGeometry": "true", "properties": POPULATION_FIELDS,
-                                              "limit": limit, "offset": offset})
+def populations_url(offset: int, limit: int = PAGE, other: bool = False) -> str:
+    """A page of núcleos, or with other=True of the other populations marked as municipal capitals."""
+    query = {"f": "json", "skipGeometry": "true", "properties": POPULATION_FIELDS, "limit": limit, "offset": offset}
+    if other:
+        query["capital"] = OTHER_CAPITALS
+    return (OTHER_POPULATIONS_URL if other else POPULATIONS_URL) + "?" + urlencode(query)
 
 
 def parse_populations(content: bytes) -> tuple[list[list], int]:
