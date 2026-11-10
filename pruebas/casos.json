@@ -1,4 +1,24 @@
 {
+  "postal_codes": [
+    ["es:municipio:15030", ["15001", "15002"]],
+    ["es:municipio:36038", ["15001", "36001"]],
+    ["es:municipio:28079", []],
+    ["es:provincia:15", []]
+  ],
+  "municipalities": [
+    ["15001", [["es:municipio:15030", 1200], ["es:municipio:36038", 4]]],
+    ["31001", [["es:municipio:31201", 900]]],
+    ["15003", []],
+    ["1500", []],
+    [15001, []]
+  ],
+  "relate_postal_code": [
+    ["31001", "resolved", "es:municipio:31201", ["es:municipio:31201"], "postal_code"],
+    ["15001", "pending", null, ["es:municipio:15030", "es:municipio:36038"], "ambiguous"],
+    ["15003", "pending", null, [], "not_found"],
+    ["8001", "pending", null, [], "not_a_postal_code"],
+    [8001, "pending", null, [], "not_a_postal_code"]
+  ],
   "locate": [
     [0.5, 0.5, "resolved", "es:municipio:15030", ["es:municipio:15030"], "inside"],
     [1.5, 0.2, "resolved", "es:municipio:32054", ["es:municipio:32054"], "inside"],

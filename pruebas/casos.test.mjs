@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { test } from 'node:test';
 import {
-  checkLetters, combine, createCatalog, createLimits, displayName, locate, normalize, parseCadastralReference,
-  relateCadastralReference, relateName, relation,
+  checkLetters, combine, createCatalog, createLimits, createPostalCodes, displayName, locate, normalize,
+  parseCadastralReference, relateCadastralReference, relateName, relation,
 } from '../js/index.js';
-import { loadCatalog, loadLimits } from '../js/node.js';
+import { loadCatalog, loadLimits, loadPostalCodes } from '../js/node.js';
 import { gzipSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -111,4 +111,30 @@ test('loadCatalog reads a data folder', () => {
 
 test('within must exist', () => {
   assert.throws(() => CATALOG.search('Ourense', { within: 'es:provincia:99' }));
+});
+
+const POSTAL = loadPostalCodes(new URL('./datos/codigos-postales.csv', import.meta.url));
+
+test('postalCodes', () => {
+  for (const [id, expected] of CASES.postal_codes) assert.deepEqual(POSTAL.postalCodes(id).map((i) => i.postal_code), expected, id);
+});
+
+test('municipalities', () => {
+  for (const [code, expected] of CASES.municipalities) {
+    assert.deepEqual(POSTAL.municipalities(code).map((i) => [i.id, i.addresses]), expected, String(code));
+  }
+});
+
+test('relatePostalCode', () => {
+  for (const [code, status, territory, candidates, reason] of CASES.relate_postal_code) {
+    const found = POSTAL.relate(code);
+    assert.deepEqual([found.status, found.territory, found.candidates, found.reason], [status, territory, candidates, reason], String(code));
+  }
+  const found = POSTAL.relate('15001');
+  assert.deepEqual(found.evidence.map((e) => [e.territory, e.addresses]), [['es:municipio:15030', 1200], ['es:municipio:36038', 4]]);
+  assert.equal(combine(found, relateName(CATALOG, 'A Coruña', { levels: ['municipality'] })).territory, 'es:municipio:15030');
+  POSTAL.municipalities('15001')[0].addresses = 0;
+  assert.equal(POSTAL.municipalities('15001')[0].addresses, 1200);
+  assert.equal(POSTAL.size, 14);
+  assert.throws(() => createPostalCodes('codigo,municipio\n'));
 });

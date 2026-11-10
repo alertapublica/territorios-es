@@ -3,6 +3,7 @@
     import territorios_es as te
     te.resolve("ine:municipio", "36038")["id"]   # 'es:municipio:36038'
     te.name("es:provincia:03", "ca")             # 'Alacant'
+    te.municipalities("29620")[0]["id"]          # 'es:municipio:29901' (Torremolinos)
 """
 from __future__ import annotations
 
@@ -15,6 +16,8 @@ from .catalog import LEVELS, REASONS, Catalog
 from .catastro import check_letters, parse_cadastral_reference
 from .catastro import relate_cadastral_reference as _relate_cadastral_reference
 from .limits import Limits, load_limits, locate
+from .postal import PostalCodes
+from .postal import load_postal_codes as _load_postal_codes
 from .relation import STATUSES, combine, relation
 from .relation import relate_name as _relate_name
 from .text import display_name, normalize, slugify
@@ -22,7 +25,8 @@ from .text import display_name, normalize, slugify
 __all__ = ["Catalog", "LEVELS", "REASONS", "STATUSES", "load", "resolve", "territory", "search",
            "mentions", "name", "children", "normalize", "display_name", "slugify", "relation",
            "relate_name", "combine", "data_dir", "parse_cadastral_reference", "check_letters",
-           "relate_cadastral_reference", "Limits", "load_limits", "locate"]
+           "relate_cadastral_reference", "Limits", "load_limits", "locate", "PostalCodes", "load_postal_codes",
+           "postal_codes", "municipalities", "relate_postal_code"]
 
 
 def data_dir() -> Path:
@@ -74,3 +78,21 @@ def relate_name(text, within=None, levels=None, catalog=None):
 
 def relate_cadastral_reference(text, catalog=None):
     return _relate_cadastral_reference(catalog or load(), text)
+
+
+@lru_cache(maxsize=4)
+def load_postal_codes(path: str | os.PathLike | None = None) -> PostalCodes:
+    """Postal codes from a codigos-postales.csv file (by default, the bundled one)."""
+    return _load_postal_codes(Path(path) if path else data_dir() / "codigos-postales.csv")
+
+
+def postal_codes(identity):
+    return load_postal_codes().postal_codes(identity)
+
+
+def municipalities(code):
+    return load_postal_codes().municipalities(code)
+
+
+def relate_postal_code(code, table=None):
+    return (table if table is not None else load_postal_codes()).relate(code)

@@ -10,6 +10,7 @@ from pathlib import Path
 
 from territorios_es.catalog import Catalog
 
+from . import codigos_postales
 from .construir import UI_LANGS
 
 # Where each kind of datum comes from (design §5). Used for the provenance columns.
@@ -127,8 +128,16 @@ def write(folder: Path, data: dict, articles: list[list[str]], sources: dict):
                 "wikipedia.csv": wikipedia_csv(articles)}
     for name, text in contents.items():
         (folder / name).write_text(text, encoding="utf-8")
+    files = {name: _sha(text) for name, text in contents.items()}
+    # The postal-code table has its own workflow (codigos-postales.yml): keep its entries.
+    path = folder / "manifiesto.json"
+    if path.exists() and (folder / codigos_postales.FILE).exists():
+        old = json.loads(path.read_text(encoding="utf-8"))
+        sources = {**sources, **{k: v for k, v in old["sources"].items() if k in codigos_postales.SOURCES.values()}}
+        if codigos_postales.FILE in old["files"]:
+            files[codigos_postales.FILE] = old["files"][codigos_postales.FILE]
     manifest = {"schema": data["schema"], "reference_date": data["reference_date"], "sources": sources,
-                "files": {name: _sha(text) for name, text in sorted(contents.items())}}
+                "files": dict(sorted(files.items()))}
     (folder / "manifiesto.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
                                             encoding="utf-8")
 
@@ -147,4 +156,8 @@ def check(folder: Path) -> list[str]:
     for name, digest in manifest["files"].items():
         if _sha((folder / name).read_text(encoding="utf-8")) != digest:
             problems.append(f"{name} does not match manifiesto.json")
+    if (folder / codigos_postales.FILE).exists():
+        if codigos_postales.FILE not in manifest["files"]:
+            problems.append(f"{codigos_postales.FILE} is not in manifiesto.json")
+        problems += codigos_postales.check(folder / codigos_postales.FILE)
     return problems

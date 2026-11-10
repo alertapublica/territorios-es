@@ -4,9 +4,13 @@
   "sources": {
     "fixture": {
       "url": "pruebas/fuentes/entrada.json"
+    },
+    "fixture_codigos_postales": {
+      "url": "pruebas/fuentes/codigos-postales.json"
     }
   },
   "files": {
+    "codigos-postales.csv": "47cdd93b9dde417cad07c44aad0c9211bde2bf144fa9e7a9f172f7a9f45cea0f",
     "codigos.csv": "1990d1969de1821d1adbf66b2a81730849c881dabfe910b48a2c9ca0e7ea32a3",
     "comunidades.csv": "0f0a51e5ace01e685ac11b1ea83115dff2c30cb340c63b4b8cd49e35aaaec708",
     "islas.csv": "f5bd6f1a6dcfb6cfa4aa0b894ad7cc1c74bba70da1582f9140a9094631ecfe92",

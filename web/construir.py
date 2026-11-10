@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "https://github.com/alertapublica/territorios-es"
 FILES = ["territorios.json", "paises.csv", "comunidades.csv", "provincias.csv", "islas.csv", "municipios.csv",
-         "codigos.csv", "nombres.csv", "wikipedia.csv", "manifiesto.json"]
+         "codigos.csv", "codigos-postales.csv", "nombres.csv", "wikipedia.csv", "manifiesto.json"]
 GENERIC = {"name_": "name_xx", "short_": "short_xx"}
 
 CSS = """:root{--bg:#fdfdfc;--fg:#1d1d1b;--muted:#5d5d58;--line:#dcdcd6;--accent:#0b5cad;--note:#fff6d6}

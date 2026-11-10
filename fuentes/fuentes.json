@@ -61,6 +61,33 @@
     "licence": "CC BY 4.0 (Orden FOM/2807/2015)",
     "attribution": "IGR_POBLACIONES 2024 CC-BY 4.0 scne.es"
   },
+  "catastro_direcciones": {
+    "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Addresses/ES.SDGC.AD.atom.xml",
+    "publisher": "Dirección General del Catastro",
+    "licence": "Licencia de la DGC (julio de 2016): uso público y comercial de la información transformada; no se redistribuye la original",
+    "attribution": "Fuente: Dirección General del Catastro (fecha de acceso en «retrieved»)"
+  },
+  "idena_direcciones": {
+    "url": "https://idena.navarra.es/descargas/DIRECC_Txt_Direcciones.zip",
+    "publisher": "Gobierno de Navarra (IDENA)",
+    "licence": "CC BY 4.0",
+    "attribution": "Información geográfica propiedad del Gobierno de Navarra."
+  },
+  "eustat_portales": {
+    "urls": {
+      "01": "https://www.eustat.eus/comun/ExtractorBlob.ashx?id=01_Atariak_Portales.csv",
+      "20": "https://www.eustat.eus/comun/ExtractorBlob.ashx?id=20_Atariak_Portales.xlsx",
+      "48": "https://www.eustat.eus/comun/ExtractorBlob.ashx?id=48_Atariak_Portales.csv"
+    },
+    "publisher": "Eustat / Gobierno Vasco (callejero NORA)",
+    "licence": "CC BY 4.0",
+    "attribution": "Eusko Jaurlaritza / Gobierno Vasco; Eustat; geoEuskadi"
+  },
+  "ine_callejero": {
+    "url": "https://www.ine.es/prodyser/callejero/caj_esp/caj_esp_{month}{year}.zip",
+    "publisher": "INE (callejero del censo electoral)",
+    "note": "Solo para contrastar los códigos postales: su código postal viene de Correos y la licencia del INE no lo cubre. No se publica."
+  },
   "ign_limites": {
     "url": "https://centrodedescargas.cnig.es/CentroDescargas/documentos/atom/au/lineas_limite_gml.zip",
     "publisher": "Instituto Geográfico Nacional",

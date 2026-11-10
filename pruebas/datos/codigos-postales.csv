@@ -1,0 +1,15 @@
+postal_code,id,ine,addresses,source
+01001,es:municipio:01059,01059,700,eustat
+01002,es:municipio:01059,01059,650,eustat
+08901,es:municipio:08101,08101,900,catastro
+08902,es:municipio:08101,08101,400,catastro
+15001,es:municipio:15030,15030,1200,catastro
+15001,es:municipio:36038,36038,4,catastro
+15002,es:municipio:15030,15030,800,catastro
+20001,es:municipio:20069,20069,500,eustat
+31001,es:municipio:31201,31201,900,idena
+31002,es:municipio:31201,31201,600,idena
+32001,es:municipio:32054,32054,2,catastro
+36001,es:municipio:36038,36038,700,catastro
+48001,es:municipio:48020,48020,800,eustat
+51001,es:municipio:51001,51001,300,catastro

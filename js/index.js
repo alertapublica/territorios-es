@@ -4,3 +4,4 @@ export { normalize, displayName, flipArticle, dropArticle, slugify, ARTICLES } f
 export { relation, relateName, combine, STATUSES } from './relation.js';
 export { checkLetters, parseCadastralReference, relateCadastralReference } from './catastro.js';
 export { createLimits, locate, MARGIN_M } from './limits.js';
+export { createPostalCodes, POSTAL_HEADER } from './postal.js';

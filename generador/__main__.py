@@ -2,6 +2,7 @@
 python -m generador --check [--salida datos]
 python -m generador --fixture   (rebuilds pruebas/datos from pruebas/fuentes, offline)
 python -m generador --limites limites-municipios.geojson.gz [--salida datos] [--cache DIR]
+python -m generador --codigos-postales [--salida datos] [--informe informe.md] [--cache DIR]
 
 Downloads go to third-party servers: run it in GitHub Actions, not on a personal connection.
 """
@@ -11,12 +12,16 @@ import argparse
 import hashlib
 import json
 import sys
+import time
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import catastro, descargas, eurostat, ign, ine, wikidata  # noqa: E402
+from . import catastro, codigos_postales, descargas, eurostat, ign, ine, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 from .limites import build_limits  # noqa: E402
@@ -176,6 +181,140 @@ def limits_file(path: Path, salida: Path, cache: Path | None):
     print(json.dumps({**counts, "bytes_gzip": len(content)}, ensure_ascii=False))
 
 
+def _minutes(seconds: float) -> str:
+    return f"{seconds / 60:.1f} min".replace(".", ",")
+
+
+def _joined(url: str, answers: list, **extra) -> dict:
+    """One manifest entry for several answers: the digest covers all of them, in order."""
+    return {"url": url, "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
+            "bytes": sum(a.bytes for a in answers), "retrieved": answers[0].retrieved, **extra}
+
+
+class _Seen:
+    """What the manifest needs from a download, without keeping its content in memory."""
+
+    def __init__(self, got):
+        self.sha256, self.bytes, self.retrieved = got.sha256, len(got.content), got.retrieved
+
+
+def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, dict, set | None, dict]:
+    """(counts by source, manifest records, INE pairs to compare or None, timings). The Catastro
+    server is slow: a few connections at a time, each with the usual pause between requests."""
+    config = load_hand_lists(FUENTES)["sources"]
+    counts, records, timings = {}, {}, {}
+    start = time.monotonic()
+
+    c = config["catastro_direcciones"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_catastro_atom.xml",
+                          validate=codigos_postales.parse_catastro_feed)
+    answers, files, updated = [_Seen(got)], [], codigos_postales.feed_updated(got.content)
+    for office in codigos_postales.parse_catastro_feed(got.content):
+        got = descargas.fetch(codigos_postales.office_feed_url(office), cache=cache,
+                              cache_name=f"cp_catastro_atom_{office}.xml", validate=codigos_postales.parse_office_feed)
+        answers.append(_Seen(got))
+        files += codigos_postales.parse_office_feed(got.content)
+    offices = len(answers) - 1
+    print(f"Catastro: {offices} gerencias, {len(files)} municipios ({_minutes(time.monotonic() - start)})",
+          file=sys.stderr, flush=True)
+
+    def one(dgc: str, urls: list[str]):
+        error = None
+        for i, url in enumerate(urls):
+            try:
+                return descargas.fetch(url, cache=cache, cache_name=f"cp_catastro_{dgc}.zip",
+                                       validate=codigos_postales.check_zip), i
+            except RuntimeError as e:
+                error = e
+        raise error
+
+    catastro, seen, failed, latin, parsing = Counter(), {}, [], 0, 0.0
+    with ThreadPoolExecutor(workers) as pool:
+        pending = {pool.submit(one, dgc, urls): dgc for dgc, urls in files}
+        for done, future in enumerate(as_completed(pending), 1):
+            dgc = pending.pop(future)
+            try:
+                got, encoding = future.result()
+                begin = time.monotonic()
+                catastro.update(codigos_postales.parse_catastro_ad(got.content))
+                parsing += time.monotonic() - begin
+                seen[dgc], latin = _Seen(got), latin + encoding
+            except (RuntimeError, ValueError) as error:
+                failed.append(f"{dgc}: {error}")
+            del future
+            if done % 250 == 0 or done == len(files):
+                mb = sum(s.bytes for s in seen.values()) / 1e6
+                print(f"Catastro: {done}/{len(files)} ZIP, {mb:.0f} MB, {_minutes(time.monotonic() - start)}",
+                      file=sys.stderr, flush=True)
+    counts["catastro"] = catastro
+    answers += [seen[dgc] for dgc in sorted(seen)]
+    records["catastro_direcciones"] = _joined(
+        c["url"] + f" ({len(seen)} municipios de {offices} gerencias)", answers, reference_date=updated,
+        licence=c["licence"], attribution=c["attribution"])
+    mb = sum(s.bytes for s in seen.values()) / 1e6
+    timings["Catastro"] = (f"{_minutes(time.monotonic() - start)} ({len(seen)} ZIP, {mb:.0f} MB, {workers} a la vez; "
+                           f"lectura de los GML {_minutes(parsing)}; {latin} enlaces en ISO-8859-1)")
+
+    begin = time.monotonic()
+    c = config["idena_direcciones"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="cp_idena.zip",
+                          validate=lambda content: codigos_postales.check_zip(content, ".dbf"))
+    counts["idena"] = codigos_postales.parse_navarra(got.content)
+    records["idena_direcciones"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    timings["IDENA"] = _minutes(time.monotonic() - begin)
+
+    begin = time.monotonic()
+    c = config["eustat_portales"]
+    counts["eustat"], answers = Counter(), []
+    for province, url in sorted(c["urls"].items()):
+        got = descargas.fetch(url, cache=cache, cache_name=f"cp_eustat_{province}", validate=codigos_postales.check_euskadi)
+        counts["eustat"].update(codigos_postales.parse_euskadi(got.content))
+        answers.append(_Seen(got))
+    records["eustat_portales"] = _joined(" ".join(url for _, url in sorted(c["urls"].items())), answers,
+                                         licence=c["licence"], attribution=c["attribution"])
+    timings["Eustat"] = _minutes(time.monotonic() - begin)
+
+    begin = time.monotonic()
+    c, ine_pairs = config["ine_callejero"], None
+    for url in codigos_postales.ine_street_urls(c["url"], date.today().isoformat()):
+        try:
+            got = descargas.fetch(url, cache=cache, cache_name="cp_ine_" + url.rsplit("/", 1)[1],
+                                  validate=lambda content: codigos_postales.check_zip(content, ""))
+            ine_pairs = codigos_postales.parse_ine_streets(got.content)
+        except (RuntimeError, ValueError) as error:
+            print(f"Aviso: {error}", file=sys.stderr)
+            continue
+        timings["INE (contraste)"] = f"{_minutes(time.monotonic() - begin)} ({url.rsplit('/', 1)[1]})"
+        break
+    timings["total"] = _minutes(time.monotonic() - start)
+    if failed:
+        timings["descargas fallidas"] = f"{len(failed)}: " + "; ".join(sorted(failed)[:20])
+    return counts, records, ine_pairs, timings
+
+
+def postal_codes_file(salida: Path, informe: Path | None, cache: Path | None) -> int:
+    """datos/codigos-postales.csv and its report, linked with the identifiers of salida/territorios.json."""
+    counts, records, ine_pairs, timings = download_postal_codes(cache)
+    data = json.loads((salida / "territorios.json").read_text(encoding="utf-8"))
+    previous = codigos_postales.read_table(salida / codigos_postales.FILE)
+    rows, report = codigos_postales.build(counts, data, previous, ine_pairs)
+    problems = codigos_postales.check_cases(rows)
+    for problem in problems:
+        report.add("Códigos postales: casos fijos que fallan", problem)
+    if ine_pairs is None:
+        report.add("Códigos postales: aviso", "no se pudo descargar el callejero del INE para contrastar")
+    for key, value in timings.items():
+        report.summary[f"tiempo: {key}" if key != "descargas fallidas" else key] = value
+    write_postal = "descargas fallidas" not in timings
+    if write_postal:
+        codigos_postales.write(salida, rows, records)
+    text = report.markdown().replace("# Informe del generador", "# Informe de códigos postales", 1)
+    if informe:
+        informe.write_text(text, encoding="utf-8")
+    print(text)
+    return 0 if write_postal and not problems else 1
+
+
 def fixture():
     folder = ROOT / "pruebas" / "fuentes"
     inputs = json.loads((folder / "entrada.json").read_text(encoding="utf-8"))
@@ -184,6 +323,16 @@ def fixture():
     data, report, articles = build(inputs, FUENTES, "2026-01-01")
     write(ROOT / "pruebas" / "datos", data, articles, {"fixture": {"url": "pruebas/fuentes/entrada.json"}})
     (ROOT / "pruebas" / "datos" / "informe.md").write_text(report.markdown(), encoding="utf-8")
+    # Postal codes: invented counts in the shape of the readers' output.
+    raw = json.loads((folder / "codigos-postales.json").read_text(encoding="utf-8"))
+    counts = {source: Counter({(code, number): n for code, number, n in raw[source]})
+              for source in codigos_postales.SOURCES}
+    ine_pairs = {(code, number) for code, number in raw["ine"]}
+    rows, report = codigos_postales.build(counts, data, None, ine_pairs)
+    codigos_postales.write(ROOT / "pruebas" / "datos", rows, {"fixture_codigos_postales": {
+        "url": "pruebas/fuentes/codigos-postales.json"}})
+    text = report.markdown().replace("# Informe del generador", "# Informe de códigos postales", 1)
+    (ROOT / "pruebas" / "datos" / "informe-codigos-postales.md").write_text(text, encoding="utf-8")
 
 
 def main(argv=None):
@@ -194,12 +343,22 @@ def main(argv=None):
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--fixture", action="store_true")
     parser.add_argument("--limites", type=Path)
+    parser.add_argument("--codigos-postales", action="store_true")
     args = parser.parse_args(argv)
     if args.limites:
         limits_file(args.limites, args.salida, args.cache)
         return 0
+    if args.codigos_postales:
+        return postal_codes_file(args.salida, args.informe, args.cache)
     if args.check:
         problems = check(args.salida)
+        # The fixed cases of the real postal codes (the test fixture has other, invented ones).
+        try:
+            rows = codigos_postales.read_table(args.salida / codigos_postales.FILE)
+        except ValueError:
+            rows = None  # check() already reports it
+        if rows is not None:
+            problems += codigos_postales.check_cases(rows)
         for problem in problems:
             print(problem, file=sys.stderr)
         return 1 if problems else 0
@@ -209,6 +368,8 @@ def main(argv=None):
     inputs, records = download_all(args.cache)
     reference = load_hand_lists(FUENTES)["sources"]["ine_municipios"]["reference_date"]
     data, report, articles = build(inputs, FUENTES, reference)
+    for orphan in codigos_postales.orphans(args.salida / codigos_postales.FILE, data):
+        report.add("Códigos postales: municipios que ya no existen", orphan)
     write(args.salida, data, articles, records)
     text = report.markdown()
     if args.informe:
