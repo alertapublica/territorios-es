@@ -1,0 +1,12 @@
+id,provincia,nuts3,wikidata,osm_relation,geonames,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,time_zone
+es:isla:eivissa,07,ES531,Q52631,6076060,2516477,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Europe/Madrid
+es:isla:formentera,07,ES531,Q31916364,2181768,2517690,Formentera,Formentera,Formentera,Formentera,Formentera,Formentera,Formentera,Formentera,Europe/Madrid
+es:isla:mallorca,07,ES532,Q8828,6803636,2514239,Mallorca,Mallorca,Mallorca,Mallorca,Mallorca,Mallorca,Mallorca,Mallorca,Europe/Madrid
+es:isla:menorca,07,ES533,Q52636,6076061,2513925,Menorca,Menorca,Menorca,Menorca,Menorca,Menorca,Menorca,Menorca,Europe/Madrid
+es:isla:fuerteventura,35,ES704,Q192534,2214682,2517481,Fuerteventura,Fuerteventura,Fuerteventura,Fuerteventura,Fuerteventura,Fuerteventura,Fuerteventura,Fuerteventura,Atlantic/Canary
+es:isla:gran-canaria,35,ES705,Q178925,2214683,2517107,Gran Canaria,Gran Canaria,Gran Canaria,Gran Canaria,Gran Canaria,Gran Canaria,Gran Canaria,Gran Canaria,Atlantic/Canary
+es:isla:lanzarote,35,ES708,Q182432,3253929,2515699,Lanzarote,Lanzarote,Lanzarote,Lanzarote,Lanzarote,Lanzarote,Lanzarote,Lanzarote,Atlantic/Canary
+es:isla:el-hierro,38,ES703,Q1036287,2214681,2516747,El Hierro,El Hierro,El Hierro,El Hierro,El Hierro,El Hierro,El Hierro,El Hierro,Atlantic/Canary
+es:isla:la-gomera,38,ES706,Q105967,2214684,2517187,La Gomera,La Gomera,La Gomera,La Gomera,La Gomera,La Gomera,La Gomera,La Gomera,Atlantic/Canary
+es:isla:la-palma,38,ES707,Q201689,11775386,2515680,La Palma,La Palma,La Palma,La Palma,La Palma,La Palma,La Palma,La Palma,Atlantic/Canary
+es:isla:tenerife,38,ES709,Q40846,2108882,2510529,Tenerife,Tenerife,Tenerife,Tenerife,Tenerife,Tenerife,Tenerife,Tenerife,Atlantic/Canary

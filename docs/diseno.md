@@ -81,7 +81,16 @@ Primera versión:
   o al Espacio Económico Europeo. Sirve, por ejemplo, para el requisito de nacionalidad de las
   convocatorias.
 
-Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales.
+Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
+ya están (versión 0.3):
+
+- **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
+  `island` e identificador `es:isla:<nombre>` (`es:isla:tenerife`, `es:isla:eivissa`). Su padre es
+  la provincia. Los municipios no cambian de padre: llevan además el campo `island`. Cada municipio
+  va a su isla por su NUTS 3 de Eurostat, salvo en Eivissa y Formentera, que comparten NUTS 3
+  (ES531): ahí `fuentes/islas.csv` lista los municipios de Formentera. Las islas menores van con el
+  municipio al que pertenecen (La Graciosa con Teguise, en Lanzarote; Cabrera con Palma, en
+  Mallorca). El nombre es el oficial (§4.4) y los demás salen de Wikidata.
 
 Más adelante: entidades de población del Nomenclátor del INE (núcleos, y parroquias en Galicia y
 Asturias), que son decenas de miles.
@@ -142,7 +151,7 @@ nombres oficiales, sino alias.
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
 
 - **Comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
-- **Provincias y municipios**: el oficial. Si es bilingüe, solo la parte del idioma de la página
+- **Provincias, islas y municipios**: el oficial. Si es bilingüe, solo la parte del idioma de la página
   («Alacant» en catalán, «San Sebastián» en castellano) y el nombre completo en los demás.
   En castellano se muestra «Girona», no «Gerona».
 - Los nombres habituales en otros idiomas («Gerona», «Seville», «Saragossa») sirven para buscar y
@@ -209,7 +218,8 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 |---|---|
 | `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia o a una isla. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla, sus municipios. Los de una provincia de Baleares o Canarias incluyen sus islas y sus municipios. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -363,8 +373,8 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Segunda versión: mapas simplificados, islas, comarcas, partidos judiciales, Open Maps For
-  Europe. Ya están las coordenadas, los límites del IGN y `locate`.
+- Segunda versión: comarcas, partidos judiciales, Open Maps For Europe. Ya están las coordenadas,
+  los límites del IGN, `locate` y las islas.
 - Más adelante: entidades de población, variaciones históricas del INE, búsqueda aproximada.
 
 ## 14. Por verificar

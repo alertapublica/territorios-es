@@ -83,7 +83,17 @@ First version:
   belong to the EU or the European Economic Area. It is useful, for example, for the nationality
   requirement in job calls.
 
-Second version: islands (cabildos and consells), official comarcas and judicial districts.
+Second version: islands (cabildos and consells), official comarcas and judicial districts. The
+islands are done (version 0.3):
+
+- **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
+  with level `island` and identifier `es:isla:<name>` (`es:isla:tenerife`, `es:isla:eivissa`).
+  Their parent is the province. Municipalities keep their parent and also carry the field
+  `island`. Each municipality goes to its island by its Eurostat NUTS 3, except in Eivissa and
+  Formentera, which share one NUTS 3 (ES531): there `fuentes/islas.csv` lists the municipalities of
+  Formentera. Smaller islands go with the municipality they belong to (La Graciosa with Teguise, in
+  Lanzarote; Cabrera with Palma, in Mallorca). The name is the official one (§4.4); the others come
+  from Wikidata.
 
 Later: population entities from the INE Nomenclátor (núcleos, and parishes in Galicia and
 Asturias), which number in the tens of thousands.
@@ -145,7 +155,7 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 - **Autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
   "Cataluña").
-- **Provinces and municipalities**: the official one. If it is bilingual, only the part in the
+- **Provinces, islands and municipalities**: the official one. If it is bilingual, only the part in the
   language of the page ("Alacant" in Catalan, "San Sebastián" in Spanish) and the full name in the
   others. In Spanish "Girona" is shown, not "Gerona".
 - The usual names in other languages ("Gerona", "Seville", "Saragossa") are used for searching and
@@ -211,7 +221,8 @@ options go in an object (`search(text, { within, levels })`).
 |---|---|
 | `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province or an island. |
+| `children(id)` | The territories whose parent is this one; for an island, its municipalities. Those of a Balearic or Canary province include its islands and its municipalities. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -368,8 +379,8 @@ Taken with the project owner on 9 November 2026:
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Second version: simplified maps, islands, comarcas, judicial districts, Open Maps For Europe.
-  The coordinates, the IGN boundaries and `locate` are done.
+- Second version: comarcas, judicial districts, Open Maps For Europe. The coordinates, the IGN
+  boundaries, `locate` and the islands are done.
 - Later: population entities, historical INE changes, fuzzy search.
 
 ## 14. To verify
