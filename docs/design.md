@@ -465,8 +465,10 @@ Checked on 10 November 2026:
   with the postal district of each street section.
 - **Official INE population**: operation 22 (`DPOP`) of the JSON API. `TABLAS_OPERACION/22` gives
   52 tables with the code `PROV-MUN` («Población por municipios y sexo», one per province,
-  including Ceuta and Melilla) and `DATOS_TABLA/{id}?nult=1&tip=AM` the latest year, with the INE
-  code in each series' metadata: 1 January 2025, final, published on 11 December 2025. The tables
+  including Ceuta and Melilla) and `DATOS_TABLA/{id}?nult=1&tip=AM&tv=18:451` the latest year of
+  the total for both sexes, with the INE code in each series' metadata: 1 January 2025, final,
+  published on 11 December 2025. Municipalities that no longer exist keep their series, empty
+  (Cesuras). The tables
   for communities (2853) and islands (2910) end in 2021. The national table by municipality
   (29005) is over 10 MB.
 

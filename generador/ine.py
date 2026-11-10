@@ -162,7 +162,8 @@ def population_tables(content: bytes, table_code: str) -> list[int]:
 def parse_population(content: bytes) -> tuple[dict[str, int], str]:
     """({province code2 or municipality code5: population}, reference date «YYYY-MM-DD») of one
     province table (DATOS_TABLA with nult=1 and tip=AM): its total and each of its municipalities,
-    both sexes. Codes come from the series metadata, not from the names."""
+    both sexes. Codes come from the series metadata, not from the names. Municipalities that no
+    longer exist keep their series, without data (Cesuras, merged into Oza-Cesuras in 2013)."""
     values, dates = {}, set()
     try:
         for series in json.loads(content):
@@ -171,6 +172,8 @@ def parse_population(content: bytes) -> tuple[dict[str, int], str]:
                 continue
             code = meta.get("Municipios") or meta.get("Provincias") or ""
             data = series["Data"]
+            if not data:
+                continue
             if (not re.fullmatch(r"[0-9]{2}|[0-9]{5}", code) or code in values or len(data) != 1
                     or not isinstance(data[0]["Valor"], (int, float))):
                 raise ValueError(f"Unexpected INE population series: {series.get('Nombre')!r}")

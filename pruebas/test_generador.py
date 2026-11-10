@@ -78,6 +78,9 @@ class Readers(unittest.TestCase):
                  series("Municipios", "Alegría-Dulantzi", "01001", "0", 2955.0),
                  series("Municipios", "Alegría-Dulantzi", "01001", "2", 1500.0),
                  series("Municipios", "Vitoria-Gasteiz", "01059", "0", 260699.0)]
+        gone = series("Municipios", "Cesuras", "01026", "0", 1.0)
+        gone["Data"] = []  # a municipality that no longer exists (seen in A Coruña on 2026-11-10)
+        table.append(gone)
         self.assertEqual(ine.parse_population(json.dumps(table).encode()),
                          ({"01": 342161, "01001": 2955, "01059": 260699}, "2025-01-01"))
         for broken in ([*table, series("Municipios", "Burgos", "09059", "0", 1.0)],  # another province

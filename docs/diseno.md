@@ -457,8 +457,9 @@ Comprobado el 10 de noviembre de 2026:
   el distrito postal de cada tramo de vía.
 - **Población oficial del INE**: operación 22 (`DPOP`) de la API JSON. `TABLAS_OPERACION/22` da 52
   tablas con el código `PROV-MUN` («Población por municipios y sexo», una por provincia, con Ceuta y
-  Melilla) y `DATOS_TABLA/{id}?nult=1&tip=AM`, el último año con el código del INE en los metadatos
-  de cada serie: 1 de enero de 2025, definitivo, publicado el 11 de diciembre de 2025. Las tablas
+  Melilla) y `DATOS_TABLA/{id}?nult=1&tip=AM&tv=18:451`, el último año del total de ambos sexos con
+  el código del INE en los metadatos de cada serie: 1 de enero de 2025, definitivo, publicado el 11
+  de diciembre de 2025. Los municipios que ya no existen siguen con su serie, vacía (Cesuras). Las tablas
   de comunidades (2853) e islas (2910) acaban en 2021. La tabla nacional por municipio (29005)
   pasa de 10 MB.
 
