@@ -3,17 +3,17 @@
 - Países: 34
 - Comunidades y ciudades autónomas: 19
 - Provincias: 52
-- Islas: 11
-- Municipios: 32
+- Islas: 5
+- Municipios: 33
 - Municipios con Wikidata: 9
-- Municipios con código LAU: 31
+- Municipios con código LAU: 32
 - Municipios con código DGC: 6
 - Municipios con nombre bilingüe: 7
 - Municipios con capital (IGN): 3
 - Municipios con límites (IGN): 5
 - Municipios con isla: 5
 
-## Catastro (21)
+## Catastro (22)
 
 - Código DGC 41900 en es:municipio:41091, es:municipio:46250; no se usa en ninguno
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa» no está en el Catastro
@@ -31,6 +31,7 @@
 - es:municipio:28079: varios códigos DGC (28900, 28901); no se enlaza
 - es:municipio:33031 «Langreo» no está en el Catastro
 - es:municipio:35016 «Las Palmas de Gran Canaria» no está en el Catastro
+- es:municipio:36008 «Cangas de Morrazo» no está en el Catastro
 - es:municipio:38038 «Santa Cruz de Tenerife» no está en el Catastro
 - es:municipio:46171 «Montcada/Moncada» no está en el Catastro
 - es:municipio:46220 «Sagunt/Sagunto» no está en el Catastro
@@ -56,7 +57,7 @@
 - es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite
 - es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite
 
-## IGN: capitales (30)
+## IGN: capitales (31)
 
 - 15026000101 «Cesuras» es capital de 15026, que no está en el INE
 - es:municipio:01059 «Vitoria-Gasteiz» sin capital en el IGN
@@ -78,6 +79,7 @@
 - es:municipio:31201 «Pamplona/Iruña» sin capital en el IGN
 - es:municipio:33031 «Langreo» sin capital en el IGN
 - es:municipio:35016 «Las Palmas de Gran Canaria» sin capital en el IGN
+- es:municipio:36008 «Cangas de Morrazo» sin capital en el IGN
 - es:municipio:36038: varias capitales (36038000101, 36038009901); no se usa ninguna
 - es:municipio:38038 «Santa Cruz de Tenerife» sin capital en el IGN
 - es:municipio:41091 «Sevilla» sin capital en el IGN
@@ -89,7 +91,7 @@
 - es:municipio:51001 «Ceuta» sin capital en el IGN
 - es:municipio:52001 «Melilla» sin capital en el IGN
 
-## IGN: límites (28)
+## IGN: límites (29)
 
 - 34151531999 «Zona común inventada» (Condominio) no es un municipio del INE
 - es:municipio:01059 «Vitoria-Gasteiz» no está en los límites del IGN
@@ -109,6 +111,7 @@
 - es:municipio:31201 «Pamplona/Iruña» no está en los límites del IGN
 - es:municipio:33031 «Langreo» no está en los límites del IGN
 - es:municipio:35016 «Las Palmas de Gran Canaria» no está en los límites del IGN
+- es:municipio:36008 «Cangas de Morrazo» no está en los límites del IGN
 - es:municipio:36038 «Pontevedra» no está en los límites del IGN
 - es:municipio:38038 «Santa Cruz de Tenerife» no está en los límites del IGN
 - es:municipio:41091 «Sevilla» no está en los límites del IGN
@@ -124,20 +127,28 @@
 
 - es:municipio:08101 «L'Hospitalet de Llobregat»: «Hospitalet» (34090808101)
 
+## INE: cambios del año (1)
+
+- 15903 «Concello novo» creado el 2026-09-01 (15 030 8 Coruña, A); entrará con el diccionario del año siguiente
+
+## INE: nombres nuevos (1)
+
+- es:municipio:36008: «Cangas» → «Cangas de Morrazo» (REL, 2026-06-15)
+
 ## INE: provincias (1)
 
 - es:provincia:32: fuentes/ dice 12 «Ourense», el INE 12 «Ourense (fixture: nombre distinto)»
 
 ## Islas (6)
 
-- es:isla:el-hierro sin municipios
-- es:isla:fuerteventura sin municipios
-- es:isla:la-gomera sin municipios
-- es:isla:la-palma sin municipios
-- es:isla:lanzarote sin municipios
-- es:isla:menorca sin municipios
+- 074 está en fuentes/islas.csv pero no en la tabla de islas del INE
+- 351 está en fuentes/islas.csv pero no en la tabla de islas del INE
+- 353 está en fuentes/islas.csv pero no en la tabla de islas del INE
+- 381 está en fuentes/islas.csv pero no en la tabla de islas del INE
+- 382 está en fuentes/islas.csv pero no en la tabla de islas del INE
+- 383 está en fuentes/islas.csv pero no en la tabla de islas del INE
 
-## Nombres bilingües (123)
+## Nombres bilingües (124)
 
 - es:municipio:01010 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:01011 está en fuentes/partes-bilingues.csv pero no en el INE
@@ -199,7 +210,7 @@
 - es:municipio:31060 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:31071 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:31074 está en fuentes/partes-bilingues.csv pero no en el INE
-- … y 63 más
+- … y 64 más
 
 ## Notas (4)
 
@@ -229,7 +240,7 @@
 
 - es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091
 
-## Wikidata: sin elemento (46)
+## Wikidata: sin elemento (41)
 
 - es:autonomia:01 (ES-AN)
 - es:autonomia:02 (ES-AR)
@@ -246,15 +257,9 @@
 - es:autonomia:17 (ES-RI)
 - es:autonomia:18 (ES-CE)
 - es:autonomia:19 (ES-ML)
-- es:isla:el-hierro (Q1036287)
-- es:isla:formentera (Q31916364)
-- es:isla:fuerteventura (Q192534)
-- es:isla:gran-canaria (Q178925)
-- es:isla:la-gomera (Q105967)
-- es:isla:la-palma (Q201689)
-- es:isla:lanzarote (Q182432)
-- es:isla:mallorca (Q8828)
-- es:isla:menorca (Q52636)
+- es:isla:071 «Formentera» (Q31916364)
+- es:isla:073 «Mallorca» (Q8828)
+- es:isla:352 «Gran Canaria» (Q178925)
 - es:municipio:01059 «Vitoria-Gasteiz»
 - es:municipio:03014 «Alacant/Alicante»
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa»
@@ -272,6 +277,7 @@
 - es:municipio:31201 «Pamplona/Iruña»
 - es:municipio:33031 «Langreo»
 - es:municipio:35016 «Las Palmas de Gran Canaria»
+- es:municipio:36008 «Cangas de Morrazo»
 - es:municipio:38038 «Santa Cruz de Tenerife»
 - es:municipio:46220 «Sagunt/Sagunto»
 - es:municipio:48020 «Bilbao»

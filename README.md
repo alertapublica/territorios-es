@@ -23,7 +23,7 @@ te.name("es:provincia:03", "ca")                        # 'Alacant'
 te.name("es:autonomia:09", "en")                        # 'Catalonia'
 [c["id"] for c in te.search("Ourense", levels=["municipality"])]   # ['es:municipio:32054']
 te.relate_name("Ourense")["status"]                     # 'pending': provincia y municipio
-te.children("es:isla:formentera")                       # ['es:municipio:07024']: municipios de la isla
+te.children("es:isla:071")                              # ['es:municipio:07024']: municipios de Formentera
 te.parse_cadastral_reference("9872023VH5797S0001WX")["valid"]  # True: letras de control correctas
 te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio de una parcela rústica
 ```
@@ -100,14 +100,14 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 
 | Fuente | Datos | Licencia |
 |---|---|---|
-| INE | códigos y nombres oficiales de municipios | reutilización citando la fuente |
-| Eurostat | LAU, NUTS 3 de cada municipio (y con él, su isla), población y superficie | CC BY 4.0 |
+| INE | códigos y nombres oficiales de municipios e islas, y cambios de nombre del año | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» (fecha de cada fichero en el manifiesto) |
+| Eurostat | LAU, NUTS 3 de cada municipio, población y superficie | CC BY 4.0 |
 | Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
 | Instituto Geográfico Nacional | código BDDAE y límites municipales (fichero adjunto a cada versión, simplificado) | CC BY 4.0: «Obra derivada de BDLJE Continua CC-BY 4.0 ign.es» |
 | Wikidata | nombres por idioma, enlaces, identificadores | CC0 |
 | GeoNames (vía Wikidata) | identificador | CC BY 4.0 |
-| Listas revisadas a mano (`fuentes/`) | nombres de comunidades, islas, alias, ISO 3166-2, NUTS | MIT |
+| Listas revisadas a mano (`fuentes/`) | nombres de comunidades, alias, ISO 3166-2, NUTS, elemento de Wikidata de cada isla | MIT |
 
 ---
 

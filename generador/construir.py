@@ -354,53 +354,63 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
 
     # Islands ---------------------------------------------------------------------------------------
     # Cabildos (Canarias) and consells insulars (Illes Balears) group the municipalities of their
-    # province without changing their parent. Each municipality goes to its island by its NUTS 3
-    # (Eurostat), except where one NUTS 3 holds two islands (Eivissa y Formentera): there
-    # fuentes/islas.csv lists the municipalities of the smaller one.
-    islands, island_by_code, island_by_nuts, island_nuts3 = [], {}, {}, {}
+    # province without changing their parent. The INE gives each island its code, its name and its
+    # municipalities; fuentes/islas.csv adds the Wikidata item and the NUTS 3 to cross-check with.
+    hand_islands = {row["ine"]: row for row in hand["islands"]}
+    island_rows = inputs.get("ine_islands") or []
+    island_names: dict[str, set[str]] = {}
+    island_of: dict[str, tuple[str, str]] = {}  # municipality -> (island id, INE check digit)
+    for island, name, code, check in island_rows:
+        island_names.setdefault(island, set()).add(name)
+        island_of[code] = (f"es:isla:{island}", check)
     nuts_count: dict[str, int] = {}
     for row in hand["islands"]:
         nuts_count[row["nuts3"]] = nuts_count.get(row["nuts3"], 0) + 1
-    for row in hand["islands"]:
-        identity, province = row["id"], row["provincia"]
+    islands, island_nuts3 = [], {}
+    for island in sorted(island_names):
+        identity, province = f"es:isla:{island}", island[:2]
+        if len(island_names[island]) > 1:
+            raise ValueError(f"INE island {island} has several names: {sorted(island_names[island])}")
         if province not in province_ccaa or province_nuts[province]:
             raise ValueError(f"{identity}: province {province} is not split into islands")
-        listed = row["municipios"].split()
-        for code in listed:
-            if code in island_by_code:
-                raise ValueError(f"{code} listed in {island_by_code[code]} and {identity}")
-            island_by_code[code] = identity
-        if not listed:
-            if row["nuts3"] in island_by_nuts:
-                raise ValueError(f"NUTS 3 {row['nuts3']} in {island_by_nuts[row['nuts3']]} and {identity}")
-            island_by_nuts[row["nuts3"]] = identity
-        island_nuts3[identity] = row["nuts3"]
+        official = next(iter(island_names[island]))
+        display = display_name(official)
+        row = hand_islands.get(island)
+        if row is None:
+            report.add("Islas", f"{identity} «{display}» no está en fuentes/islas.csv")
+            row = {"nuts3": "", "wikidata": ""}
         qid = row["wikidata"] or None
         if qid and not re.fullmatch(r"Q[1-9][0-9]*", qid):
             raise ValueError(f"{identity}: invalid QID {qid!r}")
         item = spain_items.get(qid) if qid else None
         if item is None or item["dissolved"]:
-            report.add("Wikidata: sin elemento", f"{identity} ({qid or 'sin QID en fuentes/islas.csv'})")
+            report.add("Wikidata: sin elemento", f"{identity} «{display}» ({qid or 'sin QID en fuentes/islas.csv'})")
             item = None
         qid = claim(qid, identity) if item else None
-        names = {"official": row["official"], "display": row["display"]}
-        lang = _other_names(item, {normalize(row["official"]), normalize(row["display"])}, identity, discarded)
+        names = {"official": official, "display": display}
+        lang = _other_names(item, {normalize(official), normalize(display)}, identity, discarded)
         if lang:
             names["lang"] = lang
         if aliases.get(identity):
             names["aliases"] = aliases[identity]
+        codes = {"ine:isla": island}
         # The NUTS 3 is a code of the island only when it holds no other island.
-        codes = {"nuts": row["nuts3"]} if nuts_count[row["nuts3"]] == 1 else {}
+        if row["nuts3"] and nuts_count[row["nuts3"]] == 1:
+            codes["nuts"] = row["nuts3"]
         nuts = item["codes"].get("nuts", set()) if item else set()
         if nuts and row["nuts3"] not in nuts:
             report.add("NUTS", f"{identity}: {row['nuts3']} en fuentes/, {', '.join(sorted(nuts))} en Wikidata")
         record = {"id": identity, "level": "island", "parent": f"es:provincia:{province}", "codes": codes,
-                  "names": names, "nuts3": row["nuts3"]}
+                  "names": names}
+        if row["nuts3"]:
+            record["nuts3"] = island_nuts3[identity] = row["nuts3"]
         _attach_wikidata(record, item, qid, report)
-        record.update(slug=slugify(row["display"]), time_zone=time_zone[province_ccaa[province]])
+        record.update(slug=slugify(display), time_zone=time_zone[province_ccaa[province]])
         islands.append(record)
         add_articles(identity, item)
-    island_provinces = {r["parent"].rsplit(":", 1)[1] for r in islands}
+    for island in sorted(set(hand_islands) - set(island_names)):
+        report.add("Islas", f"{island} está en fuentes/islas.csv pero no en la tabla de islas del INE")
+    island_provinces = {r["parent"].rsplit(":", 1)[1] for r in islands} | {code[:2] for code in hand_islands}
 
     # Municipalities ------------------------------------------------------------------------------
     lau_by_ine: dict[str, str] = {}
@@ -432,6 +442,26 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     for unit in inputs.get("ign_units") or []:
         units_by_ine.setdefault(unit[0][-5:], []).append(unit)
     area_in_m2 = inputs.get("lau_area_unit", "m2") == "m2"
+    # Changes registered in the REL since the dictionary (INE): new names are applied, the previous
+    # one stays as an alias; municipalities created or dissolved wait for next year's dictionary.
+    renames: dict[str, dict] = {}
+    def changes_note(message: str):
+        report.add("INE: cambios del año", message)
+
+    ine_changes = inputs.get("ine_changes")
+    if ine_changes is None:
+        changes_note("No se pudo leer la página de cambios del año: los nombres son los del diccionario")
+    elif ine_changes["since"] != reference_date:
+        changes_note(f"La página de cambios empieza el {ine_changes['since']} y el diccionario es del "
+                     f"{reference_date}: no se aplica")
+    else:
+        for change in ine_changes["changes"]:
+            if change["kind"] in ("renamed", "corrected"):
+                renames[change["code"]] = change
+            else:
+                verb = "creado" if change["kind"] == "created" else "desaparecido"
+                changes_note(f"{change['code']} «{change['name']}» {verb} el {change['date']} ({change['other']}); "
+                             f"entrará con el diccionario del año siguiente")
     municipalities, ine_codes = [], set()
     island_nuts: dict[str, set] = {}
     for code, check, official, ccaa in inputs["municipalities"]:
@@ -440,6 +470,19 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         province = code[:2]
         if province_ccaa.get(province) != ccaa:
             raise ValueError(f"{identity}: community {ccaa} does not match fuentes/provincias.csv")
+        former = None
+        change = renames.pop(code, None)
+        if change:
+            if change["check"] != check:
+                changes_note(f"{identity}: dígito de control {change['check']} en la página de "
+                             f"cambios, {check} en el diccionario")
+            if change["previous"] == official:
+                former, official = official, change["name"]
+                report.add("INE: nombres nuevos", f"{identity}: «{former}» → «{official}» "
+                                                  f"(REL, {change['date'] or 'sin fecha'})")
+            elif change["name"] != official:
+                changes_note(f"{identity}: el cambio de «{change['previous']}» a "
+                             f"«{change['name']}» no parte de «{official}»; no se aplica")
         display = display_name(official)
         names = {"official": official, "display": display}
         parts = parts_of(identity, official)
@@ -455,6 +498,10 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             names["lang"] = lang
         if aliases.get(identity):
             names["aliases"] = aliases[identity]
+        if former:
+            former_alias = {"name": display_name(former), "lang": None, "kind": "former_official", "source": "ine",
+                            "until": change["date"]}
+            names["aliases"] = [*names.get("aliases", []), former_alias]
         codes = {"ine:municipio": code, "ine:municipio:dc": code + check}
         record = {"id": identity, "level": "municipality", "parent": f"es:provincia:{province}",
                   "codes": codes, "names": names}
@@ -481,15 +528,17 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                     stats[key] = fields[key]
         elif lau:
             report.add("Eurostat LAU", f"{identity} «{display}» no está en la tabla LAU")
-        if province in island_provinces:
-            island = island_by_code.get(code) or island_by_nuts.get(record.get("nuts3"))
-            if island and code in island_by_code and record.get("nuts3") not in (None, island_nuts3[island]):
-                report.add("Islas", f"{identity} «{display}»: en fuentes/islas.csv con {island}, "
-                                    f"pero su NUTS 3 es {record['nuts3']}")
-            if island:
-                record["island"] = island
-            elif lau:
-                report.add("Islas", f"{identity} «{display}» sin isla (NUTS 3 {record.get('nuts3')})")
+        if code in island_of:
+            island, island_check = island_of[code]
+            record["island"] = island
+            if island_check != check:
+                report.add("Islas", f"{identity} «{display}»: dígito de control {island_check} en la tabla de "
+                                    f"islas, {check} en el diccionario")
+            if record.get("nuts3") and island_nuts3.get(island) not in (None, record["nuts3"]):
+                report.add("Islas", f"{identity} «{display}»: en {island} según el INE, pero su NUTS 3 es "
+                                    f"{record['nuts3']} y el de la isla {island_nuts3[island]}")
+        elif province in island_provinces and island_rows:
+            report.add("Islas", f"{identity} «{display}» no está en la tabla de islas del INE")
         entries = dgc_by_ine.get(code, [])
         if len(entries) > 1:
             report.add("Catastro", f"{identity}: varios códigos DGC "
@@ -544,8 +593,11 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("IGN: capitales", f"{entity} «{label}» es capital de {code}, que no está en el INE")
     for code in sorted(set(by_ine) - ine_codes):
         report.add("Wikidata: código INE", f"{code} ({', '.join(sorted(by_ine[code]))}) no está en el INE")
-    for code in sorted(set(island_by_code) - ine_codes):
-        report.add("Islas", f"{code} está en fuentes/islas.csv ({island_by_code[code]}) pero no en el INE")
+    for code, change in sorted(renames.items()):
+        changes_note(f"{code} «{change['name']}» (antes «{change['previous']}») no está en el diccionario")
+    for code in sorted(set(island_of) - ine_codes):
+        report.add("Islas", f"{code} está en la tabla de islas del INE ({island_of[code][0]}) pero no en el "
+                            f"diccionario de municipios")
     with_members = {r["island"] for r in municipalities if "island" in r}
     for record in islands:
         if record["id"] not in with_members:

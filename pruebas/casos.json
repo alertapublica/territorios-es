@@ -62,16 +62,16 @@
     ["dgc:municipio", "15030", null, null],
     ["dgc:municipio", "41900", null, null],
     ["sistema:inventado", "36038", null, null],
-    ["nuts", "ES709", "es:isla:tenerife", ["es:provincia:38", "es:autonomia:05", "pais:ES"]],
+    ["ine:isla", "072", "es:isla:072", ["es:provincia:07", "es:autonomia:04", "pais:ES"]],
+    ["nuts", "ES709", "es:isla:384", ["es:provincia:38", "es:autonomia:05", "pais:ES"]],
     ["nuts", "ES531", null, null],
-    ["wikidata", "Q52631", "es:isla:eivissa", ["es:provincia:07", "es:autonomia:04", "pais:ES"]]
+    ["wikidata", "Q52631", "es:isla:072", ["es:provincia:07", "es:autonomia:04", "pais:ES"]]
   ],
   "children": [
-    ["es:isla:formentera", ["es:municipio:07024"]],
-    ["es:isla:eivissa", ["es:municipio:07026"]],
-    ["es:isla:menorca", []],
-    ["es:provincia:38", ["es:isla:el-hierro", "es:isla:la-gomera", "es:isla:la-palma", "es:isla:tenerife",
-                         "es:municipio:38038"]]
+    ["es:isla:071", ["es:municipio:07024"]],
+    ["es:isla:072", ["es:municipio:07026"]],
+    ["es:isla:999", []],
+    ["es:provincia:38", ["es:isla:384", "es:municipio:38038"]]
   ],
   "name": [
     ["es:autonomia:09", "es", false, "Cataluña"],
@@ -117,11 +117,13 @@
     ["Madrid", null, null, [["es:provincia:28", "official"], ["es:municipio:28079", "official"], ["es:autonomia:13", "lang"]]],
     ["Spain", null, null, [["pais:ES", "lang"]]],
     ["Atlántida", null, null, []],
-    ["Formentera", null, null, [["es:isla:formentera", "official"], ["es:municipio:07024", "official"]]],
-    ["Formentera", "es:isla:formentera", null, [["es:municipio:07024", "official"]]],
-    ["Eivissa", "es:isla:formentera", null, []],
-    ["Ibiza", null, null, [["es:isla:eivissa", "lang"]]],
-    ["Hierro", null, ["island"], [["es:isla:el-hierro", "variant"]]]
+    ["Formentera", null, null, [["es:isla:071", "official"], ["es:municipio:07024", "official"]]],
+    ["Formentera", "es:isla:071", null, [["es:municipio:07024", "official"]]],
+    ["Eivissa", "es:isla:071", null, []],
+    ["Eivissa", null, null, [["es:municipio:07026", "official"], ["es:isla:072", "lang"]]],
+    ["Tenerife", null, ["island"], [["es:isla:384", "official"]]],
+    ["Cangas", null, null, [["es:municipio:36008", "alias"]]],
+    ["Cangas de Morrazo", null, null, [["es:municipio:36008", "official"]]]
   ],
   "mentions": [
     ["Moncada (Valencia)", null, [["valencia", ["es:provincia:46"]]]],

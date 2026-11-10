@@ -43,6 +43,45 @@ class Readers(unittest.TestCase):
                          [["15030", "8", "Coruña, A", "12"], ["36038", "8", "Pontevedra", "12"]])
         self.assertRaises(ValueError, ine.parse_municipalities, content, "1 de enero de 2027")
 
+    def test_ine_islands(self):
+        sheet = lambda title, rows: [[title], ["Illes Balears"], ["CPRO", "CISLA", "ISLA", "CMUN", "DC", "NOMBRE"], *rows]
+        title = "Relación de municipios y códigos por provincia e islas a 1 de enero de 2025"
+        content = xlsx({"07": sheet(title, [["07", "072", "Ibiza", "026", "0", "Eivissa"],
+                                            ["07", "071", "Formentera", "024", "4", "Formentera"]]),
+                        "38": sheet(title, [["38", "381", "Gomera, La ", "002", "7", "Agulo"]])})
+        self.assertEqual(ine.parse_islands(content), ([["071", "Formentera", "07024", "4"], ["072", "Ibiza", "07026", "0"],
+                                                       ["381", "Gomera, La", "38002", "7"]], "2025-01-01"))
+        for row in (["07", "381", "Ibiza", "026", "0", "Eivissa"],  # island of another province
+                    ["07", "072", "Ibiza", "26", "0", "Eivissa"]):  # short code
+            self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": sheet(title, [row])}))
+        self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": [["Sin cabecera"]]}))
+
+    def test_ine_changes_html(self):
+        def page(*rows):
+            body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
+            return ("<html><head><meta charset=ISO-8859-15></head><body>Modificaciones en los municipios producidas "
+                    f"desde el 01-01-2026<table>{body}</table></body></html>").encode("iso-8859-15")
+        content = page(["Relaci&oacute;n de municipios creados"],
+                       ["Provincia", "C&oacute;digo", "Denominaci&oacute;n", "Municipio del que se segrega", "Fecha"],
+                       ["Coruña, A", "15 902 7", "Oza-Cesuras", "15 026 9", "02/06/2013", "06/06/2013"],
+                       ["", "", "", "15 063 9", "Oza dos Ríos"],
+                       ["Cambio de denominaci&oacute;n de los municipios"],
+                       ["Provincia", "Denominación nueva", "Código", "Denominación anterior", "Fecha"],
+                       ["Pontevedra", "Caniza, A", "36 009 7", "Cañiza, A", "15/06/2026"],
+                       ["Corrección en la denominación de los municipios"],
+                       ["Provincia", "Denominación corregida", "Código", "Denominación anterior"],
+                       ["Jaén", "Espeluy", "23 032 0", "Espelúy"])
+        since, changes = ine.parse_changes(content)
+        self.assertEqual(since, "2026-01-01")
+        self.assertEqual(changes, [
+            {"kind": "created", "code": "15902", "check": "7", "name": "Oza-Cesuras",
+             "other": "15 026 9; 15 063 9 Oza dos Ríos", "date": "2013-06-02"},
+            {"kind": "renamed", "code": "36009", "check": "7", "name": "Caniza, A", "previous": "Cañiza, A",
+             "date": "2026-06-15"},
+            {"kind": "corrected", "code": "23032", "check": "0", "name": "Espeluy", "previous": "Espelúy", "date": None}])
+        self.assertEqual(ine.parse_changes(page(["Cambio de denominación"], ["Provincia", "Nueva", "Código"])),
+                         ("2026-01-01", []))
+
     def test_ine_provinces_html(self):
         page = ("<table><tr><th>CODAUTO</th><th>Comunidad</th><th>CPRO</th><th>Provincia</th></tr>"
                 "<tr><td>12</td><td>Galicia</td><td>15</td><td>Coru&ntilde;a, A</td></tr></table>").encode()
@@ -102,6 +141,10 @@ class Readers(unittest.TestCase):
             {"codine": "32054000201", "nombre": "Aldea", "capital": "000000", "longitud": -7.8, "latitud": 42.3, "altitud": None},
             {"codine": "28079000101", "nombre": "Madrid", "capital": "111100", "longitud": -3.7, "latitud": 40.4, "altitud": 657}]))
         self.assertEqual(matched, 3)
+        self.assertIn("/collections/nuc/items?", ign.populations_url(0))
+        self.assertNotIn("capital=", ign.populations_url(0))
+        self.assertIn("/collections/opob/items?", ign.populations_url(0, other=True))
+        self.assertIn("capital=000100", ign.populations_url(0, other=True))
         self.assertEqual(ign.municipal_capitals(rows), [["28079", "28079000101", "Madrid", -3.7, 40.4, 657.0],
                                                         ["32054", "32054000101", "Ourense", -7.86, 42.33, 136.2]])
         self.assertRaises(ValueError, ign.parse_populations, page([{"codine": "3205", "capital": "0011"}]))
@@ -282,43 +325,74 @@ class Build(unittest.TestCase):
 
     def test_islands(self):
         by_id = {t["id"]: t for t in self.data["territories"]}
-        self.assertEqual(sum(t["level"] == "island" for t in by_id.values()), 11)
-        # One NUTS 3 for Eivissa y Formentera: the list in fuentes/islas.csv splits it, and that
-        # NUTS 3 is a code of neither island.
-        self.assertEqual(by_id["es:municipio:07024"]["island"], "es:isla:formentera")
-        self.assertEqual(by_id["es:municipio:07026"]["island"], "es:isla:eivissa")
-        self.assertNotIn("nuts", by_id["es:isla:eivissa"]["codes"])
-        self.assertEqual(by_id["es:isla:tenerife"]["codes"]["nuts"], "ES709")
+        self.assertEqual(sorted(i for i in by_id if i.startswith("es:isla:")),
+                         ["es:isla:071", "es:isla:072", "es:isla:073", "es:isla:352", "es:isla:384"])
+        # Code, name and municipalities from the INE; Eivissa y Formentera share one NUTS 3, which
+        # is then a code of neither island.
+        self.assertEqual(by_id["es:municipio:07024"]["island"], "es:isla:071")
+        self.assertEqual(by_id["es:municipio:07026"]["island"], "es:isla:072")
+        self.assertEqual(by_id["es:isla:072"]["codes"], {"ine:isla": "072", "wikidata": "Q52631"})
+        self.assertEqual(by_id["es:isla:384"]["codes"]["nuts"], "ES709")
+        self.assertEqual(by_id["es:isla:072"]["names"], {"official": "Ibiza", "display": "Ibiza", "lang": {"ca": "Eivissa"}})
         self.assertEqual(by_id["es:municipio:38038"]["parent"], "es:provincia:38")  # unchanged
         self.assertNotIn("island", by_id["es:municipio:36038"])
-        self.assertEqual(by_id["es:isla:eivissa"]["names"]["lang"], {"en": "Ibiza", "es": "Ibiza"})
-        self.assertIn("es:isla:menorca sin municipios", self.report.sections["Islas"])
-        self.assertIn("es:isla:mallorca (Q8828)", self.report.sections["Wikidata: sin elemento"])
+        self.assertIn("074 está en fuentes/islas.csv pero no en la tabla de islas del INE", self.report.sections["Islas"])
+        self.assertIn("es:isla:073 «Mallorca» (Q8828)", self.report.sections["Wikidata: sin elemento"])
 
-    def test_island_list_errors(self):
-        import shutil
-        import tempfile
+    def test_name_changes_of_the_year(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        cangas = by_id["es:municipio:36008"]["names"]
+        self.assertEqual((cangas["official"], cangas["display"]), ("Cangas de Morrazo", "Cangas de Morrazo"))
+        self.assertIn({"name": "Cangas", "lang": None, "kind": "former_official", "source": "ine",
+                       "until": "2026-06-15"}, cangas["aliases"])
+        self.assertIn("es:municipio:36008: «Cangas» → «Cangas de Morrazo» (REL, 2026-06-15)",
+                      self.report.sections["INE: nombres nuevos"])
+        self.assertIn("15903 «Concello novo» creado el 2026-09-01 (15 030 8 Coruña, A); entrará con el diccionario del "
+                      "año siguiente", self.report.sections["INE: cambios del año"])
         inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
         inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
         inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
-        with tempfile.TemporaryDirectory() as folder:
-            shutil.copytree(ROOT / "fuentes", folder, dirs_exist_ok=True)
-            path = Path(folder) / "islas.csv"
-            original = path.read_text(encoding="utf-8")
-            # A listed municipality whose NUTS 3 is another island's, and one the INE does not have.
-            path.write_text(original.replace("Q8828,", "Q8828,07026 07999"), encoding="utf-8")
-            _, report, _ = build(inputs, Path(folder), "2026-01-01")
-            self.assertIn("es:municipio:07026 «Eivissa»: en fuentes/islas.csv con es:isla:mallorca, pero su "
-                          "NUTS 3 es ES531", report.sections["Islas"])
-            self.assertIn("07999 está en fuentes/islas.csv (es:isla:mallorca) pero no en el INE",
-                          report.sections["Islas"])
-            self.assertIn("es:municipio:07040 «Palma» sin isla (NUTS 3 ES532)", report.sections["Islas"])
-            for broken, message in (("es:isla:tenerife,38", "es:isla:tenerife,36"),  # not an island province
-                                    ("Q40846", "40846"),  # not a QID
-                                    ("Q52636,", "Q52636,07024")):  # listed twice
-                path.write_text(original.replace(broken, message), encoding="utf-8")
-                with self.assertRaises(ValueError):
-                    build(inputs, Path(folder), "2026-01-01")
+        inputs["ine_changes"]["changes"] = [
+            {"kind": "renamed", "code": "36038", "check": "1", "name": "Pontevedra nova", "previous": "Pontevedra vella",
+             "date": None},
+            {"kind": "renamed", "code": "36999", "check": "0", "name": "Ningún", "previous": "Ninguno", "date": None}]
+        data, report, _ = build(inputs, ROOT / "fuentes", "2026-01-01")
+        changes = report.sections["INE: cambios del año"]
+        self.assertIn("es:municipio:36038: el cambio de «Pontevedra vella» a «Pontevedra nova» no parte de «Pontevedra»; "
+                      "no se aplica", changes)
+        self.assertIn("es:municipio:36038: dígito de control 1 en la página de cambios, 8 en el diccionario", changes)
+        self.assertIn("36999 «Ningún» (antes «Ninguno») no está en el diccionario", changes)
+        self.assertEqual({t["id"]: t for t in data["territories"]}["es:municipio:36008"]["names"]["official"], "Cangas")
+        inputs["ine_changes"]["since"] = "2027-01-01"
+        _, report, _ = build(inputs, ROOT / "fuentes", "2026-01-01")
+        self.assertIn("La página de cambios empieza el 2027-01-01 y el diccionario es del 2026-01-01: no se aplica",
+                      report.sections["INE: cambios del año"])
+        inputs["ine_changes"] = None
+        _, report, _ = build(inputs, ROOT / "fuentes", "2026-01-01")
+        self.assertEqual(len(report.sections["INE: cambios del año"]), 1)
+
+    def test_island_table_errors(self):
+        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
+        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
+        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
+        rows = inputs["ine_islands"]
+        inputs["ine_islands"] = [r for r in rows if r[2] != "35016"] + [
+            ["073", "Mallorca", "07026", "9"],  # another island than its NUTS 3, and another check digit
+            ["074", "Menorca", "07999", "1"]]  # not in the dictionary
+        inputs["ine_islands"] = [r for r in inputs["ine_islands"] if r[:3] != ["072", "Ibiza", "07026"]]
+        _, report, _ = build(inputs, ROOT / "fuentes", "2026-01-01")
+        islands = report.sections["Islas"]
+        self.assertIn("es:municipio:07026 «Eivissa»: dígito de control 9 en la tabla de islas, 0 en el diccionario", islands)
+        self.assertIn("es:municipio:07026 «Eivissa»: en es:isla:073 según el INE, pero su NUTS 3 es ES531 y el de la "
+                      "isla ES532", islands)
+        self.assertIn("07999 está en la tabla de islas del INE (es:isla:074) pero no en el diccionario de municipios",
+                      islands)
+        self.assertIn("es:municipio:35016 «Las Palmas de Gran Canaria» no está en la tabla de islas del INE", islands)
+        for broken in ([["071", "Formentera", "07024", "4"], ["071", "Formentera bis", "07026", "0"]],  # two names
+                       [["361", "Ons", "36038", "8"]]):  # Pontevedra is not split into islands
+            inputs["ine_islands"] = broken
+            with self.assertRaises(ValueError):
+                build(inputs, ROOT / "fuentes", "2026-01-01")
 
 
 class HandLists(unittest.TestCase):

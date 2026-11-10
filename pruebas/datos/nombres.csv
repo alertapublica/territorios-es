@@ -423,30 +423,17 @@ es:provincia:51,official,,Ceuta,fuentes
 es:provincia:51,display,,Ceuta,fuentes
 es:provincia:52,official,,Melilla,fuentes
 es:provincia:52,display,,Melilla,fuentes
-es:isla:eivissa,official,,Eivissa,fuentes
-es:isla:eivissa,display,,Eivissa,fuentes
-es:isla:eivissa,lang,en,Ibiza,wikidata
-es:isla:eivissa,lang,es,Ibiza,wikidata
-es:isla:formentera,official,,Formentera,fuentes
-es:isla:formentera,display,,Formentera,fuentes
-es:isla:mallorca,official,,Mallorca,fuentes
-es:isla:mallorca,display,,Mallorca,fuentes
-es:isla:menorca,official,,Menorca,fuentes
-es:isla:menorca,display,,Menorca,fuentes
-es:isla:fuerteventura,official,,Fuerteventura,fuentes
-es:isla:fuerteventura,display,,Fuerteventura,fuentes
-es:isla:gran-canaria,official,,Gran Canaria,fuentes
-es:isla:gran-canaria,display,,Gran Canaria,fuentes
-es:isla:lanzarote,official,,Lanzarote,fuentes
-es:isla:lanzarote,display,,Lanzarote,fuentes
-es:isla:el-hierro,official,,El Hierro,fuentes
-es:isla:el-hierro,display,,El Hierro,fuentes
-es:isla:la-gomera,official,,La Gomera,fuentes
-es:isla:la-gomera,display,,La Gomera,fuentes
-es:isla:la-palma,official,,La Palma,fuentes
-es:isla:la-palma,display,,La Palma,fuentes
-es:isla:tenerife,official,,Tenerife,fuentes
-es:isla:tenerife,display,,Tenerife,fuentes
+es:isla:071,official,,Formentera,ine
+es:isla:071,display,,Formentera,derivado
+es:isla:072,official,,Ibiza,ine
+es:isla:072,display,,Ibiza,derivado
+es:isla:072,lang,ca,Eivissa,wikidata
+es:isla:073,official,,Mallorca,ine
+es:isla:073,display,,Mallorca,derivado
+es:isla:352,official,,Gran Canaria,ine
+es:isla:352,display,,Gran Canaria,derivado
+es:isla:384,official,,Tenerife,ine
+es:isla:384,display,,Tenerife,derivado
 es:municipio:01059,official,,Vitoria-Gasteiz,ine
 es:municipio:01059,display,,Vitoria-Gasteiz,derivado
 es:municipio:01059,alias:short,es,Vitoria,fuentes
@@ -510,6 +497,9 @@ es:municipio:33031,official,,Langreo,ine
 es:municipio:33031,display,,Langreo,derivado
 es:municipio:35016,official,,"Palmas de Gran Canaria, Las",ine
 es:municipio:35016,display,,Las Palmas de Gran Canaria,derivado
+es:municipio:36008,official,,Cangas de Morrazo,ine
+es:municipio:36008,display,,Cangas de Morrazo,derivado
+es:municipio:36008,alias:former_official,,Cangas,ine
 es:municipio:36038,official,,Pontevedra,ine
 es:municipio:36038,display,,Pontevedra,derivado
 es:municipio:38038,official,,Santa Cruz de Tenerife,ine

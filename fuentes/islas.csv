@@ -1,12 +1,12 @@
-id,provincia,nuts3,official,display,wikidata,municipios
-es:isla:eivissa,07,ES531,Eivissa,Eivissa,Q52631,
-es:isla:formentera,07,ES531,Formentera,Formentera,Q31916364,07024
-es:isla:mallorca,07,ES532,Mallorca,Mallorca,Q8828,
-es:isla:menorca,07,ES533,Menorca,Menorca,Q52636,
-es:isla:fuerteventura,35,ES704,Fuerteventura,Fuerteventura,Q192534,
-es:isla:gran-canaria,35,ES705,Gran Canaria,Gran Canaria,Q178925,
-es:isla:lanzarote,35,ES708,Lanzarote,Lanzarote,Q182432,
-es:isla:el-hierro,38,ES703,El Hierro,El Hierro,Q1036287,
-es:isla:la-gomera,38,ES706,La Gomera,La Gomera,Q105967,
-es:isla:la-palma,38,ES707,La Palma,La Palma,Q201689,
-es:isla:tenerife,38,ES709,Tenerife,Tenerife,Q40846,
+ine,nuts3,wikidata
+071,ES531,Q31916364
+072,ES531,Q52631
+073,ES532,Q8828
+074,ES533,Q52636
+351,ES704,Q192534
+352,ES705,Q178925
+353,ES708,Q182432
+381,ES706,Q105967
+382,ES703,Q1036287
+383,ES707,Q201689
+384,ES709,Q40846
