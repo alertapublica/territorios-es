@@ -16,8 +16,8 @@ _SPAIN = """
 """
 _COUNTRIES = "?item wdt:P297 ?alpha2 ."
 
-_SPAIN_CODES = f"""SELECT ?item ?ine ?iso ?nuts ?lau ?osm ?geonames ?end WHERE {{
-  {_SPAIN}
+_SPAIN_CODES = """SELECT ?item ?ine ?iso ?nuts ?lau ?osm ?geonames ?end WHERE {{
+  {items}
   OPTIONAL {{ ?item wdt:P605 ?nuts }} OPTIONAL {{ ?item wdt:P782 ?lau }}
   OPTIONAL {{ ?item wdt:P402 ?osm }} OPTIONAL {{ ?item wdt:P1566 ?geonames }}
   OPTIONAL {{ ?item wdt:P576 ?end }}
@@ -30,11 +30,16 @@ _COUNTRY_CODES = f"""SELECT ?item ?alpha2 ?alpha3 ?numeric ?osm ?geonames ?end W
 }}"""
 
 
-def queries() -> dict[str, str]:
+def queries(extra_qids=()) -> dict[str, str]:
     """One query for the codes and one per language for labels and articles: a single big query
-    times out on the public endpoint and comes back cut off."""
+    times out on the public endpoint and comes back cut off. extra_qids: Spanish items without an
+    INE or ISO code (the islands), by their QID."""
+    spain = _SPAIN
+    if extra_qids:
+        spain += f"  UNION\n  {{ VALUES ?item {{ {' '.join('wd:' + q for q in extra_qids)} }} }}\n"
     result = {}
-    for prefix, items, codes in (("spain", _SPAIN, _SPAIN_CODES), ("country", _COUNTRIES, _COUNTRY_CODES)):
+    for prefix, items, codes in (("spain", spain, _SPAIN_CODES.format(items=spain)),
+                                 ("country", _COUNTRIES, _COUNTRY_CODES)):
         result[f"{prefix}_codes"] = codes
         for lang in LANGS:
             result[f"{prefix}_labels_{lang}"] = f"""SELECT ?item ?label WHERE {{

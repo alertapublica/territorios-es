@@ -102,7 +102,8 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
 
     c = config["wikidata"]
     raw = {}
-    for key, query in wikidata.queries().items():
+    islands = [row["wikidata"] for row in load_hand_lists(FUENTES)["islands"] if row["wikidata"]]
+    for key, query in wikidata.queries(islands).items():
         got = descargas.fetch(c["url"], data={"query": query}, accept="application/sparql-results+json",
                               cache=cache, cache_name=f"wikidata_{key}.json", validate=json.loads)
         raw[key] = got.content

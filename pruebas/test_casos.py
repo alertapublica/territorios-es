@@ -28,6 +28,10 @@ class SharedCases(unittest.TestCase):
             self.assertEqual((found["id"], found["ancestors"]) if found else (None, None),
                              (expected, ancestors), (system, code))
 
+    def test_children(self):
+        for identity, expected in CASES["children"]:
+            self.assertEqual(CATALOG.children(identity), expected, identity)
+
     def test_name(self):
         for identity, lang, short, expected in CASES["name"]:
             self.assertEqual(CATALOG.name(identity, lang, short), expected, (identity, lang, short))

@@ -71,13 +71,19 @@ def tables(data: dict) -> dict[str, str]:
         [[t["id"], code(t, "ine:provincia"), t["parent"].rsplit(":", 1)[1], code(t, "iso3166-2"), code(t, "nuts"),
           code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"],
           t["names"]["display"], *names(t), t["time_zone"]] for t in by_level.get("province", [])])
+    files["islas.csv"] = _table(
+        ["id", "provincia", "nuts3", "wikidata", "osm_relation", "geonames", "official", "display", *name_cols,
+         "time_zone"],
+        [[t["id"], t["parent"].rsplit(":", 1)[1], t["nuts3"], code(t, "wikidata"), code(t, "osm:relation"),
+          code(t, "geonames"), t["names"]["official"], t["names"]["display"], *names(t), t["time_zone"]]
+         for t in by_level.get("island", [])])
     files["municipios.csv"] = _table(
-        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "lau", "nuts3", "wikidata",
+        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "lau", "nuts3", "wikidata",
          "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
          "lon", "lat", "altitude", "time_zone", "slug"],
         [[t["id"], code(t, "ine:municipio"), code(t, "ine:municipio:dc"), code(t, "dgc:municipio"),
           code(t, "ign:bddae"), t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1],
-          code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
+          t["island"].rsplit(":", 1)[1] if "island" in t else None, code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
           t["names"]["official"], t["names"]["display"], *names(t), t.get("stats", {}).get("population"),
           t.get("stats", {}).get("area_km2"), *[t.get("capital", {}).get(k) for k in ("name", "lon", "lat", "altitude")],
           t["time_zone"], t["slug"]]

@@ -6,7 +6,7 @@ from copy import deepcopy
 
 from .text import drop_article, normalize
 
-LEVELS = ("country", "autonomous_community", "province", "municipality")
+LEVELS = ("country", "autonomous_community", "province", "island", "municipality")
 # Order of the reasons why a text matches a territory, best first.
 REASONS = ("official", "part", "lang", "alias", "variant")
 DEFAULT_MENTION_LEVELS = ("autonomous_community", "province")
@@ -43,6 +43,12 @@ class Catalog:
                 if parent not in self._by_id:
                     raise ValueError(f"Unknown parent {parent} of {identity}")
                 self._children.setdefault(parent, []).append(identity)
+            # An island groups municipalities of its province; their parent stays the province.
+            island = record.get("island")
+            if island is not None:
+                if self._by_id.get(island, {}).get("level") != "island":
+                    raise ValueError(f"Unknown island {island} of {identity}")
+                self._children.setdefault(island, []).append(identity)
         self._index = self._build_index()
         self._mention_patterns: dict[tuple[str, ...], tuple[re.Pattern | None, dict]] = {}
 
@@ -71,6 +77,7 @@ class Catalog:
         return self.territory(identity) if identity else None
 
     def children(self, identity: str) -> list[str]:
+        """Territories whose parent is this one; for an island, its municipalities."""
         return sorted(self._children.get(identity, []))
 
     def ids(self, level: str | None = None) -> list[str]:
@@ -138,7 +145,9 @@ class Catalog:
     def _accept(self, identity: str, within: str | None, levels) -> bool:
         if levels is not None and self._by_id[identity]["level"] not in levels:
             return False
-        return within is None or within in self.ancestors(identity)
+        if within is None or within in self.ancestors(identity):
+            return True
+        return self._by_id[identity].get("island") == within
 
     # Search ----------------------------------------------------------------------------------------
 

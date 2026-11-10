@@ -4,6 +4,7 @@ import io
 import json
 import unittest
 import zipfile
+from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
@@ -198,6 +199,11 @@ class Readers(unittest.TestCase):
         self.assertEqual(len(queries), 2 * (1 + 2 * len(wikidata.LANGS)))
         self.assertIn('FILTER(LANG(?label) = "eu")', queries["spain_labels_eu"])
         self.assertIn("<https://gl.wikipedia.org/>", queries["country_articles_gl"])
+        self.assertNotIn("VALUES", queries["spain_codes"])
+        with_islands = wikidata.queries(["Q8828", "Q40846"])
+        for key in ("spain_codes", "spain_labels_ca", "spain_articles_en"):
+            self.assertIn("{ VALUES ?item { wd:Q8828 wd:Q40846 } }", with_islands[key])
+        self.assertNotIn("VALUES", with_islands["country_codes"])
 
 
 class Build(unittest.TestCase):
@@ -272,6 +278,47 @@ class Build(unittest.TestCase):
         self.assertEqual(by_id["es:municipio:51001"]["time_zone"], "Africa/Ceuta")
         self.assertTrue(by_id["pais:NO"]["eea"] and not by_id["pais:NO"]["eu"])
         self.assertNotIn("eu", by_id["pais:CH"])
+
+
+    def test_islands(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        self.assertEqual(sum(t["level"] == "island" for t in by_id.values()), 11)
+        # One NUTS 3 for Eivissa y Formentera: the list in fuentes/islas.csv splits it, and that
+        # NUTS 3 is a code of neither island.
+        self.assertEqual(by_id["es:municipio:07024"]["island"], "es:isla:formentera")
+        self.assertEqual(by_id["es:municipio:07026"]["island"], "es:isla:eivissa")
+        self.assertNotIn("nuts", by_id["es:isla:eivissa"]["codes"])
+        self.assertEqual(by_id["es:isla:tenerife"]["codes"]["nuts"], "ES709")
+        self.assertEqual(by_id["es:municipio:38038"]["parent"], "es:provincia:38")  # unchanged
+        self.assertNotIn("island", by_id["es:municipio:36038"])
+        self.assertEqual(by_id["es:isla:eivissa"]["names"]["lang"], {"en": "Ibiza", "es": "Ibiza"})
+        self.assertIn("es:isla:menorca sin municipios", self.report.sections["Islas"])
+        self.assertIn("es:isla:mallorca (Q8828)", self.report.sections["Wikidata: sin elemento"])
+
+    def test_island_list_errors(self):
+        import shutil
+        import tempfile
+        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
+        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
+        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
+        with tempfile.TemporaryDirectory() as folder:
+            shutil.copytree(ROOT / "fuentes", folder, dirs_exist_ok=True)
+            path = Path(folder) / "islas.csv"
+            original = path.read_text(encoding="utf-8")
+            # A listed municipality whose NUTS 3 is another island's, and one the INE does not have.
+            path.write_text(original.replace("Q8828,", "Q8828,07026 07999"), encoding="utf-8")
+            _, report, _ = build(inputs, Path(folder), "2026-01-01")
+            self.assertIn("es:municipio:07026 «Eivissa»: en fuentes/islas.csv con es:isla:mallorca, pero su "
+                          "NUTS 3 es ES531", report.sections["Islas"])
+            self.assertIn("07999 está en fuentes/islas.csv (es:isla:mallorca) pero no en el INE",
+                          report.sections["Islas"])
+            self.assertIn("es:municipio:07040 «Palma» sin isla (NUTS 3 ES532)", report.sections["Islas"])
+            for broken, message in (("es:isla:tenerife,38", "es:isla:tenerife,36"),  # not an island province
+                                    ("Q40846", "40846"),  # not a QID
+                                    ("Q52636,", "Q52636,07024")):  # listed twice
+                path.write_text(original.replace(broken, message), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    build(inputs, Path(folder), "2026-01-01")
 
 
 class HandLists(unittest.TestCase):

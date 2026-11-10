@@ -54,6 +54,7 @@ def load_hand_lists(folder: Path) -> dict:
         "communities": _csv(folder / "comunidades.csv"),
         "community_names": _csv(folder / "nombres-comunidades.csv"),
         "provinces": _csv(folder / "provincias.csv"),
+        "islands": _csv(folder / "islas.csv"),
         "parts": _csv(folder / "partes-bilingues.csv"),
         "aliases": _csv(folder / "alias.csv"),
         "eu": _csv(folder / "paises-ue.csv"),
@@ -351,6 +352,56 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         provinces.append(record)
         add_articles(identity, item)
 
+    # Islands ---------------------------------------------------------------------------------------
+    # Cabildos (Canarias) and consells insulars (Illes Balears) group the municipalities of their
+    # province without changing their parent. Each municipality goes to its island by its NUTS 3
+    # (Eurostat), except where one NUTS 3 holds two islands (Eivissa y Formentera): there
+    # fuentes/islas.csv lists the municipalities of the smaller one.
+    islands, island_by_code, island_by_nuts, island_nuts3 = [], {}, {}, {}
+    nuts_count: dict[str, int] = {}
+    for row in hand["islands"]:
+        nuts_count[row["nuts3"]] = nuts_count.get(row["nuts3"], 0) + 1
+    for row in hand["islands"]:
+        identity, province = row["id"], row["provincia"]
+        if province not in province_ccaa or province_nuts[province]:
+            raise ValueError(f"{identity}: province {province} is not split into islands")
+        listed = row["municipios"].split()
+        for code in listed:
+            if code in island_by_code:
+                raise ValueError(f"{code} listed in {island_by_code[code]} and {identity}")
+            island_by_code[code] = identity
+        if not listed:
+            if row["nuts3"] in island_by_nuts:
+                raise ValueError(f"NUTS 3 {row['nuts3']} in {island_by_nuts[row['nuts3']]} and {identity}")
+            island_by_nuts[row["nuts3"]] = identity
+        island_nuts3[identity] = row["nuts3"]
+        qid = row["wikidata"] or None
+        if qid and not re.fullmatch(r"Q[1-9][0-9]*", qid):
+            raise ValueError(f"{identity}: invalid QID {qid!r}")
+        item = spain_items.get(qid) if qid else None
+        if item is None or item["dissolved"]:
+            report.add("Wikidata: sin elemento", f"{identity} ({qid or 'sin QID en fuentes/islas.csv'})")
+            item = None
+        qid = claim(qid, identity) if item else None
+        names = {"official": row["official"], "display": row["display"]}
+        lang = _other_names(item, {normalize(row["official"]), normalize(row["display"])}, identity, discarded)
+        if lang:
+            names["lang"] = lang
+        if aliases.get(identity):
+            names["aliases"] = aliases[identity]
+        # The NUTS 3 is a code of the island only when it holds no other island.
+        codes = {"nuts": row["nuts3"]} if nuts_count[row["nuts3"]] == 1 else {}
+        nuts = item["codes"].get("nuts", set()) if item else set()
+        if nuts and row["nuts3"] not in nuts:
+            report.add("NUTS", f"{identity}: {row['nuts3']} en fuentes/, {', '.join(sorted(nuts))} en Wikidata")
+        record = {"id": identity, "level": "island", "parent": f"es:provincia:{province}", "codes": codes,
+                  "names": names, "nuts3": row["nuts3"]}
+        _attach_wikidata(record, item, qid, report)
+        record.update(slug=slugify(row["display"]), time_zone=time_zone[province_ccaa[province]])
+        islands.append(record)
+        add_articles(identity, item)
+    island_provinces = {r["parent"].rsplit(":", 1)[1] for r in islands}
+
     # Municipalities ------------------------------------------------------------------------------
     lau_by_ine: dict[str, str] = {}
     for lau_code in inputs.get("lau") or {}:
@@ -430,6 +481,15 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                     stats[key] = fields[key]
         elif lau:
             report.add("Eurostat LAU", f"{identity} «{display}» no está en la tabla LAU")
+        if province in island_provinces:
+            island = island_by_code.get(code) or island_by_nuts.get(record.get("nuts3"))
+            if island and code in island_by_code and record.get("nuts3") not in (None, island_nuts3[island]):
+                report.add("Islas", f"{identity} «{display}»: en fuentes/islas.csv con {island}, "
+                                    f"pero su NUTS 3 es {record['nuts3']}")
+            if island:
+                record["island"] = island
+            elif lau:
+                report.add("Islas", f"{identity} «{display}» sin isla (NUTS 3 {record.get('nuts3')})")
         entries = dgc_by_ine.get(code, [])
         if len(entries) > 1:
             report.add("Catastro", f"{identity}: varios códigos DGC "
@@ -484,6 +544,12 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("IGN: capitales", f"{entity} «{label}» es capital de {code}, que no está en el INE")
     for code in sorted(set(by_ine) - ine_codes):
         report.add("Wikidata: código INE", f"{code} ({', '.join(sorted(by_ine[code]))}) no está en el INE")
+    for code in sorted(set(island_by_code) - ine_codes):
+        report.add("Islas", f"{code} está en fuentes/islas.csv ({island_by_code[code]}) pero no en el INE")
+    with_members = {r["island"] for r in municipalities if "island" in r}
+    for record in islands:
+        if record["id"] not in with_members:
+            report.add("Islas", f"{record['id']} sin municipios")
     for province, nuts in sorted(island_nuts.items()):
         report.add("Notas", f"es:provincia:{province} reparte sus municipios en las NUTS 3 {', '.join(sorted(nuts))}")
     for identity in sorted(set(parts_by_id) - {r["id"] for r in provinces + municipalities}):
@@ -504,7 +570,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
-    for record in countries + communities + provinces + municipalities:
+    for record in countries + communities + provinces + islands + municipalities:
         for system in ("osm:relation", "geonames"):
             if system in record["codes"]:
                 holders.setdefault((system, record["codes"][system]), []).append(record)
@@ -514,20 +580,21 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                 del record["codes"][system]
             report.add("Wikidata: código repetido",
                        f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
-    known_ids = {r["id"] for r in countries + communities + provinces + municipalities}
+    known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")
 
     report.summary.update({
         "Países": len(countries), "Comunidades y ciudades autónomas": len(communities),
-        "Provincias": len(provinces), "Municipios": len(municipalities),
+        "Provincias": len(provinces), "Islas": len(islands), "Municipios": len(municipalities),
         "Municipios con Wikidata": sum("wikidata" in r["codes"] for r in municipalities),
         "Municipios con código LAU": sum("lau" in r["codes"] for r in municipalities),
         "Municipios con código DGC": sum("dgc:municipio" in r["codes"] for r in municipalities),
         "Municipios con nombre bilingüe": sum("parts" in r["names"] for r in municipalities),
         "Municipios con capital (IGN)": sum("capital" in r for r in municipalities),
         "Municipios con límites (IGN)": sum("ign:bddae" in r["codes"] for r in municipalities),
+        "Municipios con isla": sum("island" in r for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
-            "territories": countries + communities + provinces + municipalities}
+            "territories": countries + communities + provinces + islands + municipalities}
     return data, report, articles

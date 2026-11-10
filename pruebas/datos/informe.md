@@ -3,19 +3,23 @@
 - Países: 34
 - Comunidades y ciudades autónomas: 19
 - Provincias: 52
-- Municipios: 30
+- Islas: 11
+- Municipios: 32
 - Municipios con Wikidata: 9
-- Municipios con código LAU: 29
+- Municipios con código LAU: 31
 - Municipios con código DGC: 6
 - Municipios con nombre bilingüe: 7
 - Municipios con capital (IGN): 3
 - Municipios con límites (IGN): 5
+- Municipios con isla: 5
 
-## Catastro (19)
+## Catastro (21)
 
 - Código DGC 41900 en es:municipio:41091, es:municipio:46250; no se usa en ninguno
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa» no está en el Catastro
 - es:municipio:04078 «Rioja» no está en el Catastro
+- es:municipio:07024 «Formentera» no está en el Catastro
+- es:municipio:07026 «Eivissa» no está en el Catastro
 - es:municipio:07040 «Palma» no está en el Catastro
 - es:municipio:08184 «Rubí» no está en el Catastro
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» no está en el Catastro
@@ -52,13 +56,15 @@
 - es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite
 - es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite
 
-## IGN: capitales (28)
+## IGN: capitales (30)
 
 - 15026000101 «Cesuras» es capital de 15026, que no está en el INE
 - es:municipio:01059 «Vitoria-Gasteiz» sin capital en el IGN
 - es:municipio:03014 «Alacant/Alicante» sin capital en el IGN
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa» sin capital en el IGN
 - es:municipio:04078 «Rioja» sin capital en el IGN
+- es:municipio:07024 «Formentera» sin capital en el IGN
+- es:municipio:07026 «Eivissa» sin capital en el IGN
 - es:municipio:07040 «Palma» sin capital en el IGN
 - es:municipio:08101 «L'Hospitalet de Llobregat» sin capital en el IGN
 - es:municipio:08184 «Rubí» sin capital en el IGN
@@ -83,12 +89,14 @@
 - es:municipio:51001 «Ceuta» sin capital en el IGN
 - es:municipio:52001 «Melilla» sin capital en el IGN
 
-## IGN: límites (26)
+## IGN: límites (28)
 
 - 34151531999 «Zona común inventada» (Condominio) no es un municipio del INE
 - es:municipio:01059 «Vitoria-Gasteiz» no está en los límites del IGN
 - es:municipio:03014: la unidad 34030303014 no es de la comunidad 10; no se enlaza
 - es:municipio:04078 «Rioja» no está en los límites del IGN
+- es:municipio:07024 «Formentera» no está en los límites del IGN
+- es:municipio:07026 «Eivissa» no está en los límites del IGN
 - es:municipio:07040 «Palma» no está en los límites del IGN
 - es:municipio:08184 «Rubí» no está en los límites del IGN
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» no está en los límites del IGN
@@ -119,6 +127,15 @@
 ## INE: provincias (1)
 
 - es:provincia:32: fuentes/ dice 12 «Ourense», el INE 12 «Ourense (fixture: nombre distinto)»
+
+## Islas (6)
+
+- es:isla:el-hierro sin municipios
+- es:isla:fuerteventura sin municipios
+- es:isla:la-gomera sin municipios
+- es:isla:la-palma sin municipios
+- es:isla:lanzarote sin municipios
+- es:isla:menorca sin municipios
 
 ## Nombres bilingües (123)
 
@@ -186,7 +203,7 @@
 
 ## Notas (4)
 
-- es:provincia:07 reparte sus municipios en las NUTS 3 ES532
+- es:provincia:07 reparte sus municipios en las NUTS 3 ES531, ES532
 - es:provincia:35 reparte sus municipios en las NUTS 3 ES705
 - es:provincia:38 reparte sus municipios en las NUTS 3 ES709
 - es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro
@@ -212,7 +229,7 @@
 
 - es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091
 
-## Wikidata: sin elemento (35)
+## Wikidata: sin elemento (46)
 
 - es:autonomia:01 (ES-AN)
 - es:autonomia:02 (ES-AR)
@@ -229,10 +246,21 @@
 - es:autonomia:17 (ES-RI)
 - es:autonomia:18 (ES-CE)
 - es:autonomia:19 (ES-ML)
+- es:isla:el-hierro (Q1036287)
+- es:isla:formentera (Q31916364)
+- es:isla:fuerteventura (Q192534)
+- es:isla:gran-canaria (Q178925)
+- es:isla:la-gomera (Q105967)
+- es:isla:la-palma (Q201689)
+- es:isla:lanzarote (Q182432)
+- es:isla:mallorca (Q8828)
+- es:isla:menorca (Q52636)
 - es:municipio:01059 «Vitoria-Gasteiz»
 - es:municipio:03014 «Alacant/Alicante»
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa»
 - es:municipio:04078 «Rioja»
+- es:municipio:07024 «Formentera»
+- es:municipio:07026 «Eivissa»
 - es:municipio:07040 «Palma»
 - es:municipio:08101 «L'Hospitalet de Llobregat»
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana»

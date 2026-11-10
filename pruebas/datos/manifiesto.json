@@ -7,13 +7,14 @@
     }
   },
   "files": {
-    "codigos.csv": "957c65a7dc63c6a5c14c115e62d4bcb916261358a34693e6f02c3b9ec17dd2b2",
+    "codigos.csv": "4aa7bd3b8317be1123a04552e34e0dea6ffe54a2780821aaca600571774c73fd",
     "comunidades.csv": "0f0a51e5ace01e685ac11b1ea83115dff2c30cb340c63b4b8cd49e35aaaec708",
-    "municipios.csv": "871b005ed8b4720d4e0cd023d3a9282150fd6ca5b99074a59bed9019618fd1a4",
-    "nombres.csv": "81c44f1578f9fa49db345457615b0701ede512b67bce6cb33d3ecc8c6dd4b564",
+    "islas.csv": "6c5b275d34dc39c7aaa7995fc074238c06d97d54e06efae62b077e214f0bd404",
+    "municipios.csv": "6007747a325f20906f16409473eb5835839ebf55cdd7993c88e6ce18088e87b2",
+    "nombres.csv": "3a7bac4333a98d76373885c1a50a574232a999fe77f9e31ac80f74021a318c63",
     "paises.csv": "8505ba7e79949cd8bde30d6db9c31f53275597477e642a2c4f99da8b35a5b475",
     "provincias.csv": "fae342c45937714e2e4055f1055a5d58fa0e284ecd67f19f8842e26698762c53",
-    "territorios.json": "8ca546c7a87a7c497bc63cead8346bfa19b006b3335152c93a94b741bd973b4e",
-    "wikipedia.csv": "611acabfc63b6cba5d84d0c1ef33e16a857dba66327e59873e58757b535f45f7"
+    "territorios.json": "26291b7c6470f7c5ab5021ef269192b30c21216c2b10dbc81c278a1aa9309328",
+    "wikipedia.csv": "da3ec88b3cf6f28e9f30e178abde5cfd57d9d9185f9592016fee7e250b14fc5e"
   }
 }

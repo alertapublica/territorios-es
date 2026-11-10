@@ -61,7 +61,17 @@
     ["dgc:municipio", "15900", "es:municipio:15030", ["es:provincia:15", "es:autonomia:12", "pais:ES"]],
     ["dgc:municipio", "15030", null, null],
     ["dgc:municipio", "41900", null, null],
-    ["sistema:inventado", "36038", null, null]
+    ["sistema:inventado", "36038", null, null],
+    ["nuts", "ES709", "es:isla:tenerife", ["es:provincia:38", "es:autonomia:05", "pais:ES"]],
+    ["nuts", "ES531", null, null],
+    ["wikidata", "Q52631", "es:isla:eivissa", ["es:provincia:07", "es:autonomia:04", "pais:ES"]]
+  ],
+  "children": [
+    ["es:isla:formentera", ["es:municipio:07024"]],
+    ["es:isla:eivissa", ["es:municipio:07026"]],
+    ["es:isla:menorca", []],
+    ["es:provincia:38", ["es:isla:el-hierro", "es:isla:la-gomera", "es:isla:la-palma", "es:isla:tenerife",
+                         "es:municipio:38038"]]
   ],
   "name": [
     ["es:autonomia:09", "es", false, "Cataluña"],
@@ -106,7 +116,12 @@
     ["Seville", null, null, [["es:municipio:41091", "lang"]]],
     ["Madrid", null, null, [["es:provincia:28", "official"], ["es:municipio:28079", "official"], ["es:autonomia:13", "lang"]]],
     ["Spain", null, null, [["pais:ES", "lang"]]],
-    ["Atlántida", null, null, []]
+    ["Atlántida", null, null, []],
+    ["Formentera", null, null, [["es:isla:formentera", "official"], ["es:municipio:07024", "official"]]],
+    ["Formentera", "es:isla:formentera", null, [["es:municipio:07024", "official"]]],
+    ["Eivissa", "es:isla:formentera", null, []],
+    ["Ibiza", null, null, [["es:isla:eivissa", "lang"]]],
+    ["Hierro", null, ["island"], [["es:isla:el-hierro", "variant"]]]
   ],
   "mentions": [
     ["Moncada (Valencia)", null, [["valencia", ["es:provincia:46"]]]],

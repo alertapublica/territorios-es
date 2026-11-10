@@ -283,6 +283,20 @@
    "nuts3": "ES521",
    "population": "1000"
   },
+  "07024": {
+   "area": "12345678",
+   "lau": "07024",
+   "name_national": "Formentera",
+   "nuts3": "ES531",
+   "population": "1000"
+  },
+  "07026": {
+   "area": "12345678",
+   "lau": "07026",
+   "name_national": "Eivissa",
+   "nuts3": "ES531",
+   "population": "1000"
+  },
   "07040": {
    "area": "12345678",
    "lau": "07040",
@@ -496,6 +510,18 @@
    "9",
    "Rioja",
    "01"
+  ],
+  [
+   "07024",
+   "4",
+   "Formentera",
+   "04"
+  ],
+  [
+   "07026",
+   "0",
+   "Eivissa",
+   "04"
   ],
   [
    "07040",
@@ -1095,6 +1121,30 @@
   }
  },
  "wikidata_spain": {
+  "Q40846": {
+   "articles": {},
+   "codes": {
+    "nuts": [
+     "ES709"
+    ]
+   },
+   "dissolved": false,
+   "labels": {
+    "es": "Tenerife"
+   }
+  },
+  "Q52631": {
+   "articles": {
+    "ca": "Eivissa"
+   },
+   "codes": {},
+   "dissolved": false,
+   "labels": {
+    "ca": "Eivissa",
+    "en": "Ibiza",
+    "es": "Ibiza"
+   }
+  },
   "Q9000001": {
    "articles": {
     "es": "Galicia",
