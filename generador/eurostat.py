@@ -17,7 +17,7 @@ def find_link(page: bytes, pattern: str, base: str) -> str:
 def _header_index(header: list[str]) -> dict[str, int]:
     wanted = {"nuts3": r"^NUTS ?3( CODE)?$", "lau": r"^LAU( CODE| ID|_ID)$",
               "name_national": r"^LAU NAME NATIONAL", "name_latin": r"^LAU NAME LATIN",
-              "population": r"^POPULATION", "area": r"AREA", "degurba": r"^DEGURBA$",
+              "area": r"AREA", "degurba": r"^DEGURBA$",
               "coastal": r"^COASTAL", "city": r"^CITY[ _]ID$", "fua": r"^FUA[ _]ID$"}
     index = {}
     for i, cell in enumerate(header):

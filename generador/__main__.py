@@ -59,6 +59,33 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         print(f"Aviso: {error}", file=sys.stderr)
         inputs["ine_provinces"] = []
 
+    c = config["ine_poblacion"]
+    got = descargas.fetch(c["tables_url"], cache=cache, cache_name="ine_poblacion_tablas.json",
+                          validate=lambda content: ine.population_tables(content, c["table_code"]))
+    tables = ine.population_tables(got.content, c["table_code"])
+    expected = len(load_hand_lists(FUENTES)["provinces"])
+    if len(tables) != expected:
+        raise ValueError(f"INE: {len(tables)} tablas de población por provincia, se esperaban {expected}")
+    answers, population, dates = [got], {}, set()
+    for table in tables:
+        got = descargas.fetch(c["data_url"].format(table=table), cache=cache,
+                              cache_name=f"ine_poblacion_{table}.json", validate=ine.parse_population)
+        answers.append(got)
+        values, date = ine.parse_population(got.content)
+        if population.keys() & values.keys():
+            raise ValueError(f"INE: la tabla de población {table} repite códigos de otra")
+        population.update(values)
+        dates.add(date)
+    if len(dates) != 1:
+        raise ValueError(f"INE: tablas de población con fechas distintas: {sorted(dates)}")
+    inputs["ine_population"] = {"date": next(iter(dates)), "values": population}
+    # One manifest entry for the 1 + N answers: the digest covers all of them, in order.
+    records["ine_poblacion"] = {
+        "url": c["data_url"].format(table="…") + f" ({len(tables)} tablas de {c['tables_url']})",
+        "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
+        "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
+        "reference_date": next(iter(dates)), "licence": c["licence"], "attribution": c["attribution"]}
+
     c = config["eurostat_lau"]
     page = descargas.fetch(c["page"], cache=cache, cache_name="eurostat_lau.html")
     url = eurostat.find_link(page.content, c["link_pattern"], "https://ec.europa.eu")

@@ -100,8 +100,8 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 
 | Fuente | Datos | Licencia |
 |---|---|---|
-| INE | códigos y nombres oficiales de municipios e islas, y cambios de nombre del año | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» (fecha de cada fichero en el manifiesto) |
-| Eurostat | LAU, NUTS 3 de cada municipio, población y superficie | CC BY 4.0 |
+| INE | códigos y nombres oficiales de municipios e islas, cambios de nombre del año y población oficial de provincias y municipios | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» (fecha de cada fichero en el manifiesto) |
+| Eurostat | LAU, NUTS 3 de cada municipio y superficie | CC BY 4.0 |
 | Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
 | Instituto Geográfico Nacional | código BDDAE y límites municipales (fichero adjunto a cada versión, simplificado) | CC BY 4.0: «Obra derivada de BDLJE Continua CC-BY 4.0 ign.es» |
