@@ -1,0 +1,26 @@
+id,aemet,provincia,official,display,time_zone
+es:zona-aviso:614102,614102,41,Campiña sevillana,Campiña sevillana,Europe/Madrid
+es:zona-aviso:625003,625003,50,Ribera del Ebro de Zaragoza,Ribera del Ebro de Zaragoza,Europe/Madrid
+es:zona-aviso:645301,645301,07,Ibiza y Formentera,Ibiza y Formentera,Europe/Madrid
+es:zona-aviso:645404,645404,07,Sur de Mallorca,Sur de Mallorca,Europe/Madrid
+es:zona-aviso:659001,659001,35,Norte de Gran Canaria,Norte de Gran Canaria,Atlantic/Canary
+es:zona-aviso:659602,659602,38,Área metropolitana de Tenerife,Área metropolitana de Tenerife,Atlantic/Canary
+es:zona-aviso:690803,690803,08,Prelitoral de Barcelona,Prelitoral de Barcelona,Europe/Madrid
+es:zona-aviso:690804,690804,08,Litoral de Barcelona,Litoral de Barcelona,Europe/Madrid
+es:zona-aviso:691702,691702,17,Prelitoral de Girona,Prelitoral de Girona,Europe/Madrid
+es:zona-aviso:692501,692501,25,Valle de Arán,Valle de Arán,Europe/Madrid
+es:zona-aviso:692503,692503,25,Depresión central de Lleida,Depresión central de Lleida,Europe/Madrid
+es:zona-aviso:711501,711501,15,Noroeste de A Coruña,Noroeste de A Coruña,Europe/Madrid
+es:zona-aviso:713202,713202,32,Miño de Ourense,Miño de Ourense,Europe/Madrid
+es:zona-aviso:713601,713601,36,Rias Baixas,Rias Baixas,Europe/Madrid
+es:zona-aviso:722802,722802,28,Metropolitana y Henares,Metropolitana y Henares,Europe/Madrid
+es:zona-aviso:743102,743102,31,Centro de Navarra,Centro de Navarra,Europe/Madrid
+es:zona-aviso:750102,750102,01,Llanada alavesa,Llanada alavesa,Europe/Madrid
+es:zona-aviso:752001,752001,20,Gipuzkoa litoral,Gipuzkoa litoral,Europe/Madrid
+es:zona-aviso:754802,754802,48,Bizkaia interior,Bizkaia interior,Europe/Madrid
+es:zona-aviso:762601,762601,26,Ribera del Ebro de La Rioja,Ribera del Ebro de La Rioja,Europe/Madrid
+es:zona-aviso:770303,770303,03,Litoral sur de Alicante,Litoral sur de Alicante,Europe/Madrid
+es:zona-aviso:771204,771204,12,Litoral sur de Castellón,Litoral sur de Castellón,Europe/Madrid
+es:zona-aviso:774602,774602,46,Litoral norte de Valencia,Litoral norte de Valencia,Europe/Madrid
+es:zona-aviso:785101,785101,51,Ceuta,Ceuta,Africa/Ceuta
+es:zona-aviso:795201,795201,52,Melilla,Melilla,Africa/Ceuta

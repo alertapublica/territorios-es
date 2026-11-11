@@ -85,7 +85,7 @@ Primera versión:
   convocatorias.
 
 Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
-ya están (versión 0.3), y los partidos judiciales, desde la 0.4:
+ya están (versión 0.3), y los partidos judiciales y las zonas de aviso de AEMET, desde la 0.4:
 
 - **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
   `island` e identificador con el código de isla del INE (`es:isla:384` es Tenerife; `es:isla:072`,
@@ -104,6 +104,18 @@ ya están (versión 0.3), y los partidos judiciales, desde la 0.4:
   escribe en mayúsculas y con alguna errata («CATARRO4623548000000JA» por Catarroja). La LO 1/2025
   mantiene los partidos: cada uno tiene un tribunal de instancia con sede en su capital. `search` y
   `mentions` no los devuelven salvo que se pidan en `levels`, porque se llaman como su sede.
+- **Zonas de aviso de AEMET**: las 182 zonas terrestres de Meteoalerta, por las que AEMET emite
+  sus avisos, con nivel `warning_zone` e identificador con el código de AEMET, de seis cifras
+  (`es:zona-aviso:774602` es el Litoral norte de Valencia). No es una administración, sino la
+  división con la que se avisa de lluvia, viento, nieve o calor; cubre todo el país. Su padre es
+  la provincia y los municipios llevan además el campo `warning_zone`, como con las islas. La zona
+  de cada municipio sale del maestro de municipios de AEMET OpenData, que pide clave (el secreto
+  `AEMET_API_KEY`), y el nombre de cada zona, de la tabla de su delimitación. El maestro deja fuera
+  algún municipio nuevo y conserva otros ya extinguidos: los que AEMET sí sitúa en su web van en
+  `fuentes/zonas-aviso.csv`, con el enlace a su ficha, y los demás se quedan sin zona y salen en el
+  informe; nunca se deduce del mapa, que es de 2018 y no casa con los límites actuales. Las zonas
+  costeras (sufijo `C`) quedan para más adelante. `search` y `mentions` no las devuelven salvo que
+  se pidan en `levels`.
 
 Las comarcas oficiales están pendientes (§13).
 
@@ -116,6 +128,7 @@ Asturias), que son decenas de miles.
 |---|---|---|---|
 | INE | comunidad (2 cifras), provincia (2), isla (3), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
 | Censo Judicial | partido judicial (`mjusticia:partido`, 4 cifras: provincia 2 + número 2) | Censo Judicial del Ministerio de Justicia | El número es el del partido en la demarcación de su provincia. El catálogo técnico de la Generalitat (CTEAJE) usa el mismo código salvo en Ceuta y Melilla (1112 y 2908, frente a 5112 y 5208). |
+| AEMET | zona de aviso (`aemet:zona`, 6 cifras: comunidad 2 + provincia o grupo de islas 2 + zona 2) | Maestro de municipios de AEMET OpenData y delimitación de zonas de Meteoalerta | Las cifras de comunidad y provincia son de AEMET, no del INE (Baleares usa 53–55 y Canarias 90–96). |
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
@@ -242,10 +255,10 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 | Función | Qué hace |
 |---|---|
-| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla o a un partido judicial. Los partidos judiciales solo salen si se piden en `levels`. |
-| `children(id)` | Los territorios cuyo padre es este; en una isla o en un partido judicial, sus municipios. Los de una provincia incluyen sus partidos judiciales y, en Baleares y Canarias, sus islas. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial o a una zona de aviso. Los partidos judiciales y las zonas de aviso solo salen si se piden en `levels`. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial o una zona de aviso, sus municipios. Los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -431,6 +444,14 @@ Tomada el 11 de noviembre de 2026:
     `mentions` salvo que se pidan. La descarga es obligatoria: si el Ministerio no responde, la
     generación falla antes de escribir nada, en lugar de publicar los municipios sin partido. Sin
     repositorios ajenos: ninguno está mantenido ni mejora la fuente oficial.
+16. Zonas de aviso de AEMET: nivel `warning_zone` con padre en la provincia, a partir del maestro
+    de municipios de AEMET OpenData (con la clave como secreto del repositorio) y de la tabla de la
+    delimitación de zonas, en cada generación mensual. Identificador `es:zona-aviso:CCPPZZ` (código
+    de AEMET), con su nombre oficial y fuera de `search` y `mentions` salvo que se pidan. La
+    descarga es obligatoria, como la del Censo Judicial. Se prefiere el maestro a la tabla en PDF
+    del plan Meteoalerta, que trae lo mismo (comprobado el 11 de noviembre de 2026: las 8.122 filas
+    del maestro, sin los 2 municipios extinguidos y con las 4 excepciones de `fuentes/zonas-aviso.csv`,
+    son los 8.124 municipios del PDF, con la misma zona), porque es JSON y no hay que leer 221 páginas.
 
 ## 13. Pendiente
 
@@ -444,8 +465,8 @@ Tomada el 11 de noviembre de 2026:
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
 - Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
   recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
-  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales (hecho); comarcas
-  oficiales; acciones de GitHub que aún usan Node 20 (las actualiza Dependabot).
+  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales (hecho); zonas de aviso
+  de AEMET (hecho); comarcas oficiales; acciones de GitHub que aún usan Node 20 (las actualiza Dependabot).
 - Comarcas oficiales: solo son entidad local en Aragón, Castilla y León (El Bierzo), Cataluña y
   País Vasco (las cuadrillas de Álava), las cuatro comunidades del Registro de Entidades Locales.
   Cataluña tiene tabla oficial en Idescat (43 comarcas con Aran y Lluçanès) y Aragón en Aragón Open
@@ -457,6 +478,9 @@ Tomada el 11 de noviembre de 2026:
   enlazables por la sede) y sus nombres en otros idiomas; la población por partido del CGPJ; las
   demás demarcaciones del Censo Judicial (sección de la Audiencia, Tribunal Superior, fiscalía,
   registro civil).
+- Zonas de aviso de AEMET, más adelante: las 51 costeras, ligadas a su zona terrestre, y su
+  elemento de Wikidata. Pedir a AEMET que sitúe los municipios que aún no tienen zona (San Martín
+  del Tesorillo, Usansolo, El Palmar de Troya…).
 - Nombres de países: siguen saliendo de Wikidata, que tiene alguna errata. Revisarlos, corregir
   aquí las erratas con un fichero en `fuentes/` y corregirlas también en Wikidata.
 - Códigos postales en Andalucía: el CDAU trae 526 pares que no tiene el INE, que decide allí;

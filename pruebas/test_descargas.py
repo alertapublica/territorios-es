@@ -95,5 +95,44 @@ class Direct(unittest.TestCase):
         self.assertEqual(sent, [ICGC])
 
 
+class Redirecting(BaseHTTPRequestHandler):
+    seen: list[tuple[str, str | None]] = []
+
+    def do_GET(self):
+        self.seen.append((self.path, self.headers.get("api_key")))
+        if self.path == "/api":
+            self.send_response(302)
+            self.send_header("Location", "/elsewhere")
+            self.end_headers()
+        else:
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"data")
+
+    def log_message(self, *_):
+        pass
+
+
+class KeyInHeader(unittest.TestCase):
+    def setUp(self):
+        self.server = HTTPServer(("127.0.0.1", 0), Redirecting)
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+        self.addCleanup(self.server.server_close)
+        self.addCleanup(self.server.shutdown)
+        Redirecting.seen = []
+        self.base = f"http://127.0.0.1:{self.server.server_port}"
+
+    def test_a_request_with_a_key_does_not_follow_redirects(self):
+        with self.assertRaises(RuntimeError) as caught:
+            descargas.fetch(self.base + "/api", headers={"api_key": KEY}, attempts=1)
+        self.assertEqual(Redirecting.seen, [("/api", KEY)])
+        self.assertNotIn(KEY, str(caught.exception))
+
+    def test_without_headers_redirects_are_followed(self):
+        with mock.patch.object(descargas.time, "sleep"):
+            self.assertEqual(descargas.fetch(self.base + "/api").content, b"data")
+        self.assertEqual(Redirecting.seen, [("/api", None), ("/elsewhere", None)])
+
+
 if __name__ == "__main__":
     unittest.main()

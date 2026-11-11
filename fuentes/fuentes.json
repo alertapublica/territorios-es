@@ -42,6 +42,24 @@
     "licence": "Condiciones generales de reutilización de datos.gob.es (Ley 37/2007 y RD 1495/2011)",
     "attribution": "Fuente: Ministerio de Justicia, Censo Judicial (fecha de actualización en «reference_date»)"
   },
+  "aemet_municipios": {
+    "url": "https://opendata.aemet.es/opendata/api/maestro/municipios",
+    "page": "https://opendata.aemet.es/dist/",
+    "key": "AEMET_API_KEY",
+    "conditions": "https://www.aemet.es/es/nota_legal",
+    "publisher": "AEMET",
+    "licence": "Nota legal de AEMET: reutilización, también comercial, citando la fuente",
+    "attribution": "Fuente: AEMET"
+  },
+  "aemet_zonas": {
+    "url": "https://www.aemet.es/documentos/es/eltiempo/prediccion/avisos/plan_meteoalerta/AEMET-meteoalerta-delimitacion-zonas.zip",
+    "page": "https://www.aemet.es/es/eltiempo/prediccion/avisos/ayuda/",
+    "plan": "https://www.aemet.es/documentos/es/eltiempo/prediccion/avisos/plan_meteoalerta/PLAN_METEOALERTA_v9_web_externa.pdf",
+    "conditions": "https://www.aemet.es/es/nota_legal",
+    "publisher": "AEMET",
+    "licence": "Nota legal de AEMET: reutilización, también comercial, citando la fuente",
+    "attribution": "Fuente: AEMET (delimitación de zonas de Meteoalerta)"
+  },
   "eurostat_lau": {
     "page": "https://ec.europa.eu/eurostat/web/nuts/local-administrative-units",
     "link_pattern": "EU-27-LAU-2024-NUTS-2024\\.xlsx",

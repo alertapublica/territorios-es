@@ -1,0 +1,183 @@
+id,aemet,provincia,official,display,time_zone
+es:zona-aviso:610401,610401,04,Valle del Almanzora y Los Vélez,Valle del Almanzora y Los Vélez,Europe/Madrid
+es:zona-aviso:610402,610402,04,Nacimiento y Campo de Tabernas,Nacimiento y Campo de Tabernas,Europe/Madrid
+es:zona-aviso:610403,610403,04,Poniente y Almería Capital,Poniente y Almería Capital,Europe/Madrid
+es:zona-aviso:610404,610404,04,Levante almeriense,Levante almeriense,Europe/Madrid
+es:zona-aviso:611101,611101,11,Grazalema,Grazalema,Europe/Madrid
+es:zona-aviso:611102,611102,11,Campiña gaditana,Campiña gaditana,Europe/Madrid
+es:zona-aviso:611103,611103,11,Litoral gaditano,Litoral gaditano,Europe/Madrid
+es:zona-aviso:611104,611104,11,Estrecho,Estrecho,Europe/Madrid
+es:zona-aviso:611401,611401,14,Sierra y Pedroches,Sierra y Pedroches,Europe/Madrid
+es:zona-aviso:611402,611402,14,Campiña cordobesa,Campiña cordobesa,Europe/Madrid
+es:zona-aviso:611403,611403,14,Subbética cordobesa,Subbética cordobesa,Europe/Madrid
+es:zona-aviso:611801,611801,18,Cuenca del Genil,Cuenca del Genil,Europe/Madrid
+es:zona-aviso:611802,611802,18,Guadix y Baza,Guadix y Baza,Europe/Madrid
+es:zona-aviso:611803,611803,18,Nevada y Alpujarras,Nevada y Alpujarras,Europe/Madrid
+es:zona-aviso:611804,611804,18,Costa granadina,Costa granadina,Europe/Madrid
+es:zona-aviso:612101,612101,21,Aracena,Aracena,Europe/Madrid
+es:zona-aviso:612102,612102,21,Andévalo y Condado,Andévalo y Condado,Europe/Madrid
+es:zona-aviso:612103,612103,21,Litoral de Huelva,Litoral de Huelva,Europe/Madrid
+es:zona-aviso:612301,612301,23,Morena y Condado,Morena y Condado,Europe/Madrid
+es:zona-aviso:612302,612302,23,Cazorla y Segura,Cazorla y Segura,Europe/Madrid
+es:zona-aviso:612303,612303,23,Valle del Guadalquivir de Jaén,Valle del Guadalquivir de Jaén,Europe/Madrid
+es:zona-aviso:612304,612304,23,Capital y Montes de Jaén,Capital y Montes de Jaén,Europe/Madrid
+es:zona-aviso:612901,612901,29,Antequera,Antequera,Europe/Madrid
+es:zona-aviso:612902,612902,29,Ronda,Ronda,Europe/Madrid
+es:zona-aviso:612903,612903,29,Sol y Guadalhorce,Sol y Guadalhorce,Europe/Madrid
+es:zona-aviso:612904,612904,29,Axarquía,Axarquía,Europe/Madrid
+es:zona-aviso:614101,614101,41,Sierra norte de Sevilla,Sierra norte de Sevilla,Europe/Madrid
+es:zona-aviso:614102,614102,41,Campiña sevillana,Campiña sevillana,Europe/Madrid
+es:zona-aviso:614103,614103,41,Sierra sur de Sevilla,Sierra sur de Sevilla,Europe/Madrid
+es:zona-aviso:622201,622201,22,Pirineo oscense,Pirineo oscense,Europe/Madrid
+es:zona-aviso:622202,622202,22,Centro de Huesca,Centro de Huesca,Europe/Madrid
+es:zona-aviso:622203,622203,22,Sur de Huesca,Sur de Huesca,Europe/Madrid
+es:zona-aviso:624401,624401,44,Albarracín y Jiloca,Albarracín y Jiloca,Europe/Madrid
+es:zona-aviso:624402,624402,44,Gúdar y Maestrazgo,Gúdar y Maestrazgo,Europe/Madrid
+es:zona-aviso:624403,624403,44,Bajo Aragón de Teruel,Bajo Aragón de Teruel,Europe/Madrid
+es:zona-aviso:625001,625001,50,Cinco Villas de Zaragoza,Cinco Villas de Zaragoza,Europe/Madrid
+es:zona-aviso:625002,625002,50,Ibérica zaragozana,Ibérica zaragozana,Europe/Madrid
+es:zona-aviso:625003,625003,50,Ribera del Ebro de Zaragoza,Ribera del Ebro de Zaragoza,Europe/Madrid
+es:zona-aviso:633301,633301,33,Litoral occidental asturiano,Litoral occidental asturiano,Europe/Madrid
+es:zona-aviso:633302,633302,33,Litoral oriental asturiano,Litoral oriental asturiano,Europe/Madrid
+es:zona-aviso:633303,633303,33,Suroccidental asturiana,Suroccidental asturiana,Europe/Madrid
+es:zona-aviso:633304,633304,33,Central y Valles Mineros,Central y Valles Mineros,Europe/Madrid
+es:zona-aviso:633305,633305,33,Cordillera y Picos de Europa,Cordillera y Picos de Europa,Europe/Madrid
+es:zona-aviso:645301,645301,07,Ibiza y Formentera,Ibiza y Formentera,Europe/Madrid
+es:zona-aviso:645401,645401,07,Sierra Tramontana,Sierra Tramontana,Europe/Madrid
+es:zona-aviso:645402,645402,07,Norte y nordeste de Mallorca,Norte y nordeste de Mallorca,Europe/Madrid
+es:zona-aviso:645403,645403,07,Interior de Mallorca,Interior de Mallorca,Europe/Madrid
+es:zona-aviso:645404,645404,07,Sur de Mallorca,Sur de Mallorca,Europe/Madrid
+es:zona-aviso:645405,645405,07,Levante mallorquín,Levante mallorquín,Europe/Madrid
+es:zona-aviso:645501,645501,07,Menorca,Menorca,Europe/Madrid
+es:zona-aviso:659001,659001,35,Norte de Gran Canaria,Norte de Gran Canaria,Atlantic/Canary
+es:zona-aviso:659003,659003,35,Cumbres de Gran Canaria,Cumbres de Gran Canaria,Atlantic/Canary
+es:zona-aviso:659004,659004,35,"Este, sur y oeste de Gran Canaria","Este, sur y oeste de Gran Canaria",Atlantic/Canary
+es:zona-aviso:659101,659101,35,Lanzarote,Lanzarote,Atlantic/Canary
+es:zona-aviso:659201,659201,35,Fuerteventura,Fuerteventura,Atlantic/Canary
+es:zona-aviso:659302,659302,38,Cumbres de La Palma,Cumbres de La Palma,Atlantic/Canary
+es:zona-aviso:659303,659303,38,Este de La Palma,Este de La Palma,Atlantic/Canary
+es:zona-aviso:659304,659304,38,Oeste de La Palma,Oeste de La Palma,Atlantic/Canary
+es:zona-aviso:659401,659401,38,La Gomera,La Gomera,Atlantic/Canary
+es:zona-aviso:659501,659501,38,El Hierro,El Hierro,Atlantic/Canary
+es:zona-aviso:659601,659601,38,Norte de Tenerife,Norte de Tenerife,Atlantic/Canary
+es:zona-aviso:659602,659602,38,Área metropolitana de Tenerife,Área metropolitana de Tenerife,Atlantic/Canary
+es:zona-aviso:659603,659603,38,"Este, sur y oeste de Tenerife","Este, sur y oeste de Tenerife",Atlantic/Canary
+es:zona-aviso:663901,663901,39,Litoral cántabro,Litoral cántabro,Europe/Madrid
+es:zona-aviso:663902,663902,39,Liébana,Liébana,Europe/Madrid
+es:zona-aviso:663903,663903,39,Centro y valle de Villaverde,Centro y valle de Villaverde,Europe/Madrid
+es:zona-aviso:663904,663904,39,Cantabria del Ebro,Cantabria del Ebro,Europe/Madrid
+es:zona-aviso:670501,670501,05,Meseta de Ávila,Meseta de Ávila,Europe/Madrid
+es:zona-aviso:670502,670502,05,Sistema Central de Ávila,Sistema Central de Ávila,Europe/Madrid
+es:zona-aviso:670503,670503,05,Sur de Ávila,Sur de Ávila,Europe/Madrid
+es:zona-aviso:670901,670901,09,Cordillera Cantábrica de Burgos,Cordillera Cantábrica de Burgos,Europe/Madrid
+es:zona-aviso:670902,670902,09,Norte de Burgos,Norte de Burgos,Europe/Madrid
+es:zona-aviso:670903,670903,09,Condado de Treviño,Condado de Treviño,Europe/Madrid
+es:zona-aviso:670904,670904,09,Meseta de Burgos,Meseta de Burgos,Europe/Madrid
+es:zona-aviso:670905,670905,09,Ibérica de Burgos,Ibérica de Burgos,Europe/Madrid
+es:zona-aviso:672401,672401,24,Cordillera Cantábrica de León,Cordillera Cantábrica de León,Europe/Madrid
+es:zona-aviso:672402,672402,24,Bierzo de León,Bierzo de León,Europe/Madrid
+es:zona-aviso:672403,672403,24,Meseta de León,Meseta de León,Europe/Madrid
+es:zona-aviso:673401,673401,34,Cordillera Cantábrica de Palencia,Cordillera Cantábrica de Palencia,Europe/Madrid
+es:zona-aviso:673402,673402,34,Meseta de Palencia,Meseta de Palencia,Europe/Madrid
+es:zona-aviso:673701,673701,37,Meseta de Salamanca,Meseta de Salamanca,Europe/Madrid
+es:zona-aviso:673702,673702,37,Sistema Central de Salamanca,Sistema Central de Salamanca,Europe/Madrid
+es:zona-aviso:673703,673703,37,Sur de Salamanca,Sur de Salamanca,Europe/Madrid
+es:zona-aviso:674001,674001,40,Meseta de Segovia,Meseta de Segovia,Europe/Madrid
+es:zona-aviso:674002,674002,40,Sistema Central de Segovia,Sistema Central de Segovia,Europe/Madrid
+es:zona-aviso:674201,674201,42,Ibérica de Soria,Ibérica de Soria,Europe/Madrid
+es:zona-aviso:674202,674202,42,Meseta de Soria,Meseta de Soria,Europe/Madrid
+es:zona-aviso:674203,674203,42,Sistema Central de Soria,Sistema Central de Soria,Europe/Madrid
+es:zona-aviso:674701,674701,47,Meseta de Valladolid,Meseta de Valladolid,Europe/Madrid
+es:zona-aviso:674901,674901,49,Sanabria,Sanabria,Europe/Madrid
+es:zona-aviso:674902,674902,49,Meseta de Zamora,Meseta de Zamora,Europe/Madrid
+es:zona-aviso:680201,680201,02,La Mancha albaceteña,La Mancha albaceteña,Europe/Madrid
+es:zona-aviso:680202,680202,02,Alcaraz y Segura,Alcaraz y Segura,Europe/Madrid
+es:zona-aviso:680203,680203,02,Hellín y Almansa,Hellín y Almansa,Europe/Madrid
+es:zona-aviso:681301,681301,13,Montes del norte y Anchuras,Montes del norte y Anchuras,Europe/Madrid
+es:zona-aviso:681302,681302,13,La Mancha de Ciudad Real,La Mancha de Ciudad Real,Europe/Madrid
+es:zona-aviso:681303,681303,13,Valle del Guadiana,Valle del Guadiana,Europe/Madrid
+es:zona-aviso:681304,681304,13,Sierras de Alcudia y Madrona,Sierras de Alcudia y Madrona,Europe/Madrid
+es:zona-aviso:681601,681601,16,Alcarria conquense,Alcarria conquense,Europe/Madrid
+es:zona-aviso:681602,681602,16,Serranía de Cuenca,Serranía de Cuenca,Europe/Madrid
+es:zona-aviso:681603,681603,16,La Mancha conquense,La Mancha conquense,Europe/Madrid
+es:zona-aviso:681901,681901,19,Serranía de Guadalajara,Serranía de Guadalajara,Europe/Madrid
+es:zona-aviso:681902,681902,19,Parameras de Molina,Parameras de Molina,Europe/Madrid
+es:zona-aviso:681903,681903,19,Alcarria de Guadalajara,Alcarria de Guadalajara,Europe/Madrid
+es:zona-aviso:684501,684501,45,Sierra de San Vicente,Sierra de San Vicente,Europe/Madrid
+es:zona-aviso:684502,684502,45,Valle del Tajo,Valle del Tajo,Europe/Madrid
+es:zona-aviso:684503,684503,45,Montes de Toledo,Montes de Toledo,Europe/Madrid
+es:zona-aviso:684504,684504,45,La Mancha toledana,La Mancha toledana,Europe/Madrid
+es:zona-aviso:690801,690801,08,Prepirineo de Barcelona,Prepirineo de Barcelona,Europe/Madrid
+es:zona-aviso:690802,690802,08,Depresión central de Barcelona,Depresión central de Barcelona,Europe/Madrid
+es:zona-aviso:690803,690803,08,Prelitoral de Barcelona,Prelitoral de Barcelona,Europe/Madrid
+es:zona-aviso:690804,690804,08,Litoral de Barcelona,Litoral de Barcelona,Europe/Madrid
+es:zona-aviso:691701,691701,17,Pirineo de Girona,Pirineo de Girona,Europe/Madrid
+es:zona-aviso:691702,691702,17,Prelitoral de Girona,Prelitoral de Girona,Europe/Madrid
+es:zona-aviso:691703,691703,17,Ampurdán,Ampurdán,Europe/Madrid
+es:zona-aviso:691704,691704,17,Litoral sur de Girona,Litoral sur de Girona,Europe/Madrid
+es:zona-aviso:692501,692501,25,Valle de Arán,Valle de Arán,Europe/Madrid
+es:zona-aviso:692502,692502,25,Pirineo de Lleida,Pirineo de Lleida,Europe/Madrid
+es:zona-aviso:692503,692503,25,Depresión central de Lleida,Depresión central de Lleida,Europe/Madrid
+es:zona-aviso:694301,694301,43,Depresión central de Tarragona,Depresión central de Tarragona,Europe/Madrid
+es:zona-aviso:694302,694302,43,Prelitoral norte de Tarragona,Prelitoral norte de Tarragona,Europe/Madrid
+es:zona-aviso:694303,694303,43,Litoral norte de Tarragona,Litoral norte de Tarragona,Europe/Madrid
+es:zona-aviso:694304,694304,43,Litoral sur de Tarragona,Litoral sur de Tarragona,Europe/Madrid
+es:zona-aviso:694305,694305,43,Prelitoral sur de Tarragona,Prelitoral sur de Tarragona,Europe/Madrid
+es:zona-aviso:700601,700601,06,Vegas del Guadiana,Vegas del Guadiana,Europe/Madrid
+es:zona-aviso:700602,700602,06,La Siberia extremeña,La Siberia extremeña,Europe/Madrid
+es:zona-aviso:700603,700603,06,Barros y Serena,Barros y Serena,Europe/Madrid
+es:zona-aviso:700604,700604,06,Sur de Badajoz,Sur de Badajoz,Europe/Madrid
+es:zona-aviso:701001,701001,10,Norte de Cáceres,Norte de Cáceres,Europe/Madrid
+es:zona-aviso:701002,701002,10,Tajo y Alagón,Tajo y Alagón,Europe/Madrid
+es:zona-aviso:701003,701003,10,Meseta cacereña,Meseta cacereña,Europe/Madrid
+es:zona-aviso:701004,701004,10,Villuercas y Montánchez,Villuercas y Montánchez,Europe/Madrid
+es:zona-aviso:711501,711501,15,Noroeste de A Coruña,Noroeste de A Coruña,Europe/Madrid
+es:zona-aviso:711502,711502,15,Oeste de A Coruña,Oeste de A Coruña,Europe/Madrid
+es:zona-aviso:711503,711503,15,Interior de A Coruña,Interior de A Coruña,Europe/Madrid
+es:zona-aviso:711504,711504,15,Suroeste de A Coruña,Suroeste de A Coruña,Europe/Madrid
+es:zona-aviso:712701,712701,27,A Mariña,A Mariña,Europe/Madrid
+es:zona-aviso:712702,712702,27,Centro de Lugo,Centro de Lugo,Europe/Madrid
+es:zona-aviso:712703,712703,27,Montaña de Lugo,Montaña de Lugo,Europe/Madrid
+es:zona-aviso:712704,712704,27,Sur de Lugo,Sur de Lugo,Europe/Madrid
+es:zona-aviso:713201,713201,32,Noroeste de Ourense,Noroeste de Ourense,Europe/Madrid
+es:zona-aviso:713202,713202,32,Miño de Ourense,Miño de Ourense,Europe/Madrid
+es:zona-aviso:713203,713203,32,Sur de Ourense,Sur de Ourense,Europe/Madrid
+es:zona-aviso:713204,713204,32,Montaña de Ourense,Montaña de Ourense,Europe/Madrid
+es:zona-aviso:713205,713205,32,Valdeorras,Valdeorras,Europe/Madrid
+es:zona-aviso:713601,713601,36,Rias Baixas,Rias Baixas,Europe/Madrid
+es:zona-aviso:713602,713602,36,Interior de Pontevedra,Interior de Pontevedra,Europe/Madrid
+es:zona-aviso:713603,713603,36,Miño de Pontevedra,Miño de Pontevedra,Europe/Madrid
+es:zona-aviso:722801,722801,28,Sierra de Madrid,Sierra de Madrid,Europe/Madrid
+es:zona-aviso:722802,722802,28,Metropolitana y Henares,Metropolitana y Henares,Europe/Madrid
+es:zona-aviso:722803,722803,28,"Sur, Vegas y Oeste","Sur, Vegas y Oeste",Europe/Madrid
+es:zona-aviso:733001,733001,30,Altiplano de Murcia,Altiplano de Murcia,Europe/Madrid
+es:zona-aviso:733002,733002,30,Noroeste de Murcia,Noroeste de Murcia,Europe/Madrid
+es:zona-aviso:733003,733003,30,Vega del Segura,Vega del Segura,Europe/Madrid
+es:zona-aviso:733004,733004,30,"Valle del Guadalentín, Lorca y Águilas","Valle del Guadalentín, Lorca y Águilas",Europe/Madrid
+es:zona-aviso:733005,733005,30,Campo de Cartagena y Mazarrón,Campo de Cartagena y Mazarrón,Europe/Madrid
+es:zona-aviso:743101,743101,31,Vertiente cantábrica de Navarra,Vertiente cantábrica de Navarra,Europe/Madrid
+es:zona-aviso:743102,743102,31,Centro de Navarra,Centro de Navarra,Europe/Madrid
+es:zona-aviso:743103,743103,31,Pirineo navarro,Pirineo navarro,Europe/Madrid
+es:zona-aviso:743104,743104,31,Ribera del Ebro de Navarra,Ribera del Ebro de Navarra,Europe/Madrid
+es:zona-aviso:750101,750101,01,Cuenca del Nervión,Cuenca del Nervión,Europe/Madrid
+es:zona-aviso:750102,750102,01,Llanada alavesa,Llanada alavesa,Europe/Madrid
+es:zona-aviso:750103,750103,01,Rioja alavesa,Rioja alavesa,Europe/Madrid
+es:zona-aviso:752001,752001,20,Gipuzkoa litoral,Gipuzkoa litoral,Europe/Madrid
+es:zona-aviso:752002,752002,20,Gipuzkoa interior,Gipuzkoa interior,Europe/Madrid
+es:zona-aviso:754801,754801,48,Bizkaia litoral,Bizkaia litoral,Europe/Madrid
+es:zona-aviso:754802,754802,48,Bizkaia interior,Bizkaia interior,Europe/Madrid
+es:zona-aviso:762601,762601,26,Ribera del Ebro de La Rioja,Ribera del Ebro de La Rioja,Europe/Madrid
+es:zona-aviso:762602,762602,26,Ibérica riojana,Ibérica riojana,Europe/Madrid
+es:zona-aviso:770301,770301,03,Litoral norte de Alicante,Litoral norte de Alicante,Europe/Madrid
+es:zona-aviso:770302,770302,03,Interior de Alicante,Interior de Alicante,Europe/Madrid
+es:zona-aviso:770303,770303,03,Litoral sur de Alicante,Litoral sur de Alicante,Europe/Madrid
+es:zona-aviso:771201,771201,12,Interior norte de Castellón,Interior norte de Castellón,Europe/Madrid
+es:zona-aviso:771202,771202,12,Litoral norte de Castellón,Litoral norte de Castellón,Europe/Madrid
+es:zona-aviso:771203,771203,12,Interior sur de Castellón,Interior sur de Castellón,Europe/Madrid
+es:zona-aviso:771204,771204,12,Litoral sur de Castellón,Litoral sur de Castellón,Europe/Madrid
+es:zona-aviso:774601,774601,46,Interior norte de Valencia,Interior norte de Valencia,Europe/Madrid
+es:zona-aviso:774602,774602,46,Litoral norte de Valencia,Litoral norte de Valencia,Europe/Madrid
+es:zona-aviso:774603,774603,46,Interior sur de Valencia,Interior sur de Valencia,Europe/Madrid
+es:zona-aviso:774604,774604,46,Litoral sur de Valencia,Litoral sur de Valencia,Europe/Madrid
+es:zona-aviso:785101,785101,51,Ceuta,Ceuta,Africa/Ceuta
+es:zona-aviso:795201,795201,52,Melilla,Melilla,Africa/Ceuta

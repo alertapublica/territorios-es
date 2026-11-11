@@ -602,3 +602,53 @@ es:partido:5112,official,,Ceuta,derivado
 es:partido:5112,display,,Ceuta,derivado
 es:partido:5208,official,,Melilla,derivado
 es:partido:5208,display,,Melilla,derivado
+es:zona-aviso:614102,official,,Campiña sevillana,aemet
+es:zona-aviso:614102,display,,Campiña sevillana,aemet
+es:zona-aviso:625003,official,,Ribera del Ebro de Zaragoza,aemet
+es:zona-aviso:625003,display,,Ribera del Ebro de Zaragoza,aemet
+es:zona-aviso:645301,official,,Ibiza y Formentera,aemet
+es:zona-aviso:645301,display,,Ibiza y Formentera,aemet
+es:zona-aviso:645404,official,,Sur de Mallorca,aemet
+es:zona-aviso:645404,display,,Sur de Mallorca,aemet
+es:zona-aviso:659001,official,,Norte de Gran Canaria,aemet
+es:zona-aviso:659001,display,,Norte de Gran Canaria,aemet
+es:zona-aviso:659602,official,,Área metropolitana de Tenerife,aemet
+es:zona-aviso:659602,display,,Área metropolitana de Tenerife,aemet
+es:zona-aviso:690803,official,,Prelitoral de Barcelona,aemet
+es:zona-aviso:690803,display,,Prelitoral de Barcelona,aemet
+es:zona-aviso:690804,official,,Litoral de Barcelona,aemet
+es:zona-aviso:690804,display,,Litoral de Barcelona,aemet
+es:zona-aviso:691702,official,,Prelitoral de Girona,aemet
+es:zona-aviso:691702,display,,Prelitoral de Girona,aemet
+es:zona-aviso:692501,official,,Valle de Arán,aemet
+es:zona-aviso:692501,display,,Valle de Arán,aemet
+es:zona-aviso:692503,official,,Depresión central de Lleida,aemet
+es:zona-aviso:692503,display,,Depresión central de Lleida,aemet
+es:zona-aviso:711501,official,,Noroeste de A Coruña,aemet
+es:zona-aviso:711501,display,,Noroeste de A Coruña,aemet
+es:zona-aviso:713202,official,,Miño de Ourense,aemet
+es:zona-aviso:713202,display,,Miño de Ourense,aemet
+es:zona-aviso:713601,official,,Rias Baixas,aemet
+es:zona-aviso:713601,display,,Rias Baixas,aemet
+es:zona-aviso:722802,official,,Metropolitana y Henares,aemet
+es:zona-aviso:722802,display,,Metropolitana y Henares,aemet
+es:zona-aviso:743102,official,,Centro de Navarra,aemet
+es:zona-aviso:743102,display,,Centro de Navarra,aemet
+es:zona-aviso:750102,official,,Llanada alavesa,aemet
+es:zona-aviso:750102,display,,Llanada alavesa,aemet
+es:zona-aviso:752001,official,,Gipuzkoa litoral,aemet
+es:zona-aviso:752001,display,,Gipuzkoa litoral,aemet
+es:zona-aviso:754802,official,,Bizkaia interior,aemet
+es:zona-aviso:754802,display,,Bizkaia interior,aemet
+es:zona-aviso:762601,official,,Ribera del Ebro de La Rioja,aemet
+es:zona-aviso:762601,display,,Ribera del Ebro de La Rioja,aemet
+es:zona-aviso:770303,official,,Litoral sur de Alicante,aemet
+es:zona-aviso:770303,display,,Litoral sur de Alicante,aemet
+es:zona-aviso:771204,official,,Litoral sur de Castellón,aemet
+es:zona-aviso:771204,display,,Litoral sur de Castellón,aemet
+es:zona-aviso:774602,official,,Litoral norte de Valencia,aemet
+es:zona-aviso:774602,display,,Litoral norte de Valencia,aemet
+es:zona-aviso:785101,official,,Ceuta,aemet
+es:zona-aviso:785101,display,,Ceuta,aemet
+es:zona-aviso:795201,official,,Melilla,aemet
+es:zona-aviso:795201,display,,Melilla,aemet

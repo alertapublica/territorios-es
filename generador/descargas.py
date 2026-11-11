@@ -33,6 +33,17 @@ def relay(url: str) -> tuple[str, dict[str, str]]:
     return base.rstrip("/") + "/?" + urllib.parse.urlencode({"url": url}), {"x-ts": ts, "x-firma": signature}
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """For requests that carry a key in a header: urllib would resend it to wherever the server
+    redirects, even another host or plain HTTP. The redirect becomes an error instead."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+_NO_REDIRECT = urllib.request.build_opener(_NoRedirect)
+
+
 class Download:
     def __init__(self, url: str, content: bytes):
         self.url = url
@@ -46,13 +57,17 @@ class Download:
 
 
 def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: Path | None = None,
-          cache_name: str | None = None, attempts: int = 4, validate=None) -> Download:
+          cache_name: str | None = None, attempts: int = 4, validate=None,
+          headers: dict[str, str] | None = None) -> Download:
     """GET (or POST form data). With a cache folder, a file already there is reused. `validate`
-    raises on a broken answer (e.g. JSON cut off by a server timeout), which is retried."""
+    raises on a broken answer (e.g. JSON cut off by a server timeout), which is retried. `headers`
+    go with the request (an API key, for example) and are never written anywhere; such a request does
+    not follow redirects."""
     if cache and cache_name and (cache / cache_name).exists():
         return Download(url, (cache / cache_name).read_bytes())
     body = urllib.parse.urlencode(data).encode() if data else None
-    headers = {"User-Agent": USER_AGENT}
+    extra = headers or {}
+    headers = {**extra, "User-Agent": USER_AGENT}
     if accept:
         headers["Accept"] = accept
     error = None
@@ -62,7 +77,7 @@ def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: 
         try:
             target, signed = relay(url) if body is None else (url, {})
             request = urllib.request.Request(target, data=body, headers={**headers, **signed})
-            with urllib.request.urlopen(request, timeout=180) as r:
+            with (_NO_REDIRECT.open if extra else urllib.request.urlopen)(request, timeout=180) as r:
                 content = r.read()
             time.sleep(PAUSE)
             if validate:

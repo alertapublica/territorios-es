@@ -14,6 +14,8 @@
 - Municipios con isla: 5
 - Partidos judiciales: 30
 - Municipios con partido judicial: 32
+- Zonas de aviso (AEMET): 25
+- Municipios con zona de aviso: 31
 
 ## Catastro (22)
 
@@ -302,3 +304,15 @@
 ## Wikidata: varios valores (1)
 
 - es:municipio:28079: OSM 5326784, 999
+
+## Zonas de aviso (9)
+
+- 04904 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios
+- 18106 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios
+- 18915 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios
+- 36011 está en el maestro de AEMET (zona 713602) pero no en el diccionario de municipios
+- 36902 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios
+- Zona 610401 «Valle del Almanzora y Los Vélez» sin municipios en el maestro de AEMET
+- Zona 633304: no está en la delimitación de AEMET; quedan sin zona 33031
+- es:municipio:04078 «Rioja» sin zona de aviso de AEMET
+- es:municipio:33031 «Langreo» sin zona de aviso de AEMET
