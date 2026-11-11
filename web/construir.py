@@ -7,8 +7,11 @@ One page per language plus a language chooser; the data files are copied under d
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import re
 import shutil
+import sqlite3
 from html import escape
 from pathlib import Path
 
@@ -70,6 +73,38 @@ def _columns(datos: Path) -> list[str]:
             if column not in seen:
                 seen.append(column)
     return seen
+
+
+INTEGER = re.compile(r"-?(0|[1-9][0-9]*)")
+REAL = re.compile(r"-?(0|[1-9][0-9]*)\.[0-9]+")
+
+
+def database(path: Path, datos: Path):
+    """Every published CSV in one SQLite file, to explore it in Datasette Lite. A column is a number only if all its
+    values are written as numbers with no leading zero, so codes such as 01001 stay text."""
+    path.unlink(missing_ok=True)
+    db = sqlite3.connect(path)
+    try:
+        for name in FILES:
+            source = datos / name
+            if source.suffix != ".csv" or not source.exists():
+                continue
+            with source.open(encoding="utf-8", newline="") as f:
+                rows = list(csv.reader(f))
+            header, rows = rows[0], rows[1:]
+            types = []
+            for i in range(len(header)):
+                values = [row[i] for row in rows if row[i] != ""]
+                kind = ("INTEGER" if values and all(INTEGER.fullmatch(v) for v in values) else
+                        "REAL" if values and all(INTEGER.fullmatch(v) or REAL.fullmatch(v) for v in values) else "TEXT")
+                types.append(kind)
+            table = source.stem
+            db.execute(f'CREATE TABLE "{table}" (' + ", ".join(f'"{c}" {k}' for c, k in zip(header, types)) + ")")
+            db.executemany(f'INSERT INTO "{table}" VALUES (' + ", ".join("?" * len(header)) + ")",
+                           [[None if v == "" else v for v in row] for row in rows])
+        db.commit()
+    finally:
+        db.close()
 
 
 def top_nav(lang: str, t: dict, status: bool) -> str:
@@ -164,6 +199,7 @@ def build(out: Path, datos: Path | None):
         for name in FILES:
             if (datos / name).exists():
                 shutil.copy2(datos / name, out / "datos" / name)
+        database(out / "datos" / estado.DATABASE, datos)
         for lang in texts:
             (out / lang / "estado").mkdir()
             (out / lang / "estado" / "index.html").write_text(estado.page(lang, datos), encoding="utf-8")

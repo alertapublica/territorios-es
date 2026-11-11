@@ -17,6 +17,7 @@ import csv
 import json
 import re
 import sys
+import unicodedata
 from functools import lru_cache
 from html import escape
 from pathlib import Path
@@ -26,7 +27,8 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = {"es": ROOT / "docs" / "estado.md", "en": ROOT / "docs" / "status.md"}
 REPO = "https://github.com/alertapublica/territorios-es"
 PAGES = "https://alertapublica.github.io/territorios-es"
-DATASETTE = "https://lite.datasette.io/?csv="
+DATASETTE = "https://lite.datasette.io/?url="
+DATABASE = "territorios-es.db"  # SQLite built by web/construir.py with every CSV, codes as text
 
 TEXTS = ROOT / "web" / "textos.json"  # every visible text, under "estado", in each language of the website
 
@@ -36,6 +38,12 @@ LEVELS = ["autonomous_community", "province", "municipality", "island", "judicia
 LINKS = ["island", "judicial_district", "warning_zone", "comarca", "seat", "capital"]  # fields pointing to another territory
 COVERAGE = ["population", "partido", "zona_aviso", "comarca", "isla", "postal_code", "lau", "nuts3", "area_km2", "dgc",
             "bddae", "capital", "lon", "altitude", "wikidata", "osm_relation", "geonames"]  # columns of municipios.csv
+SCOPE = {  # data that only exist in part of the country: which municipalities they apply to
+    "isla": lambda r: r["provincia"] in ("07", "35", "38"),
+    "dgc": lambda r: r["provincia"] not in ("01", "20", "31", "48"),
+    "comarca": lambda r: r["autonomia"] in ("02", "09") or r["provincia"] == "01" or (r["provincia"] == "24" and r["comarca"]),
+}
+MISSING_LIST = 30  # list the municipalities missing a datum when they are this many or fewer
 MUNICIPAL_PLAIN = {"id", "ine", "ine_dc", "provincia", "autonomia", "official", "display", "lat", "time_zone", "slug"}
 CP_SOURCES = {"madrid": "Ayto. de Madrid", "icgc": "ICGC", "idena": "IDENA", "eustat": "Eustat", "ideib": "IDEIB",
               "ine": "INE", "cdau": "CDAU", "catastro": "Catastro"}
@@ -125,6 +133,7 @@ def _rows(path: Path) -> int:
     return 0
 
 
+@lru_cache(maxsize=None)
 def _csv(path: Path) -> list[dict]:
     if not path.exists():
         return []
@@ -143,6 +152,7 @@ def _node(name: str) -> str:
     return re.sub(r"\W", "_", name)
 
 
+@lru_cache(maxsize=None)
 def _territories(path: Path) -> list[dict]:
     return json.loads(path.read_text(encoding="utf-8"))["territories"] if path.exists() else []
 
@@ -166,9 +176,13 @@ def _graph(territories: list[dict]):
 
 def _workflow_triggers(path: Path) -> tuple[list[str], list[str]]:
     text = path.read_text(encoding="utf-8")
-    block = re.search(r"^on:\n((?:  .*\n|\n)+)", text, re.M)
-    triggers = re.findall(r"^  (\w+):", block.group(1), re.M) if block else []
-    return triggers, re.findall(r'cron:\s*"([^"]+)"', text)
+    inline = re.search(r"^on:[ \t]*([^\s#].*)$", text, re.M)  # on: push · on: [push, pull_request]
+    if inline:
+        triggers = re.findall(r"[\w-]+", inline.group(1))
+    else:
+        block = re.search(r"^on:[ \t]*\n((?:[ \t]+.*\n|\n)+)", text, re.M)
+        triggers = re.findall(r"^  (\w+):", block.group(1), re.M) if block else []
+    return triggers, re.findall(r"""cron:\s*["']([^"']+)["']""", text)
 
 
 def _pending(lang: str) -> list[str]:
@@ -177,20 +191,23 @@ def _pending(lang: str) -> list[str]:
     section = re.search(r"^## 13\..*?\n(.*?)(?=^## )", text, re.M | re.S)
     items = []
     for bullet in re.findall(r"^- (.*?)(?=^- |\Z)", section.group(1) if section else "", re.M | re.S):
-        bullet = " ".join(bullet.split())
-        lead, sep, rest = bullet.partition(": ")
-        if not sep or len(lead) > 80:
-            lead, rest = bullet, ""
-        if rest and len(lead) < 30:
-            lead = f"{lead}: {re.split(r'(?<=[.;])\s|\(', rest)[0].rstrip('.;')}"
-        lead = lead if len(lead) <= 120 else lead[:117].rsplit(" ", 1)[0] + "…"
-        items.append(lead.strip().rstrip("."))
+        # The first sentence, as written (with its parentheses, such as «(hecho)»); a long one keeps what comes
+        # before its colon, if that says enough, or is cut.
+        sentence = re.split(r"(?<=[.;])\s", " ".join(bullet.split()))[0].rstrip(".;")
+        lead, sep, _ = sentence.partition(": ")
+        if len(sentence) > 140 and sep and len(lead) >= 30:
+            sentence = lead
+        items.append(sentence if len(sentence) <= 140 else sentence[:137].rsplit(" ", 1)[0] + "…")
     return items
 
 
-def _published(name: str) -> bool:
-    """Whether the website copies this file of datos/ (web/construir.py, FILES)."""
-    return f'"{name}"' in (ROOT / "web" / "construir.py").read_text(encoding="utf-8")
+def _published() -> list[str]:
+    """Files of datos/ that the website copies (FILES in web/construir.py, which imports this module)."""
+    try:
+        from . import construir
+    except ImportError:  # run as a script: python web/estado.py
+        import construir
+    return construir.FILES
 
 
 def problems() -> list[str]:
@@ -208,9 +225,17 @@ def problems() -> list[str]:
     for p in sorted((ROOT / "python" / "territorios_es").glob("*.py")) + sorted((ROOT / "js").glob("*.js")):
         if p.stem not in LIBRARY and p.name not in LIBRARY_GLUE:
             out.append(f"módulo de la librería sin declarar en LIBRARY: {p.relative_to(ROOT)}")
-    for p in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
-        if p.name not in WORKFLOWS:
-            out.append(f"workflow sin declarar en WORKFLOWS: {p.name}")
+    for mod in LIBRARY:
+        for path in (ROOT / "python" / "territorios_es" / f"{mod}.py", ROOT / "js" / f"{mod}.js"):
+            if not path.exists():
+                out.append(f"módulo de LIBRARY que no existe: {path.relative_to(ROOT)}")
+    for mod in GENERATOR:
+        if not (ROOT / "generador" / f"{mod}.py").exists():
+            out.append(f"módulo de GENERATOR que no existe: generador/{mod}.py")
+    workflows = {p.name for p in (ROOT / ".github" / "workflows").glob("*.y*ml")}
+    out += [f"workflow sin declarar en WORKFLOWS: {name}" for name in sorted(workflows - set(WORKFLOWS))]
+    out += [f"workflow de WORKFLOWS que no existe: {name}" for name in sorted(set(WORKFLOWS) - workflows)]
+    out += [f"lista de HAND_LISTS que no existe: fuentes/{name}" for name in HAND_LISTS if not (ROOT / "fuentes" / name).exists()]
     for path in (ROOT / "datos" / "territorios.json", ROOT / "pruebas" / "datos" / "territorios.json"):
         for t in _territories(path):
             if t["level"] not in LEVELS:
@@ -231,14 +256,15 @@ def problems() -> list[str]:
     es = texts()["es"]["estado"]
     for group, keys in TEXT_GROUPS.items():
         out += [f"falta el texto de {group}.{k} en web/textos.json (estado)" for k in keys if k not in es[group]]
-    for path in (ROOT / "datos").glob("*.csv"):
-        if not _published(path.name):
+    published = _published()
+    for path in sorted((ROOT / "datos").glob("*.*")):
+        if path.suffix in (".csv", ".json") and path.name not in published:
             out.append(f"datos/{path.name} no se publica en la web (FILES de web/construir.py)")
     return sorted(set(out))
 
 
 # Blocks: ("p", text) · ("mermaid", code) · ("table", header, aligns, rows) · ("details", summary, blocks)
-# · ("list", items). Text is Markdown with `code`, **bold** and [links]; a table cell may be ("bar", n, total).
+# · ("list", items[, lang]). A diagram may carry an accessible title: ("mermaid", code, title). Text is Markdown with `code`, **bold** and [links]; a table cell may be ("bar", n, total).
 
 def collect(lang: str, datos: Path, html: bool = False):
     """Cards and sections of the status page, from datos/ (the same numbers for Markdown and HTML)."""
@@ -274,34 +300,42 @@ def collect(lang: str, datos: Path, html: bool = False):
             code.append(f'  {lv}["{t["levels"][lv]}<br>{_num(counts[lv], lang)}"]:::done')
         else:
             code.append(f'  {lv}["{t["levels"][lv]}<br>{t["pending_gen"]} · {t["test"]}: {_num(test[0][lv], lang)}"]:::todo')
-    code += [f"  {parent} --> {child}" for parent, child in sorted(test[1])]
-    for src, field, dst in sorted(test[2]):
+    def only_in_test(*lvs):  # a relation with a level that the generator can build but datos/ does not have yet
+        return not all(lv in counts for lv in lvs)
+    code += [f"  {parent} --> {child}" for parent, child in sorted(set(parents) | {e for e in test[1] if only_in_test(*e)})]
+    for src, field, dst in sorted(set(links) | {e for e in test[2] if only_in_test(e[0], e[2])}):
         if field == "capital":
             continue
         n = links.get((src, field, dst))
         label = t["links"][field] + (f": {_num(n, lang)} {t['of']} {_num(counts.get(src), lang)}" if n else "")
         code.append(f'  {src} -.->|"{label}"| {dst}')
-    sections["levels"] = [("p", t["levels_text"]), ("mermaid", "\n".join(code + [f"  {s}" for s in STYLE]))]
+    sections["levels"] = [("p", t["levels_text"]), ("mermaid", "\n".join(code + [f"  {s}" for s in STYLE]), t["s_levels"])]
 
     # Coverage
     with_cp = {r["id"] for r in postal}
     total = len(munis)
     columns = set(munis[0]) if munis else set()
     test_columns = set(next(iter(_csv(fixture / "municipios.csv")), {}))
-    rows = []
+    rows, missing_rows = [], []
     for col in COVERAGE:
         where = t["coverage_where"].get(col)
         label = t["coverage"][col] + (f" · {where}" if where else "")
-        if col == "postal_code":
-            n = sum(1 for r in munis if r["id"] in with_cp)
-        elif col in columns:
-            n = sum(1 for r in munis if r[col])
-        else:
+        if col != "postal_code" and col not in columns:
             if col in test_columns:
                 rows.append([label, t["pending_gen"], "", ""])
             continue
-        rows.append([label, f"{_num(n, lang)} {t['of']} {_num(total, lang)}", _pct(n, total, lang), ("bar", n, total)])
+        scope = [r for r in munis if SCOPE.get(col, bool)(r)]
+        has = (lambda r: r["id"] in with_cp) if col == "postal_code" else (lambda r: r[col])
+        missing = [r for r in scope if not has(r)]
+        n = len(scope) - len(missing)
+        rows.append([label, f"{_num(n, lang)} {t['of']} {_num(len(scope), lang)}", _pct(n, len(scope), lang),
+                     ("bar", n, len(scope))])
+        if 0 < len(missing) <= MISSING_LIST:
+            missing_rows.append([label, ", ".join(f"{r['display']} ({r['ine']})" for r in missing)])
     blocks = [("p", t["coverage_text"]), ("table", [t["datum"], t["municipalities"], "%", ""], "lrrl", rows)]
+    if missing_rows:
+        blocks.append(("details", t["missing_details"].format(n=MISSING_LIST),
+                       [("table", [t["datum"], t["municipalities"]], "ll", missing_rows)]))
     deciding = {}
     for r in postal:
         deciding.setdefault(r["id"], r["source"])
@@ -310,16 +344,16 @@ def collect(lang: str, datos: Path, html: bool = False):
         by_source[source] = by_source.get(source, 0) + 1
     names = {}
     for r in _csv(datos / "nombres.csv"):
-        if r["kind"] == "lang":
+        if r["kind"] == "lang" and r["source"] == "wikidata":
             names[r["lang"]] = names.get(r["lang"], 0) + 1
     if by_source:
         blocks.append(("p", f"**{t['pie_cp']}**"))
         blocks.append(("mermaid", "\n".join([PIE, "pie showData"] + [
-            f'  "{CP_SOURCES.get(k, k)}" : {n}' for k, n in sorted(by_source.items(), key=lambda x: -x[1])])))
+            f'  "{CP_SOURCES.get(k, k)}" : {n}' for k, n in sorted(by_source.items(), key=lambda x: -x[1])]), t["pie_cp"]))
     if names:
         blocks.append(("p", f"**{t['pie_names']}**"))
         blocks.append(("mermaid", "\n".join([PIE, "pie showData"] + [
-            f'  "{t["lang_names"].get(k, k)}" : {n}' for k, n in sorted(names.items(), key=lambda x: -x[1])])))
+            f'  "{t["lang_names"].get(k, k)}" : {n}' for k, n in sorted(names.items(), key=lambda x: -x[1])]), t["pie_names"]))
     sections["coverage"] = blocks
 
     # Communities
@@ -369,7 +403,7 @@ def collect(lang: str, datos: Path, html: bool = False):
         workflows.append([f"[{title}]({repo}.github/workflows/{name})", when, t["workflows"][name]])
     modules = [[f"`{mod}`", "; ".join(t["sources"][k] for k, s in SOURCES.items() if s[1] == mod)] for mod in readers]
     modules += [[f"`{mod}`", t["generator"][mod]] for mod in GENERATOR]
-    sections["repo"] = [("p", t["flow_text"]), ("mermaid", "\n".join(code)),
+    sections["repo"] = [("p", t["flow_text"]), ("mermaid", "\n".join(code), t["s_repo"]),
                         ("details", t["workflows_details"].format(n=len(WORKFLOWS)),
                          [("table", [t["workflow"], t["when"], t["what"]], "lll", workflows)]),
                         ("details", t["generator_details"].format(n=len(modules)),
@@ -379,24 +413,25 @@ def collect(lang: str, datos: Path, html: bool = False):
     edges = sorted({(s[0], f) for s in SOURCES.values() for f in s[2]})
     code = ["flowchart LR"] + [f'  o_{_node(org)}(["{org}"]):::box' for org in orgs]
     for f in sorted({f for _, f in edges}):
-        cls = "done" if (datos / f).exists() or f.endswith(".gz") else "todo"
+        cls = "box" if f.endswith(".gz") else "done" if (datos / f).exists() else "todo"
         code.append(f'  f_{_node(f)}[("{f}")]:::{cls}')
     code += [f"  o_{_node(o)} --> f_{_node(f)}" for o, f in edges] + [f"  {s}" for s in STYLE]
     rows = [[f"`{key}`", org, "`fuentes/`" if module == "fuentes/" else f"`generador/{module}.py`", t["sources"][key],
              retrieved.get(key) or t["never"]] for key, (org, module, _) in SOURCES.items()]
-    sections["sources"] = [("p", t["sources_text"]), ("mermaid", "\n".join(code)),
+    sections["sources"] = [("p", t["sources_text"]), ("mermaid", "\n".join(code), t["s_sources"]),
                            ("details", t["sources_details"].format(n=len(SOURCES)),
                             [("table", [t["source"], t["org"], t["module"], t["gives"], t["retrieved"]], "lllll", rows)])]
 
     # Files
-    rows = []
+    rows, published = [], _published()
+    database = quote(f"{PAGES}/datos/{DATABASE}", safe="")
     for f in data_files:
         here = (datos / f).exists()
         path = datos / f if here else fixture / f
         link = (f"../../datos/{f}" if html else f"../datos/{f}") if here else None
         name = f"[`{f}`]({link})" if link else f"`{f}`"
-        explore = (f"[{t['explore']}]({DATASETTE}{quote(f'{PAGES}/datos/{f}', safe='')})"
-                   if here and f.endswith(".csv") and _published(f) else "")
+        explore = (f"[{t['explore']}]({DATASETTE}{database}#/{Path(DATABASE).stem}/{Path(f).stem})"
+                   if here and f.endswith(".csv") and f in published else "")
         rows.append([name, _num(_rows(path), lang) if path.exists() and f != "manifiesto.json" else "",
                      _size(path.stat().st_size, lang) if here else "",
                      ", ".join(sorted({s[0] for s in SOURCES.values() if f in s[2]})),
@@ -411,21 +446,22 @@ def collect(lang: str, datos: Path, html: bool = False):
     # Library
     code = ["flowchart LR"]
     for d in sorted({d for d, _ in LIBRARY.values() if d}):
-        code.append(f'  d_{_node(d)}[("{d}")]:::' + ("box" if d == "Catastro" else "done"))
+        code.append(f'  d_{_node(d)}[("{d}")]:::' + ("box" if d == "Catastro" or d.endswith(".gz") else "done"))
     for mod, (d, offers) in LIBRARY.items():
         net = f" · {t['net']}" if mod == "catastro_online" else ""
         code.append(f'  m_{mod}["{mod}{net}<br>{offers}"]')
         if d:
             code.append(f"  d_{_node(d)} --> m_{mod}")
     code += ["  m_text --> m_catalog", "  m_catalog --> m_relation", "  m_geo --> m_limits", *[f"  {s}" for s in STYLE]]
-    sections["library"] = [("p", t["library_text"]), ("mermaid", "\n".join(code))]
+    sections["library"] = [("p", t["library_text"]), ("mermaid", "\n".join(code), t["s_library"])]
 
     # Progress
     done = [t["levels"][lv] for lv in levels if lv in counts]
     todo = [t["levels"][lv] for lv in levels if lv not in counts]
     sections["progress"] = [("list", [f"**{t['done_levels']}**: {', '.join(done) or t['none']}.",
                                       f"**{t['todo_levels']}**: {', '.join(todo) or t['none']}."]),
-                            ("p", t["progress_text"].format(repo=repo)), ("list", pending)]
+                            ("p", t["progress_text"].format(repo=repo)),
+                            ("list", pending, None if lang in ("es", "en") else "es")]
 
     last = max((v for v in retrieved.values() if v), default="")
     cards = [(_num(len(territories), lang), t["c_territories"]),
@@ -435,6 +471,21 @@ def collect(lang: str, datos: Path, html: bool = False):
              (_num(len(postal), lang), t["c_postal"]),
              (str(len(pending)), t["c_pending"])]
     return cards, sections
+
+
+def _mermaid(block) -> str:
+    """The diagram, with its accessible title (accTitle) after the line that names its type."""
+    code = block[1]
+    if len(block) > 2 and block[2]:
+        lines = code.split("\n")
+        at = next(i for i, line in enumerate(lines) if line.startswith(("flowchart", "pie")))
+        code = "\n".join(lines[:at + 1] + ["  accTitle: " + re.sub(r"[\n:]", " ", block[2])] + lines[at + 1:])
+    return code
+
+
+def _anchor(title: str) -> str:
+    """An ASCII id for a tab: the browser would encode accents in the address and the tab would not be found."""
+    return _slug(unicodedata.normalize("NFKD", title).encode("ascii", "ignore").decode())
 
 
 def _slug(title: str) -> str:
@@ -457,7 +508,7 @@ def _md_blocks(blocks) -> list[str]:
         if kind == "p":
             out += [block[1], ""]
         elif kind == "mermaid":
-            out += ["```mermaid", block[1], "```", ""]
+            out += ["```mermaid", _mermaid(block), "```", ""]
         elif kind == "list":
             out += [f"- {item}" for item in block[1]] + [""]
         elif kind == "table":
@@ -517,9 +568,10 @@ def _html_blocks(blocks, lang: str) -> str:
                             f'aria-label="{escape(t["zoom_" + k])}">{icon}</button>'
                             for k, icon in (("in", "+"), ("out", "−"), ("fit", "↔"), ("full", "⛶")))
             out.append(f'<div class="diagram"><div class="tools">{tools}</div>'
-                       f'<div class="canvas"><pre class="mermaid">{escape(block[1], quote=False)}</pre></div></div>')
+                       f'<div class="canvas"><pre class="mermaid">{escape(_mermaid(block), quote=False)}</pre></div></div>')
         elif kind == "list":
-            out.append("<ul>" + "".join(f"<li>{_inline(item)}</li>" for item in block[1]) + "</ul>")
+            lang_attr = f' lang="{block[2]}"' if len(block) > 2 and block[2] else ""
+            out.append(f"<ul{lang_attr}>" + "".join(f"<li>{_inline(item)}</li>" for item in block[1]) + "</ul>")
         elif kind == "table":
             _, header, aligns, rows = block
             head = "".join(f'<th class="{a}">{_inline(h)}</th>' for h, a in zip(header, aligns))
@@ -537,7 +589,7 @@ CSS = """.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1
 .tabs{display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid var(--line);margin-top:1.4em;position:sticky;top:0;
 background:var(--bg);z-index:1;padding-top:6px}
 .tabs a{padding:.45em .8em;text-decoration:none;color:var(--muted);border:1px solid transparent;border-radius:6px 6px 0 0;margin-bottom:-1px}
-.tabs a[aria-selected=true]{color:var(--fg);font-weight:600;border-color:var(--line);border-bottom-color:var(--bg);background:var(--bg)}
+.tabs a[aria-current=true]{color:var(--fg);font-weight:600;border-color:var(--line);border-bottom-color:var(--bg);background:var(--bg)}
 .panel>h2:first-child{margin-top:1em}.diagram{position:relative;margin:1em 0;border:1px solid var(--line);border-radius:8px;
 background:var(--bg)}.canvas{overflow:auto;max-height:80vh;cursor:grab;padding:8px}.canvas.drag{cursor:grabbing;user-select:none}
 pre.mermaid{background:none;text-align:center;margin:0}.tools{position:absolute;top:6px;right:6px;display:flex;gap:4px;z-index:1}
@@ -549,21 +601,26 @@ th.r,td.r{text-align:right;white-space:nowrap}
 vertical-align:middle}.bar i{display:block;height:100%;background:var(--accent)}
 details{margin:1em 0}summary{cursor:pointer;font-weight:600}"""
 
-SCRIPT = """import mermaid from "%s";
+SCRIPT = """(() => {
+// Tabs, zoom and dragging work even if Mermaid (jsDelivr) does not load: the diagrams then stay as text.
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-mermaid.initialize({startOnLoad: false, theme: dark ? "dark" : "default", securityLevel: "strict"});
+const mermaid = import("%s").then(m => {
+  m.default.initialize({startOnLoad: false, theme: dark ? "dark" : "default", securityLevel: "strict"});
+  return m.default;
+}).catch(() => null);
 const tabs = [...document.querySelectorAll(".tabs a")], panels = [...document.querySelectorAll(".panel")];
 async function show(id) {
   if (!panels.some(p => p.id === "tab-" + id)) id = panels[0].id.slice(4);
   for (const p of panels) p.hidden = p.id !== "tab-" + id;
-  for (const a of tabs) a.setAttribute("aria-selected", String(a.hash === "#" + id));
+  for (const a of tabs) a.hash === "#" + id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current");
   const nodes = [...document.getElementById("tab-" + id).querySelectorAll("pre.mermaid:not([data-processed])")];
-  if (nodes.length) await mermaid.run({nodes});
+  const m = await mermaid;
+  if (m && nodes.length) await m.run({nodes});
 }
 function zoom(box, how) {
   const svg = box.querySelector("svg");
-  if (!svg) return;
   if (how === "full") { document.fullscreenElement ? document.exitFullscreen() : box.requestFullscreen?.(); return; }
+  if (!svg) return;
   const natural = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
   const now = svg.getBoundingClientRect().width;
   if (how === "fit") { svg.style.width = ""; svg.style.maxWidth = svg.dataset.max || ""; return; }
@@ -586,7 +643,8 @@ for (const c of document.querySelectorAll(".canvas")) {
 }
 for (const a of tabs) a.addEventListener("click", e => { e.preventDefault(); history.replaceState(null, "", a.hash); show(a.hash.slice(1)); });
 addEventListener("hashchange", () => show(location.hash.slice(1)));
-show(location.hash.slice(1));""" % MERMAID
+show(location.hash.slice(1));
+})();""" % MERMAID
 
 
 def page(lang: str, datos: Path) -> str:
@@ -603,8 +661,8 @@ def page(lang: str, datos: Path) -> str:
     panels = []
     for tab, names in TABS.items():
         body = "".join(f"<h2>{escape(t['s_' + s])}</h2>{_html_blocks(sections[s], lang)}" for s in names)
-        panels.append(f'<section class="panel" id="tab-{_slug(tab_title[tab])}" aria-label="{escape(tab_title[tab])}">{body}</section>')
-    tabs = "".join(f'<a href="#{_slug(tab_title[tab])}">{escape(tab_title[tab])}</a>' for tab in TABS)
+        panels.append(f'<section class="panel" id="tab-{_anchor(tab_title[tab])}" aria-label="{escape(tab_title[tab])}">{body}</section>')
+    tabs = "".join(f'<a href="#{_anchor(tab_title[tab])}">{escape(tab_title[tab])}</a>' for tab in TABS)
     card_html = "".join(f"<div class=\"card\"><b>{escape(v)}</b><span>{_inline(label)}</span></div>" for v, label in cards)
     alternates = "".join(f'<link rel="alternate" hreflang="{c}" href="../../{c}/estado/">' for c in everything)
     return (f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
@@ -615,7 +673,7 @@ def page(lang: str, datos: Path) -> str:
             f'<main>{review}<div class="cards">{card_html}</div><nav class="tabs" aria-label="{escape(t["index"])}">{tabs}</nav>'
             f'{"".join(panels)}</main>'
             f'<footer><p><a href="{REPO}">GitHub</a>. {escape(web["licence_code"])}</p></footer>'
-            f'<script type="module">{SCRIPT}</script></body></html>\n')
+            f'<script>{SCRIPT}</script></body></html>\n')
 
 
 def main(argv=None) -> int:

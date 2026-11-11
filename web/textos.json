@@ -120,7 +120,7 @@
       "pending_gen": "sin generar",
       "test": "prueba",
       "s_coverage": "Cobertura",
-      "coverage_text": "Cuántos municipios tienen cada dato en `municipios.csv`. Las barras son sobre todos los municipios; algunos datos solo existen en una parte del territorio.",
+      "coverage_text": "Cuántos municipios tienen cada dato en `municipios.csv`. Los datos que solo existen en una parte del territorio se cuentan sobre los municipios de esa parte.",
       "datum": "Dato",
       "municipalities": "Municipios",
       "pie_cp": "Fuente que decide los códigos postales (municipios)",
@@ -163,7 +163,7 @@
       "retrieved": "Descargada",
       "never": "aún no",
       "s_files": "Ficheros",
-      "files_text": "«Explorar» abre el CSV publicado en la web con Datasette Lite: filtros, orden y consultas SQL en el navegador.",
+      "files_text": "«Explorar» abre la tabla en Datasette Lite (filtros, orden y consultas SQL en el navegador) desde una base SQLite que la web publica con todos los CSV y los códigos como texto.",
       "file": "Fichero",
       "rows": "Filas",
       "size": "Tamaño",
@@ -191,7 +191,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "a mano",
         "schedule": "programado",
-        "release": "al publicar una versión"
+        "release": "al publicar una versión",
+        "workflow_run": "al acabar la CI"
       },
       "levels": {
         "autonomous_community": "Comunidades y ciudades autónomas",
@@ -222,7 +223,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "superficie (Eurostat)",
         "dgc": "código DGC (Catastro)",
-        "bddae": "código BDDAE y límites (IGN)",
+        "bddae": "código BDDAE (IGN)",
         "capital": "capital (IGN)",
         "lon": "coordenadas de la capital",
         "altitude": "altitud de la capital",
@@ -289,7 +290,7 @@
         "generar.yml": "descarga las fuentes y regenera datos/ y este mapa; en main abre una PR y actualiza el issue del informe",
         "codigos-postales.yml": "recopila los códigos postales de todas las fuentes, regenera este mapa y abre una PR",
         "limites.yml": "adjunta limites-municipios.geojson.gz a cada versión",
-        "pages.yml": "publica la web y esta página de estado en GitHub Pages con cada cambio en main"
+        "pages.yml": "publica la web y esta página de estado en GitHub Pages cuando la CI pasa en main"
       },
       "lang_names": {
         "es": "castellano",
@@ -300,7 +301,8 @@
         "en": "inglés",
         "ast": "asturiano",
         "an": "aragonés"
-      }
+      },
+      "missing_details": "Municipios a los que les falta cada dato (si son {n} o menos)"
     }
   },
   "en": {
@@ -424,7 +426,7 @@
       "pending_gen": "not generated",
       "test": "test",
       "s_coverage": "Coverage",
-      "coverage_text": "How many municipalities have each datum in `municipios.csv`. Bars are over all municipalities; some data only exist in part of the country.",
+      "coverage_text": "How many municipalities have each datum in `municipios.csv`. Data that only exist in part of the country are counted over the municipalities of that part.",
       "datum": "Datum",
       "municipalities": "Municipalities",
       "pie_cp": "Source that decides the postal codes (municipalities)",
@@ -467,7 +469,7 @@
       "retrieved": "Retrieved",
       "never": "not yet",
       "s_files": "Files",
-      "files_text": "«Explore» opens the CSV published on the website in Datasette Lite: filters, sorting and SQL in the browser.",
+      "files_text": "«Explore» opens the table in Datasette Lite (filters, sorting and SQL in the browser) from a SQLite database the website publishes with every CSV and the codes as text.",
       "file": "File",
       "rows": "Rows",
       "size": "Size",
@@ -495,7 +497,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "manual",
         "schedule": "scheduled",
-        "release": "on release"
+        "release": "on release",
+        "workflow_run": "after CI"
       },
       "levels": {
         "autonomous_community": "Autonomous communities and cities",
@@ -526,7 +529,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "area (Eurostat)",
         "dgc": "DGC code (Catastro)",
-        "bddae": "BDDAE code and boundaries (IGN)",
+        "bddae": "BDDAE code (IGN)",
         "capital": "capital (IGN)",
         "lon": "coordinates of the capital",
         "altitude": "altitude of the capital",
@@ -593,7 +596,7 @@
         "generar.yml": "downloads the sources and rebuilds datos/ and this map; on main opens a PR and updates the report issue",
         "codigos-postales.yml": "collects the postal codes from every source, rebuilds this map and opens a PR",
         "limites.yml": "attaches limites-municipios.geojson.gz to each release",
-        "pages.yml": "publishes the website and this status page on GitHub Pages with every change on main"
+        "pages.yml": "publishes the website and this status page on GitHub Pages when CI passes on main"
       },
       "lang_names": {
         "es": "Spanish",
@@ -604,7 +607,8 @@
         "en": "English",
         "ast": "Asturian",
         "an": "Aragonese"
-      }
+      },
+      "missing_details": "Municipalities missing each datum (when {n} or fewer)"
     }
   },
   "ca": {
@@ -728,7 +732,7 @@
       "pending_gen": "sense generar",
       "test": "prova",
       "s_coverage": "Cobertura",
-      "coverage_text": "Quants municipis tenen cada dada a `municipios.csv`. Les barres són sobre tots els municipis; algunes dades només existeixen en una part del territori.",
+      "coverage_text": "Quants municipis tenen cada dada a `municipios.csv`. Les dades que només existeixen en una part del territori es compten sobre els municipis d'aquesta part.",
       "datum": "Dada",
       "municipalities": "Municipis",
       "pie_cp": "Font que decideix els codis postals (municipis)",
@@ -771,7 +775,7 @@
       "retrieved": "Baixada",
       "never": "encara no",
       "s_files": "Fitxers",
-      "files_text": "«Explorar» obre el CSV publicat a la web amb Datasette Lite: filtres, ordre i consultes SQL al navegador.",
+      "files_text": "«Explorar» obre la taula a Datasette Lite (filtres, ordre i consultes SQL al navegador) des d'una base SQLite que la web publica amb tots els CSV i els codis com a text.",
       "file": "Fitxer",
       "rows": "Files",
       "size": "Mida",
@@ -799,7 +803,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "a mà",
         "schedule": "programat",
-        "release": "en publicar una versió"
+        "release": "en publicar una versió",
+        "workflow_run": "en acabar la CI"
       },
       "levels": {
         "autonomous_community": "Comunitats i ciutats autònomes",
@@ -830,7 +835,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "superfície (Eurostat)",
         "dgc": "codi DGC (Cadastre)",
-        "bddae": "codi BDDAE i límits (IGN)",
+        "bddae": "codi BDDAE (IGN)",
         "capital": "capital (IGN)",
         "lon": "coordenades de la capital",
         "altitude": "altitud de la capital",
@@ -865,7 +870,7 @@
         "idena_direcciones": "codis postals de Navarra",
         "eustat_portales": "codis postals del País Basc",
         "ideib_portales": "codis postals de les Illes Balears",
-        "ine_callejero": "codis postals de tot Espanya (carrerer del cens electoral)",
+        "ine_callejero": "codis postals de tota Espanya (carrerer del cens electoral)",
         "cdau_portales": "codis postals d'Andalusia (contrast)",
         "catastro_direcciones": "codis postals dels municipis de règim comú"
       },
@@ -897,7 +902,7 @@
         "generar.yml": "baixa les fonts i regenera datos/ i aquest mapa; a main obre una PR i actualitza l'issue de l'informe",
         "codigos-postales.yml": "recull els codis postals de totes les fonts, regenera aquest mapa i obre una PR",
         "limites.yml": "adjunta limites-municipios.geojson.gz a cada versió",
-        "pages.yml": "publica la web i aquesta pàgina d'estat a GitHub Pages amb cada canvi a main"
+        "pages.yml": "publica la web i aquesta pàgina d'estat a GitHub Pages quan la CI passa a main"
       },
       "lang_names": {
         "es": "castellà",
@@ -908,7 +913,8 @@
         "en": "anglès",
         "ast": "asturià",
         "an": "aragonès"
-      }
+      },
+      "missing_details": "Municipis als quals falta cada dada (si són {n} o menys)"
     }
   },
   "gl": {
@@ -1032,7 +1038,7 @@
       "pending_gen": "sen xerar",
       "test": "proba",
       "s_coverage": "Cobertura",
-      "coverage_text": "Cantos concellos teñen cada dato en `municipios.csv`. As barras son sobre todos os concellos; algúns datos só existen nunha parte do territorio.",
+      "coverage_text": "Cantos concellos teñen cada dato en `municipios.csv`. Os datos que só existen nunha parte do territorio cóntanse sobre os concellos desa parte.",
       "datum": "Dato",
       "municipalities": "Concellos",
       "pie_cp": "Fonte que decide os códigos postais (concellos)",
@@ -1075,7 +1081,7 @@
       "retrieved": "Descargada",
       "never": "aínda non",
       "s_files": "Ficheiros",
-      "files_text": "«Explorar» abre o CSV publicado na web con Datasette Lite: filtros, orde e consultas SQL no navegador.",
+      "files_text": "«Explorar» abre a táboa en Datasette Lite (filtros, orde e consultas SQL no navegador) desde unha base SQLite que a web publica con todos os CSV e os códigos como texto.",
       "file": "Ficheiro",
       "rows": "Filas",
       "size": "Tamaño",
@@ -1103,7 +1109,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "a man",
         "schedule": "programado",
-        "release": "ao publicar unha versión"
+        "release": "ao publicar unha versión",
+        "workflow_run": "ao rematar a CI"
       },
       "levels": {
         "autonomous_community": "Comunidades e cidades autónomas",
@@ -1134,7 +1141,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "superficie (Eurostat)",
         "dgc": "código DGC (Catastro)",
-        "bddae": "código BDDAE e límites (IGN)",
+        "bddae": "código BDDAE (IGN)",
         "capital": "capital (IGN)",
         "lon": "coordenadas da capital",
         "altitude": "altitude da capital",
@@ -1201,7 +1208,7 @@
         "generar.yml": "descarga as fontes e rexenera datos/ e este mapa; en main abre unha PR e actualiza o issue do informe",
         "codigos-postales.yml": "recompila os códigos postais de todas as fontes, rexenera este mapa e abre unha PR",
         "limites.yml": "anexa limites-municipios.geojson.gz a cada versión",
-        "pages.yml": "publica a web e esta páxina de estado en GitHub Pages con cada cambio en main"
+        "pages.yml": "publica a web e esta páxina de estado en GitHub Pages cando a CI pasa en main"
       },
       "lang_names": {
         "es": "castelán",
@@ -1212,7 +1219,8 @@
         "en": "inglés",
         "ast": "asturiano",
         "an": "aragonés"
-      }
+      },
+      "missing_details": "Concellos aos que lles falta cada dato (se son {n} ou menos)"
     }
   },
   "eu": {
@@ -1336,7 +1344,7 @@
       "pending_gen": "sortu gabe",
       "test": "proba",
       "s_coverage": "Estaldura",
-      "coverage_text": "Zenbat udalerrik duten datu bakoitza `municipios.csv`-en. Barrak udalerri guztien gainekoak dira; datu batzuk lurraldearen zati batean baino ez daude.",
+      "coverage_text": "Zenbat udalerrik duten datu bakoitza `municipios.csv`-en. Lurraldearen zati batean bakarrik dauden datuak zati horretako udalerrien gainean zenbatzen dira.",
       "datum": "Datua",
       "municipalities": "Udalerriak",
       "pie_cp": "Posta-kodeak erabakitzen dituen iturria (udalerriak)",
@@ -1379,7 +1387,7 @@
       "retrieved": "Deskargatua",
       "never": "oraindik ez",
       "s_files": "Fitxategiak",
-      "files_text": "«Arakatu»-k webgunean argitaratutako CSVa irekitzen du Datasette Liten: iragazkiak, ordena eta SQL kontsultak nabigatzailean.",
+      "files_text": "«Arakatu»-k taula Datasette Liten irekitzen du (iragazkiak, ordena eta SQL kontsultak nabigatzailean), webguneak CSV guztiekin eta kodeak testu gisa argitaratzen duen SQLite datu-base batetik.",
       "file": "Fitxategia",
       "rows": "Errenkadak",
       "size": "Tamaina",
@@ -1407,7 +1415,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "eskuz",
         "schedule": "programatua",
-        "release": "bertsio bat argitaratzean"
+        "release": "bertsio bat argitaratzean",
+        "workflow_run": "CIa amaitzean"
       },
       "levels": {
         "autonomous_community": "Autonomia-erkidegoak eta -hiriak",
@@ -1438,7 +1447,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "azalera (Eurostat)",
         "dgc": "DGC kodea (Katastroa)",
-        "bddae": "BDDAE kodea eta mugak (IGN)",
+        "bddae": "BDDAE kodea (IGN)",
         "capital": "hiriburua (IGN)",
         "lon": "hiriburuaren koordenatuak",
         "altitude": "hiriburuaren altitudea",
@@ -1505,7 +1514,7 @@
         "generar.yml": "iturriak deskargatu eta datos/ eta mapa hau birsortzen ditu; main-en PR bat ireki eta txostenaren issuea eguneratzen du",
         "codigos-postales.yml": "iturri guztietako posta-kodeak bildu, mapa hau birsortu eta PR bat irekitzen du",
         "limites.yml": "limites-municipios.geojson.gz bertsio bakoitzari eransten dio",
-        "pages.yml": "webgunea eta egoera-orri hau GitHub Pagesen argitaratzen ditu main-en aldaketa bakoitzarekin"
+        "pages.yml": "webgunea eta egoera-orri hau GitHub Pagesen argitaratzen ditu main-en CIa gainditzen denean"
       },
       "lang_names": {
         "es": "gaztelania",
@@ -1516,7 +1525,8 @@
         "en": "ingelesa",
         "ast": "asturiera",
         "an": "aragoiera"
-      }
+      },
+      "missing_details": "Datu bakoitza falta zaien udalerriak ({n} edo gutxiago badira)"
     }
   },
   "oc": {
@@ -1640,7 +1650,7 @@
       "pending_gen": "shens generar",
       "test": "pròva",
       "s_coverage": "Cobertura",
-      "coverage_text": "Quanti municipis an cada dada en `municipios.csv`. Es barres son sus toti es municipis; quauques dades sonque existissen en ua part deth territòri.",
+      "coverage_text": "Quanti municipis an cada dada en `municipios.csv`. Es dades que sonque existissen en ua part deth territòri se compden sus es municipis d'aguesta part.",
       "datum": "Dada",
       "municipalities": "Municipis",
       "pie_cp": "Hònt que decidís es còdis postaus (municipis)",
@@ -1660,7 +1670,7 @@
       "hand": "listes revisades a man",
       "readers": "lectors",
       "data": "fichièrs",
-      "attached": "junhent a cada version",
+      "attached": "adjunt a cada version",
       "lib": "libraria Python e JavaScript",
       "web": "web de dades (GitHub Pages)",
       "tests": "pròves",
@@ -1683,7 +1693,7 @@
       "retrieved": "Descargada",
       "never": "encara non",
       "s_files": "Fichièrs",
-      "files_text": "«Explorar» dobrís eth CSV publicat ena web damb Datasette Lite: filtres, òrdre e consultes SQL en navegador.",
+      "files_text": "«Explorar» dobrís era taula en Datasette Lite (filtres, òrdre e consultes SQL en navegador) a partir d'ua basa SQLite que era web publique damb toti es CSV e es còdis coma tèxte.",
       "file": "Fichièr",
       "rows": "Linhes",
       "size": "Talha",
@@ -1711,7 +1721,8 @@
         "pull_request": "PR",
         "workflow_dispatch": "a man",
         "schedule": "programat",
-        "release": "en publicar ua version"
+        "release": "en publicar ua version",
+        "workflow_run": "en acabar era CI"
       },
       "levels": {
         "autonomous_community": "Comunitats e ciutats autonòmes",
@@ -1742,7 +1753,7 @@
         "nuts3": "NUTS 3",
         "area_km2": "superfícia (Eurostat)",
         "dgc": "còdi DGC (Cadastre)",
-        "bddae": "còdi BDDAE e limits (IGN)",
+        "bddae": "còdi BDDAE (IGN)",
         "capital": "capitau (IGN)",
         "lon": "coordenades dera capitau",
         "altitude": "altitud dera capitau",
@@ -1809,7 +1820,7 @@
         "generar.yml": "descarga es hònts e regenère datos/ e aguest mapa; en main dobrís ua PR e actualize er issue deth rapòrt",
         "codigos-postales.yml": "recuelh es còdis postaus de totes es hònts, regenère aguest mapa e dobrís ua PR",
         "limites.yml": "junh limites-municipios.geojson.gz a cada version",
-        "pages.yml": "publique era web e aguesta pagina d'estat en GitHub Pages damb cada cambi en main"
+        "pages.yml": "publique era web e aguesta pagina d'estat en GitHub Pages quan era CI passe en main"
       },
       "lang_names": {
         "es": "castelhan",
@@ -1820,7 +1831,8 @@
         "en": "anglés",
         "ast": "asturian",
         "an": "aragonés"
-      }
+      },
+      "missing_details": "Municipis que les manque cada dada (se son {n} o mens)"
     }
   }
 }

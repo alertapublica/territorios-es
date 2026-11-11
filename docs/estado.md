@@ -2,7 +2,7 @@
 
 Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md).
 
-| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** | **11** |
+| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** | **12** |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio | puntos pendientes |
 
@@ -14,6 +14,7 @@ Las flechas continuas van del padre al hijo; las de puntos, de un territorio a o
 
 ```mermaid
 flowchart TB
+  accTitle: Territorios
   autonomous_community["Comunidades y ciudades autónomas<br>19"]:::done
   province["Provincias<br>52"]:::done
   municipality["Municipios<br>8.132"]:::done
@@ -41,21 +42,21 @@ flowchart TB
 
 ## Cobertura
 
-Cuántos municipios tienen cada dato en `municipios.csv`. Las barras son sobre todos los municipios; algunos datos solo existen en una parte del territorio.
+Cuántos municipios tienen cada dato en `municipios.csv`. Los datos que solo existen en una parte del territorio se cuentan sobre los municipios de esa parte.
 
 | Dato | Municipios | % |  |
 |---|---:|---:|---|
 | población (INE) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | partido judicial (Justicia) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | zona de aviso (AEMET) | 8.124 de 8.132 | 99,9 % | `███████████████████░` |
-| comarca · Cataluña, Aragón, Álava y El Bierzo | 1.767 de 8.132 | 21,7 % | `████░░░░░░░░░░░░░░░░` |
-| isla (INE) · Baleares y Canarias | 155 de 8.132 | 1,9 % | `█░░░░░░░░░░░░░░░░░░░` |
+| comarca · Cataluña, Aragón, Álava y El Bierzo | 1.767 de 1.767 | 100 % | `████████████████████` |
+| isla (INE) · Baleares y Canarias | 155 de 155 | 100 % | `████████████████████` |
 | código postal | 8.132 de 8.132 | 100 % | `████████████████████` |
 | LAU (Eurostat) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | NUTS 3 | 8.132 de 8.132 | 100 % | `████████████████████` |
 | superficie (Eurostat) | 8.132 de 8.132 | 100 % | `████████████████████` |
-| código DGC (Catastro) · régimen común | 7.608 de 8.132 | 93,6 % | `███████████████████░` |
-| código BDDAE y límites (IGN) | 8.132 de 8.132 | 100 % | `████████████████████` |
+| código DGC (Catastro) · régimen común | 7.608 de 7.608 | 100 % | `████████████████████` |
+| código BDDAE (IGN) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | capital (IGN) | 8.105 de 8.132 | 99,7 % | `███████████████████░` |
 | coordenadas de la capital | 8.105 de 8.132 | 99,7 % | `███████████████████░` |
 | altitud de la capital | 8.105 de 8.132 | 99,7 % | `███████████████████░` |
@@ -63,11 +64,26 @@ Cuántos municipios tienen cada dato en `municipios.csv`. Las barras son sobre t
 | OpenStreetMap | 8.121 de 8.132 | 99,9 % | `███████████████████░` |
 | GeoNames | 7.991 de 8.132 | 98,3 % | `███████████████████░` |
 
+<details>
+<summary>Municipios a los que les falta cada dato (si son 30 o menos)</summary>
+
+| Dato | Municipios |
+|---|---|
+| zona de aviso (AEMET) | San Martín del Tesorillo (11903), Fuente Carreteros (14901), La Guijarrosa (14902), Fornes (18077), Torrenueva Costa (18916), La Zarza-Perrunal (21902), El Palmar de Troya (41904), Usansolo (48916) |
+| capital (IGN) | la Vall de Laguar (03137), Canovelles (08041), Capolat (08045), L'Espunyola (08078), Fogars de la Selva (08082), Malla (08111), Les Masies de Voltregà (08117), La Quar (08177), Teià (08281), Los Ausines (09030), Valle de Losa (09908), Los Cortijos (13036), Foixà (17068), Ataun (20015), Valderrueda (24183), La Molsosa (25136), Pinós (25167), La Hiruela (28069), Moaña (36029), Nigrán (36035), Hermigua (38021), Puntallana (38030), El Pinar de El Hierro (38901), Valdáliga (39091), Barrika (48014), Galdakao (48036), Erandio (48902) |
+| coordenadas de la capital | la Vall de Laguar (03137), Canovelles (08041), Capolat (08045), L'Espunyola (08078), Fogars de la Selva (08082), Malla (08111), Les Masies de Voltregà (08117), La Quar (08177), Teià (08281), Los Ausines (09030), Valle de Losa (09908), Los Cortijos (13036), Foixà (17068), Ataun (20015), Valderrueda (24183), La Molsosa (25136), Pinós (25167), La Hiruela (28069), Moaña (36029), Nigrán (36035), Hermigua (38021), Puntallana (38030), El Pinar de El Hierro (38901), Valdáliga (39091), Barrika (48014), Galdakao (48036), Erandio (48902) |
+| altitud de la capital | la Vall de Laguar (03137), Canovelles (08041), Capolat (08045), L'Espunyola (08078), Fogars de la Selva (08082), Malla (08111), Les Masies de Voltregà (08117), La Quar (08177), Teià (08281), Los Ausines (09030), Valle de Losa (09908), Los Cortijos (13036), Foixà (17068), Ataun (20015), Valderrueda (24183), La Molsosa (25136), Pinós (25167), La Hiruela (28069), Moaña (36029), Nigrán (36035), Hermigua (38021), Puntallana (38030), El Pinar de El Hierro (38901), Valdáliga (39091), Barrika (48014), Galdakao (48036), Erandio (48902) |
+| Wikidata | Ezkio-Itsaso (20035), Ceuta (51001), Melilla (52001) |
+| OpenStreetMap | Bahabón de Esgueva (09033), Illana (19152), Ezkio-Itsaso (20035), Uharte Arakil (31123), Iza/Itza (31131), Jaurrieta (31134), Ultzama (31236), l'Alcúdia (46019), Carlet (46085), Ceuta (51001), Melilla (52001) |
+
+</details>
+
 **Fuente que decide los códigos postales (municipios)**
 
 ```mermaid
 %%{init: {"themeVariables": {"pie1": "#4e8fd6", "pie2": "#f2a33a", "pie3": "#4cb08a", "pie4": "#d98cb8", "pie5": "#8cc8ef", "pie6": "#e6794a", "pie7": "#e8dc4a", "pie8": "#b0b0b0", "pieSectionTextColor": "#111111", "pieStrokeColor": "#ffffff", "pieOpacity": "1"}}}%%
 pie showData
+  accTitle: Fuente que decide los códigos postales (municipios)
   "INE" : 6593
   "ICGC" : 947
   "IDENA" : 272
@@ -81,14 +97,15 @@ pie showData
 ```mermaid
 %%{init: {"themeVariables": {"pie1": "#4e8fd6", "pie2": "#f2a33a", "pie3": "#4cb08a", "pie4": "#d98cb8", "pie5": "#8cc8ef", "pie6": "#e6794a", "pie7": "#e8dc4a", "pie8": "#b0b0b0", "pieSectionTextColor": "#111111", "pieStrokeColor": "#ffffff", "pieOpacity": "1"}}}%%
 pie showData
+  accTitle: Nombres por idioma de Wikidata (todos los territorios)
   "aragonés" : 1231
-  "castellano" : 1214
-  "catalán" : 705
-  "euskera" : 589
+  "castellano" : 1195
+  "catalán" : 686
+  "euskera" : 570
   "asturiano" : 558
-  "aranés" : 544
-  "gallego" : 451
-  "inglés" : 400
+  "aranés" : 525
+  "gallego" : 432
+  "inglés" : 381
 ```
 
 ## Por comunidad
@@ -121,6 +138,7 @@ De las fuentes a los datos y de los datos a la librería, la web y las pruebas. 
 
 ```mermaid
 flowchart TB
+  accTitle: Repositorio
   ext(["24 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
   hand[/"fuentes/<br>13 listas revisadas a mano"/]
   descargas["descargas<br>descarga con caché, huella SHA-256 y relay"]
@@ -173,7 +191,7 @@ flowchart TB
 | [Generar datos](../.github/workflows/generar.yml) | a mano, programado (`17 5 3 * *`) | descarga las fuentes y regenera datos/ y este mapa; en main abre una PR y actualiza el issue del informe |
 | [Códigos postales](../.github/workflows/codigos-postales.yml) | a mano, programado (`41 4 10 1,7 *`) | recopila los códigos postales de todas las fuentes, regenera este mapa y abre una PR |
 | [Límites de la versión](../.github/workflows/limites.yml) | al publicar una versión | adjunta limites-municipios.geojson.gz a cada versión |
-| [Web de datos](../.github/workflows/pages.yml) | push, a mano | publica la web y esta página de estado en GitHub Pages con cada cambio en main |
+| [Web de datos](../.github/workflows/pages.yml) | al acabar la CI, a mano | publica la web y esta página de estado en GitHub Pages cuando la CI pasa en main |
 
 </details>
 
@@ -206,6 +224,7 @@ Qué organismo alimenta cada fichero de `datos/`.
 
 ```mermaid
 flowchart LR
+  accTitle: Fuentes
   o_AEMET(["AEMET"]):::box
   o_Aragón(["Aragón"]):::box
   o_Ayto__de_Madrid(["Ayto. de Madrid"]):::box
@@ -228,7 +247,7 @@ flowchart LR
   f_comarcas_csv[("comarcas.csv")]:::done
   f_comunidades_csv[("comunidades.csv")]:::done
   f_islas_csv[("islas.csv")]:::done
-  f_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::done
+  f_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::box
   f_municipios_csv[("municipios.csv")]:::done
   f_nombres_csv[("nombres.csv")]:::done
   f_paises_csv[("paises.csv")]:::done
@@ -317,25 +336,25 @@ flowchart LR
 
 ## Ficheros
 
-«Explorar» abre el CSV publicado en la web con Datasette Lite: filtros, orden y consultas SQL en el navegador.
+«Explorar» abre la tabla en Datasette Lite (filtros, orden y consultas SQL en el navegador) desde una base SQLite que la web publica con todos los CSV y los códigos como texto.
 
 | Fichero | Filas | Tamaño | Lo alimentan | Estado |  |
 |---|---:|---:|---|---|---|
-| [`codigos-postales-fuentes.csv`](../datos/codigos-postales-fuentes.csv) | 33.537 | 1,7 MB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos-postales-fuentes.csv) |
-| [`codigos-postales.csv`](../datos/codigos-postales.csv) | 14.054 | 865 KB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos-postales.csv) |
-| [`codigos.csv`](../datos/codigos.csv) | 67.083 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos.csv) |
-| [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcomarcas.csv) |
-| [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcomunidades.csv) |
-| [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fislas.csv) |
+| [`codigos-postales-fuentes.csv`](../datos/codigos-postales-fuentes.csv) | 33.537 | 1,7 MB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos-postales-fuentes) |
+| [`codigos-postales.csv`](../datos/codigos-postales.csv) | 14.054 | 865 KB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos-postales) |
+| [`codigos.csv`](../datos/codigos.csv) | 67.083 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos) |
+| [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comarcas) |
+| [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comunidades) |
+| [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/islas) |
 | [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | en datos/ |  |
-| [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fmunicipios.csv) |
-| [`nombres.csv`](../datos/nombres.csv) | 24.394 | 1,1 MB | INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fnombres.csv) |
-| [`paises.csv`](../datos/paises.csv) | 249 | 23 KB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fpaises.csv) |
-| [`partidos-judiciales.csv`](../datos/partidos-judiciales.csv) | 431 | 58 KB | Justicia | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fpartidos-judiciales.csv) |
-| [`provincias.csv`](../datos/provincias.csv) | 52 | 8 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fprovincias.csv) |
+| [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/municipios) |
+| [`nombres.csv`](../datos/nombres.csv) | 24.394 | 1,1 MB | INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/nombres) |
+| [`paises.csv`](../datos/paises.csv) | 249 | 23 KB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/paises) |
+| [`partidos-judiciales.csv`](../datos/partidos-judiciales.csv) | 431 | 58 KB | Justicia | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/partidos-judiciales) |
+| [`provincias.csv`](../datos/provincias.csv) | 52 | 8 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/provincias) |
 | [`territorios.json`](../datos/territorios.json) | 9.160 | 5,5 MB |  | en datos/ |  |
-| [`wikipedia.csv`](../datos/wikipedia.csv) | 64.898 | 4,9 MB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fwikipedia.csv) |
-| [`zonas-aviso.csv`](../datos/zonas-aviso.csv) | 182 | 15 KB | AEMET | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fzonas-aviso.csv) |
+| [`wikipedia.csv`](../datos/wikipedia.csv) | 64.898 | 4,9 MB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/wikipedia) |
+| [`zonas-aviso.csv`](../datos/zonas-aviso.csv) | 182 | 15 KB | AEMET | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/zonas-aviso) |
 
 <details>
 <summary>Las 13 listas revisadas a mano (<code>fuentes/</code>)</summary>
@@ -364,9 +383,10 @@ Los mismos módulos en Python (`python/territorios_es/`) y JavaScript (`js/`).
 
 ```mermaid
 flowchart LR
+  accTitle: Librería
   d_Catastro[("Catastro")]:::box
   d_codigos_postales_csv[("codigos-postales.csv")]:::done
-  d_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::done
+  d_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::box
   d_territorios_json[("territorios.json")]:::done
   m_catalog["catalog<br>resolve · territory · search · mentions · name · children"]
   d_territorios_json --> m_catalog
@@ -396,13 +416,14 @@ flowchart LR
 Del [apartado 13 del diseño](../docs/diseno.md#13-pendiente):
 
 - Traducir este documento y el README al catalán, gallego, euskera y aranés
-- Revisar las traducciones de la web y de los nombres de comunidades (marcadas como pendientes)
+- Revisar las traducciones de la web, de su página de estado y de los nombres de comunidades (marcadas como pendientes)
 - Revisar el informe de discrepancias de la primera generación
-- Permitir que Actions abra PR: es un ajuste de la organización
-- Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat
-- Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales
+- Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General → Workflow permissions)
+- Publicar la versión 0.4
+- Página de estado, más adelante (review de Codex de la PR #19)
+- Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales (se baja sin navegador de…
 - Cruces de los partidos judiciales, como capas posteriores
-- Zonas de aviso de AEMET, más adelante
+- Zonas de aviso de AEMET, más adelante: las 51 costeras, ligadas a su zona terrestre, y su elemento de Wikidata
 - Nombres de países: siguen saliendo de Wikidata, que tiene alguna errata
 - Códigos postales en Andalucía: el CDAU trae 526 pares que no tiene el INE, que decide allí
-- Más adelante: entidades de población, variaciones históricas del INE
+- Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde 2004 y páginas de modificaciones de…
