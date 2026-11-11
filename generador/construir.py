@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 from territorios_es import geo
@@ -19,6 +20,9 @@ from .eurostat import ine_code
 from .wikidata import LANGS
 
 UI_LANGS = ("es", "ca", "gl", "eu", "oc", "en")
+# Kinds of comarca in fuentes/comarcas.csv, and the code system of each community's own numbering.
+COMARCA_TYPES = ("comarca", "cuadrilla", "aran")
+REGIONAL_COMARCA_CODES = {"09": "idescat:comarca", "02": "aragon:comarca"}
 
 
 class Report:
@@ -56,6 +60,8 @@ def load_hand_lists(folder: Path) -> dict:
         "provinces": _csv(folder / "provincias.csv"),
         "islands": _csv(folder / "islas.csv"),
         "warning_zones": _csv(folder / "zonas-aviso.csv"),
+        "comarcas": _csv(folder / "comarcas.csv"),
+        "comarca_members": _csv(folder / "comarcas-municipios.csv"),
         "parts": _csv(folder / "partes-bilingues.csv"),
         "aliases": _csv(folder / "alias.csv"),
         "eu": _csv(folder / "paises-ue.csv"),
@@ -662,6 +668,78 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     else:
         report.add("Zonas de aviso", "Sin datos del maestro de municipios de AEMET")
 
+    # Comarcas -----------------------------------------------------------------------------------------
+    # Only the comarcas that are a local entity: those of Catalonia (with Aran and the Lluçanès, created
+    # by law in 2023 although its council will not exist until after the 2027 local elections), those of
+    # Aragon, the cuadrillas of Álava and El Bierzo. fuentes/comarcas.csv lists them, reviewed against
+    # the Registro de Entidades Locales; the members come every month from Idescat and Aragón Open
+    # Data, by INE code, and from fuentes/comarcas-municipios.csv in Álava and El Bierzo. The parent of
+    # a comarca is its community, since some cross a provincial border; municipalities keep their
+    # province and also carry the field `comarca`.
+    comarca_rows = {}
+    for row in hand["comarcas"]:
+        if not re.fullmatch(r"[0-9]{4}", row["codigo"]) or row["codigo"][:2] != row["autonomia"] \
+                or row["autonomia"] not in province_ccaa.values() or row["tipo"] not in COMARCA_TYPES \
+                or not re.fullmatch(r"(06[0-9]{6})?", row["rel"]) or row["codigo"] in comarca_rows:
+            raise ValueError(f"fuentes/comarcas.csv: fila no válida o repetida: {row}")
+        comarca_rows[row["codigo"]] = row
+    by_regional = {(row["autonomia"], row["autonomico"]): code for code, row in comarca_rows.items() if row["autonomico"]}
+    comarca_of: dict[str, str] = {}
+    for ccaa, label, rows in (("09", "Idescat", inputs.get("idescat_comarcas")),
+                              ("02", "Aragón Open Data", inputs.get("aragon_comarcas"))):
+        if not rows:
+            report.add("Comarcas", f"Sin datos de {label}")
+        for code, number in rows or []:
+            comarca = by_regional.get((ccaa, number))
+            if comarca is None:
+                report.add("Comarcas", f"{label}: {code} en la comarca {number}, que no está en fuentes/comarcas.csv")
+            elif code not in by_code or province_ccaa[code[:2]] != ccaa:
+                report.add("Comarcas", f"{label}: {code} (comarca {number}) no es un municipio de la comunidad {ccaa} "
+                                       f"en el diccionario")
+            else:
+                comarca_of[code] = comarca
+    unknown = []
+    for row in hand["comarca_members"]:
+        code, comarca = row["ine"], row["comarca"]
+        if comarca not in comarca_rows or comarca_rows[comarca]["autonomico"] or code in comarca_of \
+                or (code in by_code and province_ccaa[code[:2]] != comarca_rows[comarca]["autonomia"]):
+            raise ValueError(f"fuentes/comarcas-municipios.csv: fila no válida, repetida o de otra comunidad: {row}")
+        if code in by_code:
+            comarca_of[code] = comarca
+        else:
+            unknown.append(code)
+    if unknown:
+        report.add("Comarcas", f"En fuentes/comarcas-municipios.csv pero no en el diccionario de municipios: "
+                               f"{', '.join(unknown)}")
+    comarcas = []
+    comarca_size = Counter(comarca_of.values())
+    empty = [f"{code} «{row['official']}»" for code, row in sorted(comarca_rows.items()) if not comarca_size[code]]
+    if empty:
+        report.add("Comarcas", f"Comarcas sin municipios, que no se publican: {', '.join(empty)}")
+    for code, row in sorted(comarca_rows.items()):
+        identity, official = f"es:comarca:{code}", row["official"]
+        if not comarca_size[code]:
+            continue
+        names = {"official": official, "display": display_name(official)}
+        parts = parts_of(identity, official)
+        if parts:
+            names["parts"] = parts
+        if aliases.get(identity):
+            names["aliases"] = aliases[identity]
+        codes = {"rel:comarca": row["rel"]} if row["rel"] else {}
+        if row["autonomico"]:
+            codes[REGIONAL_COMARCA_CODES[row["autonomia"]]] = row["autonomico"]
+        comarcas.append({"id": identity, "level": "comarca", "parent": f"es:autonomia:{row['autonomia']}",
+                         "codes": codes, "names": names, "type": row["tipo"], "slug": slugify(names["display"]),
+                         "time_zone": "Europe/Madrid"})
+    for code, comarca in comarca_of.items():
+        if comarca_size[comarca]:
+            by_code[code]["comarca"] = f"es:comarca:{comarca}"
+    for record in municipalities:
+        code = record["codes"]["ine:municipio"]
+        if "comarca" not in record and (province_ccaa[code[:2]] in ("02", "09") or code[:2] == "01"):
+            report.add("Comarcas", f"{record['id']} «{record['names']['display']}» sin comarca")
+
     missing = [row["ine"] for row in hand["provinces"] if row["ine"] not in population]
     if missing:
         report.add("INE: población", f"Provincias sin población del INE: {', '.join(missing)}")
@@ -736,7 +814,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
-    for record in countries + communities + provinces + islands + municipalities + districts + zones:
+    for record in countries + communities + provinces + islands + municipalities + districts + zones + comarcas:
         for system in ("osm:relation", "geonames"):
             if system in record["codes"]:
                 holders.setdefault((system, record["codes"][system]), []).append(record)
@@ -747,7 +825,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("Wikidata: código repetido",
                        f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
     known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities + districts
-                 + zones}
+                 + zones + comarcas}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")
 
@@ -765,7 +843,10 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Municipios con partido judicial": sum("judicial_district" in r for r in municipalities),
         "Zonas de aviso (AEMET)": len(zones),
         "Municipios con zona de aviso": sum("warning_zone" in r for r in municipalities),
+        "Comarcas": len(comarcas),
+        "Municipios con comarca": sum("comarca" in r for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
-            "territories": countries + communities + provinces + islands + municipalities + districts + zones}
+            "territories": countries + communities + provinces + islands + municipalities + districts + zones
+                          + comarcas}
     return data, report, articles

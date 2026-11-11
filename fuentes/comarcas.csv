@@ -1,0 +1,85 @@
+codigo,autonomia,autonomico,rel,tipo,official
+0201,02,01,06020110,comarca,"Jacetania, La"
+0202,02,02,06020030,comarca,Alto Gállego
+0203,02,03,06020250,comarca,Sobrarbe
+0204,02,04,06020150,comarca,Ribagorza
+0205,02,05,06020210,comarca,Cinco Villas
+0206,02,06,06020220,comarca,Hoya de Huesca/Plana de Uesca
+0207,02,07,06020050,comarca,Somontano de Barbastro
+0208,02,08,06020080,comarca,Cinca Medio
+0209,02,09,06020200,comarca,"Litera, La/Llitera, la"
+0210,02,10,06020170,comarca,"Monegros, Los"
+0211,02,11,06020190,comarca,Bajo Cinca/Baix Cinca
+0212,02,12,06020020,comarca,Tarazona y el Moncayo
+0213,02,13,06020060,comarca,Campo de Borja
+0214,02,14,06020070,comarca,Aranda
+0215,02,15,06020290,comarca,Ribera Alta del Ebro
+0216,02,16,06020160,comarca,Valdejalón
+0217,02,17,06020330,comarca,Central
+0218,02,18,06020140,comarca,Ribera Baja del Ebro
+0219,02,19,06020260,comarca,Bajo Aragón-Caspe/Baix Aragó-Casp
+0220,02,20,06020010,comarca,Comunidad de Calatayud
+0221,02,21,06020240,comarca,Campo de Cariñena
+0222,02,22,06020230,comarca,Campo de Belchite
+0223,02,23,06020270,comarca,Bajo Martín
+0224,02,24,06020180,comarca,Campo de Daroca
+0225,02,25,06020320,comarca,Jiloca
+0226,02,26,06020310,comarca,Cuencas Mineras
+0227,02,27,06020120,comarca,Andorra-Sierra de Arcos
+0228,02,28,06020100,comarca,Bajo Aragón
+0229,02,29,06020300,comarca,Comunidad de Teruel
+0230,02,30,06020130,comarca,Maestrazgo
+0231,02,31,06020280,comarca,Sierra de Albarracín
+0232,02,32,06020040,comarca,Gúdar-Javalambre
+0233,02,33,06020090,comarca,Matarraña/Matarranya
+0701,07,,06070010,comarca,"Bierzo, El"
+0901,09,01,06090060,comarca,Alt Camp
+0902,09,02,06090110,comarca,Alt Empordà
+0903,09,03,06090400,comarca,Alt Penedès
+0904,09,04,06090240,comarca,Alt Urgell
+0905,09,05,06090350,comarca,Alta Ribagorça
+0906,09,06,06090390,comarca,Anoia
+0907,09,07,06090070,comarca,Bages
+0908,09,08,06090030,comarca,Baix Camp
+0909,09,09,06090040,comarca,Baix Ebre
+0910,09,10,06090190,comarca,Baix Empordà
+0911,09,11,06090090,comarca,Baix Llobregat
+0912,09,12,06090270,comarca,Baix Penedès
+0913,09,13,06090210,comarca,Barcelonès
+0914,09,14,06090320,comarca,Berguedà
+0915,09,15,06090200,comarca,Cerdanya
+0916,09,16,06090020,comarca,Conca de Barberà
+0917,09,17,06090310,comarca,Garraf
+0918,09,18,06090120,comarca,Garrigues
+0919,09,19,06090290,comarca,Garrotxa
+0920,09,20,06090410,comarca,Gironès
+0921,09,21,06090380,comarca,Maresme
+0922,09,22,06090050,comarca,Montsià
+0923,09,23,06090130,comarca,Noguera
+0924,09,24,06090330,comarca,Osona
+0925,09,25,06090140,comarca,Pallars Jussà
+0926,09,26,06090150,comarca,Pallars Sobirà
+0927,09,27,06090250,comarca,Pla d'Urgell
+0928,09,28,06090260,comarca,Pla de l'Estany
+0929,09,29,06090080,comarca,Priorat
+0930,09,30,06090340,comarca,Ribera d'Ebre
+0931,09,31,06090100,comarca,Ripollès
+0932,09,32,06090360,comarca,Segarra
+0933,09,33,06090160,comarca,Segrià
+0934,09,34,06090220,comarca,Selva
+0935,09,35,06090170,comarca,Solsonès
+0936,09,36,06090010,comarca,Tarragonès
+0937,09,37,06090280,comarca,Terra Alta
+0938,09,38,06090230,comarca,Urgell
+0939,09,39,06090180,aran,Aran
+0940,09,40,06090300,comarca,Vallès Occidental
+0941,09,41,06090370,comarca,Vallès Oriental
+0942,09,42,06090420,comarca,Moianès
+0943,09,43,,comarca,Lluçanès
+1601,16,,06160010,cuadrilla,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa
+1602,16,,06160020,cuadrilla,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa
+1603,16,,06160030,cuadrilla,Cuadrilla de Añana/Añanako Kuadrilla
+1604,16,,06160040,cuadrilla,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla
+1605,16,,06160050,cuadrilla,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla
+1606,16,,06160060,cuadrilla,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea
+1607,16,,06160070,cuadrilla,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla

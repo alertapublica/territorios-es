@@ -60,6 +60,30 @@
     "licence": "Nota legal de AEMET: reutilización, también comercial, citando la fuente",
     "attribution": "Fuente: AEMET (delimitación de zonas de Meteoalerta)"
   },
+  "idescat_comarcas": {
+    "url": "https://www.idescat.cat/codis/?f=ssv&id=50&n=9",
+    "page": "https://www.idescat.cat/codis/?id=50&n=9",
+    "conditions": "https://www.idescat.cat/institut/web/",
+    "publisher": "Idescat",
+    "licence": "Reutilización autorizada citando la fuente (condiciones de uso de la web de Idescat)",
+    "attribution": "Fuente: Idescat"
+  },
+  "aragon_comarcas": {
+    "url": "https://opendata.aragon.es/GA_OD_Core/download?resource_id=11&formato=csv",
+    "page": "https://opendata.aragon.es/datos/catalogo/dataset/informacion-general-de-los-municipios-de-aragon",
+    "publisher": "Gobierno de Aragón",
+    "licence": "CC BY 4.0",
+    "attribution": "Fuente: Aragón Open Data, Gobierno de Aragón"
+  },
+  "rel_comarcas": {
+    "url": "https://registroentidadeslocales.mpt.es/REL/frontend/export_data/file_export/export_excel/comarcas/all",
+    "page": "https://registroentidadeslocales.mpt.es/REL/frontend/inicio/comarcas/all",
+    "conditions": "https://mptmd.gob.es/portal/footer/nota_legal",
+    "publisher": "Ministerio de Política Territorial (Registro de Entidades Locales)",
+    "licence": "Reutilización citando la fuente (nota legal del Ministerio)",
+    "attribution": "Fuente: Registro de Entidades Locales",
+    "note": "Exportación consultada el 2026-11-11 para fuentes/comarcas.csv y fuentes/comarcas-municipios.csv; no se descarga en cada generación"
+  },
   "eurostat_lau": {
     "page": "https://ec.europa.eu/eurostat/web/nuts/local-administrative-units",
     "link_pattern": "EU-27-LAU-2024-NUTS-2024\\.xlsx",

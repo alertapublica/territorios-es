@@ -3,7 +3,7 @@
 *[English below](#english)*
 
 Territorios de España —comunidades y ciudades autónomas, provincias, islas, partidos judiciales,
-zonas de aviso de AEMET y municipios— y países del mundo, con todos sus nombres (el oficial; en castellano, catalán, gallego, euskera, aranés e
+zonas de aviso de AEMET, comarcas y municipios— y países del mundo, con todos sus nombres (el oficial; en castellano, catalán, gallego, euskera, aranés e
 inglés; y alias), sus códigos (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata, OpenStreetMap,
 GeoNames…), la capital de cada municipio con sus coordenadas, los límites municipales y los
 códigos postales, regenerables desde las fuentes oficiales y abiertas. Incluye una librería pequeña en
@@ -26,6 +26,7 @@ te.relate_name("Ourense")["status"]                     # 'pending': provincia y
 te.children("es:isla:071")                              # ['es:municipio:07024']: municipios de Formentera
 te.territory("es:municipio:07024")["judicial_district"]  # 'es:partido:0705': el partido de Eivissa
 te.territory("es:municipio:46220")["warning_zone"]      # 'es:zona-aviso:774602': zona de avisos de AEMET
+te.territory("es:municipio:25243")["comarca"]          # 'es:comarca:0939': Aran
 te.parse_cadastral_reference("9872023VH5797S0001WX")["valid"]  # True: letras de control correctas
 te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio de una parcela rústica
 [m["id"] for m in te.municipalities("28760")]          # Tres Cantos y Madrid, primero el principal
@@ -46,7 +47,7 @@ await locateReference(te, '9872023VH5797S0001WX');        // { status: 'resolved
 ```
 
 Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children` (en una isla, un
-partido judicial o una zona de aviso de AEMET, sus municipios), `normalize`,
+partido judicial, una zona de aviso de AEMET o una comarca, sus municipios), `normalize`,
 `relate_name` (en JS, `relateName`), `combine`, `parse_cadastral_reference` y
 `relate_cadastral_reference` (referencias catastrales, sin red), `locate` (de un punto a su
 municipio) y `postal_codes`, `municipalities` y `relate_postal_code` (códigos postales). Están
@@ -132,6 +133,9 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 | Eurostat | LAU, NUTS 3 de cada municipio y superficie | CC BY 4.0 |
 | Ministerio de Justicia (Censo Judicial) | partido judicial de cada municipio y su sede | condiciones generales de reutilización de datos.gob.es: «Fuente: Ministerio de Justicia, Censo Judicial» (fecha de actualización en el manifiesto) |
 | AEMET | zona de aviso (Meteoalerta) de cada municipio y nombre de cada zona | nota legal de AEMET: «Fuente: AEMET» |
+| Idescat | comarca de cada municipio de Cataluña | reutilización citando la fuente: «Fuente: Idescat» |
+| Gobierno de Aragón (Aragón Open Data) | comarca de cada municipio de Aragón | CC BY 4.0 |
+| Registro de Entidades Locales | comarcas que son entidad local y municipios de las cuadrillas de Álava y de El Bierzo (exportación revisada en `fuentes/`) | reutilización citando la fuente: «Fuente: Registro de Entidades Locales» |
 | Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Ayuntamiento de Madrid (callejero oficial) | códigos postales del municipio de Madrid, con el número de direcciones | CC BY 4.0: «Ayuntamiento de Madrid» |
 | Institut Cartogràfic i Geològic de Catalunya (Adreces) | códigos postales de Cataluña, con el número de direcciones | CC BY 4.0: «Institut Cartogràfic i Geològic de Catalunya (ICGC)» |
@@ -152,7 +156,7 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 ## English
 
 Spanish territories —autonomous communities and cities, provinces, islands, judicial districts,
-AEMET warning zones and municipalities— and the countries of the world, with all their names (official; in Spanish, Catalan, Galician, Basque,
+AEMET warning zones, comarcas and municipalities— and the countries of the world, with all their names (official; in Spanish, Catalan, Galician, Basque,
 Aranese and English; aliases), their codes (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata,
 OpenStreetMap, GeoNames…), the capital of each municipality with its coordinates, the municipal
 boundaries and the postal codes, rebuilt from official and open sources. It ships a small Python and JavaScript library

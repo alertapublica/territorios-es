@@ -24201,3 +24201,195 @@ es:zona-aviso:785101,official,,Ceuta,aemet
 es:zona-aviso:785101,display,,Ceuta,aemet
 es:zona-aviso:795201,official,,Melilla,aemet
 es:zona-aviso:795201,display,,Melilla,aemet
+es:comarca:0201,official,,"Jacetania, La",fuentes
+es:comarca:0201,display,,La Jacetania,fuentes
+es:comarca:0202,official,,Alto Gállego,fuentes
+es:comarca:0202,display,,Alto Gállego,fuentes
+es:comarca:0203,official,,Sobrarbe,fuentes
+es:comarca:0203,display,,Sobrarbe,fuentes
+es:comarca:0204,official,,Ribagorza,fuentes
+es:comarca:0204,display,,Ribagorza,fuentes
+es:comarca:0205,official,,Cinco Villas,fuentes
+es:comarca:0205,display,,Cinco Villas,fuentes
+es:comarca:0206,official,,Hoya de Huesca/Plana de Uesca,fuentes
+es:comarca:0206,display,,Hoya de Huesca/Plana de Uesca,fuentes
+es:comarca:0206,parts,es,Hoya de Huesca,fuentes
+es:comarca:0206,parts,an,Plana de Uesca,fuentes
+es:comarca:0207,official,,Somontano de Barbastro,fuentes
+es:comarca:0207,display,,Somontano de Barbastro,fuentes
+es:comarca:0208,official,,Cinca Medio,fuentes
+es:comarca:0208,display,,Cinca Medio,fuentes
+es:comarca:0209,official,,"Litera, La/Llitera, la",fuentes
+es:comarca:0209,display,,La Litera/la Llitera,fuentes
+es:comarca:0209,parts,es,La Litera,fuentes
+es:comarca:0209,parts,ca,la Llitera,fuentes
+es:comarca:0210,official,,"Monegros, Los",fuentes
+es:comarca:0210,display,,Los Monegros,fuentes
+es:comarca:0211,official,,Bajo Cinca/Baix Cinca,fuentes
+es:comarca:0211,display,,Bajo Cinca/Baix Cinca,fuentes
+es:comarca:0211,parts,es,Bajo Cinca,fuentes
+es:comarca:0211,parts,ca,Baix Cinca,fuentes
+es:comarca:0212,official,,Tarazona y el Moncayo,fuentes
+es:comarca:0212,display,,Tarazona y el Moncayo,fuentes
+es:comarca:0213,official,,Campo de Borja,fuentes
+es:comarca:0213,display,,Campo de Borja,fuentes
+es:comarca:0214,official,,Aranda,fuentes
+es:comarca:0214,display,,Aranda,fuentes
+es:comarca:0215,official,,Ribera Alta del Ebro,fuentes
+es:comarca:0215,display,,Ribera Alta del Ebro,fuentes
+es:comarca:0216,official,,Valdejalón,fuentes
+es:comarca:0216,display,,Valdejalón,fuentes
+es:comarca:0217,official,,Central,fuentes
+es:comarca:0217,display,,Central,fuentes
+es:comarca:0218,official,,Ribera Baja del Ebro,fuentes
+es:comarca:0218,display,,Ribera Baja del Ebro,fuentes
+es:comarca:0219,official,,Bajo Aragón-Caspe/Baix Aragó-Casp,fuentes
+es:comarca:0219,display,,Bajo Aragón-Caspe/Baix Aragó-Casp,fuentes
+es:comarca:0219,parts,es,Bajo Aragón-Caspe,fuentes
+es:comarca:0219,parts,ca,Baix Aragó-Casp,fuentes
+es:comarca:0220,official,,Comunidad de Calatayud,fuentes
+es:comarca:0220,display,,Comunidad de Calatayud,fuentes
+es:comarca:0221,official,,Campo de Cariñena,fuentes
+es:comarca:0221,display,,Campo de Cariñena,fuentes
+es:comarca:0222,official,,Campo de Belchite,fuentes
+es:comarca:0222,display,,Campo de Belchite,fuentes
+es:comarca:0223,official,,Bajo Martín,fuentes
+es:comarca:0223,display,,Bajo Martín,fuentes
+es:comarca:0224,official,,Campo de Daroca,fuentes
+es:comarca:0224,display,,Campo de Daroca,fuentes
+es:comarca:0225,official,,Jiloca,fuentes
+es:comarca:0225,display,,Jiloca,fuentes
+es:comarca:0226,official,,Cuencas Mineras,fuentes
+es:comarca:0226,display,,Cuencas Mineras,fuentes
+es:comarca:0227,official,,Andorra-Sierra de Arcos,fuentes
+es:comarca:0227,display,,Andorra-Sierra de Arcos,fuentes
+es:comarca:0228,official,,Bajo Aragón,fuentes
+es:comarca:0228,display,,Bajo Aragón,fuentes
+es:comarca:0229,official,,Comunidad de Teruel,fuentes
+es:comarca:0229,display,,Comunidad de Teruel,fuentes
+es:comarca:0230,official,,Maestrazgo,fuentes
+es:comarca:0230,display,,Maestrazgo,fuentes
+es:comarca:0231,official,,Sierra de Albarracín,fuentes
+es:comarca:0231,display,,Sierra de Albarracín,fuentes
+es:comarca:0232,official,,Gúdar-Javalambre,fuentes
+es:comarca:0232,display,,Gúdar-Javalambre,fuentes
+es:comarca:0233,official,,Matarraña/Matarranya,fuentes
+es:comarca:0233,display,,Matarraña/Matarranya,fuentes
+es:comarca:0233,parts,es,Matarraña,fuentes
+es:comarca:0233,parts,ca,Matarranya,fuentes
+es:comarca:0701,official,,"Bierzo, El",fuentes
+es:comarca:0701,display,,El Bierzo,fuentes
+es:comarca:0901,official,,Alt Camp,fuentes
+es:comarca:0901,display,,Alt Camp,fuentes
+es:comarca:0902,official,,Alt Empordà,fuentes
+es:comarca:0902,display,,Alt Empordà,fuentes
+es:comarca:0903,official,,Alt Penedès,fuentes
+es:comarca:0903,display,,Alt Penedès,fuentes
+es:comarca:0904,official,,Alt Urgell,fuentes
+es:comarca:0904,display,,Alt Urgell,fuentes
+es:comarca:0905,official,,Alta Ribagorça,fuentes
+es:comarca:0905,display,,Alta Ribagorça,fuentes
+es:comarca:0906,official,,Anoia,fuentes
+es:comarca:0906,display,,Anoia,fuentes
+es:comarca:0907,official,,Bages,fuentes
+es:comarca:0907,display,,Bages,fuentes
+es:comarca:0908,official,,Baix Camp,fuentes
+es:comarca:0908,display,,Baix Camp,fuentes
+es:comarca:0909,official,,Baix Ebre,fuentes
+es:comarca:0909,display,,Baix Ebre,fuentes
+es:comarca:0910,official,,Baix Empordà,fuentes
+es:comarca:0910,display,,Baix Empordà,fuentes
+es:comarca:0911,official,,Baix Llobregat,fuentes
+es:comarca:0911,display,,Baix Llobregat,fuentes
+es:comarca:0912,official,,Baix Penedès,fuentes
+es:comarca:0912,display,,Baix Penedès,fuentes
+es:comarca:0913,official,,Barcelonès,fuentes
+es:comarca:0913,display,,Barcelonès,fuentes
+es:comarca:0914,official,,Berguedà,fuentes
+es:comarca:0914,display,,Berguedà,fuentes
+es:comarca:0915,official,,Cerdanya,fuentes
+es:comarca:0915,display,,Cerdanya,fuentes
+es:comarca:0916,official,,Conca de Barberà,fuentes
+es:comarca:0916,display,,Conca de Barberà,fuentes
+es:comarca:0917,official,,Garraf,fuentes
+es:comarca:0917,display,,Garraf,fuentes
+es:comarca:0918,official,,Garrigues,fuentes
+es:comarca:0918,display,,Garrigues,fuentes
+es:comarca:0919,official,,Garrotxa,fuentes
+es:comarca:0919,display,,Garrotxa,fuentes
+es:comarca:0920,official,,Gironès,fuentes
+es:comarca:0920,display,,Gironès,fuentes
+es:comarca:0921,official,,Maresme,fuentes
+es:comarca:0921,display,,Maresme,fuentes
+es:comarca:0922,official,,Montsià,fuentes
+es:comarca:0922,display,,Montsià,fuentes
+es:comarca:0923,official,,Noguera,fuentes
+es:comarca:0923,display,,Noguera,fuentes
+es:comarca:0924,official,,Osona,fuentes
+es:comarca:0924,display,,Osona,fuentes
+es:comarca:0925,official,,Pallars Jussà,fuentes
+es:comarca:0925,display,,Pallars Jussà,fuentes
+es:comarca:0926,official,,Pallars Sobirà,fuentes
+es:comarca:0926,display,,Pallars Sobirà,fuentes
+es:comarca:0927,official,,Pla d'Urgell,fuentes
+es:comarca:0927,display,,Pla d'Urgell,fuentes
+es:comarca:0928,official,,Pla de l'Estany,fuentes
+es:comarca:0928,display,,Pla de l'Estany,fuentes
+es:comarca:0929,official,,Priorat,fuentes
+es:comarca:0929,display,,Priorat,fuentes
+es:comarca:0930,official,,Ribera d'Ebre,fuentes
+es:comarca:0930,display,,Ribera d'Ebre,fuentes
+es:comarca:0931,official,,Ripollès,fuentes
+es:comarca:0931,display,,Ripollès,fuentes
+es:comarca:0932,official,,Segarra,fuentes
+es:comarca:0932,display,,Segarra,fuentes
+es:comarca:0933,official,,Segrià,fuentes
+es:comarca:0933,display,,Segrià,fuentes
+es:comarca:0934,official,,Selva,fuentes
+es:comarca:0934,display,,Selva,fuentes
+es:comarca:0935,official,,Solsonès,fuentes
+es:comarca:0935,display,,Solsonès,fuentes
+es:comarca:0936,official,,Tarragonès,fuentes
+es:comarca:0936,display,,Tarragonès,fuentes
+es:comarca:0937,official,,Terra Alta,fuentes
+es:comarca:0937,display,,Terra Alta,fuentes
+es:comarca:0938,official,,Urgell,fuentes
+es:comarca:0938,display,,Urgell,fuentes
+es:comarca:0939,official,,Aran,fuentes
+es:comarca:0939,display,,Aran,fuentes
+es:comarca:0940,official,,Vallès Occidental,fuentes
+es:comarca:0940,display,,Vallès Occidental,fuentes
+es:comarca:0941,official,,Vallès Oriental,fuentes
+es:comarca:0941,display,,Vallès Oriental,fuentes
+es:comarca:0942,official,,Moianès,fuentes
+es:comarca:0942,display,,Moianès,fuentes
+es:comarca:0943,official,,Lluçanès,fuentes
+es:comarca:0943,display,,Lluçanès,fuentes
+es:comarca:1601,official,,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,fuentes
+es:comarca:1601,display,,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,fuentes
+es:comarca:1601,parts,eu,Arabako Lautadako Kuadrilla,fuentes
+es:comarca:1601,parts,es,Cuadrilla de la Llanada Alavesa,fuentes
+es:comarca:1602,official,,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,fuentes
+es:comarca:1602,display,,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,fuentes
+es:comarca:1602,parts,eu,Arabako Errioxako Kuadrilla,fuentes
+es:comarca:1602,parts,es,Cuadrilla de Rioja Alavesa,fuentes
+es:comarca:1603,official,,Cuadrilla de Añana/Añanako Kuadrilla,fuentes
+es:comarca:1603,display,,Cuadrilla de Añana/Añanako Kuadrilla,fuentes
+es:comarca:1603,parts,es,Cuadrilla de Añana,fuentes
+es:comarca:1603,parts,eu,Añanako Kuadrilla,fuentes
+es:comarca:1604,official,,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,fuentes
+es:comarca:1604,display,,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,fuentes
+es:comarca:1604,parts,es,Cuadrilla de Vitoria-Gasteiz,fuentes
+es:comarca:1604,parts,eu,Vitoria-Gasteizko Kuadrilla,fuentes
+es:comarca:1605,official,,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,fuentes
+es:comarca:1605,display,,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,fuentes
+es:comarca:1605,parts,es,Cuadrilla de Montaña Alavesa,fuentes
+es:comarca:1605,parts,eu,Arabako Mendialdeko Kuadrilla,fuentes
+es:comarca:1606,official,,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,fuentes
+es:comarca:1606,display,,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,fuentes
+es:comarca:1606,parts,eu,Aiaraldeko Kuadrilla,fuentes
+es:comarca:1606,parts,es,Cuadrilla de Aiaraldea,fuentes
+es:comarca:1607,official,,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,fuentes
+es:comarca:1607,display,,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,fuentes
+es:comarca:1607,parts,es,Cuadrilla de Gorbeialdea,fuentes
+es:comarca:1607,parts,eu,Gorbeialdeko Kuadrilla,fuentes

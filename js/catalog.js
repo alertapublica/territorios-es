@@ -3,13 +3,15 @@ import { dropArticle, normalize } from './text.js';
 
 export const LEVELS = [
   'country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district', 'warning_zone',
+  'comarca',
 ];
 // Groups of municipalities that do not change their parent: the field of the municipality that names
 // its group is the level of the group.
-const GROUPS = ['island', 'judicial_district', 'warning_zone'];
-// Levels that search() leaves out unless asked for: a judicial district has the name of its seat, and a
-// warning zone of AEMET is not an administration.
-const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone'];
+const GROUPS = ['island', 'judicial_district', 'warning_zone', 'comarca'];
+// Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
+// warning zone of AEMET is not an administration and a comarca exists only in some communities (and
+// some share their name with a municipality).
+const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone', 'comarca'];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -55,8 +57,8 @@ export function createCatalog(data) {
       if (!childrenOf.has(record.parent)) childrenOf.set(record.parent, []);
       childrenOf.get(record.parent).push(id);
     }
-    // An island, a judicial district or a warning zone groups municipalities of its province; their
-    // parent stays the province.
+    // An island, a judicial district, a warning zone or a comarca groups municipalities, whose parent
+    // stays the province.
     for (const group of GROUPS) {
       const memberOf = record[group];
       if (memberOf == null) continue;

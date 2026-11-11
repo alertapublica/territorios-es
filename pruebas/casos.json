@@ -90,7 +90,10 @@
     ["mjusticia:partido", "0705", "es:partido:0705", ["es:provincia:07", "es:autonomia:04", "pais:ES"]],
     ["mjusticia:partido", "705", null, null],
     ["aemet:zona", "774602", "es:zona-aviso:774602", ["es:provincia:46", "es:autonomia:10", "pais:ES"]],
-    ["aemet:zona", "74602", null, null]
+    ["aemet:zona", "74602", null, null],
+    ["rel:comarca", "06090180", "es:comarca:0939", ["es:autonomia:09", "pais:ES"]],
+    ["idescat:comarca", "39", "es:comarca:0939", ["es:autonomia:09", "pais:ES"]],
+    ["rel:comarca", "6090180", null, null]
   ],
   "children": [
     ["es:isla:071", ["es:municipio:07024"]],
@@ -98,7 +101,8 @@
     ["es:isla:999", []],
     ["es:provincia:38", ["es:isla:384", "es:municipio:38038", "es:partido:3803", "es:zona-aviso:659602"]],
     ["es:partido:0705", ["es:municipio:07024", "es:municipio:07026"]],
-    ["es:zona-aviso:774602", ["es:municipio:46171", "es:municipio:46220", "es:municipio:46250"]]
+    ["es:zona-aviso:774602", ["es:municipio:46171", "es:municipio:46220", "es:municipio:46250"]],
+    ["es:comarca:0939", ["es:municipio:25057", "es:municipio:25243"]]
   ],
   "name": [
     ["es:autonomia:09", "es", false, "Cataluña"],
@@ -159,7 +163,11 @@
     ["Formentera", "es:partido:0705", ["island", "municipality"], [["es:municipio:07024", "official"]]],
     ["Campiña sevillana", null, null, []],
     ["Campiña sevillana", null, ["warning_zone"], [["es:zona-aviso:614102", "official"]]],
-    ["Sagunto", "es:zona-aviso:774602", null, [["es:municipio:46220", "part"]]]
+    ["Sagunto", "es:zona-aviso:774602", null, [["es:municipio:46220", "part"]]],
+    ["Gironès", null, null, []],
+    ["Gironès", null, ["comarca"], [["es:comarca:0920", "official"]]],
+    ["Vitoria-Gasteizko Kuadrilla", null, ["comarca"], [["es:comarca:1604", "part"]]],
+    ["Vielha e Mijaran", "es:comarca:0939", null, [["es:municipio:25243", "official"]]]
   ],
   "mentions": [
     ["Moncada (Valencia)", null, [["valencia", ["es:provincia:46"]]]],
@@ -169,7 +177,8 @@
     ["Sin territorio", null, []],
     ["Vivo en Pontevedra", ["municipality"], [["pontevedra", ["es:municipio:36038"]]]],
     ["Juzgado de Eivissa", ["judicial_district"], [["eivissa", ["es:partido:0705"]]]],
-    ["Aviso naranja en el Litoral norte de Valencia", ["warning_zone"], [["litoral norte de valencia", ["es:zona-aviso:774602"]]]]
+    ["Aviso naranja en el Litoral norte de Valencia", ["warning_zone"], [["litoral norte de valencia", ["es:zona-aviso:774602"]]]],
+    ["Consell Comarcal del Gironès", ["comarca"], [["girones", ["es:comarca:0920"]]]]
   ],
   "relate_name": [
     ["Ourense", null, ["municipality"], "resolved", "es:municipio:32054", ["es:municipio:32054"], "name"],

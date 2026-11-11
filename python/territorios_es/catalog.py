@@ -7,13 +7,14 @@ from copy import deepcopy
 from .text import drop_article, normalize
 
 LEVELS = ("country", "autonomous_community", "province", "island", "municipality", "judicial_district",
-          "warning_zone")
+          "warning_zone", "comarca")
 # Groups of municipalities that do not change their parent: the field of the municipality that names
 # its group is the level of the group.
-GROUPS = ("island", "judicial_district", "warning_zone")
-# Levels that search() leaves out unless asked for: a judicial district has the name of its seat, and a
-# warning zone of AEMET is not an administration.
-UNSEARCHED_LEVELS = ("judicial_district", "warning_zone")
+GROUPS = ("island", "judicial_district", "warning_zone", "comarca")
+# Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
+# warning zone of AEMET is not an administration and a comarca exists only in some communities (and
+# some share their name with a municipality).
+UNSEARCHED_LEVELS = ("judicial_district", "warning_zone", "comarca")
 # Order of the reasons why a text matches a territory, best first.
 REASONS = ("official", "part", "lang", "alias", "variant")
 DEFAULT_MENTION_LEVELS = ("autonomous_community", "province")
@@ -50,8 +51,8 @@ class Catalog:
                 if parent not in self._by_id:
                     raise ValueError(f"Unknown parent {parent} of {identity}")
                 self._children.setdefault(parent, []).append(identity)
-            # An island, a judicial district or a warning zone groups municipalities of its province;
-            # their parent stays the province.
+            # An island, a judicial district, a warning zone or a comarca groups municipalities, whose
+            # parent stays the province.
             for group in GROUPS:
                 member_of = record.get(group)
                 if member_of is not None:
@@ -86,8 +87,8 @@ class Catalog:
         return self.territory(identity) if identity else None
 
     def children(self, identity: str) -> list[str]:
-        """Territories whose parent is this one; for an island, a judicial district or a warning zone,
-        its municipalities."""
+        """Territories whose parent is this one; for an island, a judicial district, a warning zone or
+        a comarca, its municipalities."""
         return sorted(self._children.get(identity, []))
 
     def ids(self, level: str | None = None) -> list[str]:

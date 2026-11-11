@@ -85,7 +85,8 @@ Primera versión:
   convocatorias.
 
 Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
-ya están (versión 0.3), y los partidos judiciales y las zonas de aviso de AEMET, desde la 0.4:
+ya están (versión 0.3); los partidos judiciales, las zonas de aviso de AEMET y las comarcas, desde la
+0.4:
 
 - **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
   `island` e identificador con el código de isla del INE (`es:isla:384` es Tenerife; `es:isla:072`,
@@ -116,8 +117,25 @@ ya están (versión 0.3), y los partidos judiciales y las zonas de aviso de AEME
   informe; nunca se deduce del mapa, que es de 2018 y no casa con los límites actuales. Las zonas
   costeras (sufijo `C`) quedan para más adelante. `search` y `mentions` no las devuelven salvo que
   se pidan en `levels`.
-
-Las comarcas oficiales están pendientes (§13).
+- **Comarcas**: solo las que son entidad local, las del Registro de Entidades Locales: las 42
+  comarcas de Cataluña más Aran, las 33 de Aragón, las 7 cuadrillas de Álava y El Bierzo. De las 42
+  catalanas, el Registro aún no tiene el Lluçanès, que la Ley 7/2023 creó como comarca aunque su
+  consejo no se constituye hasta después de las elecciones municipales de 2027 (el Registro la
+  inscribirá entonces); aquí ya está. Son 84 y 1.767 municipios.
+  Nivel `comarca`, con padre en la comunidad, porque alguna cruza el límite provincial; los
+  municipios no cambian de padre y llevan además el campo `comarca`. El identificador es propio y
+  no cambia: `es:comarca:CCNN`, con la comunidad del INE y un número, que en Cataluña y Aragón es
+  el de su comarca en Idescat y en el Gobierno de Aragón (`es:comarca:0943` es el Lluçanès;
+  `es:comarca:0217`, la Central) y en Álava y El Bierzo, el orden de su número en el Registro
+  (`es:comarca:1604`, la cuadrilla de Vitoria-Gasteiz). El número del Registro (8 cifras) y el
+  código autonómico van como códigos. `fuentes/comarcas.csv` las lista con su tipo (`comarca`,
+  `cuadrilla` o `aran`, entidad territorial singular) y su nombre: el de Idescat en Cataluña y el
+  del Registro en las demás. Los municipios de cada una salen cada mes de Idescat y de Aragón Open
+  Data, por código INE, y en Álava y El Bierzo de `fuentes/comarcas-municipios.csv`, sacada del
+  Registro. El Barcelonès sigue siendo comarca aunque su consejo se suprimió en 2019. Las comarcas
+  de Galicia, la Comunitat Valenciana o Asturias, que son estadísticas o de planificación, quedan
+  fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
+  pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
 
 Más adelante: entidades de población del Nomenclátor del INE (núcleos, y parroquias en Galicia y
 Asturias), que son decenas de miles.
@@ -129,6 +147,7 @@ Asturias), que son decenas de miles.
 | INE | comunidad (2 cifras), provincia (2), isla (3), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
 | Censo Judicial | partido judicial (`mjusticia:partido`, 4 cifras: provincia 2 + número 2) | Censo Judicial del Ministerio de Justicia | El número es el del partido en la demarcación de su provincia. El catálogo técnico de la Generalitat (CTEAJE) usa el mismo código salvo en Ceuta y Melilla (1112 y 2908, frente a 5112 y 5208). |
 | AEMET | zona de aviso (`aemet:zona`, 6 cifras: comunidad 2 + provincia o grupo de islas 2 + zona 2) | Maestro de municipios de AEMET OpenData y delimitación de zonas de Meteoalerta | Las cifras de comunidad y provincia son de AEMET, no del INE (Baleares usa 53–55 y Canarias 90–96). |
+| Comarca | comarca (`rel:comarca`, 8 cifras; `idescat:comarca` y `aragon:comarca`, 2 cifras) | Registro de Entidades Locales, Idescat y Gobierno de Aragón | El número del Registro empieza por 06 y la comunidad; el Excel del Registro pierde el cero inicial. El Lluçanès aún no lo tiene. |
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
@@ -255,10 +274,10 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 | Función | Qué hace |
 |---|---|
-| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial o a una zona de aviso. Los partidos judiciales y las zonas de aviso solo salen si se piden en `levels`. |
-| `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial o una zona de aviso, sus municipios. Los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca. Los partidos judiciales, las zonas de aviso y las comarcas solo salen si se piden en `levels`. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial, una zona de aviso o una comarca, sus municipios. Los de una comunidad incluyen sus comarcas; los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -452,6 +471,13 @@ Tomada el 11 de noviembre de 2026:
     del plan Meteoalerta, que trae lo mismo (comprobado el 11 de noviembre de 2026: las 8.122 filas
     del maestro, sin los 2 municipios extinguidos y con las 4 excepciones de `fuentes/zonas-aviso.csv`,
     son los 8.124 municipios del PDF, con la misma zona), porque es JSON y no hay que leer 221 páginas.
+17. Comarcas: solo las que son entidad local, con el Lluçanès desde ya (está creado por ley y su
+    consejo llega en 2027), nivel `comarca` con padre en la comunidad e identificador propio
+    `es:comarca:CCNN`, que no depende de que el Registro la inscriba ni cambia si la renombran (la
+    cuadrilla de Ayala ya se llama de Aiaraldea). Los municipios de Cataluña y Aragón salen cada mes
+    de Idescat y Aragón Open Data; la lista de comarcas y los municipios de Álava y El Bierzo, de
+    una exportación del Registro revisada a mano, porque es un Excel binario antiguo y cambian muy
+    poco. No se rellenan con comarcas estadísticas los municipios de las demás comunidades.
 
 ## 13. Pendiente
 
@@ -466,14 +492,14 @@ Tomada el 11 de noviembre de 2026:
 - Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
   recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
   más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales (hecho); zonas de aviso
-  de AEMET (hecho); comarcas oficiales; acciones de GitHub que aún usan Node 20 (las actualiza Dependabot).
-- Comarcas oficiales: solo son entidad local en Aragón, Castilla y León (El Bierzo), Cataluña y
-  País Vasco (las cuadrillas de Álava), las cuatro comunidades del Registro de Entidades Locales.
-  Cataluña tiene tabla oficial en Idescat (43 comarcas con Aran y Lluçanès) y Aragón en Aragón Open
-  Data (33, con la Central; nombres en mayúsculas y sin tildes). La exportación del Registro se
-  baja con una petición normal (`…/export_excel/comarcas/all`), sin navegador. Las de Galicia, la
-  Comunitat Valenciana, Asturias o Navarra son estadísticas o de planificación, no entidades
-  locales.
+  de AEMET (hecho); comarcas que son entidad local (hecho); acciones de GitHub que aún usan Node 20
+  (las actualiza Dependabot).
+- Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales
+  (se baja sin navegador de `…/export_excel/comarcas/all`, pero es un Excel binario antiguo, .xls,
+  que habría que leer); su elemento de Wikidata y sus nombres en otros idiomas; inscribir el
+  Lluçanès cuando el Registro lo haga, tras las elecciones de 2027. Las comarcas estadísticas o de
+  planificación (Galicia, Comunitat Valenciana, Asturias, la zonificación de Navarra) irían con
+  otro tipo, si se quieren.
 - Cruces de los partidos judiciales, como capas posteriores: su elemento de Wikidata (390 de 431,
   enlazables por la sede) y sus nombres en otros idiomas; la población por partido del CGPJ; las
   demás demarcaciones del Censo Judicial (sección de la Audiencia, Tribunal Superior, fiscalía,

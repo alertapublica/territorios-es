@@ -11,7 +11,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import aemet, catastro, codigos_postales, eurostat, exportar, ign, ine, justicia, limites, wikidata
+from generador import aemet, catastro, codigos_postales, comarcas, eurostat, exportar, ign, ine, justicia, limites, wikidata
 from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -123,6 +123,21 @@ class Readers(unittest.TestCase):
         self.assertRaises(ValueError, aemet.parse_zones, bytes(crc))
         self.assertRaises(ValueError, aemet.parse_zones, zipped({"zonas.dbf": land[:40]}))
         self.assertRaises(ValueError, aemet.parse_zones, zipped({"zonas.dbf": land[:-30]}))
+
+    def test_comarcas_readers(self):
+        idescat = ("\ufeffMunicipis \nInstitut d'Estadística de Catalunya\nhttps://www.idescat.cat/codis/?id=50&n=9\n"
+                   "Codi;Nom;Codi comarca;Nom comarca;\n080043;Alpens;43;Lluçanès;\n251207;Lleida;33;Segrià;\n")
+        self.assertEqual(comarcas.parse_idescat(idescat.encode()), [["08004", "43"], ["25120", "33"]])
+        for broken in (idescat.replace("Codi;Nom", "Codigo;Nom"), idescat + "251207;Lleida;33;Segrià;\n",
+                       idescat + "25120;Lleida;33;Segrià;\n", idescat + "251208;Otro;3;X;\n",
+                       idescat.split("Codi;")[0] + "Codi;Nom;Codi comarca;Nom comarca;\n"):
+            self.assertRaises(ValueError, comarcas.parse_idescat, broken.encode())
+        self.assertRaises(ValueError, comarcas.parse_idescat, "Codi;Nom;Codi comarca;\n".encode("utf-16"))
+        aragon = "mun_id,codigo_mun,denominacion,codigo_comarc,comarca\n1,50297,ZARAGOZA,17,CENTRAL\n2,22001,ABIEGO,07,X\n"
+        self.assertEqual(comarcas.parse_aragon(aragon.encode()), [["22001", "07"], ["50297", "17"]])
+        for broken in (aragon.replace("codigo_comarc", "comarc"), aragon + "3,50297,ZARAGOZA,17,CENTRAL\n",
+                       aragon + "3,5029,X,17,Y\n", "codigo_mun,codigo_comarc\n"):
+            self.assertRaises(ValueError, comarcas.parse_aragon, broken.encode())
 
     def test_ine_population(self):
         tables = [{"Id": 2855, "Nombre": "Albacete: Población por municipios y sexo.", "Codigo": "PROV-MUN"},
@@ -521,6 +536,54 @@ class Build(unittest.TestCase):
                       report.sections["Zonas de aviso"])
         self.assertIn("Zona 785101: tiene municipios de varias provincias (51, 52); quedan sin zona 51001, 52001",
                       report.sections["Zonas de aviso"])
+
+    def test_comarcas(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        # Parent in the community; the municipalities keep their province.
+        self.assertEqual(by_id["es:comarca:0939"], {
+            "id": "es:comarca:0939", "level": "comarca", "parent": "es:autonomia:09",
+            "codes": {"rel:comarca": "06090180", "idescat:comarca": "39"}, "names": {"official": "Aran", "display": "Aran"},
+            "type": "aran", "slug": "aran", "time_zone": "Europe/Madrid"})
+        self.assertEqual(by_id["es:comarca:0217"]["codes"], {"rel:comarca": "06020330", "aragon:comarca": "17"})
+        self.assertEqual(by_id["es:municipio:25243"]["comarca"], "es:comarca:0939")
+        self.assertEqual(by_id["es:municipio:25243"]["parent"], "es:provincia:25")
+        self.assertEqual(by_id["es:municipio:50297"]["comarca"], "es:comarca:0217")
+        # Álava, from fuentes/comarcas-municipios.csv; bilingual name with its parts.
+        vitoria = by_id["es:comarca:1604"]
+        self.assertEqual((vitoria["type"], vitoria["names"]["parts"]),
+                         ("cuadrilla", {"es": "Cuadrilla de Vitoria-Gasteiz", "eu": "Vitoria-Gasteizko Kuadrilla"}))
+        self.assertEqual(by_id["es:municipio:01059"]["comarca"], "es:comarca:1604")
+        # Without municipalities in the dictionary, a comarca is not published.
+        self.assertNotIn("es:comarca:0943", by_id)
+        self.assertNotIn("comarca", by_id["es:municipio:25120"])
+        self.assertNotIn("comarca", by_id["es:municipio:28079"])
+        lines = self.report.sections["Comarcas"]
+        self.assertIn("Idescat: 08999 en la comarca 99, que no está en fuentes/comarcas.csv", lines)
+        self.assertIn("Idescat: 43001 (comarca 36) no es un municipio de la comunidad 09 en el diccionario", lines)
+        self.assertIn("es:municipio:25120 «Lleida» sin comarca", lines)
+        self.assertTrue(any(line.startswith("Comarcas sin municipios, que no se publican: 0201 «Jacetania, La»")
+                            for line in lines))
+        self.assertEqual(self.report.summary["Comarcas"], 6)
+
+    def test_comarcas_hand_lists_are_checked(self):
+        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
+        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
+        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
+        for name, broken in (("comarcas.csv", "0939,08,39,06090180,aran,Aran\n"),  # code of another community
+                             ("comarcas.csv", "0939,09,39,6090180,aran,Aran\n"),  # REL number without its zero
+                             ("comarcas.csv", "0939,09,39,06090180,valle,Aran\n"),  # unknown type
+                             ("comarcas-municipios.csv", "01059,0939\n"),  # a comarca with a regional source
+                             ("comarcas-municipios.csv", "28079,1604\n")):  # Madrid in a cuadrilla of Álava
+            with self.subTest(broken=broken), tempfile.TemporaryDirectory() as tmp:
+                fuentes = Path(tmp) / "fuentes"
+                shutil.copytree(ROOT / "fuentes", fuentes)
+                path = fuentes / name
+                lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+                if name == "comarcas.csv":
+                    lines = [line for line in lines if not line.startswith("0939,")]
+                path.write_text("".join(lines) + broken, encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    build(inputs, fuentes, "2026-01-01")
 
     def test_population(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

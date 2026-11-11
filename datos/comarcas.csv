@@ -1,0 +1,85 @@
+id,autonomia,tipo,rel,idescat,aragon,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,time_zone
+es:comarca:0201,02,comarca,06020110,,01,"Jacetania, La",La Jacetania,La Jacetania,La Jacetania,La Jacetania,La Jacetania,La Jacetania,La Jacetania,Europe/Madrid
+es:comarca:0202,02,comarca,06020030,,02,Alto Gállego,Alto Gállego,Alto Gállego,Alto Gállego,Alto Gállego,Alto Gállego,Alto Gállego,Alto Gállego,Europe/Madrid
+es:comarca:0203,02,comarca,06020250,,03,Sobrarbe,Sobrarbe,Sobrarbe,Sobrarbe,Sobrarbe,Sobrarbe,Sobrarbe,Sobrarbe,Europe/Madrid
+es:comarca:0204,02,comarca,06020150,,04,Ribagorza,Ribagorza,Ribagorza,Ribagorza,Ribagorza,Ribagorza,Ribagorza,Ribagorza,Europe/Madrid
+es:comarca:0205,02,comarca,06020210,,05,Cinco Villas,Cinco Villas,Cinco Villas,Cinco Villas,Cinco Villas,Cinco Villas,Cinco Villas,Cinco Villas,Europe/Madrid
+es:comarca:0206,02,comarca,06020220,,06,Hoya de Huesca/Plana de Uesca,Hoya de Huesca/Plana de Uesca,Hoya de Huesca,Hoya de Huesca/Plana de Uesca,Hoya de Huesca/Plana de Uesca,Hoya de Huesca/Plana de Uesca,Hoya de Huesca/Plana de Uesca,Hoya de Huesca/Plana de Uesca,Europe/Madrid
+es:comarca:0207,02,comarca,06020050,,07,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Somontano de Barbastro,Europe/Madrid
+es:comarca:0208,02,comarca,06020080,,08,Cinca Medio,Cinca Medio,Cinca Medio,Cinca Medio,Cinca Medio,Cinca Medio,Cinca Medio,Cinca Medio,Europe/Madrid
+es:comarca:0209,02,comarca,06020200,,09,"Litera, La/Llitera, la",La Litera/la Llitera,La Litera,la Llitera,La Litera/la Llitera,La Litera/la Llitera,La Litera/la Llitera,La Litera/la Llitera,Europe/Madrid
+es:comarca:0210,02,comarca,06020170,,10,"Monegros, Los",Los Monegros,Los Monegros,Los Monegros,Los Monegros,Los Monegros,Los Monegros,Los Monegros,Europe/Madrid
+es:comarca:0211,02,comarca,06020190,,11,Bajo Cinca/Baix Cinca,Bajo Cinca/Baix Cinca,Bajo Cinca,Baix Cinca,Bajo Cinca/Baix Cinca,Bajo Cinca/Baix Cinca,Bajo Cinca/Baix Cinca,Bajo Cinca/Baix Cinca,Europe/Madrid
+es:comarca:0212,02,comarca,06020020,,12,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Tarazona y el Moncayo,Europe/Madrid
+es:comarca:0213,02,comarca,06020060,,13,Campo de Borja,Campo de Borja,Campo de Borja,Campo de Borja,Campo de Borja,Campo de Borja,Campo de Borja,Campo de Borja,Europe/Madrid
+es:comarca:0214,02,comarca,06020070,,14,Aranda,Aranda,Aranda,Aranda,Aranda,Aranda,Aranda,Aranda,Europe/Madrid
+es:comarca:0215,02,comarca,06020290,,15,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Ribera Alta del Ebro,Europe/Madrid
+es:comarca:0216,02,comarca,06020160,,16,Valdejalón,Valdejalón,Valdejalón,Valdejalón,Valdejalón,Valdejalón,Valdejalón,Valdejalón,Europe/Madrid
+es:comarca:0217,02,comarca,06020330,,17,Central,Central,Central,Central,Central,Central,Central,Central,Europe/Madrid
+es:comarca:0218,02,comarca,06020140,,18,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Ribera Baja del Ebro,Europe/Madrid
+es:comarca:0219,02,comarca,06020260,,19,Bajo Aragón-Caspe/Baix Aragó-Casp,Bajo Aragón-Caspe/Baix Aragó-Casp,Bajo Aragón-Caspe,Baix Aragó-Casp,Bajo Aragón-Caspe/Baix Aragó-Casp,Bajo Aragón-Caspe/Baix Aragó-Casp,Bajo Aragón-Caspe/Baix Aragó-Casp,Bajo Aragón-Caspe/Baix Aragó-Casp,Europe/Madrid
+es:comarca:0220,02,comarca,06020010,,20,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Comunidad de Calatayud,Europe/Madrid
+es:comarca:0221,02,comarca,06020240,,21,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Campo de Cariñena,Europe/Madrid
+es:comarca:0222,02,comarca,06020230,,22,Campo de Belchite,Campo de Belchite,Campo de Belchite,Campo de Belchite,Campo de Belchite,Campo de Belchite,Campo de Belchite,Campo de Belchite,Europe/Madrid
+es:comarca:0223,02,comarca,06020270,,23,Bajo Martín,Bajo Martín,Bajo Martín,Bajo Martín,Bajo Martín,Bajo Martín,Bajo Martín,Bajo Martín,Europe/Madrid
+es:comarca:0224,02,comarca,06020180,,24,Campo de Daroca,Campo de Daroca,Campo de Daroca,Campo de Daroca,Campo de Daroca,Campo de Daroca,Campo de Daroca,Campo de Daroca,Europe/Madrid
+es:comarca:0225,02,comarca,06020320,,25,Jiloca,Jiloca,Jiloca,Jiloca,Jiloca,Jiloca,Jiloca,Jiloca,Europe/Madrid
+es:comarca:0226,02,comarca,06020310,,26,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Cuencas Mineras,Europe/Madrid
+es:comarca:0227,02,comarca,06020120,,27,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Andorra-Sierra de Arcos,Europe/Madrid
+es:comarca:0228,02,comarca,06020100,,28,Bajo Aragón,Bajo Aragón,Bajo Aragón,Bajo Aragón,Bajo Aragón,Bajo Aragón,Bajo Aragón,Bajo Aragón,Europe/Madrid
+es:comarca:0229,02,comarca,06020300,,29,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Comunidad de Teruel,Europe/Madrid
+es:comarca:0230,02,comarca,06020130,,30,Maestrazgo,Maestrazgo,Maestrazgo,Maestrazgo,Maestrazgo,Maestrazgo,Maestrazgo,Maestrazgo,Europe/Madrid
+es:comarca:0231,02,comarca,06020280,,31,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Sierra de Albarracín,Europe/Madrid
+es:comarca:0232,02,comarca,06020040,,32,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Gúdar-Javalambre,Europe/Madrid
+es:comarca:0233,02,comarca,06020090,,33,Matarraña/Matarranya,Matarraña/Matarranya,Matarraña,Matarranya,Matarraña/Matarranya,Matarraña/Matarranya,Matarraña/Matarranya,Matarraña/Matarranya,Europe/Madrid
+es:comarca:0701,07,comarca,06070010,,,"Bierzo, El",El Bierzo,El Bierzo,El Bierzo,El Bierzo,El Bierzo,El Bierzo,El Bierzo,Europe/Madrid
+es:comarca:0901,09,comarca,06090060,01,,Alt Camp,Alt Camp,Alt Camp,Alt Camp,Alt Camp,Alt Camp,Alt Camp,Alt Camp,Europe/Madrid
+es:comarca:0902,09,comarca,06090110,02,,Alt Empordà,Alt Empordà,Alt Empordà,Alt Empordà,Alt Empordà,Alt Empordà,Alt Empordà,Alt Empordà,Europe/Madrid
+es:comarca:0903,09,comarca,06090400,03,,Alt Penedès,Alt Penedès,Alt Penedès,Alt Penedès,Alt Penedès,Alt Penedès,Alt Penedès,Alt Penedès,Europe/Madrid
+es:comarca:0904,09,comarca,06090240,04,,Alt Urgell,Alt Urgell,Alt Urgell,Alt Urgell,Alt Urgell,Alt Urgell,Alt Urgell,Alt Urgell,Europe/Madrid
+es:comarca:0905,09,comarca,06090350,05,,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Alta Ribagorça,Europe/Madrid
+es:comarca:0906,09,comarca,06090390,06,,Anoia,Anoia,Anoia,Anoia,Anoia,Anoia,Anoia,Anoia,Europe/Madrid
+es:comarca:0907,09,comarca,06090070,07,,Bages,Bages,Bages,Bages,Bages,Bages,Bages,Bages,Europe/Madrid
+es:comarca:0908,09,comarca,06090030,08,,Baix Camp,Baix Camp,Baix Camp,Baix Camp,Baix Camp,Baix Camp,Baix Camp,Baix Camp,Europe/Madrid
+es:comarca:0909,09,comarca,06090040,09,,Baix Ebre,Baix Ebre,Baix Ebre,Baix Ebre,Baix Ebre,Baix Ebre,Baix Ebre,Baix Ebre,Europe/Madrid
+es:comarca:0910,09,comarca,06090190,10,,Baix Empordà,Baix Empordà,Baix Empordà,Baix Empordà,Baix Empordà,Baix Empordà,Baix Empordà,Baix Empordà,Europe/Madrid
+es:comarca:0911,09,comarca,06090090,11,,Baix Llobregat,Baix Llobregat,Baix Llobregat,Baix Llobregat,Baix Llobregat,Baix Llobregat,Baix Llobregat,Baix Llobregat,Europe/Madrid
+es:comarca:0912,09,comarca,06090270,12,,Baix Penedès,Baix Penedès,Baix Penedès,Baix Penedès,Baix Penedès,Baix Penedès,Baix Penedès,Baix Penedès,Europe/Madrid
+es:comarca:0913,09,comarca,06090210,13,,Barcelonès,Barcelonès,Barcelonès,Barcelonès,Barcelonès,Barcelonès,Barcelonès,Barcelonès,Europe/Madrid
+es:comarca:0914,09,comarca,06090320,14,,Berguedà,Berguedà,Berguedà,Berguedà,Berguedà,Berguedà,Berguedà,Berguedà,Europe/Madrid
+es:comarca:0915,09,comarca,06090200,15,,Cerdanya,Cerdanya,Cerdanya,Cerdanya,Cerdanya,Cerdanya,Cerdanya,Cerdanya,Europe/Madrid
+es:comarca:0916,09,comarca,06090020,16,,Conca de Barberà,Conca de Barberà,Conca de Barberà,Conca de Barberà,Conca de Barberà,Conca de Barberà,Conca de Barberà,Conca de Barberà,Europe/Madrid
+es:comarca:0917,09,comarca,06090310,17,,Garraf,Garraf,Garraf,Garraf,Garraf,Garraf,Garraf,Garraf,Europe/Madrid
+es:comarca:0918,09,comarca,06090120,18,,Garrigues,Garrigues,Garrigues,Garrigues,Garrigues,Garrigues,Garrigues,Garrigues,Europe/Madrid
+es:comarca:0919,09,comarca,06090290,19,,Garrotxa,Garrotxa,Garrotxa,Garrotxa,Garrotxa,Garrotxa,Garrotxa,Garrotxa,Europe/Madrid
+es:comarca:0920,09,comarca,06090410,20,,Gironès,Gironès,Gironès,Gironès,Gironès,Gironès,Gironès,Gironès,Europe/Madrid
+es:comarca:0921,09,comarca,06090380,21,,Maresme,Maresme,Maresme,Maresme,Maresme,Maresme,Maresme,Maresme,Europe/Madrid
+es:comarca:0922,09,comarca,06090050,22,,Montsià,Montsià,Montsià,Montsià,Montsià,Montsià,Montsià,Montsià,Europe/Madrid
+es:comarca:0923,09,comarca,06090130,23,,Noguera,Noguera,Noguera,Noguera,Noguera,Noguera,Noguera,Noguera,Europe/Madrid
+es:comarca:0924,09,comarca,06090330,24,,Osona,Osona,Osona,Osona,Osona,Osona,Osona,Osona,Europe/Madrid
+es:comarca:0925,09,comarca,06090140,25,,Pallars Jussà,Pallars Jussà,Pallars Jussà,Pallars Jussà,Pallars Jussà,Pallars Jussà,Pallars Jussà,Pallars Jussà,Europe/Madrid
+es:comarca:0926,09,comarca,06090150,26,,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Pallars Sobirà,Europe/Madrid
+es:comarca:0927,09,comarca,06090250,27,,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Pla d'Urgell,Europe/Madrid
+es:comarca:0928,09,comarca,06090260,28,,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Pla de l'Estany,Europe/Madrid
+es:comarca:0929,09,comarca,06090080,29,,Priorat,Priorat,Priorat,Priorat,Priorat,Priorat,Priorat,Priorat,Europe/Madrid
+es:comarca:0930,09,comarca,06090340,30,,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Ribera d'Ebre,Europe/Madrid
+es:comarca:0931,09,comarca,06090100,31,,Ripollès,Ripollès,Ripollès,Ripollès,Ripollès,Ripollès,Ripollès,Ripollès,Europe/Madrid
+es:comarca:0932,09,comarca,06090360,32,,Segarra,Segarra,Segarra,Segarra,Segarra,Segarra,Segarra,Segarra,Europe/Madrid
+es:comarca:0933,09,comarca,06090160,33,,Segrià,Segrià,Segrià,Segrià,Segrià,Segrià,Segrià,Segrià,Europe/Madrid
+es:comarca:0934,09,comarca,06090220,34,,Selva,Selva,Selva,Selva,Selva,Selva,Selva,Selva,Europe/Madrid
+es:comarca:0935,09,comarca,06090170,35,,Solsonès,Solsonès,Solsonès,Solsonès,Solsonès,Solsonès,Solsonès,Solsonès,Europe/Madrid
+es:comarca:0936,09,comarca,06090010,36,,Tarragonès,Tarragonès,Tarragonès,Tarragonès,Tarragonès,Tarragonès,Tarragonès,Tarragonès,Europe/Madrid
+es:comarca:0937,09,comarca,06090280,37,,Terra Alta,Terra Alta,Terra Alta,Terra Alta,Terra Alta,Terra Alta,Terra Alta,Terra Alta,Europe/Madrid
+es:comarca:0938,09,comarca,06090230,38,,Urgell,Urgell,Urgell,Urgell,Urgell,Urgell,Urgell,Urgell,Europe/Madrid
+es:comarca:0939,09,aran,06090180,39,,Aran,Aran,Aran,Aran,Aran,Aran,Aran,Aran,Europe/Madrid
+es:comarca:0940,09,comarca,06090300,40,,Vallès Occidental,Vallès Occidental,Vallès Occidental,Vallès Occidental,Vallès Occidental,Vallès Occidental,Vallès Occidental,Vallès Occidental,Europe/Madrid
+es:comarca:0941,09,comarca,06090370,41,,Vallès Oriental,Vallès Oriental,Vallès Oriental,Vallès Oriental,Vallès Oriental,Vallès Oriental,Vallès Oriental,Vallès Oriental,Europe/Madrid
+es:comarca:0942,09,comarca,06090420,42,,Moianès,Moianès,Moianès,Moianès,Moianès,Moianès,Moianès,Moianès,Europe/Madrid
+es:comarca:0943,09,comarca,,43,,Lluçanès,Lluçanès,Lluçanès,Lluçanès,Lluçanès,Lluçanès,Lluçanès,Lluçanès,Europe/Madrid
+es:comarca:1601,16,cuadrilla,06160010,,,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Cuadrilla de la Llanada Alavesa,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Arabako Lautadako Kuadrilla,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa,Europe/Madrid
+es:comarca:1602,16,cuadrilla,06160020,,,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Cuadrilla de Rioja Alavesa,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Arabako Errioxako Kuadrilla,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa,Europe/Madrid
+es:comarca:1603,16,cuadrilla,06160030,,,Cuadrilla de Añana/Añanako Kuadrilla,Cuadrilla de Añana/Añanako Kuadrilla,Cuadrilla de Añana,Cuadrilla de Añana/Añanako Kuadrilla,Cuadrilla de Añana/Añanako Kuadrilla,Añanako Kuadrilla,Cuadrilla de Añana/Añanako Kuadrilla,Cuadrilla de Añana/Añanako Kuadrilla,Europe/Madrid
+es:comarca:1604,16,cuadrilla,06160040,,,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Cuadrilla de Vitoria-Gasteiz,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Vitoria-Gasteizko Kuadrilla,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,Europe/Madrid
+es:comarca:1605,16,cuadrilla,06160050,,,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Cuadrilla de Montaña Alavesa,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Arabako Mendialdeko Kuadrilla,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla,Europe/Madrid
+es:comarca:1606,16,cuadrilla,06160060,,,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Cuadrilla de Aiaraldea,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Aiaraldeko Kuadrilla,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea,Europe/Madrid
+es:comarca:1607,16,cuadrilla,06160070,,,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Cuadrilla de Gorbeialdea,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Gorbeialdeko Kuadrilla,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla,Europe/Madrid
