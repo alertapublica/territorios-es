@@ -23837,3 +23837,367 @@ es:partido:5112,official,,Ceuta,derivado
 es:partido:5112,display,,Ceuta,derivado
 es:partido:5208,official,,Melilla,derivado
 es:partido:5208,display,,Melilla,derivado
+es:zona-aviso:610401,official,,Valle del Almanzora y Los Vélez,aemet
+es:zona-aviso:610401,display,,Valle del Almanzora y Los Vélez,aemet
+es:zona-aviso:610402,official,,Nacimiento y Campo de Tabernas,aemet
+es:zona-aviso:610402,display,,Nacimiento y Campo de Tabernas,aemet
+es:zona-aviso:610403,official,,Poniente y Almería Capital,aemet
+es:zona-aviso:610403,display,,Poniente y Almería Capital,aemet
+es:zona-aviso:610404,official,,Levante almeriense,aemet
+es:zona-aviso:610404,display,,Levante almeriense,aemet
+es:zona-aviso:611101,official,,Grazalema,aemet
+es:zona-aviso:611101,display,,Grazalema,aemet
+es:zona-aviso:611102,official,,Campiña gaditana,aemet
+es:zona-aviso:611102,display,,Campiña gaditana,aemet
+es:zona-aviso:611103,official,,Litoral gaditano,aemet
+es:zona-aviso:611103,display,,Litoral gaditano,aemet
+es:zona-aviso:611104,official,,Estrecho,aemet
+es:zona-aviso:611104,display,,Estrecho,aemet
+es:zona-aviso:611401,official,,Sierra y Pedroches,aemet
+es:zona-aviso:611401,display,,Sierra y Pedroches,aemet
+es:zona-aviso:611402,official,,Campiña cordobesa,aemet
+es:zona-aviso:611402,display,,Campiña cordobesa,aemet
+es:zona-aviso:611403,official,,Subbética cordobesa,aemet
+es:zona-aviso:611403,display,,Subbética cordobesa,aemet
+es:zona-aviso:611801,official,,Cuenca del Genil,aemet
+es:zona-aviso:611801,display,,Cuenca del Genil,aemet
+es:zona-aviso:611802,official,,Guadix y Baza,aemet
+es:zona-aviso:611802,display,,Guadix y Baza,aemet
+es:zona-aviso:611803,official,,Nevada y Alpujarras,aemet
+es:zona-aviso:611803,display,,Nevada y Alpujarras,aemet
+es:zona-aviso:611804,official,,Costa granadina,aemet
+es:zona-aviso:611804,display,,Costa granadina,aemet
+es:zona-aviso:612101,official,,Aracena,aemet
+es:zona-aviso:612101,display,,Aracena,aemet
+es:zona-aviso:612102,official,,Andévalo y Condado,aemet
+es:zona-aviso:612102,display,,Andévalo y Condado,aemet
+es:zona-aviso:612103,official,,Litoral de Huelva,aemet
+es:zona-aviso:612103,display,,Litoral de Huelva,aemet
+es:zona-aviso:612301,official,,Morena y Condado,aemet
+es:zona-aviso:612301,display,,Morena y Condado,aemet
+es:zona-aviso:612302,official,,Cazorla y Segura,aemet
+es:zona-aviso:612302,display,,Cazorla y Segura,aemet
+es:zona-aviso:612303,official,,Valle del Guadalquivir de Jaén,aemet
+es:zona-aviso:612303,display,,Valle del Guadalquivir de Jaén,aemet
+es:zona-aviso:612304,official,,Capital y Montes de Jaén,aemet
+es:zona-aviso:612304,display,,Capital y Montes de Jaén,aemet
+es:zona-aviso:612901,official,,Antequera,aemet
+es:zona-aviso:612901,display,,Antequera,aemet
+es:zona-aviso:612902,official,,Ronda,aemet
+es:zona-aviso:612902,display,,Ronda,aemet
+es:zona-aviso:612903,official,,Sol y Guadalhorce,aemet
+es:zona-aviso:612903,display,,Sol y Guadalhorce,aemet
+es:zona-aviso:612904,official,,Axarquía,aemet
+es:zona-aviso:612904,display,,Axarquía,aemet
+es:zona-aviso:614101,official,,Sierra norte de Sevilla,aemet
+es:zona-aviso:614101,display,,Sierra norte de Sevilla,aemet
+es:zona-aviso:614102,official,,Campiña sevillana,aemet
+es:zona-aviso:614102,display,,Campiña sevillana,aemet
+es:zona-aviso:614103,official,,Sierra sur de Sevilla,aemet
+es:zona-aviso:614103,display,,Sierra sur de Sevilla,aemet
+es:zona-aviso:622201,official,,Pirineo oscense,aemet
+es:zona-aviso:622201,display,,Pirineo oscense,aemet
+es:zona-aviso:622202,official,,Centro de Huesca,aemet
+es:zona-aviso:622202,display,,Centro de Huesca,aemet
+es:zona-aviso:622203,official,,Sur de Huesca,aemet
+es:zona-aviso:622203,display,,Sur de Huesca,aemet
+es:zona-aviso:624401,official,,Albarracín y Jiloca,aemet
+es:zona-aviso:624401,display,,Albarracín y Jiloca,aemet
+es:zona-aviso:624402,official,,Gúdar y Maestrazgo,aemet
+es:zona-aviso:624402,display,,Gúdar y Maestrazgo,aemet
+es:zona-aviso:624403,official,,Bajo Aragón de Teruel,aemet
+es:zona-aviso:624403,display,,Bajo Aragón de Teruel,aemet
+es:zona-aviso:625001,official,,Cinco Villas de Zaragoza,aemet
+es:zona-aviso:625001,display,,Cinco Villas de Zaragoza,aemet
+es:zona-aviso:625002,official,,Ibérica zaragozana,aemet
+es:zona-aviso:625002,display,,Ibérica zaragozana,aemet
+es:zona-aviso:625003,official,,Ribera del Ebro de Zaragoza,aemet
+es:zona-aviso:625003,display,,Ribera del Ebro de Zaragoza,aemet
+es:zona-aviso:633301,official,,Litoral occidental asturiano,aemet
+es:zona-aviso:633301,display,,Litoral occidental asturiano,aemet
+es:zona-aviso:633302,official,,Litoral oriental asturiano,aemet
+es:zona-aviso:633302,display,,Litoral oriental asturiano,aemet
+es:zona-aviso:633303,official,,Suroccidental asturiana,aemet
+es:zona-aviso:633303,display,,Suroccidental asturiana,aemet
+es:zona-aviso:633304,official,,Central y Valles Mineros,aemet
+es:zona-aviso:633304,display,,Central y Valles Mineros,aemet
+es:zona-aviso:633305,official,,Cordillera y Picos de Europa,aemet
+es:zona-aviso:633305,display,,Cordillera y Picos de Europa,aemet
+es:zona-aviso:645301,official,,Ibiza y Formentera,aemet
+es:zona-aviso:645301,display,,Ibiza y Formentera,aemet
+es:zona-aviso:645401,official,,Sierra Tramontana,aemet
+es:zona-aviso:645401,display,,Sierra Tramontana,aemet
+es:zona-aviso:645402,official,,Norte y nordeste de Mallorca,aemet
+es:zona-aviso:645402,display,,Norte y nordeste de Mallorca,aemet
+es:zona-aviso:645403,official,,Interior de Mallorca,aemet
+es:zona-aviso:645403,display,,Interior de Mallorca,aemet
+es:zona-aviso:645404,official,,Sur de Mallorca,aemet
+es:zona-aviso:645404,display,,Sur de Mallorca,aemet
+es:zona-aviso:645405,official,,Levante mallorquín,aemet
+es:zona-aviso:645405,display,,Levante mallorquín,aemet
+es:zona-aviso:645501,official,,Menorca,aemet
+es:zona-aviso:645501,display,,Menorca,aemet
+es:zona-aviso:659001,official,,Norte de Gran Canaria,aemet
+es:zona-aviso:659001,display,,Norte de Gran Canaria,aemet
+es:zona-aviso:659003,official,,Cumbres de Gran Canaria,aemet
+es:zona-aviso:659003,display,,Cumbres de Gran Canaria,aemet
+es:zona-aviso:659004,official,,"Este, sur y oeste de Gran Canaria",aemet
+es:zona-aviso:659004,display,,"Este, sur y oeste de Gran Canaria",aemet
+es:zona-aviso:659101,official,,Lanzarote,aemet
+es:zona-aviso:659101,display,,Lanzarote,aemet
+es:zona-aviso:659201,official,,Fuerteventura,aemet
+es:zona-aviso:659201,display,,Fuerteventura,aemet
+es:zona-aviso:659302,official,,Cumbres de La Palma,aemet
+es:zona-aviso:659302,display,,Cumbres de La Palma,aemet
+es:zona-aviso:659303,official,,Este de La Palma,aemet
+es:zona-aviso:659303,display,,Este de La Palma,aemet
+es:zona-aviso:659304,official,,Oeste de La Palma,aemet
+es:zona-aviso:659304,display,,Oeste de La Palma,aemet
+es:zona-aviso:659401,official,,La Gomera,aemet
+es:zona-aviso:659401,display,,La Gomera,aemet
+es:zona-aviso:659501,official,,El Hierro,aemet
+es:zona-aviso:659501,display,,El Hierro,aemet
+es:zona-aviso:659601,official,,Norte de Tenerife,aemet
+es:zona-aviso:659601,display,,Norte de Tenerife,aemet
+es:zona-aviso:659602,official,,Área metropolitana de Tenerife,aemet
+es:zona-aviso:659602,display,,Área metropolitana de Tenerife,aemet
+es:zona-aviso:659603,official,,"Este, sur y oeste de Tenerife",aemet
+es:zona-aviso:659603,display,,"Este, sur y oeste de Tenerife",aemet
+es:zona-aviso:663901,official,,Litoral cántabro,aemet
+es:zona-aviso:663901,display,,Litoral cántabro,aemet
+es:zona-aviso:663902,official,,Liébana,aemet
+es:zona-aviso:663902,display,,Liébana,aemet
+es:zona-aviso:663903,official,,Centro y valle de Villaverde,aemet
+es:zona-aviso:663903,display,,Centro y valle de Villaverde,aemet
+es:zona-aviso:663904,official,,Cantabria del Ebro,aemet
+es:zona-aviso:663904,display,,Cantabria del Ebro,aemet
+es:zona-aviso:670501,official,,Meseta de Ávila,aemet
+es:zona-aviso:670501,display,,Meseta de Ávila,aemet
+es:zona-aviso:670502,official,,Sistema Central de Ávila,aemet
+es:zona-aviso:670502,display,,Sistema Central de Ávila,aemet
+es:zona-aviso:670503,official,,Sur de Ávila,aemet
+es:zona-aviso:670503,display,,Sur de Ávila,aemet
+es:zona-aviso:670901,official,,Cordillera Cantábrica de Burgos,aemet
+es:zona-aviso:670901,display,,Cordillera Cantábrica de Burgos,aemet
+es:zona-aviso:670902,official,,Norte de Burgos,aemet
+es:zona-aviso:670902,display,,Norte de Burgos,aemet
+es:zona-aviso:670903,official,,Condado de Treviño,aemet
+es:zona-aviso:670903,display,,Condado de Treviño,aemet
+es:zona-aviso:670904,official,,Meseta de Burgos,aemet
+es:zona-aviso:670904,display,,Meseta de Burgos,aemet
+es:zona-aviso:670905,official,,Ibérica de Burgos,aemet
+es:zona-aviso:670905,display,,Ibérica de Burgos,aemet
+es:zona-aviso:672401,official,,Cordillera Cantábrica de León,aemet
+es:zona-aviso:672401,display,,Cordillera Cantábrica de León,aemet
+es:zona-aviso:672402,official,,Bierzo de León,aemet
+es:zona-aviso:672402,display,,Bierzo de León,aemet
+es:zona-aviso:672403,official,,Meseta de León,aemet
+es:zona-aviso:672403,display,,Meseta de León,aemet
+es:zona-aviso:673401,official,,Cordillera Cantábrica de Palencia,aemet
+es:zona-aviso:673401,display,,Cordillera Cantábrica de Palencia,aemet
+es:zona-aviso:673402,official,,Meseta de Palencia,aemet
+es:zona-aviso:673402,display,,Meseta de Palencia,aemet
+es:zona-aviso:673701,official,,Meseta de Salamanca,aemet
+es:zona-aviso:673701,display,,Meseta de Salamanca,aemet
+es:zona-aviso:673702,official,,Sistema Central de Salamanca,aemet
+es:zona-aviso:673702,display,,Sistema Central de Salamanca,aemet
+es:zona-aviso:673703,official,,Sur de Salamanca,aemet
+es:zona-aviso:673703,display,,Sur de Salamanca,aemet
+es:zona-aviso:674001,official,,Meseta de Segovia,aemet
+es:zona-aviso:674001,display,,Meseta de Segovia,aemet
+es:zona-aviso:674002,official,,Sistema Central de Segovia,aemet
+es:zona-aviso:674002,display,,Sistema Central de Segovia,aemet
+es:zona-aviso:674201,official,,Ibérica de Soria,aemet
+es:zona-aviso:674201,display,,Ibérica de Soria,aemet
+es:zona-aviso:674202,official,,Meseta de Soria,aemet
+es:zona-aviso:674202,display,,Meseta de Soria,aemet
+es:zona-aviso:674203,official,,Sistema Central de Soria,aemet
+es:zona-aviso:674203,display,,Sistema Central de Soria,aemet
+es:zona-aviso:674701,official,,Meseta de Valladolid,aemet
+es:zona-aviso:674701,display,,Meseta de Valladolid,aemet
+es:zona-aviso:674901,official,,Sanabria,aemet
+es:zona-aviso:674901,display,,Sanabria,aemet
+es:zona-aviso:674902,official,,Meseta de Zamora,aemet
+es:zona-aviso:674902,display,,Meseta de Zamora,aemet
+es:zona-aviso:680201,official,,La Mancha albaceteña,aemet
+es:zona-aviso:680201,display,,La Mancha albaceteña,aemet
+es:zona-aviso:680202,official,,Alcaraz y Segura,aemet
+es:zona-aviso:680202,display,,Alcaraz y Segura,aemet
+es:zona-aviso:680203,official,,Hellín y Almansa,aemet
+es:zona-aviso:680203,display,,Hellín y Almansa,aemet
+es:zona-aviso:681301,official,,Montes del norte y Anchuras,aemet
+es:zona-aviso:681301,display,,Montes del norte y Anchuras,aemet
+es:zona-aviso:681302,official,,La Mancha de Ciudad Real,aemet
+es:zona-aviso:681302,display,,La Mancha de Ciudad Real,aemet
+es:zona-aviso:681303,official,,Valle del Guadiana,aemet
+es:zona-aviso:681303,display,,Valle del Guadiana,aemet
+es:zona-aviso:681304,official,,Sierras de Alcudia y Madrona,aemet
+es:zona-aviso:681304,display,,Sierras de Alcudia y Madrona,aemet
+es:zona-aviso:681601,official,,Alcarria conquense,aemet
+es:zona-aviso:681601,display,,Alcarria conquense,aemet
+es:zona-aviso:681602,official,,Serranía de Cuenca,aemet
+es:zona-aviso:681602,display,,Serranía de Cuenca,aemet
+es:zona-aviso:681603,official,,La Mancha conquense,aemet
+es:zona-aviso:681603,display,,La Mancha conquense,aemet
+es:zona-aviso:681901,official,,Serranía de Guadalajara,aemet
+es:zona-aviso:681901,display,,Serranía de Guadalajara,aemet
+es:zona-aviso:681902,official,,Parameras de Molina,aemet
+es:zona-aviso:681902,display,,Parameras de Molina,aemet
+es:zona-aviso:681903,official,,Alcarria de Guadalajara,aemet
+es:zona-aviso:681903,display,,Alcarria de Guadalajara,aemet
+es:zona-aviso:684501,official,,Sierra de San Vicente,aemet
+es:zona-aviso:684501,display,,Sierra de San Vicente,aemet
+es:zona-aviso:684502,official,,Valle del Tajo,aemet
+es:zona-aviso:684502,display,,Valle del Tajo,aemet
+es:zona-aviso:684503,official,,Montes de Toledo,aemet
+es:zona-aviso:684503,display,,Montes de Toledo,aemet
+es:zona-aviso:684504,official,,La Mancha toledana,aemet
+es:zona-aviso:684504,display,,La Mancha toledana,aemet
+es:zona-aviso:690801,official,,Prepirineo de Barcelona,aemet
+es:zona-aviso:690801,display,,Prepirineo de Barcelona,aemet
+es:zona-aviso:690802,official,,Depresión central de Barcelona,aemet
+es:zona-aviso:690802,display,,Depresión central de Barcelona,aemet
+es:zona-aviso:690803,official,,Prelitoral de Barcelona,aemet
+es:zona-aviso:690803,display,,Prelitoral de Barcelona,aemet
+es:zona-aviso:690804,official,,Litoral de Barcelona,aemet
+es:zona-aviso:690804,display,,Litoral de Barcelona,aemet
+es:zona-aviso:691701,official,,Pirineo de Girona,aemet
+es:zona-aviso:691701,display,,Pirineo de Girona,aemet
+es:zona-aviso:691702,official,,Prelitoral de Girona,aemet
+es:zona-aviso:691702,display,,Prelitoral de Girona,aemet
+es:zona-aviso:691703,official,,Ampurdán,aemet
+es:zona-aviso:691703,display,,Ampurdán,aemet
+es:zona-aviso:691704,official,,Litoral sur de Girona,aemet
+es:zona-aviso:691704,display,,Litoral sur de Girona,aemet
+es:zona-aviso:692501,official,,Valle de Arán,aemet
+es:zona-aviso:692501,display,,Valle de Arán,aemet
+es:zona-aviso:692502,official,,Pirineo de Lleida,aemet
+es:zona-aviso:692502,display,,Pirineo de Lleida,aemet
+es:zona-aviso:692503,official,,Depresión central de Lleida,aemet
+es:zona-aviso:692503,display,,Depresión central de Lleida,aemet
+es:zona-aviso:694301,official,,Depresión central de Tarragona,aemet
+es:zona-aviso:694301,display,,Depresión central de Tarragona,aemet
+es:zona-aviso:694302,official,,Prelitoral norte de Tarragona,aemet
+es:zona-aviso:694302,display,,Prelitoral norte de Tarragona,aemet
+es:zona-aviso:694303,official,,Litoral norte de Tarragona,aemet
+es:zona-aviso:694303,display,,Litoral norte de Tarragona,aemet
+es:zona-aviso:694304,official,,Litoral sur de Tarragona,aemet
+es:zona-aviso:694304,display,,Litoral sur de Tarragona,aemet
+es:zona-aviso:694305,official,,Prelitoral sur de Tarragona,aemet
+es:zona-aviso:694305,display,,Prelitoral sur de Tarragona,aemet
+es:zona-aviso:700601,official,,Vegas del Guadiana,aemet
+es:zona-aviso:700601,display,,Vegas del Guadiana,aemet
+es:zona-aviso:700602,official,,La Siberia extremeña,aemet
+es:zona-aviso:700602,display,,La Siberia extremeña,aemet
+es:zona-aviso:700603,official,,Barros y Serena,aemet
+es:zona-aviso:700603,display,,Barros y Serena,aemet
+es:zona-aviso:700604,official,,Sur de Badajoz,aemet
+es:zona-aviso:700604,display,,Sur de Badajoz,aemet
+es:zona-aviso:701001,official,,Norte de Cáceres,aemet
+es:zona-aviso:701001,display,,Norte de Cáceres,aemet
+es:zona-aviso:701002,official,,Tajo y Alagón,aemet
+es:zona-aviso:701002,display,,Tajo y Alagón,aemet
+es:zona-aviso:701003,official,,Meseta cacereña,aemet
+es:zona-aviso:701003,display,,Meseta cacereña,aemet
+es:zona-aviso:701004,official,,Villuercas y Montánchez,aemet
+es:zona-aviso:701004,display,,Villuercas y Montánchez,aemet
+es:zona-aviso:711501,official,,Noroeste de A Coruña,aemet
+es:zona-aviso:711501,display,,Noroeste de A Coruña,aemet
+es:zona-aviso:711502,official,,Oeste de A Coruña,aemet
+es:zona-aviso:711502,display,,Oeste de A Coruña,aemet
+es:zona-aviso:711503,official,,Interior de A Coruña,aemet
+es:zona-aviso:711503,display,,Interior de A Coruña,aemet
+es:zona-aviso:711504,official,,Suroeste de A Coruña,aemet
+es:zona-aviso:711504,display,,Suroeste de A Coruña,aemet
+es:zona-aviso:712701,official,,A Mariña,aemet
+es:zona-aviso:712701,display,,A Mariña,aemet
+es:zona-aviso:712702,official,,Centro de Lugo,aemet
+es:zona-aviso:712702,display,,Centro de Lugo,aemet
+es:zona-aviso:712703,official,,Montaña de Lugo,aemet
+es:zona-aviso:712703,display,,Montaña de Lugo,aemet
+es:zona-aviso:712704,official,,Sur de Lugo,aemet
+es:zona-aviso:712704,display,,Sur de Lugo,aemet
+es:zona-aviso:713201,official,,Noroeste de Ourense,aemet
+es:zona-aviso:713201,display,,Noroeste de Ourense,aemet
+es:zona-aviso:713202,official,,Miño de Ourense,aemet
+es:zona-aviso:713202,display,,Miño de Ourense,aemet
+es:zona-aviso:713203,official,,Sur de Ourense,aemet
+es:zona-aviso:713203,display,,Sur de Ourense,aemet
+es:zona-aviso:713204,official,,Montaña de Ourense,aemet
+es:zona-aviso:713204,display,,Montaña de Ourense,aemet
+es:zona-aviso:713205,official,,Valdeorras,aemet
+es:zona-aviso:713205,display,,Valdeorras,aemet
+es:zona-aviso:713601,official,,Rias Baixas,aemet
+es:zona-aviso:713601,display,,Rias Baixas,aemet
+es:zona-aviso:713602,official,,Interior de Pontevedra,aemet
+es:zona-aviso:713602,display,,Interior de Pontevedra,aemet
+es:zona-aviso:713603,official,,Miño de Pontevedra,aemet
+es:zona-aviso:713603,display,,Miño de Pontevedra,aemet
+es:zona-aviso:722801,official,,Sierra de Madrid,aemet
+es:zona-aviso:722801,display,,Sierra de Madrid,aemet
+es:zona-aviso:722802,official,,Metropolitana y Henares,aemet
+es:zona-aviso:722802,display,,Metropolitana y Henares,aemet
+es:zona-aviso:722803,official,,"Sur, Vegas y Oeste",aemet
+es:zona-aviso:722803,display,,"Sur, Vegas y Oeste",aemet
+es:zona-aviso:733001,official,,Altiplano de Murcia,aemet
+es:zona-aviso:733001,display,,Altiplano de Murcia,aemet
+es:zona-aviso:733002,official,,Noroeste de Murcia,aemet
+es:zona-aviso:733002,display,,Noroeste de Murcia,aemet
+es:zona-aviso:733003,official,,Vega del Segura,aemet
+es:zona-aviso:733003,display,,Vega del Segura,aemet
+es:zona-aviso:733004,official,,"Valle del Guadalentín, Lorca y Águilas",aemet
+es:zona-aviso:733004,display,,"Valle del Guadalentín, Lorca y Águilas",aemet
+es:zona-aviso:733005,official,,Campo de Cartagena y Mazarrón,aemet
+es:zona-aviso:733005,display,,Campo de Cartagena y Mazarrón,aemet
+es:zona-aviso:743101,official,,Vertiente cantábrica de Navarra,aemet
+es:zona-aviso:743101,display,,Vertiente cantábrica de Navarra,aemet
+es:zona-aviso:743102,official,,Centro de Navarra,aemet
+es:zona-aviso:743102,display,,Centro de Navarra,aemet
+es:zona-aviso:743103,official,,Pirineo navarro,aemet
+es:zona-aviso:743103,display,,Pirineo navarro,aemet
+es:zona-aviso:743104,official,,Ribera del Ebro de Navarra,aemet
+es:zona-aviso:743104,display,,Ribera del Ebro de Navarra,aemet
+es:zona-aviso:750101,official,,Cuenca del Nervión,aemet
+es:zona-aviso:750101,display,,Cuenca del Nervión,aemet
+es:zona-aviso:750102,official,,Llanada alavesa,aemet
+es:zona-aviso:750102,display,,Llanada alavesa,aemet
+es:zona-aviso:750103,official,,Rioja alavesa,aemet
+es:zona-aviso:750103,display,,Rioja alavesa,aemet
+es:zona-aviso:752001,official,,Gipuzkoa litoral,aemet
+es:zona-aviso:752001,display,,Gipuzkoa litoral,aemet
+es:zona-aviso:752002,official,,Gipuzkoa interior,aemet
+es:zona-aviso:752002,display,,Gipuzkoa interior,aemet
+es:zona-aviso:754801,official,,Bizkaia litoral,aemet
+es:zona-aviso:754801,display,,Bizkaia litoral,aemet
+es:zona-aviso:754802,official,,Bizkaia interior,aemet
+es:zona-aviso:754802,display,,Bizkaia interior,aemet
+es:zona-aviso:762601,official,,Ribera del Ebro de La Rioja,aemet
+es:zona-aviso:762601,display,,Ribera del Ebro de La Rioja,aemet
+es:zona-aviso:762602,official,,Ibérica riojana,aemet
+es:zona-aviso:762602,display,,Ibérica riojana,aemet
+es:zona-aviso:770301,official,,Litoral norte de Alicante,aemet
+es:zona-aviso:770301,display,,Litoral norte de Alicante,aemet
+es:zona-aviso:770302,official,,Interior de Alicante,aemet
+es:zona-aviso:770302,display,,Interior de Alicante,aemet
+es:zona-aviso:770303,official,,Litoral sur de Alicante,aemet
+es:zona-aviso:770303,display,,Litoral sur de Alicante,aemet
+es:zona-aviso:771201,official,,Interior norte de Castellón,aemet
+es:zona-aviso:771201,display,,Interior norte de Castellón,aemet
+es:zona-aviso:771202,official,,Litoral norte de Castellón,aemet
+es:zona-aviso:771202,display,,Litoral norte de Castellón,aemet
+es:zona-aviso:771203,official,,Interior sur de Castellón,aemet
+es:zona-aviso:771203,display,,Interior sur de Castellón,aemet
+es:zona-aviso:771204,official,,Litoral sur de Castellón,aemet
+es:zona-aviso:771204,display,,Litoral sur de Castellón,aemet
+es:zona-aviso:774601,official,,Interior norte de Valencia,aemet
+es:zona-aviso:774601,display,,Interior norte de Valencia,aemet
+es:zona-aviso:774602,official,,Litoral norte de Valencia,aemet
+es:zona-aviso:774602,display,,Litoral norte de Valencia,aemet
+es:zona-aviso:774603,official,,Interior sur de Valencia,aemet
+es:zona-aviso:774603,display,,Interior sur de Valencia,aemet
+es:zona-aviso:774604,official,,Litoral sur de Valencia,aemet
+es:zona-aviso:774604,display,,Litoral sur de Valencia,aemet
+es:zona-aviso:785101,official,,Ceuta,aemet
+es:zona-aviso:785101,display,,Ceuta,aemet
+es:zona-aviso:795201,official,,Melilla,aemet
+es:zona-aviso:795201,display,,Melilla,aemet
