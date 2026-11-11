@@ -12,11 +12,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "41 4 10 1,7 *"
-  # TEMPORAL: tirada de medida sobre la rama (workflow_dispatch solo sirve para workflows que ya están
-  # en main). Quitar antes de abrir la PR.
-  push:
-    branches: [codigos-postales]
-    paths: [.github/workflows/codigos-postales.yml]
 
 permissions:
   contents: read
@@ -28,7 +23,7 @@ concurrency:
 jobs:
   generar:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
+    timeout-minutes: 270
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -43,7 +38,7 @@ jobs:
           key: codigos-postales-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: codigos-postales-
       - name: Descargar y generar
-        timeout-minutes: 300
+        timeout-minutes: 240
         env:
           PYTHONUNBUFFERED: "1"
           # Relay con IP española para los hosts de VIA_RELAY (generador/descargas.py); sin clave, directa.
