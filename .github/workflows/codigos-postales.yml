@@ -46,6 +46,9 @@ jobs:
         timeout-minutes: 300
         env:
           PYTHONUNBUFFERED: "1"
+          # Relay con IP española para los hosts de VIA_RELAY (generador/descargas.py); sin clave, directa.
+          RELAY_CLAVE: ${{ secrets.RELAY_CLAVE }}
+          RELAY_URL: ${{ secrets.RELAY_URL }}
         run: python -m generador --codigos-postales --informe informe.md --cache .cache
       - name: Guardar las descargas
         if: always()
