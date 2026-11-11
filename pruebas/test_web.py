@@ -41,9 +41,25 @@ class Web(unittest.TestCase):
                 html = (out / lang / "index.html").read_text(encoding="utf-8")
                 self.assertIn(f'<html lang="{lang}">', html)
                 self.assertIn("../datos/municipios.csv", html)
+                self.assertIn('href="estado/"', html)
+                status = (out / lang / "estado" / "index.html").read_text(encoding="utf-8")
+                self.assertIn(f'<html lang="{lang}">', status)
+                self.assertIn('class="mermaid"', status)
             self.assertTrue((out / "datos" / "territorios.json").exists())
             site.build(out, Path(folder) / "sin-datos")
             self.assertIn(TEXTS["es"]["no_data"].split(".")[0], (out / "es" / "index.html").read_text(encoding="utf-8"))
+
+
+class Status(unittest.TestCase):
+    def test_everything_in_the_repository_is_on_the_map(self):
+        import web.estado as estado
+        self.assertEqual(estado.problems(), [])
+
+    def test_markdown_builds_from_fixture_data(self):
+        import web.estado as estado
+        for lang in estado.OUT:
+            text = estado.markdown(lang, ROOT / "pruebas" / "datos")
+            self.assertIn("```mermaid", text)
 
 
 if __name__ == "__main__":

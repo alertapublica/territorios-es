@@ -371,6 +371,15 @@ each new mapping. We write the translations ourselves when writing them (they ar
 run time) and they are marked as pending review until someone with command of the language reviews
 them.
 
+Every page links to the status page (`<language>/estado/`, in the same six languages): levels and
+relations, coverage of each datum across municipalities, each community, sources, files (with a link
+to explore each CSV in Datasette Lite), library and workflows, with Mermaid diagrams.
+`web/estado.py` builds it from `datos/`, `fuentes/` and the repository itself, and it is published
+with every change on `main`. The same script writes `docs/estado.md` and `docs/status.md` (Spanish
+and English), which GitHub renders: CI checks they are up to date and the data workflows regenerate
+them in their PRs. If a source, module, workflow, level or column appears that is not on its map,
+the check fails.
+
 ## 9. Ready for the EU
 
 The first version is Spain only, but nothing prevents extending it:

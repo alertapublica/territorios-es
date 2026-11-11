@@ -13,6 +13,10 @@ cada idioma.
 Los identificadores (`es:municipio:36038`) solo cambian en una versión mayor; los campos y niveles
 nuevos llegan en versiones menores. El planteamiento está en [`docs/diseno.md`](docs/diseno.md).
 
+La [web de datos](https://alertapublica.github.io/territorios-es/) describe cada fichero y cada campo en seis idiomas. Su página de
+[estado](https://alertapublica.github.io/territorios-es/es/estado/) (también en [`docs/estado.md`](docs/estado.md)) muestra qué hay en los
+datos, cuánto cubre cada dato, de dónde sale cada cosa y cómo se relacionan las piezas del repositorio.
+
 ## Uso
 
 ```python
@@ -164,7 +168,10 @@ to resolve codes, search names, pick the display name for each language and plac
 municipality.
 
 Identifiers (`es:municipio:36038`) only change in a major version; new fields and levels come in
-minor versions. The design is in [`docs/design.md`](docs/design.md). Usage, data, tests and
+minor versions. The design is in [`docs/design.md`](docs/design.md). The [data website](https://alertapublica.github.io/territorios-es/)
+describes every file and field in six languages, and its [status page](https://alertapublica.github.io/territorios-es/en/estado/) (also in
+[`docs/status.md`](docs/status.md)) shows what is in the data, how much each datum covers, where
+everything comes from and how the pieces of the repository relate. Usage, data, tests and
 licences are described in the Spanish section above; code and field names are in English. The
 code is MIT-licensed; each datum keeps its source's licence. To report a wrong datum, or to ask for
 one to be withdrawn, open a [claim issue](https://github.com/alertapublica/territorios-es/issues/new?template=reclamacion.md).

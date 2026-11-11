@@ -2,11 +2,8 @@ name: Web de datos
 
 on:
   push:
+    # Con cualquier cambio en main: la página de estado mira datos/, fuentes/, docs/, el código y los workflows.
     branches: [main]
-    paths:
-      - "datos/**"
-      - "web/**"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:

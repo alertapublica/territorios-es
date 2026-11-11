@@ -364,6 +364,15 @@ las atribuciones, en castellano, catalán, gallego, euskera, aranés e inglés. 
 nuevo. Las traducciones las redactamos nosotros al escribirlas (no se generan en ejecución) y
 quedan marcadas como pendientes de revisión hasta que alguien con dominio del idioma las revise.
 
+Cada página enlaza con la de estado (`<idioma>/estado/`, en los mismos seis idiomas): niveles y
+relaciones, cobertura de cada dato en los municipios, cada comunidad, fuentes, ficheros (con un
+enlace para explorar cada CSV en Datasette Lite), librería y workflows, con diagramas de Mermaid. La
+genera `web/estado.py` desde `datos/`, `fuentes/` y el propio repositorio, y se publica con cada
+cambio en `main`. El mismo script escribe `docs/estado.md` y `docs/status.md` (castellano e inglés),
+que se ven en GitHub: la CI comprueba que están al día y los workflows de datos los regeneran en sus
+PR. Si aparece una fuente, un módulo, un workflow, un nivel o una columna que no está en su mapa, la
+comprobación falla.
+
 ## 9. Preparado para la UE
 
 La primera versión es solo España, pero nada impide ampliarla:

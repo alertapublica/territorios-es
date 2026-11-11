@@ -12,6 +12,11 @@ import shutil
 from html import escape
 from pathlib import Path
 
+try:
+    from . import estado
+except ImportError:  # run as a script: python web/construir.py
+    import estado
+
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "https://github.com/alertapublica/territorios-es"
 FILES = ["territorios.json", "paises.csv", "comunidades.csv", "provincias.csv", "islas.csv", "partidos-judiciales.csv",
@@ -33,7 +38,8 @@ display:flex;flex-wrap:wrap;gap:.4em 1em}nav a[aria-current]{font-weight:700;tex
 table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{text-align:left;vertical-align:top;
 padding:.45em .6em;border-bottom:1px solid var(--line)}td.n{text-align:right;white-space:nowrap}
 code{font-size:.9em;overflow-wrap:anywhere}dt{font-family:ui-monospace,monospace;margin-top:.6em}dd{margin:0 0 0 1.2em}
-footer{color:var(--muted);padding-bottom:32px;margin-top:3em}"""
+footer{color:var(--muted);padding-bottom:32px;margin-top:3em}
+.top{display:flex;flex-wrap:wrap;gap:.4em 1.2em;align-items:center;margin-bottom:.8em}.top .langs{margin-left:auto}"""
 
 
 def _size(n: int) -> str:
@@ -64,6 +70,13 @@ def _columns(datos: Path) -> list[str]:
             if column not in seen:
                 seen.append(column)
     return seen
+
+
+def top_nav(lang: str, t: dict, status: bool) -> str:
+    """Data · Status · GitHub, the same on the data pages and on the status page."""
+    link = f'<a href="estado/">{escape(t["nav_status"])}</a>' if status else ""
+    return (f'<nav class="top"><strong>{escape(t["nav_data"])}</strong>{link}'
+            f'<a href="{REPO}">GitHub</a></nav>')
 
 
 def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
@@ -113,7 +126,7 @@ def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{escape(t["title"])}</title><meta name="description" content="{escape(t["subtitle"])}">'
             f'{alternates}<link rel="stylesheet" href="../estilo.css"></head><body>'
-            f'<header><nav aria-label="{escape(t["languages"])}"><ul>{nav}</ul></nav>'
+            f'<header>{top_nav(lang, t, bool(datos))}<nav aria-label="{escape(t["languages"])}"><ul>{nav}</ul></nav>'
             f'<h1>{escape(t["title"])}</h1><p class="sub">{escape(t["subtitle"])}</p></header>'
             f'<main>{"".join(parts)}</main>'
             f'<footer><p><a href="{REPO}">{escape(t["repository"])}</a>. {escape(t["licence_code"])}</p></footer>'
@@ -151,6 +164,9 @@ def build(out: Path, datos: Path | None):
         for name in FILES:
             if (datos / name).exists():
                 shutil.copy2(datos / name, out / "datos" / name)
+        for lang in texts:
+            (out / lang / "estado").mkdir()
+            (out / lang / "estado" / "index.html").write_text(estado.page(lang, datos), encoding="utf-8")
 
 
 def main():
