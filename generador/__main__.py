@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import catastro, codigos_postales, descargas, eurostat, ign, ine, wikidata  # noqa: E402
+from . import catastro, codigos_postales, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 from .limites import build_limits  # noqa: E402
@@ -90,6 +90,14 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
         "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
         "reference_date": next(iter(dates)), "licence": c["licence"], "attribution": c["attribution"]}
+
+    c = config["mjusticia_censo_judicial"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="mjusticia_censo_judicial.xlsx",
+                          validate=justicia.parse_census)
+    inputs["judicial_districts"], date = justicia.parse_census(got.content)
+    records["mjusticia_censo_judicial"] = got.record(reference_date=date, licence=c["licence"],
+                                                     attribution=c["attribution"])
+
 
     c = config["eurostat_lau"]
     page = descargas.fetch(c["page"], cache=cache, cache_name="eurostat_lau.html")

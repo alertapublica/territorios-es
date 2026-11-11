@@ -14981,7 +14981,6 @@ es:municipio:31243,official,,Urroz Villa/Urrotz,ine
 es:municipio:31243,display,,Urroz Villa/Urrotz,derivado
 es:municipio:31243,parts,es,Urroz Villa,fuentes
 es:municipio:31243,parts,eu,Urrotz,fuentes
-es:municipio:31243,lang,an,Urroz,wikidata
 es:municipio:31243,alias:former_official,,Urroz-Villa,ine
 es:municipio:31244,official,,Urroz,ine
 es:municipio:31244,display,,Urroz,derivado
@@ -17242,7 +17241,6 @@ es:municipio:39034,official,,Lamasón,ine
 es:municipio:39034,display,,Lamasón,derivado
 es:municipio:39035,official,,Laredo,ine
 es:municipio:39035,display,,Laredo,derivado
-es:municipio:39035,lang,an,Santoña,wikidata
 es:municipio:39036,official,,Liendo,ine
 es:municipio:39036,display,,Liendo,derivado
 es:municipio:39037,official,,Liérganes,ine
@@ -22955,3 +22953,887 @@ es:municipio:51001,official,,Ceuta,ine
 es:municipio:51001,display,,Ceuta,derivado
 es:municipio:52001,official,,Melilla,ine
 es:municipio:52001,display,,Melilla,derivado
+es:partido:0101,official,,Amurrio,derivado
+es:partido:0101,display,,Amurrio,derivado
+es:partido:0102,official,,Vitoria-Gasteiz,derivado
+es:partido:0102,display,,Vitoria-Gasteiz,derivado
+es:partido:0201,official,,Albacete,derivado
+es:partido:0201,display,,Albacete,derivado
+es:partido:0202,official,,Alcaraz,derivado
+es:partido:0202,display,,Alcaraz,derivado
+es:partido:0203,official,,Almansa,derivado
+es:partido:0203,display,,Almansa,derivado
+es:partido:0204,official,,Hellín,derivado
+es:partido:0204,display,,Hellín,derivado
+es:partido:0205,official,,"Roda, La",derivado
+es:partido:0205,display,,La Roda,derivado
+es:partido:0206,official,,Villarrobledo,derivado
+es:partido:0206,display,,Villarrobledo,derivado
+es:partido:0207,official,,Casas-Ibáñez,derivado
+es:partido:0207,display,,Casas-Ibáñez,derivado
+es:partido:0301,official,,Dénia,derivado
+es:partido:0301,display,,Dénia,derivado
+es:partido:0302,official,,Alcoi/Alcoy,derivado
+es:partido:0302,display,,Alcoi/Alcoy,derivado
+es:partido:0302,parts,ca,Alcoi,derivado
+es:partido:0302,parts,es,Alcoy,derivado
+es:partido:0303,official,,Alacant/Alicante,derivado
+es:partido:0303,display,,Alacant/Alicante,derivado
+es:partido:0303,parts,ca,Alacant,derivado
+es:partido:0303,parts,es,Alicante,derivado
+es:partido:0304,official,,Orihuela,derivado
+es:partido:0304,display,,Orihuela,derivado
+es:partido:0305,official,,"Vila Joiosa, la/Villajoyosa",derivado
+es:partido:0305,display,,la Vila Joiosa/Villajoyosa,derivado
+es:partido:0305,parts,ca,la Vila Joiosa,derivado
+es:partido:0305,parts,es,Villajoyosa,derivado
+es:partido:0306,official,,Elda,derivado
+es:partido:0306,display,,Elda,derivado
+es:partido:0307,official,,Villena,derivado
+es:partido:0307,display,,Villena,derivado
+es:partido:0308,official,,Elx/Elche,derivado
+es:partido:0308,display,,Elx/Elche,derivado
+es:partido:0308,parts,ca,Elx,derivado
+es:partido:0308,parts,es,Elche,derivado
+es:partido:0309,official,,Benidorm,derivado
+es:partido:0309,display,,Benidorm,derivado
+es:partido:0310,official,,Sant Vicent del Raspeig/San Vicente del Raspeig,derivado
+es:partido:0310,display,,Sant Vicent del Raspeig/San Vicente del Raspeig,derivado
+es:partido:0310,parts,ca,Sant Vicent del Raspeig,derivado
+es:partido:0310,parts,es,San Vicente del Raspeig,derivado
+es:partido:0311,official,,Novelda,derivado
+es:partido:0311,display,,Novelda,derivado
+es:partido:0312,official,,Ibi,derivado
+es:partido:0312,display,,Ibi,derivado
+es:partido:0313,official,,Torrevieja,derivado
+es:partido:0313,display,,Torrevieja,derivado
+es:partido:0401,official,,Almería,derivado
+es:partido:0401,display,,Almería,derivado
+es:partido:0402,official,,Berja,derivado
+es:partido:0402,display,,Berja,derivado
+es:partido:0403,official,,Huércal-Overa,derivado
+es:partido:0403,display,,Huércal-Overa,derivado
+es:partido:0404,official,,Vera,derivado
+es:partido:0404,display,,Vera,derivado
+es:partido:0405,official,,Roquetas de Mar,derivado
+es:partido:0405,display,,Roquetas de Mar,derivado
+es:partido:0406,official,,Vélez-Rubio,derivado
+es:partido:0406,display,,Vélez-Rubio,derivado
+es:partido:0407,official,,"Ejido, El",derivado
+es:partido:0407,display,,El Ejido,derivado
+es:partido:0408,official,,Purchena,derivado
+es:partido:0408,display,,Purchena,derivado
+es:partido:0501,official,,Arévalo,derivado
+es:partido:0501,display,,Arévalo,derivado
+es:partido:0502,official,,Arenas de San Pedro,derivado
+es:partido:0502,display,,Arenas de San Pedro,derivado
+es:partido:0503,official,,Ávila,derivado
+es:partido:0503,display,,Ávila,derivado
+es:partido:0504,official,,Piedrahíta,derivado
+es:partido:0504,display,,Piedrahíta,derivado
+es:partido:0601,official,,Villanueva de la Serena,derivado
+es:partido:0601,display,,Villanueva de la Serena,derivado
+es:partido:0602,official,,Almendralejo,derivado
+es:partido:0602,display,,Almendralejo,derivado
+es:partido:0603,official,,Llerena,derivado
+es:partido:0603,display,,Llerena,derivado
+es:partido:0604,official,,Mérida,derivado
+es:partido:0604,display,,Mérida,derivado
+es:partido:0605,official,,Badajoz,derivado
+es:partido:0605,display,,Badajoz,derivado
+es:partido:0606,official,,Olivenza,derivado
+es:partido:0606,display,,Olivenza,derivado
+es:partido:0607,official,,Zafra,derivado
+es:partido:0607,display,,Zafra,derivado
+es:partido:0608,official,,Jerez de los Caballeros,derivado
+es:partido:0608,display,,Jerez de los Caballeros,derivado
+es:partido:0609,official,,Herrera del Duque,derivado
+es:partido:0609,display,,Herrera del Duque,derivado
+es:partido:0610,official,,Castuera,derivado
+es:partido:0610,display,,Castuera,derivado
+es:partido:0611,official,,Don Benito,derivado
+es:partido:0611,display,,Don Benito,derivado
+es:partido:0612,official,,Fregenal de la Sierra,derivado
+es:partido:0612,display,,Fregenal de la Sierra,derivado
+es:partido:0613,official,,Montijo,derivado
+es:partido:0613,display,,Montijo,derivado
+es:partido:0614,official,,Villafranca de los Barros,derivado
+es:partido:0614,display,,Villafranca de los Barros,derivado
+es:partido:0701,official,,Maó,derivado
+es:partido:0701,display,,Maó,derivado
+es:partido:0702,official,,Inca,derivado
+es:partido:0702,display,,Inca,derivado
+es:partido:0703,official,,Palma,derivado
+es:partido:0703,display,,Palma,derivado
+es:partido:0704,official,,Manacor,derivado
+es:partido:0704,display,,Manacor,derivado
+es:partido:0705,official,,Eivissa,derivado
+es:partido:0705,display,,Eivissa,derivado
+es:partido:0706,official,,Ciutadella de Menorca,derivado
+es:partido:0706,display,,Ciutadella de Menorca,derivado
+es:partido:0801,official,,Martorell,derivado
+es:partido:0801,display,,Martorell,derivado
+es:partido:0802,official,,Manresa,derivado
+es:partido:0802,display,,Manresa,derivado
+es:partido:0803,official,,Granollers,derivado
+es:partido:0803,display,,Granollers,derivado
+es:partido:0804,official,,Mataró,derivado
+es:partido:0804,display,,Mataró,derivado
+es:partido:0805,official,,Vic,derivado
+es:partido:0805,display,,Vic,derivado
+es:partido:0806,official,,Arenys de Mar,derivado
+es:partido:0806,display,,Arenys de Mar,derivado
+es:partido:0807,official,,Igualada,derivado
+es:partido:0807,display,,Igualada,derivado
+es:partido:0808,official,,Berga,derivado
+es:partido:0808,display,,Berga,derivado
+es:partido:0809,official,,Vilafranca del Penedès,derivado
+es:partido:0809,display,,Vilafranca del Penedès,derivado
+es:partido:0810,official,,Badalona,derivado
+es:partido:0810,display,,Badalona,derivado
+es:partido:0811,official,,Barcelona,derivado
+es:partido:0811,display,,Barcelona,derivado
+es:partido:0812,official,,Sant Boi de Llobregat,derivado
+es:partido:0812,display,,Sant Boi de Llobregat,derivado
+es:partido:0813,official,,Sabadell,derivado
+es:partido:0813,display,,Sabadell,derivado
+es:partido:0814,official,,Vilanova i la Geltrú,derivado
+es:partido:0814,display,,Vilanova i la Geltrú,derivado
+es:partido:0815,official,,Terrassa,derivado
+es:partido:0815,display,,Terrassa,derivado
+es:partido:0816,official,,Sant Feliu de Llobregat,derivado
+es:partido:0816,display,,Sant Feliu de Llobregat,derivado
+es:partido:0817,official,,"Hospitalet de Llobregat, L'",derivado
+es:partido:0817,display,,L'Hospitalet de Llobregat,derivado
+es:partido:0818,official,,Santa Coloma de Gramenet,derivado
+es:partido:0818,display,,Santa Coloma de Gramenet,derivado
+es:partido:0819,official,,Cerdanyola del Vallès,derivado
+es:partido:0819,display,,Cerdanyola del Vallès,derivado
+es:partido:0820,official,,Cornellà de Llobregat,derivado
+es:partido:0820,display,,Cornellà de Llobregat,derivado
+es:partido:0821,official,,Gavà,derivado
+es:partido:0821,display,,Gavà,derivado
+es:partido:0822,official,,Mollet del Vallès,derivado
+es:partido:0822,display,,Mollet del Vallès,derivado
+es:partido:0823,official,,Esplugues de Llobregat,derivado
+es:partido:0823,display,,Esplugues de Llobregat,derivado
+es:partido:0824,official,,Rubí,derivado
+es:partido:0824,display,,Rubí,derivado
+es:partido:0825,official,,"Prat de Llobregat, El",derivado
+es:partido:0825,display,,El Prat de Llobregat,derivado
+es:partido:0901,official,,Burgos,derivado
+es:partido:0901,display,,Burgos,derivado
+es:partido:0902,official,,Aranda de Duero,derivado
+es:partido:0902,display,,Aranda de Duero,derivado
+es:partido:0903,official,,Villarcayo de Merindad de Castilla la Vieja,derivado
+es:partido:0903,display,,Villarcayo de Merindad de Castilla la Vieja,derivado
+es:partido:0904,official,,Miranda de Ebro,derivado
+es:partido:0904,display,,Miranda de Ebro,derivado
+es:partido:0905,official,,Lerma,derivado
+es:partido:0905,display,,Lerma,derivado
+es:partido:0906,official,,Briviesca,derivado
+es:partido:0906,display,,Briviesca,derivado
+es:partido:0907,official,,Salas de los Infantes,derivado
+es:partido:0907,display,,Salas de los Infantes,derivado
+es:partido:1001,official,,Cáceres,derivado
+es:partido:1001,display,,Cáceres,derivado
+es:partido:1002,official,,Coria,derivado
+es:partido:1002,display,,Coria,derivado
+es:partido:1003,official,,Navalmoral de la Mata,derivado
+es:partido:1003,display,,Navalmoral de la Mata,derivado
+es:partido:1004,official,,Plasencia,derivado
+es:partido:1004,display,,Plasencia,derivado
+es:partido:1005,official,,Trujillo,derivado
+es:partido:1005,display,,Trujillo,derivado
+es:partido:1006,official,,Valencia de Alcántara,derivado
+es:partido:1006,display,,Valencia de Alcántara,derivado
+es:partido:1007,official,,Logrosán,derivado
+es:partido:1007,display,,Logrosán,derivado
+es:partido:1101,official,,Chiclana de la Frontera,derivado
+es:partido:1101,display,,Chiclana de la Frontera,derivado
+es:partido:1102,official,,Arcos de la Frontera,derivado
+es:partido:1102,display,,Arcos de la Frontera,derivado
+es:partido:1103,official,,Algeciras,derivado
+es:partido:1103,display,,Algeciras,derivado
+es:partido:1104,official,,Cádiz,derivado
+es:partido:1104,display,,Cádiz,derivado
+es:partido:1105,official,,San Roque,derivado
+es:partido:1105,display,,San Roque,derivado
+es:partido:1106,official,,Sanlúcar de Barrameda,derivado
+es:partido:1106,display,,Sanlúcar de Barrameda,derivado
+es:partido:1107,official,,Jerez de la Frontera,derivado
+es:partido:1107,display,,Jerez de la Frontera,derivado
+es:partido:1108,official,,"Línea de la Concepción, La",derivado
+es:partido:1108,display,,La Línea de la Concepción,derivado
+es:partido:1109,official,,San Fernando,derivado
+es:partido:1109,display,,San Fernando,derivado
+es:partido:1110,official,,"Puerto de Santa María, El",derivado
+es:partido:1110,display,,El Puerto de Santa María,derivado
+es:partido:1111,official,,Rota,derivado
+es:partido:1111,display,,Rota,derivado
+es:partido:1113,official,,Puerto Real,derivado
+es:partido:1113,display,,Puerto Real,derivado
+es:partido:1114,official,,Barbate,derivado
+es:partido:1114,display,,Barbate,derivado
+es:partido:1115,official,,Ubrique,derivado
+es:partido:1115,display,,Ubrique,derivado
+es:partido:1201,official,,Castelló de la Plana/Castellón de la Plana,derivado
+es:partido:1201,display,,Castelló de la Plana/Castellón de la Plana,derivado
+es:partido:1201,parts,ca,Castelló de la Plana,derivado
+es:partido:1201,parts,es,Castellón de la Plana,derivado
+es:partido:1202,official,,Segorbe,derivado
+es:partido:1202,display,,Segorbe,derivado
+es:partido:1203,official,,Vinaròs,derivado
+es:partido:1203,display,,Vinaròs,derivado
+es:partido:1204,official,,Nules,derivado
+es:partido:1204,display,,Nules,derivado
+es:partido:1205,official,,Vila-real,derivado
+es:partido:1205,display,,Vila-real,derivado
+es:partido:1301,official,,Alcázar de San Juan,derivado
+es:partido:1301,display,,Alcázar de San Juan,derivado
+es:partido:1302,official,,Ciudad Real,derivado
+es:partido:1302,display,,Ciudad Real,derivado
+es:partido:1303,official,,Daimiel,derivado
+es:partido:1303,display,,Daimiel,derivado
+es:partido:1304,official,,Manzanares,derivado
+es:partido:1304,display,,Manzanares,derivado
+es:partido:1305,official,,Valdepeñas,derivado
+es:partido:1305,display,,Valdepeñas,derivado
+es:partido:1306,official,,Villanueva de los Infantes,derivado
+es:partido:1306,display,,Villanueva de los Infantes,derivado
+es:partido:1307,official,,Puertollano,derivado
+es:partido:1307,display,,Puertollano,derivado
+es:partido:1308,official,,Tomelloso,derivado
+es:partido:1308,display,,Tomelloso,derivado
+es:partido:1309,official,,Almagro,derivado
+es:partido:1309,display,,Almagro,derivado
+es:partido:1310,official,,Almadén,derivado
+es:partido:1310,display,,Almadén,derivado
+es:partido:1401,official,,Montoro,derivado
+es:partido:1401,display,,Montoro,derivado
+es:partido:1402,official,,Aguilar de la Frontera,derivado
+es:partido:1402,display,,Aguilar de la Frontera,derivado
+es:partido:1403,official,,Pozoblanco,derivado
+es:partido:1403,display,,Pozoblanco,derivado
+es:partido:1404,official,,Baena,derivado
+es:partido:1404,display,,Baena,derivado
+es:partido:1405,official,,Posadas,derivado
+es:partido:1405,display,,Posadas,derivado
+es:partido:1406,official,,Peñarroya-Pueblonuevo,derivado
+es:partido:1406,display,,Peñarroya-Pueblonuevo,derivado
+es:partido:1407,official,,Lucena,derivado
+es:partido:1407,display,,Lucena,derivado
+es:partido:1408,official,,Córdoba,derivado
+es:partido:1408,display,,Córdoba,derivado
+es:partido:1409,official,,Priego de Córdoba,derivado
+es:partido:1409,display,,Priego de Córdoba,derivado
+es:partido:1410,official,,Cabra,derivado
+es:partido:1410,display,,Cabra,derivado
+es:partido:1411,official,,Montilla,derivado
+es:partido:1411,display,,Montilla,derivado
+es:partido:1412,official,,Puente Genil,derivado
+es:partido:1412,display,,Puente Genil,derivado
+es:partido:1501,official,,Betanzos,derivado
+es:partido:1501,display,,Betanzos,derivado
+es:partido:1502,official,,Santiago de Compostela,derivado
+es:partido:1502,display,,Santiago de Compostela,derivado
+es:partido:1503,official,,Ferrol,derivado
+es:partido:1503,display,,Ferrol,derivado
+es:partido:1504,official,,"Coruña, A",derivado
+es:partido:1504,display,,A Coruña,derivado
+es:partido:1505,official,,Noia,derivado
+es:partido:1505,display,,Noia,derivado
+es:partido:1506,official,,Carballo,derivado
+es:partido:1506,display,,Carballo,derivado
+es:partido:1507,official,,Corcubión,derivado
+es:partido:1507,display,,Corcubión,derivado
+es:partido:1508,official,,Arzúa,derivado
+es:partido:1508,display,,Arzúa,derivado
+es:partido:1509,official,,Ortigueira,derivado
+es:partido:1509,display,,Ortigueira,derivado
+es:partido:1510,official,,Ribeira,derivado
+es:partido:1510,display,,Ribeira,derivado
+es:partido:1511,official,,Negreira,derivado
+es:partido:1511,display,,Negreira,derivado
+es:partido:1512,official,,Muros,derivado
+es:partido:1512,display,,Muros,derivado
+es:partido:1513,official,,Padrón,derivado
+es:partido:1513,display,,Padrón,derivado
+es:partido:1514,official,,Ordes,derivado
+es:partido:1514,display,,Ordes,derivado
+es:partido:1601,official,,Cuenca,derivado
+es:partido:1601,display,,Cuenca,derivado
+es:partido:1602,official,,Tarancón,derivado
+es:partido:1602,display,,Tarancón,derivado
+es:partido:1603,official,,Motilla del Palancar,derivado
+es:partido:1603,display,,Motilla del Palancar,derivado
+es:partido:1604,official,,San Clemente,derivado
+es:partido:1604,display,,San Clemente,derivado
+es:partido:1701,official,,Figueres,derivado
+es:partido:1701,display,,Figueres,derivado
+es:partido:1702,official,,Girona,derivado
+es:partido:1702,display,,Girona,derivado
+es:partido:1703,official,,"Bisbal d'Empordà, La",derivado
+es:partido:1703,display,,La Bisbal d'Empordà,derivado
+es:partido:1704,official,,Ripoll,derivado
+es:partido:1704,display,,Ripoll,derivado
+es:partido:1705,official,,Santa Coloma de Farners,derivado
+es:partido:1705,display,,Santa Coloma de Farners,derivado
+es:partido:1706,official,,Olot,derivado
+es:partido:1706,display,,Olot,derivado
+es:partido:1707,official,,Blanes,derivado
+es:partido:1707,display,,Blanes,derivado
+es:partido:1708,official,,Sant Feliu de Guíxols,derivado
+es:partido:1708,display,,Sant Feliu de Guíxols,derivado
+es:partido:1709,official,,Puigcerdà,derivado
+es:partido:1709,display,,Puigcerdà,derivado
+es:partido:1801,official,,Loja,derivado
+es:partido:1801,display,,Loja,derivado
+es:partido:1802,official,,Guadix,derivado
+es:partido:1802,display,,Guadix,derivado
+es:partido:1803,official,,Granada,derivado
+es:partido:1803,display,,Granada,derivado
+es:partido:1804,official,,Motril,derivado
+es:partido:1804,display,,Motril,derivado
+es:partido:1805,official,,Órgiva,derivado
+es:partido:1805,display,,Órgiva,derivado
+es:partido:1806,official,,Baza,derivado
+es:partido:1806,display,,Baza,derivado
+es:partido:1807,official,,Santa Fe,derivado
+es:partido:1807,display,,Santa Fe,derivado
+es:partido:1808,official,,Huéscar,derivado
+es:partido:1808,display,,Huéscar,derivado
+es:partido:1809,official,,Almuñécar,derivado
+es:partido:1809,display,,Almuñécar,derivado
+es:partido:1901,official,,Guadalajara,derivado
+es:partido:1901,display,,Guadalajara,derivado
+es:partido:1902,official,,Molina de Aragón,derivado
+es:partido:1902,display,,Molina de Aragón,derivado
+es:partido:1903,official,,Sigüenza,derivado
+es:partido:1903,display,,Sigüenza,derivado
+es:partido:2001,official,,Tolosa,derivado
+es:partido:2001,display,,Tolosa,derivado
+es:partido:2002,official,,Azpeitia,derivado
+es:partido:2002,display,,Azpeitia,derivado
+es:partido:2003,official,,Bergara,derivado
+es:partido:2003,display,,Bergara,derivado
+es:partido:2004,official,,Eibar,derivado
+es:partido:2004,display,,Eibar,derivado
+es:partido:2005,official,,Donostia/San Sebastián,derivado
+es:partido:2005,display,,Donostia/San Sebastián,derivado
+es:partido:2005,parts,eu,Donostia,derivado
+es:partido:2005,parts,es,San Sebastián,derivado
+es:partido:2006,official,,Irun,derivado
+es:partido:2006,display,,Irun,derivado
+es:partido:2101,official,,Aracena,derivado
+es:partido:2101,display,,Aracena,derivado
+es:partido:2102,official,,Huelva,derivado
+es:partido:2102,display,,Huelva,derivado
+es:partido:2103,official,,"Palma del Condado, La",derivado
+es:partido:2103,display,,La Palma del Condado,derivado
+es:partido:2104,official,,Valverde del Camino,derivado
+es:partido:2104,display,,Valverde del Camino,derivado
+es:partido:2105,official,,Ayamonte,derivado
+es:partido:2105,display,,Ayamonte,derivado
+es:partido:2106,official,,Moguer,derivado
+es:partido:2106,display,,Moguer,derivado
+es:partido:2201,official,,Barbastro,derivado
+es:partido:2201,display,,Barbastro,derivado
+es:partido:2202,official,,Boltaña,derivado
+es:partido:2202,display,,Boltaña,derivado
+es:partido:2203,official,,Fraga,derivado
+es:partido:2203,display,,Fraga,derivado
+es:partido:2204,official,,Huesca,derivado
+es:partido:2204,display,,Huesca,derivado
+es:partido:2205,official,,Jaca,derivado
+es:partido:2205,display,,Jaca,derivado
+es:partido:2206,official,,Monzón,derivado
+es:partido:2206,display,,Monzón,derivado
+es:partido:2301,official,,Jaén,derivado
+es:partido:2301,display,,Jaén,derivado
+es:partido:2302,official,,Alcalá la Real,derivado
+es:partido:2302,display,,Alcalá la Real,derivado
+es:partido:2303,official,,"Carolina, La",derivado
+es:partido:2303,display,,La Carolina,derivado
+es:partido:2304,official,,Andújar,derivado
+es:partido:2304,display,,Andújar,derivado
+es:partido:2305,official,,Baeza,derivado
+es:partido:2305,display,,Baeza,derivado
+es:partido:2306,official,,Linares,derivado
+es:partido:2306,display,,Linares,derivado
+es:partido:2307,official,,Villacarrillo,derivado
+es:partido:2307,display,,Villacarrillo,derivado
+es:partido:2308,official,,Cazorla,derivado
+es:partido:2308,display,,Cazorla,derivado
+es:partido:2309,official,,Martos,derivado
+es:partido:2309,display,,Martos,derivado
+es:partido:2310,official,,Úbeda,derivado
+es:partido:2310,display,,Úbeda,derivado
+es:partido:2401,official,,Sahagún,derivado
+es:partido:2401,display,,Sahagún,derivado
+es:partido:2402,official,,León,derivado
+es:partido:2402,display,,León,derivado
+es:partido:2403,official,,"Bañeza, La",derivado
+es:partido:2403,display,,La Bañeza,derivado
+es:partido:2404,official,,Ponferrada,derivado
+es:partido:2404,display,,Ponferrada,derivado
+es:partido:2405,official,,Astorga,derivado
+es:partido:2405,display,,Astorga,derivado
+es:partido:2406,official,,Cistierna,derivado
+es:partido:2406,display,,Cistierna,derivado
+es:partido:2407,official,,Villablino,derivado
+es:partido:2407,display,,Villablino,derivado
+es:partido:2501,official,,Tremp,derivado
+es:partido:2501,display,,Tremp,derivado
+es:partido:2502,official,,Balaguer,derivado
+es:partido:2502,display,,Balaguer,derivado
+es:partido:2503,official,,Cervera,derivado
+es:partido:2503,display,,Cervera,derivado
+es:partido:2504,official,,Lleida,derivado
+es:partido:2504,display,,Lleida,derivado
+es:partido:2505,official,,"Seu d'Urgell, La",derivado
+es:partido:2505,display,,La Seu d'Urgell,derivado
+es:partido:2506,official,,Vielha e Mijaran,derivado
+es:partido:2506,display,,Vielha e Mijaran,derivado
+es:partido:2507,official,,Solsona,derivado
+es:partido:2507,display,,Solsona,derivado
+es:partido:2601,official,,Haro,derivado
+es:partido:2601,display,,Haro,derivado
+es:partido:2602,official,,Calahorra,derivado
+es:partido:2602,display,,Calahorra,derivado
+es:partido:2603,official,,Logroño,derivado
+es:partido:2603,display,,Logroño,derivado
+es:partido:2701,official,,Mondoñedo,derivado
+es:partido:2701,display,,Mondoñedo,derivado
+es:partido:2702,official,,Chantada,derivado
+es:partido:2702,display,,Chantada,derivado
+es:partido:2703,official,,Lugo,derivado
+es:partido:2703,display,,Lugo,derivado
+es:partido:2704,official,,Vilalba,derivado
+es:partido:2704,display,,Vilalba,derivado
+es:partido:2705,official,,Monforte de Lemos,derivado
+es:partido:2705,display,,Monforte de Lemos,derivado
+es:partido:2706,official,,Viveiro,derivado
+es:partido:2706,display,,Viveiro,derivado
+es:partido:2707,official,,Sarria,derivado
+es:partido:2707,display,,Sarria,derivado
+es:partido:2708,official,,"Fonsagrada, A",derivado
+es:partido:2708,display,,A Fonsagrada,derivado
+es:partido:2709,official,,Becerreá,derivado
+es:partido:2709,display,,Becerreá,derivado
+es:partido:2801,official,,Torrelaguna,derivado
+es:partido:2801,display,,Torrelaguna,derivado
+es:partido:2802,official,,Torrejón de Ardoz,derivado
+es:partido:2802,display,,Torrejón de Ardoz,derivado
+es:partido:2803,official,,Navalcarnero,derivado
+es:partido:2803,display,,Navalcarnero,derivado
+es:partido:2804,official,,Alcalá de Henares,derivado
+es:partido:2804,display,,Alcalá de Henares,derivado
+es:partido:2805,official,,Alcobendas,derivado
+es:partido:2805,display,,Alcobendas,derivado
+es:partido:2806,official,,Móstoles,derivado
+es:partido:2806,display,,Móstoles,derivado
+es:partido:2807,official,,San Lorenzo de El Escorial,derivado
+es:partido:2807,display,,San Lorenzo de El Escorial,derivado
+es:partido:2808,official,,Aranjuez,derivado
+es:partido:2808,display,,Aranjuez,derivado
+es:partido:2809,official,,Leganés,derivado
+es:partido:2809,display,,Leganés,derivado
+es:partido:2810,official,,Getafe,derivado
+es:partido:2810,display,,Getafe,derivado
+es:partido:2811,official,,Madrid,derivado
+es:partido:2811,display,,Madrid,derivado
+es:partido:2812,official,,Majadahonda,derivado
+es:partido:2812,display,,Majadahonda,derivado
+es:partido:2813,official,,Coslada,derivado
+es:partido:2813,display,,Coslada,derivado
+es:partido:2814,official,,Arganda del Rey,derivado
+es:partido:2814,display,,Arganda del Rey,derivado
+es:partido:2815,official,,Collado Villalba,derivado
+es:partido:2815,display,,Collado Villalba,derivado
+es:partido:2816,official,,Parla,derivado
+es:partido:2816,display,,Parla,derivado
+es:partido:2817,official,,Alcorcón,derivado
+es:partido:2817,display,,Alcorcón,derivado
+es:partido:2818,official,,Fuenlabrada,derivado
+es:partido:2818,display,,Fuenlabrada,derivado
+es:partido:2819,official,,Colmenar Viejo,derivado
+es:partido:2819,display,,Colmenar Viejo,derivado
+es:partido:2820,official,,Valdemoro,derivado
+es:partido:2820,display,,Valdemoro,derivado
+es:partido:2821,official,,Pozuelo de Alarcón,derivado
+es:partido:2821,display,,Pozuelo de Alarcón,derivado
+es:partido:2901,official,,Antequera,derivado
+es:partido:2901,display,,Antequera,derivado
+es:partido:2902,official,,Vélez-Málaga,derivado
+es:partido:2902,display,,Vélez-Málaga,derivado
+es:partido:2903,official,,Málaga,derivado
+es:partido:2903,display,,Málaga,derivado
+es:partido:2904,official,,Ronda,derivado
+es:partido:2904,display,,Ronda,derivado
+es:partido:2905,official,,Fuengirola,derivado
+es:partido:2905,display,,Fuengirola,derivado
+es:partido:2906,official,,Marbella,derivado
+es:partido:2906,display,,Marbella,derivado
+es:partido:2907,official,,Estepona,derivado
+es:partido:2907,display,,Estepona,derivado
+es:partido:2909,official,,Torrox,derivado
+es:partido:2909,display,,Torrox,derivado
+es:partido:2910,official,,Coín,derivado
+es:partido:2910,display,,Coín,derivado
+es:partido:2911,official,,Archidona,derivado
+es:partido:2911,display,,Archidona,derivado
+es:partido:2912,official,,Torremolinos,derivado
+es:partido:2912,display,,Torremolinos,derivado
+es:partido:3001,official,,Caravaca de la Cruz,derivado
+es:partido:3001,display,,Caravaca de la Cruz,derivado
+es:partido:3002,official,,Cartagena,derivado
+es:partido:3002,display,,Cartagena,derivado
+es:partido:3003,official,,Cieza,derivado
+es:partido:3003,display,,Cieza,derivado
+es:partido:3004,official,,Lorca,derivado
+es:partido:3004,display,,Lorca,derivado
+es:partido:3005,official,,Mula,derivado
+es:partido:3005,display,,Mula,derivado
+es:partido:3006,official,,Murcia,derivado
+es:partido:3006,display,,Murcia,derivado
+es:partido:3007,official,,Yecla,derivado
+es:partido:3007,display,,Yecla,derivado
+es:partido:3008,official,,Molina de Segura,derivado
+es:partido:3008,display,,Molina de Segura,derivado
+es:partido:3009,official,,Totana,derivado
+es:partido:3009,display,,Totana,derivado
+es:partido:3010,official,,Jumilla,derivado
+es:partido:3010,display,,Jumilla,derivado
+es:partido:3011,official,,San Javier,derivado
+es:partido:3011,display,,San Javier,derivado
+es:partido:3101,official,,Estella-Lizarra,derivado
+es:partido:3101,display,,Estella-Lizarra,derivado
+es:partido:3102,official,,Aoiz/Agoitz,derivado
+es:partido:3102,display,,Aoiz/Agoitz,derivado
+es:partido:3102,parts,es,Aoiz,derivado
+es:partido:3102,parts,eu,Agoitz,derivado
+es:partido:3103,official,,Tudela,derivado
+es:partido:3103,display,,Tudela,derivado
+es:partido:3104,official,,Pamplona/Iruña,derivado
+es:partido:3104,display,,Pamplona/Iruña,derivado
+es:partido:3104,parts,es,Pamplona,derivado
+es:partido:3104,parts,eu,Iruña,derivado
+es:partido:3105,official,,Tafalla,derivado
+es:partido:3105,display,,Tafalla,derivado
+es:partido:3201,official,,Ourense,derivado
+es:partido:3201,display,,Ourense,derivado
+es:partido:3202,official,,Ribadavia,derivado
+es:partido:3202,display,,Ribadavia,derivado
+es:partido:3203,official,,Xinzo de Limia,derivado
+es:partido:3203,display,,Xinzo de Limia,derivado
+es:partido:3204,official,,"Pobra de Trives, A",derivado
+es:partido:3204,display,,A Pobra de Trives,derivado
+es:partido:3205,official,,Verín,derivado
+es:partido:3205,display,,Verín,derivado
+es:partido:3206,official,,"Barco de Valdeorras, O",derivado
+es:partido:3206,display,,O Barco de Valdeorras,derivado
+es:partido:3207,official,,"Carballiño, O",derivado
+es:partido:3207,display,,O Carballiño,derivado
+es:partido:3208,official,,Bande,derivado
+es:partido:3208,display,,Bande,derivado
+es:partido:3209,official,,Celanova,derivado
+es:partido:3209,display,,Celanova,derivado
+es:partido:3301,official,,Cangas del Narcea,derivado
+es:partido:3301,display,,Cangas del Narcea,derivado
+es:partido:3302,official,,Lena,derivado
+es:partido:3302,display,,Lena,derivado
+es:partido:3303,official,,Cangas de Onís,derivado
+es:partido:3303,display,,Cangas de Onís,derivado
+es:partido:3304,official,,Avilés,derivado
+es:partido:3304,display,,Avilés,derivado
+es:partido:3305,official,,Grado,derivado
+es:partido:3305,display,,Grado,derivado
+es:partido:3306,official,,Siero,derivado
+es:partido:3306,display,,Siero,derivado
+es:partido:3307,official,,Castropol,derivado
+es:partido:3307,display,,Castropol,derivado
+es:partido:3308,official,,Gijón,derivado
+es:partido:3308,display,,Gijón,derivado
+es:partido:3309,official,,Laviana,derivado
+es:partido:3309,display,,Laviana,derivado
+es:partido:3310,official,,Oviedo,derivado
+es:partido:3310,display,,Oviedo,derivado
+es:partido:3311,official,,Llanes,derivado
+es:partido:3311,display,,Llanes,derivado
+es:partido:3312,official,,Mieres,derivado
+es:partido:3312,display,,Mieres,derivado
+es:partido:3313,official,,Langreo,derivado
+es:partido:3313,display,,Langreo,derivado
+es:partido:3314,official,,Tineo,derivado
+es:partido:3314,display,,Tineo,derivado
+es:partido:3315,official,,Valdés,derivado
+es:partido:3315,display,,Valdés,derivado
+es:partido:3316,official,,Pravia,derivado
+es:partido:3316,display,,Pravia,derivado
+es:partido:3317,official,,Villaviciosa,derivado
+es:partido:3317,display,,Villaviciosa,derivado
+es:partido:3318,official,,Piloña,derivado
+es:partido:3318,display,,Piloña,derivado
+es:partido:3401,official,,Palencia,derivado
+es:partido:3401,display,,Palencia,derivado
+es:partido:3402,official,,Carrión de los Condes,derivado
+es:partido:3402,display,,Carrión de los Condes,derivado
+es:partido:3403,official,,Cervera de Pisuerga,derivado
+es:partido:3403,display,,Cervera de Pisuerga,derivado
+es:partido:3501,official,,Arrecife,derivado
+es:partido:3501,display,,Arrecife,derivado
+es:partido:3502,official,,"Palmas de Gran Canaria, Las",derivado
+es:partido:3502,display,,Las Palmas de Gran Canaria,derivado
+es:partido:3503,official,,Puerto del Rosario,derivado
+es:partido:3503,display,,Puerto del Rosario,derivado
+es:partido:3504,official,,Santa María de Guía de Gran Canaria,derivado
+es:partido:3504,display,,Santa María de Guía de Gran Canaria,derivado
+es:partido:3505,official,,Telde,derivado
+es:partido:3505,display,,Telde,derivado
+es:partido:3506,official,,San Bartolomé de Tirajana,derivado
+es:partido:3506,display,,San Bartolomé de Tirajana,derivado
+es:partido:3507,official,,Arucas,derivado
+es:partido:3507,display,,Arucas,derivado
+es:partido:3601,official,,Ponteareas,derivado
+es:partido:3601,display,,Ponteareas,derivado
+es:partido:3602,official,,Vilagarcía de Arousa,derivado
+es:partido:3602,display,,Vilagarcía de Arousa,derivado
+es:partido:3603,official,,Vigo,derivado
+es:partido:3603,display,,Vigo,derivado
+es:partido:3604,official,,Pontevedra,derivado
+es:partido:3604,display,,Pontevedra,derivado
+es:partido:3605,official,,"Estrada, A",derivado
+es:partido:3605,display,,A Estrada,derivado
+es:partido:3606,official,,Tui,derivado
+es:partido:3606,display,,Tui,derivado
+es:partido:3607,official,,Cangas de Morrazo,derivado
+es:partido:3607,display,,Cangas de Morrazo,derivado
+es:partido:3608,official,,Lalín,derivado
+es:partido:3608,display,,Lalín,derivado
+es:partido:3609,official,,Cambados,derivado
+es:partido:3609,display,,Cambados,derivado
+es:partido:3610,official,,Redondela,derivado
+es:partido:3610,display,,Redondela,derivado
+es:partido:3611,official,,"Porriño, O",derivado
+es:partido:3611,display,,O Porriño,derivado
+es:partido:3612,official,,Caldas de Reis,derivado
+es:partido:3612,display,,Caldas de Reis,derivado
+es:partido:3613,official,,Marín,derivado
+es:partido:3613,display,,Marín,derivado
+es:partido:3701,official,,Salamanca,derivado
+es:partido:3701,display,,Salamanca,derivado
+es:partido:3702,official,,Ciudad Rodrigo,derivado
+es:partido:3702,display,,Ciudad Rodrigo,derivado
+es:partido:3703,official,,Vitigudino,derivado
+es:partido:3703,display,,Vitigudino,derivado
+es:partido:3704,official,,Béjar,derivado
+es:partido:3704,display,,Béjar,derivado
+es:partido:3705,official,,Peñaranda de Bracamonte,derivado
+es:partido:3705,display,,Peñaranda de Bracamonte,derivado
+es:partido:3801,official,,Granadilla de Abona,derivado
+es:partido:3801,display,,Granadilla de Abona,derivado
+es:partido:3802,official,,San Sebastián de la Gomera,derivado
+es:partido:3802,display,,San Sebastián de la Gomera,derivado
+es:partido:3803,official,,Santa Cruz de Tenerife,derivado
+es:partido:3803,display,,Santa Cruz de Tenerife,derivado
+es:partido:3804,official,,Santa Cruz de la Palma,derivado
+es:partido:3804,display,,Santa Cruz de la Palma,derivado
+es:partido:3805,official,,Icod de los Vinos,derivado
+es:partido:3805,display,,Icod de los Vinos,derivado
+es:partido:3806,official,,Valverde,derivado
+es:partido:3806,display,,Valverde,derivado
+es:partido:3807,official,,San Cristóbal de La Laguna,derivado
+es:partido:3807,display,,San Cristóbal de La Laguna,derivado
+es:partido:3808,official,,"Orotava, La",derivado
+es:partido:3808,display,,La Orotava,derivado
+es:partido:3809,official,,"Llanos de Aridane, Los",derivado
+es:partido:3809,display,,Los Llanos de Aridane,derivado
+es:partido:3810,official,,Puerto de la Cruz,derivado
+es:partido:3810,display,,Puerto de la Cruz,derivado
+es:partido:3811,official,,Güímar,derivado
+es:partido:3811,display,,Güímar,derivado
+es:partido:3812,official,,Arona,derivado
+es:partido:3812,display,,Arona,derivado
+es:partido:3901,official,,Torrelavega,derivado
+es:partido:3901,display,,Torrelavega,derivado
+es:partido:3902,official,,Laredo,derivado
+es:partido:3902,display,,Laredo,derivado
+es:partido:3903,official,,Santander,derivado
+es:partido:3903,display,,Santander,derivado
+es:partido:3904,official,,San Vicente de la Barquera,derivado
+es:partido:3904,display,,San Vicente de la Barquera,derivado
+es:partido:3905,official,,Reinosa,derivado
+es:partido:3905,display,,Reinosa,derivado
+es:partido:3906,official,,Santoña,derivado
+es:partido:3906,display,,Santoña,derivado
+es:partido:3907,official,,Medio Cudeyo,derivado
+es:partido:3907,display,,Medio Cudeyo,derivado
+es:partido:3908,official,,Castro-Urdiales,derivado
+es:partido:3908,display,,Castro-Urdiales,derivado
+es:partido:4001,official,,Segovia,derivado
+es:partido:4001,display,,Segovia,derivado
+es:partido:4002,official,,Cuéllar,derivado
+es:partido:4002,display,,Cuéllar,derivado
+es:partido:4003,official,,Sepúlveda,derivado
+es:partido:4003,display,,Sepúlveda,derivado
+es:partido:4004,official,,Santa María la Real de Nieva,derivado
+es:partido:4004,display,,Santa María la Real de Nieva,derivado
+es:partido:4101,official,,Osuna,derivado
+es:partido:4101,display,,Osuna,derivado
+es:partido:4102,official,,Cazalla de la Sierra,derivado
+es:partido:4102,display,,Cazalla de la Sierra,derivado
+es:partido:4103,official,,Sanlúcar la Mayor,derivado
+es:partido:4103,display,,Sanlúcar la Mayor,derivado
+es:partido:4104,official,,Carmona,derivado
+es:partido:4104,display,,Carmona,derivado
+es:partido:4105,official,,Lora del Río,derivado
+es:partido:4105,display,,Lora del Río,derivado
+es:partido:4106,official,,Sevilla,derivado
+es:partido:4106,display,,Sevilla,derivado
+es:partido:4107,official,,Morón de la Frontera,derivado
+es:partido:4107,display,,Morón de la Frontera,derivado
+es:partido:4108,official,,Lebrija,derivado
+es:partido:4108,display,,Lebrija,derivado
+es:partido:4109,official,,Utrera,derivado
+es:partido:4109,display,,Utrera,derivado
+es:partido:4110,official,,Écija,derivado
+es:partido:4110,display,,Écija,derivado
+es:partido:4111,official,,Alcalá de Guadaíra,derivado
+es:partido:4111,display,,Alcalá de Guadaíra,derivado
+es:partido:4112,official,,Dos Hermanas,derivado
+es:partido:4112,display,,Dos Hermanas,derivado
+es:partido:4113,official,,Marchena,derivado
+es:partido:4113,display,,Marchena,derivado
+es:partido:4114,official,,Coria del Río,derivado
+es:partido:4114,display,,Coria del Río,derivado
+es:partido:4115,official,,Estepa,derivado
+es:partido:4115,display,,Estepa,derivado
+es:partido:4201,official,,Almazán,derivado
+es:partido:4201,display,,Almazán,derivado
+es:partido:4202,official,,Burgo de Osma-Ciudad de Osma,derivado
+es:partido:4202,display,,Burgo de Osma-Ciudad de Osma,derivado
+es:partido:4203,official,,Soria,derivado
+es:partido:4203,display,,Soria,derivado
+es:partido:4301,official,,"Vendrell, El",derivado
+es:partido:4301,display,,El Vendrell,derivado
+es:partido:4302,official,,Reus,derivado
+es:partido:4302,display,,Reus,derivado
+es:partido:4303,official,,Amposta,derivado
+es:partido:4303,display,,Amposta,derivado
+es:partido:4304,official,,Valls,derivado
+es:partido:4304,display,,Valls,derivado
+es:partido:4305,official,,Gandesa,derivado
+es:partido:4305,display,,Gandesa,derivado
+es:partido:4306,official,,Tarragona,derivado
+es:partido:4306,display,,Tarragona,derivado
+es:partido:4307,official,,Tortosa,derivado
+es:partido:4307,display,,Tortosa,derivado
+es:partido:4308,official,,Falset,derivado
+es:partido:4308,display,,Falset,derivado
+es:partido:4401,official,,Alcañiz,derivado
+es:partido:4401,display,,Alcañiz,derivado
+es:partido:4402,official,,Calamocha,derivado
+es:partido:4402,display,,Calamocha,derivado
+es:partido:4403,official,,Teruel,derivado
+es:partido:4403,display,,Teruel,derivado
+es:partido:4501,official,,Ocaña,derivado
+es:partido:4501,display,,Ocaña,derivado
+es:partido:4502,official,,Orgaz,derivado
+es:partido:4502,display,,Orgaz,derivado
+es:partido:4503,official,,Illescas,derivado
+es:partido:4503,display,,Illescas,derivado
+es:partido:4504,official,,Talavera de la Reina,derivado
+es:partido:4504,display,,Talavera de la Reina,derivado
+es:partido:4505,official,,Toledo,derivado
+es:partido:4505,display,,Toledo,derivado
+es:partido:4506,official,,Torrijos,derivado
+es:partido:4506,display,,Torrijos,derivado
+es:partido:4507,official,,Quintanar de la Orden,derivado
+es:partido:4507,display,,Quintanar de la Orden,derivado
+es:partido:4601,official,,Llíria,derivado
+es:partido:4601,display,,Llíria,derivado
+es:partido:4602,official,,Gandia,derivado
+es:partido:4602,display,,Gandia,derivado
+es:partido:4603,official,,Ontinyent,derivado
+es:partido:4603,display,,Ontinyent,derivado
+es:partido:4604,official,,Torrent,derivado
+es:partido:4604,display,,Torrent,derivado
+es:partido:4605,official,,Sueca,derivado
+es:partido:4605,display,,Sueca,derivado
+es:partido:4606,official,,València,derivado
+es:partido:4606,display,,València,derivado
+es:partido:4607,official,,Sagunt/Sagunto,derivado
+es:partido:4607,display,,Sagunt/Sagunto,derivado
+es:partido:4607,parts,ca,Sagunt,derivado
+es:partido:4607,parts,es,Sagunto,derivado
+es:partido:4608,official,,Alzira,derivado
+es:partido:4608,display,,Alzira,derivado
+es:partido:4609,official,,Carlet,derivado
+es:partido:4609,display,,Carlet,derivado
+es:partido:4610,official,,Xàtiva,derivado
+es:partido:4610,display,,Xàtiva,derivado
+es:partido:4611,official,,Requena,derivado
+es:partido:4611,display,,Requena,derivado
+es:partido:4612,official,,Catarroja,derivado
+es:partido:4612,display,,Catarroja,derivado
+es:partido:4613,official,,Montcada/Moncada,derivado
+es:partido:4613,display,,Montcada/Moncada,derivado
+es:partido:4613,parts,ca,Montcada,derivado
+es:partido:4613,parts,es,Moncada,derivado
+es:partido:4614,official,,Paterna,derivado
+es:partido:4614,display,,Paterna,derivado
+es:partido:4615,official,,Quart de Poblet,derivado
+es:partido:4615,display,,Quart de Poblet,derivado
+es:partido:4616,official,,Mislata,derivado
+es:partido:4616,display,,Mislata,derivado
+es:partido:4617,official,,Massamagrell,derivado
+es:partido:4617,display,,Massamagrell,derivado
+es:partido:4618,official,,Picassent,derivado
+es:partido:4618,display,,Picassent,derivado
+es:partido:4701,official,,Valladolid,derivado
+es:partido:4701,display,,Valladolid,derivado
+es:partido:4702,official,,Medina del Campo,derivado
+es:partido:4702,display,,Medina del Campo,derivado
+es:partido:4703,official,,Medina de Rioseco,derivado
+es:partido:4703,display,,Medina de Rioseco,derivado
+es:partido:4801,official,,Durango,derivado
+es:partido:4801,display,,Durango,derivado
+es:partido:4802,official,,Barakaldo,derivado
+es:partido:4802,display,,Barakaldo,derivado
+es:partido:4803,official,,Gernika-Lumo,derivado
+es:partido:4803,display,,Gernika-Lumo,derivado
+es:partido:4804,official,,Bilbao,derivado
+es:partido:4804,display,,Bilbao,derivado
+es:partido:4805,official,,Balmaseda,derivado
+es:partido:4805,display,,Balmaseda,derivado
+es:partido:4806,official,,Getxo,derivado
+es:partido:4806,display,,Getxo,derivado
+es:partido:4901,official,,Toro,derivado
+es:partido:4901,display,,Toro,derivado
+es:partido:4902,official,,Zamora,derivado
+es:partido:4902,display,,Zamora,derivado
+es:partido:4903,official,,Benavente,derivado
+es:partido:4903,display,,Benavente,derivado
+es:partido:4904,official,,Puebla de Sanabria,derivado
+es:partido:4904,display,,Puebla de Sanabria,derivado
+es:partido:4905,official,,Villalpando,derivado
+es:partido:4905,display,,Villalpando,derivado
+es:partido:5001,official,,Calatayud,derivado
+es:partido:5001,display,,Calatayud,derivado
+es:partido:5002,official,,Tarazona,derivado
+es:partido:5002,display,,Tarazona,derivado
+es:partido:5003,official,,Zaragoza,derivado
+es:partido:5003,display,,Zaragoza,derivado
+es:partido:5004,official,,Caspe,derivado
+es:partido:5004,display,,Caspe,derivado
+es:partido:5005,official,,Ejea de los Caballeros,derivado
+es:partido:5005,display,,Ejea de los Caballeros,derivado
+es:partido:5006,official,,Daroca,derivado
+es:partido:5006,display,,Daroca,derivado
+es:partido:5007,official,,"Almunia de Doña Godina, La",derivado
+es:partido:5007,display,,La Almunia de Doña Godina,derivado
+es:partido:5112,official,,Ceuta,derivado
+es:partido:5112,display,,Ceuta,derivado
+es:partido:5208,official,,Melilla,derivado
+es:partido:5208,display,,Melilla,derivado

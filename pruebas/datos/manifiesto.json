@@ -12,14 +12,15 @@
   "files": {
     "codigos-postales-fuentes.csv": "12a86995be2015d2048ae1c2be1627f4f07f449e193773e04c0e04391daf04c0",
     "codigos-postales.csv": "36398c8b94d9b52013f7afe96b7ca5939772e6f7a3238a6b8926e1d280b868ce",
-    "codigos.csv": "1990d1969de1821d1adbf66b2a81730849c881dabfe910b48a2c9ca0e7ea32a3",
+    "codigos.csv": "7a016b001e93e6aed1cc502ff3e99d70ab302af42446ff31b9e8002d544befa3",
     "comunidades.csv": "0f0a51e5ace01e685ac11b1ea83115dff2c30cb340c63b4b8cd49e35aaaec708",
     "islas.csv": "f5bd6f1a6dcfb6cfa4aa0b894ad7cc1c74bba70da1582f9140a9094631ecfe92",
-    "municipios.csv": "e444daa39ae8efa53eb5863374bb1da268c83c018c98132ad1763bc974c6b97a",
-    "nombres.csv": "78d4d498a37d49b2487d27e01fbf103663f55dece176d668b769800b268d7424",
+    "municipios.csv": "6b696478c095b4a45b1e1ab2aeac84e885dab81b414a10d8f3b2dd3eee453153",
+    "nombres.csv": "8b7a9fef01a5a5acc83d2d523b4efc5f6fde5ef58e88779da267bfe7de783d20",
     "paises.csv": "8505ba7e79949cd8bde30d6db9c31f53275597477e642a2c4f99da8b35a5b475",
+    "partidos-judiciales.csv": "f791edc4bb3ad845d276cca8724f80f21141621d540d23239811258b8578b101",
     "provincias.csv": "23a2dad894b41475467e3759c2e3a01aa77bfd0227559bc6c52693c2233ed99d",
-    "territorios.json": "ba9c185409b0b2d60438a7eb7767cfc233fe289e7ffcf7d9b4c69f0f1968daf6",
+    "territorios.json": "55e9f0693469cc01b0727d4fcec9617b3e34edf7d6ef5ab23fb24684db50439a",
     "wikipedia.csv": "8dbdefe86b0264a33a60f126af09ed209df1b9a5454fb5b189fb0559ed9afd7d"
   }
 }

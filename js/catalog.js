@@ -1,7 +1,12 @@
 // Catalogue of territories built from datos/territorios.json. Mirrors python/territorios_es/catalog.py.
 import { dropArticle, normalize } from './text.js';
 
-export const LEVELS = ['country', 'autonomous_community', 'province', 'island', 'municipality'];
+export const LEVELS = ['country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district'];
+// Groups of municipalities that do not change their parent: the field of the municipality that names
+// its group is the level of the group.
+const GROUPS = ['island', 'judicial_district'];
+// Levels that search() leaves out unless asked for: a judicial district has the name of its seat.
+const UNSEARCHED_LEVELS = ['judicial_district'];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -47,11 +52,14 @@ export function createCatalog(data) {
       if (!childrenOf.has(record.parent)) childrenOf.set(record.parent, []);
       childrenOf.get(record.parent).push(id);
     }
-    // An island groups municipalities of its province; their parent stays the province.
-    if (record.island != null) {
-      if (byId.get(record.island)?.level !== 'island') throw new Error(`Unknown island ${record.island} of ${id}`);
-      if (!childrenOf.has(record.island)) childrenOf.set(record.island, []);
-      childrenOf.get(record.island).push(id);
+    // An island or a judicial district groups municipalities of its province; their parent stays the
+    // province.
+    for (const group of GROUPS) {
+      const memberOf = record[group];
+      if (memberOf == null) continue;
+      if (byId.get(memberOf)?.level !== group) throw new Error(`Unknown ${group} ${memberOf} of ${id}`);
+      if (!childrenOf.has(memberOf)) childrenOf.set(memberOf, []);
+      childrenOf.get(memberOf).push(id);
     }
   }
 
@@ -93,8 +101,9 @@ export function createCatalog(data) {
     return { id, level: record.level, name: record.names.display, reason, lang };
   };
   const accept = (id, within, levels) => {
-    if (levels != null && !levels.includes(byId.get(id).level)) return false;
-    return within == null || ancestors(id).includes(within) || byId.get(id).island === within;
+    const level = byId.get(id).level;
+    if (levels != null ? !levels.includes(level) : UNSEARCHED_LEVELS.includes(level)) return false;
+    return within == null || ancestors(id).includes(within) || GROUPS.some((group) => byId.get(id)[group] === within);
   };
   const territory = (id) => {
     const record = typeof id === 'string' ? byId.get(id) : undefined;
@@ -150,7 +159,7 @@ export function createCatalog(data) {
       if (!pattern) return [];
       const found = [];
       for (const match of normalize(text).matchAll(pattern)) {
-        const candidates = forms.get(match[0]).filter((e) => accept(e[2], within, null)).map(candidate);
+        const candidates = forms.get(match[0]).filter((e) => accept(e[2], within, levels)).map(candidate);
         if (candidates.length) found.push({ text: match[0], candidates });
       }
       return found;

@@ -87,7 +87,7 @@ First version:
   requirement in job calls.
 
 Second version: islands (cabildos and consells), official comarcas and judicial districts. The
-islands are done (version 0.3):
+islands are done (version 0.3), and the judicial districts since 0.4:
 
 - **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
   with level `island` and an identifier with the INE island code (`es:isla:384` is Tenerife;
@@ -97,6 +97,18 @@ islands are done (version 0.3):
   NUTS 3, which is only used to cross-check (Eivissa and Formentera share ES531). Smaller islands go
   with the municipality they belong to (La Graciosa with Teguise, in Lanzarote; Cabrera with Palma,
   in Mallorca). The name is the INE's official one (§4.4); the others come from Wikidata.
+- **Judicial districts** (partidos judiciales): the 431 of the judicial map, with level
+  `judicial_district` and an identifier with the code of the Ministry of Justice's Censo Judicial:
+  province and number of the district within it (`es:partido:0705` is Eivissa; `es:partido:5112`,
+  Ceuta). Their parent is the province, since no district crosses one; municipalities keep their
+  parent and also carry the field `judicial_district`, as with the islands. The municipalities of
+  each district and its seat come from the Censo Judicial. The name is the seat's, with its parts if
+  it is bilingual, because the Censo writes it in capitals and with some typos
+  («CATARRO4623548000000JA» for Catarroja). Organic Law 1/2025 keeps the districts: each has a
+  court of first instance (tribunal de instancia) seated in its capital. `search` and `mentions`
+  leave them out unless asked for in `levels`, since they are named after their seat.
+
+Official comarcas are pending (§13).
 
 Later: population entities from the INE Nomenclátor (núcleos, and parishes in Galicia and
 Asturias), which number in the tens of thousands.
@@ -106,6 +118,7 @@ Asturias), which number in the tens of thousands.
 | Code | Levels | Source | Notes |
 |---|---|---|---|
 | INE | autonomous community (2 digits), province (2), island (3), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
+| Censo Judicial | judicial district (`mjusticia:partido`, 4 digits: province 2 + number 2) | Ministry of Justice's Censo Judicial | The number is the district's in the judicial map of its province. The Generalitat's technical catalogue (CTEAJE) uses the same code except in Ceuta and Melilla (1112 and 2908, against 5112 and 5208). |
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
@@ -158,9 +171,9 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 - **Autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
   "Cataluña").
-- **Provinces, islands and municipalities**: the official one. If it is bilingual, only the part in the
-  language of the page ("Alacant" in Catalan, "San Sebastián" in Spanish) and the full name in the
-  others. In Spanish "Girona" is shown, not "Gerona".
+- **Provinces, islands, judicial districts and municipalities**: the official one (a district's is
+  its seat's). If it is bilingual, only the part in the language of the page ("Alacant" in Catalan,
+  "San Sebastián" in Spanish) and the full name in the others. In Spanish "Girona" is shown, not "Gerona".
 - The usual names in other languages ("Gerona", "Seville", "Saragossa") are used for searching and
   are available for anyone who wants to display them.
 
@@ -232,10 +245,10 @@ options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
-| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province or an island. |
-| `children(id)` | The territories whose parent is this one; for an island, its municipalities. Those of a Balearic or Canary province include its islands and its municipalities. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island or a judicial district. Judicial districts only come up if asked for in `levels`. |
+| `children(id)` | The territories whose parent is this one; for an island or a judicial district, its municipalities. Those of a province include its judicial districts and, in the Balearic and Canary Islands, its islands. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -363,7 +376,7 @@ the source), but several are useful for cross-checking or as inspiration:
 | EU Vocabularies: ATU and Country authority tables (Publications Office) | Administrative units of the Member States, current and past, with stable URIs. | Cross-checking and linking, if its coverage of Spain reaches municipalities. |
 | Eurostat GISCO | LAU–NUTS tables and boundaries. | The tables and the codes, yes. The boundaries, no: their licence excludes commercial use. |
 | EuroGeographics, Open Maps For Europe | European boundaries. | Discarded: EuroGeographics' own licence, EuroBoundaryMap is not open, and the data for Spain come from the IGN, which we use directly. |
-| Unicode CLDR and Debian iso-codes | Translated names of countries and of ISO 3166-2 subdivisions. | Candidate for country names per language (today from Wikidata); Unicode licence for CLDR. |
+| Unicode CLDR and Debian iso-codes | Translated names of countries and of ISO 3166-2 subdivisions. | Reviewed on 11 November 2026 (CLDR 49): discarded for country names, which still come from Wikidata. It has no Aranese and uses interface names («Congo - Kinshasa», «RAE de Hong Kong (China)», «Côte d’Ivoire» in Spanish). |
 | mapSpain and giscoR (R packages) | Maps of Spain and dictionaries of codes and names. | Inspiration. |
 | datos.gob.es | URIs of autonomous communities and provinces. | Additional identifier (§4.2). |
 | Base de datos general de entidades locales (Ministry of Finance) | Local entities with INE code and NIF. | For the sibling repo of public bodies. |
@@ -415,6 +428,16 @@ Taken on 10 November 2026:
     the other sources that have it (`also`). If a download fails nothing is written. The API works
     both ways and stays out of `resolve`.
 
+Taken on 11 November 2026:
+
+15. Judicial districts: level `judicial_district` with the province as parent, like the islands,
+    from the Ministry of Justice's Censo Judicial in every monthly generation. Identifier
+    `es:partido:PPNN` (province and the Ministry's number), named after the seat and left out of
+    `search` and `mentions` unless asked for. The download is mandatory: if the Ministry does not
+    answer, the generation fails before writing anything, instead of publishing the municipalities
+    without a district. No third-party repositories: none is maintained or improves on the official
+    source.
+
 ## 13. Pending
 
 - Translate this document and the README into Catalan, Galician, Basque and Aranese.
@@ -428,9 +451,25 @@ Taken on 10 November 2026:
   link to open the PR by hand. GitHub Pages is already enabled.
 - Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
   postal-code gatherer (done, with the full run of every source; afterwards, more
-  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts and official comarcas (find a source: the Registro de
-  Entidades Locales records islands, comarcas and associations of municipalities); country names
-  from CLDR; GitHub actions still on Node 20.
+  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); official comarcas;
+  GitHub actions still on Node 20 (Dependabot updates them).
+- Official comarcas: they are a local entity only in Aragon, Castile and León (El Bierzo),
+  Catalonia and the Basque Country (the cuadrillas of Álava), the four communities in the Registro
+  de Entidades Locales. Catalonia has an official table at Idescat (43 comarcas with Aran and
+  Lluçanès) and Aragon at Aragón Open Data (33, with the Central one; names in capitals and without
+  accents). The Registro export is downloaded with a plain request (`…/export_excel/comarcas/all`),
+  without a browser. Those of Galicia, the Valencian Community, Asturias or Navarre are statistical or
+  planning areas, not local entities.
+- Cross-references of the judicial districts, as later layers: their Wikidata item (390 of 431,
+  linkable through the seat) and their names in other languages; the CGPJ's population by
+  district; the other jurisdictions in the Censo Judicial (section of the Audiencia, High Court,
+  public prosecutor, civil registry).
+- Country names: they still come from Wikidata, which has some typos. Review them, fix the typos
+  here with a file in `fuentes/` and fix them in Wikidata too.
+- Postal codes in Andalusia: CDAU has 526 pairs that the INE, which decides there, lacks; the
+  Cadastre confirms 176 of them (Vera Playa, 04621, among them). They are probably second-home
+  areas missing from the electoral census, where the INE data comes from. Consider whether CDAU
+  should contribute those pairs.
 - Later: population entities, historical INE changes (annual dictionaries since 2004 and each
   year's page of changes), fuzzy search.
 
@@ -534,6 +573,22 @@ Checked on 10 November 2026:
   (Cesuras). The tables
   for communities (2853) and islands (2910) end in 2021. The national table by municipality
   (29005) is over 10 MB.
+
+Checked on 11 November 2026:
+
+- **Censo Judicial (Ministry of Justice)**: XLSX in the Ministry's download area and in the
+  datos.gob.es catalogue (`e05228601-censo-judicial`); according to the dataset's metadata, its
+  conditions of use are the catalogue's general ones (`https://datos.gob.es/avisolegal`). The
+  Ministry portal's legal notice limits its other contents to private use. One row per
+  municipality with `CPRO`, `PJ` (district number), `CODM PJ` (seat), `CODM` and `CPJ` («SI» at the
+  seat), and a last row «Actualizado a 25/03/2026». It has the dictionary's 8,132 municipalities and
+  431 districts, each with one seat in its province, and it matches row by row the PDF Nomenclátor
+  de Partidos Judiciales of 30 December 2025. Its population matches the INE's; its postal code is
+  that of the court or town hall, not the municipality's. No district joins two islands except
+  Eivissa's, which includes Formentera.
+- **Cross-checking the districts**: the CGPJ publishes the population by district and municipality
+  every year (XLSX, names only) and the Generalitat the CTEAJE catalogue of Spain's districts (code,
+  name and seat). No third-party repository with the national relation is maintained.
 
 To be checked:
 

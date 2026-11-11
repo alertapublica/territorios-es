@@ -1,0 +1,432 @@
+id,mjusticia,provincia,sede,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,time_zone
+es:partido:0101,0101,01,01002,Amurrio,Amurrio,Amurrio,Amurrio,Amurrio,Amurrio,Amurrio,Amurrio,Europe/Madrid
+es:partido:0102,0102,01,01059,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Vitoria-Gasteiz,Europe/Madrid
+es:partido:0201,0201,02,02003,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Albacete,Europe/Madrid
+es:partido:0202,0202,02,02008,Alcaraz,Alcaraz,Alcaraz,Alcaraz,Alcaraz,Alcaraz,Alcaraz,Alcaraz,Europe/Madrid
+es:partido:0203,0203,02,02009,Almansa,Almansa,Almansa,Almansa,Almansa,Almansa,Almansa,Almansa,Europe/Madrid
+es:partido:0204,0204,02,02037,Hellín,Hellín,Hellín,Hellín,Hellín,Hellín,Hellín,Hellín,Europe/Madrid
+es:partido:0205,0205,02,02069,"Roda, La",La Roda,La Roda,La Roda,La Roda,La Roda,La Roda,La Roda,Europe/Madrid
+es:partido:0206,0206,02,02081,Villarrobledo,Villarrobledo,Villarrobledo,Villarrobledo,Villarrobledo,Villarrobledo,Villarrobledo,Villarrobledo,Europe/Madrid
+es:partido:0207,0207,02,02024,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Casas-Ibáñez,Europe/Madrid
+es:partido:0301,0301,03,03063,Dénia,Dénia,Dénia,Dénia,Dénia,Dénia,Dénia,Dénia,Europe/Madrid
+es:partido:0302,0302,03,03009,Alcoi/Alcoy,Alcoi/Alcoy,Alcoy,Alcoi,Alcoi/Alcoy,Alcoi/Alcoy,Alcoi/Alcoy,Alcoi/Alcoy,Europe/Madrid
+es:partido:0303,0303,03,03014,Alacant/Alicante,Alacant/Alicante,Alicante,Alacant,Alacant/Alicante,Alacant/Alicante,Alacant/Alicante,Alacant/Alicante,Europe/Madrid
+es:partido:0304,0304,03,03099,Orihuela,Orihuela,Orihuela,Orihuela,Orihuela,Orihuela,Orihuela,Orihuela,Europe/Madrid
+es:partido:0305,0305,03,03139,"Vila Joiosa, la/Villajoyosa",la Vila Joiosa/Villajoyosa,Villajoyosa,la Vila Joiosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,la Vila Joiosa/Villajoyosa,Europe/Madrid
+es:partido:0306,0306,03,03066,Elda,Elda,Elda,Elda,Elda,Elda,Elda,Elda,Europe/Madrid
+es:partido:0307,0307,03,03140,Villena,Villena,Villena,Villena,Villena,Villena,Villena,Villena,Europe/Madrid
+es:partido:0308,0308,03,03065,Elx/Elche,Elx/Elche,Elche,Elx,Elx/Elche,Elx/Elche,Elx/Elche,Elx/Elche,Europe/Madrid
+es:partido:0309,0309,03,03031,Benidorm,Benidorm,Benidorm,Benidorm,Benidorm,Benidorm,Benidorm,Benidorm,Europe/Madrid
+es:partido:0310,0310,03,03122,Sant Vicent del Raspeig/San Vicente del Raspeig,Sant Vicent del Raspeig/San Vicente del Raspeig,San Vicente del Raspeig,Sant Vicent del Raspeig,Sant Vicent del Raspeig/San Vicente del Raspeig,Sant Vicent del Raspeig/San Vicente del Raspeig,Sant Vicent del Raspeig/San Vicente del Raspeig,Sant Vicent del Raspeig/San Vicente del Raspeig,Europe/Madrid
+es:partido:0311,0311,03,03093,Novelda,Novelda,Novelda,Novelda,Novelda,Novelda,Novelda,Novelda,Europe/Madrid
+es:partido:0312,0312,03,03079,Ibi,Ibi,Ibi,Ibi,Ibi,Ibi,Ibi,Ibi,Europe/Madrid
+es:partido:0313,0313,03,03133,Torrevieja,Torrevieja,Torrevieja,Torrevieja,Torrevieja,Torrevieja,Torrevieja,Torrevieja,Europe/Madrid
+es:partido:0401,0401,04,04013,Almería,Almería,Almería,Almería,Almería,Almería,Almería,Almería,Europe/Madrid
+es:partido:0402,0402,04,04029,Berja,Berja,Berja,Berja,Berja,Berja,Berja,Berja,Europe/Madrid
+es:partido:0403,0403,04,04053,Huércal-Overa,Huércal-Overa,Huércal-Overa,Huércal-Overa,Huércal-Overa,Huércal-Overa,Huércal-Overa,Huércal-Overa,Europe/Madrid
+es:partido:0404,0404,04,04100,Vera,Vera,Vera,Vera,Vera,Vera,Vera,Vera,Europe/Madrid
+es:partido:0405,0405,04,04079,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Roquetas de Mar,Europe/Madrid
+es:partido:0406,0406,04,04099,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Vélez-Rubio,Europe/Madrid
+es:partido:0407,0407,04,04902,"Ejido, El",El Ejido,El Ejido,El Ejido,El Ejido,El Ejido,El Ejido,El Ejido,Europe/Madrid
+es:partido:0408,0408,04,04076,Purchena,Purchena,Purchena,Purchena,Purchena,Purchena,Purchena,Purchena,Europe/Madrid
+es:partido:0501,0501,05,05016,Arévalo,Arévalo,Arévalo,Arévalo,Arévalo,Arévalo,Arévalo,Arévalo,Europe/Madrid
+es:partido:0502,0502,05,05014,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Arenas de San Pedro,Europe/Madrid
+es:partido:0503,0503,05,05019,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Europe/Madrid
+es:partido:0504,0504,05,05186,Piedrahíta,Piedrahíta,Piedrahíta,Piedrahíta,Piedrahíta,Piedrahíta,Piedrahíta,Piedrahíta,Europe/Madrid
+es:partido:0601,0601,06,06153,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Villanueva de la Serena,Europe/Madrid
+es:partido:0602,0602,06,06011,Almendralejo,Almendralejo,Almendralejo,Almendralejo,Almendralejo,Almendralejo,Almendralejo,Almendralejo,Europe/Madrid
+es:partido:0603,0603,06,06074,Llerena,Llerena,Llerena,Llerena,Llerena,Llerena,Llerena,Llerena,Europe/Madrid
+es:partido:0604,0604,06,06083,Mérida,Mérida,Mérida,Mérida,Mérida,Mérida,Mérida,Mérida,Europe/Madrid
+es:partido:0605,0605,06,06015,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Europe/Madrid
+es:partido:0606,0606,06,06095,Olivenza,Olivenza,Olivenza,Olivenza,Olivenza,Olivenza,Olivenza,Olivenza,Europe/Madrid
+es:partido:0607,0607,06,06158,Zafra,Zafra,Zafra,Zafra,Zafra,Zafra,Zafra,Zafra,Europe/Madrid
+es:partido:0608,0608,06,06070,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Jerez de los Caballeros,Europe/Madrid
+es:partido:0609,0609,06,06063,Herrera del Duque,Herrera del Duque,Herrera del Duque,Herrera del Duque,Herrera del Duque,Herrera del Duque,Herrera del Duque,Herrera del Duque,Europe/Madrid
+es:partido:0610,0610,06,06036,Castuera,Castuera,Castuera,Castuera,Castuera,Castuera,Castuera,Castuera,Europe/Madrid
+es:partido:0611,0611,06,06044,Don Benito,Don Benito,Don Benito,Don Benito,Don Benito,Don Benito,Don Benito,Don Benito,Europe/Madrid
+es:partido:0612,0612,06,06050,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Fregenal de la Sierra,Europe/Madrid
+es:partido:0613,0613,06,06088,Montijo,Montijo,Montijo,Montijo,Montijo,Montijo,Montijo,Montijo,Europe/Madrid
+es:partido:0614,0614,06,06149,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Villafranca de los Barros,Europe/Madrid
+es:partido:0701,0701,07,07032,Maó,Maó,Maó,Maó,Maó,Maó,Maó,Maó,Europe/Madrid
+es:partido:0702,0702,07,07027,Inca,Inca,Inca,Inca,Inca,Inca,Inca,Inca,Europe/Madrid
+es:partido:0703,0703,07,07040,Palma,Palma,Palma,Palma,Palma,Palma,Palma,Palma,Europe/Madrid
+es:partido:0704,0704,07,07033,Manacor,Manacor,Manacor,Manacor,Manacor,Manacor,Manacor,Manacor,Europe/Madrid
+es:partido:0705,0705,07,07026,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Eivissa,Europe/Madrid
+es:partido:0706,0706,07,07015,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Ciutadella de Menorca,Europe/Madrid
+es:partido:0801,0801,08,08114,Martorell,Martorell,Martorell,Martorell,Martorell,Martorell,Martorell,Martorell,Europe/Madrid
+es:partido:0802,0802,08,08113,Manresa,Manresa,Manresa,Manresa,Manresa,Manresa,Manresa,Manresa,Europe/Madrid
+es:partido:0803,0803,08,08096,Granollers,Granollers,Granollers,Granollers,Granollers,Granollers,Granollers,Granollers,Europe/Madrid
+es:partido:0804,0804,08,08121,Mataró,Mataró,Mataró,Mataró,Mataró,Mataró,Mataró,Mataró,Europe/Madrid
+es:partido:0805,0805,08,08298,Vic,Vic,Vic,Vic,Vic,Vic,Vic,Vic,Europe/Madrid
+es:partido:0806,0806,08,08006,Arenys de Mar,Arenys de Mar,Arenys de Mar,Arenys de Mar,Arenys de Mar,Arenys de Mar,Arenys de Mar,Arenys de Mar,Europe/Madrid
+es:partido:0807,0807,08,08102,Igualada,Igualada,Igualada,Igualada,Igualada,Igualada,Igualada,Igualada,Europe/Madrid
+es:partido:0808,0808,08,08022,Berga,Berga,Berga,Berga,Berga,Berga,Berga,Berga,Europe/Madrid
+es:partido:0809,0809,08,08305,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Vilafranca del Penedès,Europe/Madrid
+es:partido:0810,0810,08,08015,Badalona,Badalona,Badalona,Badalona,Badalona,Badalona,Badalona,Badalona,Europe/Madrid
+es:partido:0811,0811,08,08019,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Europe/Madrid
+es:partido:0812,0812,08,08200,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Sant Boi de Llobregat,Europe/Madrid
+es:partido:0813,0813,08,08187,Sabadell,Sabadell,Sabadell,Sabadell,Sabadell,Sabadell,Sabadell,Sabadell,Europe/Madrid
+es:partido:0814,0814,08,08307,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Vilanova i la Geltrú,Europe/Madrid
+es:partido:0815,0815,08,08279,Terrassa,Terrassa,Terrassa,Terrassa,Terrassa,Terrassa,Terrassa,Terrassa,Europe/Madrid
+es:partido:0816,0816,08,08211,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Sant Feliu de Llobregat,Europe/Madrid
+es:partido:0817,0817,08,08101,"Hospitalet de Llobregat, L'",L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,L'Hospitalet de Llobregat,Europe/Madrid
+es:partido:0818,0818,08,08245,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Santa Coloma de Gramenet,Europe/Madrid
+es:partido:0819,0819,08,08266,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Cerdanyola del Vallès,Europe/Madrid
+es:partido:0820,0820,08,08073,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Cornellà de Llobregat,Europe/Madrid
+es:partido:0821,0821,08,08089,Gavà,Gavà,Gavà,Gavà,Gavà,Gavà,Gavà,Gavà,Europe/Madrid
+es:partido:0822,0822,08,08124,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Mollet del Vallès,Europe/Madrid
+es:partido:0823,0823,08,08077,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Esplugues de Llobregat,Europe/Madrid
+es:partido:0824,0824,08,08184,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,Rubí,Europe/Madrid
+es:partido:0825,0825,08,08169,"Prat de Llobregat, El",El Prat de Llobregat,El Prat de Llobregat,El Prat de Llobregat,El Prat de Llobregat,El Prat de Llobregat,El Prat de Llobregat,El Prat de Llobregat,Europe/Madrid
+es:partido:0901,0901,09,09059,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Europe/Madrid
+es:partido:0902,0902,09,09018,Aranda de Duero,Aranda de Duero,Aranda de Duero,Aranda de Duero,Aranda de Duero,Aranda de Duero,Aranda de Duero,Aranda de Duero,Europe/Madrid
+es:partido:0903,0903,09,09903,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Villarcayo de Merindad de Castilla la Vieja,Europe/Madrid
+es:partido:0904,0904,09,09219,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Miranda de Ebro,Europe/Madrid
+es:partido:0905,0905,09,09194,Lerma,Lerma,Lerma,Lerma,Lerma,Lerma,Lerma,Lerma,Europe/Madrid
+es:partido:0906,0906,09,09056,Briviesca,Briviesca,Briviesca,Briviesca,Briviesca,Briviesca,Briviesca,Briviesca,Europe/Madrid
+es:partido:0907,0907,09,09330,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Salas de los Infantes,Europe/Madrid
+es:partido:1001,1001,10,10037,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Europe/Madrid
+es:partido:1002,1002,10,10067,Coria,Coria,Coria,Coria,Coria,Coria,Coria,Coria,Europe/Madrid
+es:partido:1003,1003,10,10131,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Navalmoral de la Mata,Europe/Madrid
+es:partido:1004,1004,10,10148,Plasencia,Plasencia,Plasencia,Plasencia,Plasencia,Plasencia,Plasencia,Plasencia,Europe/Madrid
+es:partido:1005,1005,10,10195,Trujillo,Trujillo,Trujillo,Trujillo,Trujillo,Trujillo,Trujillo,Trujillo,Europe/Madrid
+es:partido:1006,1006,10,10203,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Valencia de Alcántara,Europe/Madrid
+es:partido:1007,1007,10,10109,Logrosán,Logrosán,Logrosán,Logrosán,Logrosán,Logrosán,Logrosán,Logrosán,Europe/Madrid
+es:partido:1101,1101,11,11015,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Chiclana de la Frontera,Europe/Madrid
+es:partido:1102,1102,11,11006,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Arcos de la Frontera,Europe/Madrid
+es:partido:1103,1103,11,11004,Algeciras,Algeciras,Algeciras,Algeciras,Algeciras,Algeciras,Algeciras,Algeciras,Europe/Madrid
+es:partido:1104,1104,11,11012,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Europe/Madrid
+es:partido:1105,1105,11,11033,San Roque,San Roque,San Roque,San Roque,San Roque,San Roque,San Roque,San Roque,Europe/Madrid
+es:partido:1106,1106,11,11032,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Sanlúcar de Barrameda,Europe/Madrid
+es:partido:1107,1107,11,11020,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Jerez de la Frontera,Europe/Madrid
+es:partido:1108,1108,11,11022,"Línea de la Concepción, La",La Línea de la Concepción,La Línea de la Concepción,La Línea de la Concepción,La Línea de la Concepción,La Línea de la Concepción,La Línea de la Concepción,La Línea de la Concepción,Europe/Madrid
+es:partido:1109,1109,11,11031,San Fernando,San Fernando,San Fernando,San Fernando,San Fernando,San Fernando,San Fernando,San Fernando,Europe/Madrid
+es:partido:1110,1110,11,11027,"Puerto de Santa María, El",El Puerto de Santa María,El Puerto de Santa María,El Puerto de Santa María,El Puerto de Santa María,El Puerto de Santa María,El Puerto de Santa María,El Puerto de Santa María,Europe/Madrid
+es:partido:1111,1111,11,11030,Rota,Rota,Rota,Rota,Rota,Rota,Rota,Rota,Europe/Madrid
+es:partido:1113,1113,11,11028,Puerto Real,Puerto Real,Puerto Real,Puerto Real,Puerto Real,Puerto Real,Puerto Real,Puerto Real,Europe/Madrid
+es:partido:1114,1114,11,11007,Barbate,Barbate,Barbate,Barbate,Barbate,Barbate,Barbate,Barbate,Europe/Madrid
+es:partido:1115,1115,11,11038,Ubrique,Ubrique,Ubrique,Ubrique,Ubrique,Ubrique,Ubrique,Ubrique,Europe/Madrid
+es:partido:1201,1201,12,12040,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castellón de la Plana,Castelló de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Castelló de la Plana/Castellón de la Plana,Europe/Madrid
+es:partido:1202,1202,12,12104,Segorbe,Segorbe,Segorbe,Segorbe,Segorbe,Segorbe,Segorbe,Segorbe,Europe/Madrid
+es:partido:1203,1203,12,12138,Vinaròs,Vinaròs,Vinaròs,Vinaròs,Vinaròs,Vinaròs,Vinaròs,Vinaròs,Europe/Madrid
+es:partido:1204,1204,12,12082,Nules,Nules,Nules,Nules,Nules,Nules,Nules,Nules,Europe/Madrid
+es:partido:1205,1205,12,12135,Vila-real,Vila-real,Vila-real,Vila-real,Vila-real,Vila-real,Vila-real,Vila-real,Europe/Madrid
+es:partido:1301,1301,13,13005,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Alcázar de San Juan,Europe/Madrid
+es:partido:1302,1302,13,13034,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Ciudad Real,Europe/Madrid
+es:partido:1303,1303,13,13039,Daimiel,Daimiel,Daimiel,Daimiel,Daimiel,Daimiel,Daimiel,Daimiel,Europe/Madrid
+es:partido:1304,1304,13,13053,Manzanares,Manzanares,Manzanares,Manzanares,Manzanares,Manzanares,Manzanares,Manzanares,Europe/Madrid
+es:partido:1305,1305,13,13087,Valdepeñas,Valdepeñas,Valdepeñas,Valdepeñas,Valdepeñas,Valdepeñas,Valdepeñas,Valdepeñas,Europe/Madrid
+es:partido:1306,1306,13,13093,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Villanueva de los Infantes,Europe/Madrid
+es:partido:1307,1307,13,13071,Puertollano,Puertollano,Puertollano,Puertollano,Puertollano,Puertollano,Puertollano,Puertollano,Europe/Madrid
+es:partido:1308,1308,13,13082,Tomelloso,Tomelloso,Tomelloso,Tomelloso,Tomelloso,Tomelloso,Tomelloso,Tomelloso,Europe/Madrid
+es:partido:1309,1309,13,13013,Almagro,Almagro,Almagro,Almagro,Almagro,Almagro,Almagro,Almagro,Europe/Madrid
+es:partido:1310,1310,13,13011,Almadén,Almadén,Almadén,Almadén,Almadén,Almadén,Almadén,Almadén,Europe/Madrid
+es:partido:1401,1401,14,14043,Montoro,Montoro,Montoro,Montoro,Montoro,Montoro,Montoro,Montoro,Europe/Madrid
+es:partido:1402,1402,14,14002,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Aguilar de la Frontera,Europe/Madrid
+es:partido:1403,1403,14,14054,Pozoblanco,Pozoblanco,Pozoblanco,Pozoblanco,Pozoblanco,Pozoblanco,Pozoblanco,Pozoblanco,Europe/Madrid
+es:partido:1404,1404,14,14007,Baena,Baena,Baena,Baena,Baena,Baena,Baena,Baena,Europe/Madrid
+es:partido:1405,1405,14,14053,Posadas,Posadas,Posadas,Posadas,Posadas,Posadas,Posadas,Posadas,Europe/Madrid
+es:partido:1406,1406,14,14052,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Peñarroya-Pueblonuevo,Europe/Madrid
+es:partido:1407,1407,14,14038,Lucena,Lucena,Lucena,Lucena,Lucena,Lucena,Lucena,Lucena,Europe/Madrid
+es:partido:1408,1408,14,14021,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Córdoba,Europe/Madrid
+es:partido:1409,1409,14,14055,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Priego de Córdoba,Europe/Madrid
+es:partido:1410,1410,14,14013,Cabra,Cabra,Cabra,Cabra,Cabra,Cabra,Cabra,Cabra,Europe/Madrid
+es:partido:1411,1411,14,14042,Montilla,Montilla,Montilla,Montilla,Montilla,Montilla,Montilla,Montilla,Europe/Madrid
+es:partido:1412,1412,14,14056,Puente Genil,Puente Genil,Puente Genil,Puente Genil,Puente Genil,Puente Genil,Puente Genil,Puente Genil,Europe/Madrid
+es:partido:1501,1501,15,15009,Betanzos,Betanzos,Betanzos,Betanzos,Betanzos,Betanzos,Betanzos,Betanzos,Europe/Madrid
+es:partido:1502,1502,15,15078,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Santiago de Compostela,Europe/Madrid
+es:partido:1503,1503,15,15036,Ferrol,Ferrol,Ferrol,Ferrol,Ferrol,Ferrol,Ferrol,Ferrol,Europe/Madrid
+es:partido:1504,1504,15,15030,"Coruña, A",A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,A Coruña,Europe/Madrid
+es:partido:1505,1505,15,15057,Noia,Noia,Noia,Noia,Noia,Noia,Noia,Noia,Europe/Madrid
+es:partido:1506,1506,15,15019,Carballo,Carballo,Carballo,Carballo,Carballo,Carballo,Carballo,Carballo,Europe/Madrid
+es:partido:1507,1507,15,15028,Corcubión,Corcubión,Corcubión,Corcubión,Corcubión,Corcubión,Corcubión,Corcubión,Europe/Madrid
+es:partido:1508,1508,15,15006,Arzúa,Arzúa,Arzúa,Arzúa,Arzúa,Arzúa,Arzúa,Arzúa,Europe/Madrid
+es:partido:1509,1509,15,15061,Ortigueira,Ortigueira,Ortigueira,Ortigueira,Ortigueira,Ortigueira,Ortigueira,Ortigueira,Europe/Madrid
+es:partido:1510,1510,15,15073,Ribeira,Ribeira,Ribeira,Ribeira,Ribeira,Ribeira,Ribeira,Ribeira,Europe/Madrid
+es:partido:1511,1511,15,15056,Negreira,Negreira,Negreira,Negreira,Negreira,Negreira,Negreira,Negreira,Europe/Madrid
+es:partido:1512,1512,15,15053,Muros,Muros,Muros,Muros,Muros,Muros,Muros,Muros,Europe/Madrid
+es:partido:1513,1513,15,15065,Padrón,Padrón,Padrón,Padrón,Padrón,Padrón,Padrón,Padrón,Europe/Madrid
+es:partido:1514,1514,15,15059,Ordes,Ordes,Ordes,Ordes,Ordes,Ordes,Ordes,Ordes,Europe/Madrid
+es:partido:1601,1601,16,16078,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Cuenca,Europe/Madrid
+es:partido:1602,1602,16,16203,Tarancón,Tarancón,Tarancón,Tarancón,Tarancón,Tarancón,Tarancón,Tarancón,Europe/Madrid
+es:partido:1603,1603,16,16134,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Motilla del Palancar,Europe/Madrid
+es:partido:1604,1604,16,16190,San Clemente,San Clemente,San Clemente,San Clemente,San Clemente,San Clemente,San Clemente,San Clemente,Europe/Madrid
+es:partido:1701,1701,17,17066,Figueres,Figueres,Figueres,Figueres,Figueres,Figueres,Figueres,Figueres,Europe/Madrid
+es:partido:1702,1702,17,17079,Girona,Girona,Girona,Girona,Girona,Girona,Girona,Girona,Europe/Madrid
+es:partido:1703,1703,17,17022,"Bisbal d'Empordà, La",La Bisbal d'Empordà,La Bisbal d'Empordà,La Bisbal d'Empordà,La Bisbal d'Empordà,La Bisbal d'Empordà,La Bisbal d'Empordà,La Bisbal d'Empordà,Europe/Madrid
+es:partido:1704,1704,17,17147,Ripoll,Ripoll,Ripoll,Ripoll,Ripoll,Ripoll,Ripoll,Ripoll,Europe/Madrid
+es:partido:1705,1705,17,17180,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Santa Coloma de Farners,Europe/Madrid
+es:partido:1706,1706,17,17114,Olot,Olot,Olot,Olot,Olot,Olot,Olot,Olot,Europe/Madrid
+es:partido:1707,1707,17,17023,Blanes,Blanes,Blanes,Blanes,Blanes,Blanes,Blanes,Blanes,Europe/Madrid
+es:partido:1708,1708,17,17160,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Sant Feliu de Guíxols,Europe/Madrid
+es:partido:1709,1709,17,17141,Puigcerdà,Puigcerdà,Puigcerdà,Puigcerdà,Puigcerdà,Puigcerdà,Puigcerdà,Puigcerdà,Europe/Madrid
+es:partido:1801,1801,18,18122,Loja,Loja,Loja,Loja,Loja,Loja,Loja,Loja,Europe/Madrid
+es:partido:1802,1802,18,18089,Guadix,Guadix,Guadix,Guadix,Guadix,Guadix,Guadix,Guadix,Europe/Madrid
+es:partido:1803,1803,18,18087,Granada,Granada,Granada,Granada,Granada,Granada,Granada,Granada,Europe/Madrid
+es:partido:1804,1804,18,18140,Motril,Motril,Motril,Motril,Motril,Motril,Motril,Motril,Europe/Madrid
+es:partido:1805,1805,18,18147,Órgiva,Órgiva,Órgiva,Órgiva,Órgiva,Órgiva,Órgiva,Órgiva,Europe/Madrid
+es:partido:1806,1806,18,18023,Baza,Baza,Baza,Baza,Baza,Baza,Baza,Baza,Europe/Madrid
+es:partido:1807,1807,18,18175,Santa Fe,Santa Fe,Santa Fe,Santa Fe,Santa Fe,Santa Fe,Santa Fe,Santa Fe,Europe/Madrid
+es:partido:1808,1808,18,18098,Huéscar,Huéscar,Huéscar,Huéscar,Huéscar,Huéscar,Huéscar,Huéscar,Europe/Madrid
+es:partido:1809,1809,18,18017,Almuñécar,Almuñécar,Almuñécar,Almuñécar,Almuñécar,Almuñécar,Almuñécar,Almuñécar,Europe/Madrid
+es:partido:1901,1901,19,19130,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Guadalajara,Europe/Madrid
+es:partido:1902,1902,19,19190,Molina de Aragón,Molina de Aragón,Molina de Aragón,Molina de Aragón,Molina de Aragón,Molina de Aragón,Molina de Aragón,Molina de Aragón,Europe/Madrid
+es:partido:1903,1903,19,19257,Sigüenza,Sigüenza,Sigüenza,Sigüenza,Sigüenza,Sigüenza,Sigüenza,Sigüenza,Europe/Madrid
+es:partido:2001,2001,20,20071,Tolosa,Tolosa,Tolosa,Tolosa,Tolosa,Tolosa,Tolosa,Tolosa,Europe/Madrid
+es:partido:2002,2002,20,20018,Azpeitia,Azpeitia,Azpeitia,Azpeitia,Azpeitia,Azpeitia,Azpeitia,Azpeitia,Europe/Madrid
+es:partido:2003,2003,20,20074,Bergara,Bergara,Bergara,Bergara,Bergara,Bergara,Bergara,Bergara,Europe/Madrid
+es:partido:2004,2004,20,20030,Eibar,Eibar,Eibar,Eibar,Eibar,Eibar,Eibar,Eibar,Europe/Madrid
+es:partido:2005,2005,20,20069,Donostia/San Sebastián,Donostia/San Sebastián,San Sebastián,Donostia/San Sebastián,Donostia/San Sebastián,Donostia,Donostia/San Sebastián,Donostia/San Sebastián,Europe/Madrid
+es:partido:2006,2006,20,20045,Irun,Irun,Irun,Irun,Irun,Irun,Irun,Irun,Europe/Madrid
+es:partido:2101,2101,21,21007,Aracena,Aracena,Aracena,Aracena,Aracena,Aracena,Aracena,Aracena,Europe/Madrid
+es:partido:2102,2102,21,21041,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Huelva,Europe/Madrid
+es:partido:2103,2103,21,21054,"Palma del Condado, La",La Palma del Condado,La Palma del Condado,La Palma del Condado,La Palma del Condado,La Palma del Condado,La Palma del Condado,La Palma del Condado,Europe/Madrid
+es:partido:2104,2104,21,21072,Valverde del Camino,Valverde del Camino,Valverde del Camino,Valverde del Camino,Valverde del Camino,Valverde del Camino,Valverde del Camino,Valverde del Camino,Europe/Madrid
+es:partido:2105,2105,21,21010,Ayamonte,Ayamonte,Ayamonte,Ayamonte,Ayamonte,Ayamonte,Ayamonte,Ayamonte,Europe/Madrid
+es:partido:2106,2106,21,21050,Moguer,Moguer,Moguer,Moguer,Moguer,Moguer,Moguer,Moguer,Europe/Madrid
+es:partido:2201,2201,22,22048,Barbastro,Barbastro,Barbastro,Barbastro,Barbastro,Barbastro,Barbastro,Barbastro,Europe/Madrid
+es:partido:2202,2202,22,22066,Boltaña,Boltaña,Boltaña,Boltaña,Boltaña,Boltaña,Boltaña,Boltaña,Europe/Madrid
+es:partido:2203,2203,22,22112,Fraga,Fraga,Fraga,Fraga,Fraga,Fraga,Fraga,Fraga,Europe/Madrid
+es:partido:2204,2204,22,22125,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Huesca,Europe/Madrid
+es:partido:2205,2205,22,22130,Jaca,Jaca,Jaca,Jaca,Jaca,Jaca,Jaca,Jaca,Europe/Madrid
+es:partido:2206,2206,22,22158,Monzón,Monzón,Monzón,Monzón,Monzón,Monzón,Monzón,Monzón,Europe/Madrid
+es:partido:2301,2301,23,23050,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Jaén,Europe/Madrid
+es:partido:2302,2302,23,23002,Alcalá la Real,Alcalá la Real,Alcalá la Real,Alcalá la Real,Alcalá la Real,Alcalá la Real,Alcalá la Real,Alcalá la Real,Europe/Madrid
+es:partido:2303,2303,23,23024,"Carolina, La",La Carolina,La Carolina,La Carolina,La Carolina,La Carolina,La Carolina,La Carolina,Europe/Madrid
+es:partido:2304,2304,23,23005,Andújar,Andújar,Andújar,Andújar,Andújar,Andújar,Andújar,Andújar,Europe/Madrid
+es:partido:2305,2305,23,23009,Baeza,Baeza,Baeza,Baeza,Baeza,Baeza,Baeza,Baeza,Europe/Madrid
+es:partido:2306,2306,23,23055,Linares,Linares,Linares,Linares,Linares,Linares,Linares,Linares,Europe/Madrid
+es:partido:2307,2307,23,23095,Villacarrillo,Villacarrillo,Villacarrillo,Villacarrillo,Villacarrillo,Villacarrillo,Villacarrillo,Villacarrillo,Europe/Madrid
+es:partido:2308,2308,23,23028,Cazorla,Cazorla,Cazorla,Cazorla,Cazorla,Cazorla,Cazorla,Cazorla,Europe/Madrid
+es:partido:2309,2309,23,23060,Martos,Martos,Martos,Martos,Martos,Martos,Martos,Martos,Europe/Madrid
+es:partido:2310,2310,23,23092,Úbeda,Úbeda,Úbeda,Úbeda,Úbeda,Úbeda,Úbeda,Úbeda,Europe/Madrid
+es:partido:2401,2401,24,24139,Sahagún,Sahagún,Sahagún,Sahagún,Sahagún,Sahagún,Sahagún,Sahagún,Europe/Madrid
+es:partido:2402,2402,24,24089,León,León,León,León,León,León,León,León,Europe/Madrid
+es:partido:2403,2403,24,24010,"Bañeza, La",La Bañeza,La Bañeza,La Bañeza,La Bañeza,La Bañeza,La Bañeza,La Bañeza,Europe/Madrid
+es:partido:2404,2404,24,24115,Ponferrada,Ponferrada,Ponferrada,Ponferrada,Ponferrada,Ponferrada,Ponferrada,Ponferrada,Europe/Madrid
+es:partido:2405,2405,24,24008,Astorga,Astorga,Astorga,Astorga,Astorga,Astorga,Astorga,Astorga,Europe/Madrid
+es:partido:2406,2406,24,24056,Cistierna,Cistierna,Cistierna,Cistierna,Cistierna,Cistierna,Cistierna,Cistierna,Europe/Madrid
+es:partido:2407,2407,24,24202,Villablino,Villablino,Villablino,Villablino,Villablino,Villablino,Villablino,Villablino,Europe/Madrid
+es:partido:2501,2501,25,25234,Tremp,Tremp,Tremp,Tremp,Tremp,Tremp,Tremp,Tremp,Europe/Madrid
+es:partido:2502,2502,25,25040,Balaguer,Balaguer,Balaguer,Balaguer,Balaguer,Balaguer,Balaguer,Balaguer,Europe/Madrid
+es:partido:2503,2503,25,25072,Cervera,Cervera,Cervera,Cervera,Cervera,Cervera,Cervera,Cervera,Europe/Madrid
+es:partido:2504,2504,25,25120,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Lleida,Europe/Madrid
+es:partido:2505,2505,25,25203,"Seu d'Urgell, La",La Seu d'Urgell,La Seu d'Urgell,La Seu d'Urgell,La Seu d'Urgell,La Seu d'Urgell,La Seu d'Urgell,La Seu d'Urgell,Europe/Madrid
+es:partido:2506,2506,25,25243,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Vielha e Mijaran,Europe/Madrid
+es:partido:2507,2507,25,25207,Solsona,Solsona,Solsona,Solsona,Solsona,Solsona,Solsona,Solsona,Europe/Madrid
+es:partido:2601,2601,26,26071,Haro,Haro,Haro,Haro,Haro,Haro,Haro,Haro,Europe/Madrid
+es:partido:2602,2602,26,26036,Calahorra,Calahorra,Calahorra,Calahorra,Calahorra,Calahorra,Calahorra,Calahorra,Europe/Madrid
+es:partido:2603,2603,26,26089,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,Logroño,Europe/Madrid
+es:partido:2701,2701,27,27030,Mondoñedo,Mondoñedo,Mondoñedo,Mondoñedo,Mondoñedo,Mondoñedo,Mondoñedo,Mondoñedo,Europe/Madrid
+es:partido:2702,2702,27,27016,Chantada,Chantada,Chantada,Chantada,Chantada,Chantada,Chantada,Chantada,Europe/Madrid
+es:partido:2703,2703,27,27028,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Lugo,Europe/Madrid
+es:partido:2704,2704,27,27065,Vilalba,Vilalba,Vilalba,Vilalba,Vilalba,Vilalba,Vilalba,Vilalba,Europe/Madrid
+es:partido:2705,2705,27,27031,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Monforte de Lemos,Europe/Madrid
+es:partido:2706,2706,27,27066,Viveiro,Viveiro,Viveiro,Viveiro,Viveiro,Viveiro,Viveiro,Viveiro,Europe/Madrid
+es:partido:2707,2707,27,27057,Sarria,Sarria,Sarria,Sarria,Sarria,Sarria,Sarria,Sarria,Europe/Madrid
+es:partido:2708,2708,27,27018,"Fonsagrada, A",A Fonsagrada,A Fonsagrada,A Fonsagrada,A Fonsagrada,A Fonsagrada,A Fonsagrada,A Fonsagrada,Europe/Madrid
+es:partido:2709,2709,27,27006,Becerreá,Becerreá,Becerreá,Becerreá,Becerreá,Becerreá,Becerreá,Becerreá,Europe/Madrid
+es:partido:2801,2801,28,28151,Torrelaguna,Torrelaguna,Torrelaguna,Torrelaguna,Torrelaguna,Torrelaguna,Torrelaguna,Torrelaguna,Europe/Madrid
+es:partido:2802,2802,28,28148,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Torrejón de Ardoz,Europe/Madrid
+es:partido:2803,2803,28,28096,Navalcarnero,Navalcarnero,Navalcarnero,Navalcarnero,Navalcarnero,Navalcarnero,Navalcarnero,Navalcarnero,Europe/Madrid
+es:partido:2804,2804,28,28005,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Alcalá de Henares,Europe/Madrid
+es:partido:2805,2805,28,28006,Alcobendas,Alcobendas,Alcobendas,Alcobendas,Alcobendas,Alcobendas,Alcobendas,Alcobendas,Europe/Madrid
+es:partido:2806,2806,28,28092,Móstoles,Móstoles,Móstoles,Móstoles,Móstoles,Móstoles,Móstoles,Móstoles,Europe/Madrid
+es:partido:2807,2807,28,28131,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,San Lorenzo de El Escorial,Europe/Madrid
+es:partido:2808,2808,28,28013,Aranjuez,Aranjuez,Aranjuez,Aranjuez,Aranjuez,Aranjuez,Aranjuez,Aranjuez,Europe/Madrid
+es:partido:2809,2809,28,28074,Leganés,Leganés,Leganés,Leganés,Leganés,Leganés,Leganés,Leganés,Europe/Madrid
+es:partido:2810,2810,28,28065,Getafe,Getafe,Getafe,Getafe,Getafe,Getafe,Getafe,Getafe,Europe/Madrid
+es:partido:2811,2811,28,28079,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Madrid,Europe/Madrid
+es:partido:2812,2812,28,28080,Majadahonda,Majadahonda,Majadahonda,Majadahonda,Majadahonda,Majadahonda,Majadahonda,Majadahonda,Europe/Madrid
+es:partido:2813,2813,28,28049,Coslada,Coslada,Coslada,Coslada,Coslada,Coslada,Coslada,Coslada,Europe/Madrid
+es:partido:2814,2814,28,28014,Arganda del Rey,Arganda del Rey,Arganda del Rey,Arganda del Rey,Arganda del Rey,Arganda del Rey,Arganda del Rey,Arganda del Rey,Europe/Madrid
+es:partido:2815,2815,28,28047,Collado Villalba,Collado Villalba,Collado Villalba,Collado Villalba,Collado Villalba,Collado Villalba,Collado Villalba,Collado Villalba,Europe/Madrid
+es:partido:2816,2816,28,28106,Parla,Parla,Parla,Parla,Parla,Parla,Parla,Parla,Europe/Madrid
+es:partido:2817,2817,28,28007,Alcorcón,Alcorcón,Alcorcón,Alcorcón,Alcorcón,Alcorcón,Alcorcón,Alcorcón,Europe/Madrid
+es:partido:2818,2818,28,28058,Fuenlabrada,Fuenlabrada,Fuenlabrada,Fuenlabrada,Fuenlabrada,Fuenlabrada,Fuenlabrada,Fuenlabrada,Europe/Madrid
+es:partido:2819,2819,28,28045,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Colmenar Viejo,Europe/Madrid
+es:partido:2820,2820,28,28161,Valdemoro,Valdemoro,Valdemoro,Valdemoro,Valdemoro,Valdemoro,Valdemoro,Valdemoro,Europe/Madrid
+es:partido:2821,2821,28,28115,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Pozuelo de Alarcón,Europe/Madrid
+es:partido:2901,2901,29,29015,Antequera,Antequera,Antequera,Antequera,Antequera,Antequera,Antequera,Antequera,Europe/Madrid
+es:partido:2902,2902,29,29094,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Vélez-Málaga,Europe/Madrid
+es:partido:2903,2903,29,29067,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Málaga,Europe/Madrid
+es:partido:2904,2904,29,29084,Ronda,Ronda,Ronda,Ronda,Ronda,Ronda,Ronda,Ronda,Europe/Madrid
+es:partido:2905,2905,29,29054,Fuengirola,Fuengirola,Fuengirola,Fuengirola,Fuengirola,Fuengirola,Fuengirola,Fuengirola,Europe/Madrid
+es:partido:2906,2906,29,29069,Marbella,Marbella,Marbella,Marbella,Marbella,Marbella,Marbella,Marbella,Europe/Madrid
+es:partido:2907,2907,29,29051,Estepona,Estepona,Estepona,Estepona,Estepona,Estepona,Estepona,Estepona,Europe/Madrid
+es:partido:2909,2909,29,29091,Torrox,Torrox,Torrox,Torrox,Torrox,Torrox,Torrox,Torrox,Europe/Madrid
+es:partido:2910,2910,29,29042,Coín,Coín,Coín,Coín,Coín,Coín,Coín,Coín,Europe/Madrid
+es:partido:2911,2911,29,29017,Archidona,Archidona,Archidona,Archidona,Archidona,Archidona,Archidona,Archidona,Europe/Madrid
+es:partido:2912,2912,29,29901,Torremolinos,Torremolinos,Torremolinos,Torremolinos,Torremolinos,Torremolinos,Torremolinos,Torremolinos,Europe/Madrid
+es:partido:3001,3001,30,30015,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Caravaca de la Cruz,Europe/Madrid
+es:partido:3002,3002,30,30016,Cartagena,Cartagena,Cartagena,Cartagena,Cartagena,Cartagena,Cartagena,Cartagena,Europe/Madrid
+es:partido:3003,3003,30,30019,Cieza,Cieza,Cieza,Cieza,Cieza,Cieza,Cieza,Cieza,Europe/Madrid
+es:partido:3004,3004,30,30024,Lorca,Lorca,Lorca,Lorca,Lorca,Lorca,Lorca,Lorca,Europe/Madrid
+es:partido:3005,3005,30,30029,Mula,Mula,Mula,Mula,Mula,Mula,Mula,Mula,Europe/Madrid
+es:partido:3006,3006,30,30030,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Murcia,Europe/Madrid
+es:partido:3007,3007,30,30043,Yecla,Yecla,Yecla,Yecla,Yecla,Yecla,Yecla,Yecla,Europe/Madrid
+es:partido:3008,3008,30,30027,Molina de Segura,Molina de Segura,Molina de Segura,Molina de Segura,Molina de Segura,Molina de Segura,Molina de Segura,Molina de Segura,Europe/Madrid
+es:partido:3009,3009,30,30039,Totana,Totana,Totana,Totana,Totana,Totana,Totana,Totana,Europe/Madrid
+es:partido:3010,3010,30,30022,Jumilla,Jumilla,Jumilla,Jumilla,Jumilla,Jumilla,Jumilla,Jumilla,Europe/Madrid
+es:partido:3011,3011,30,30035,San Javier,San Javier,San Javier,San Javier,San Javier,San Javier,San Javier,San Javier,Europe/Madrid
+es:partido:3101,3101,31,31097,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Estella-Lizarra,Europe/Madrid
+es:partido:3102,3102,31,31019,Aoiz/Agoitz,Aoiz/Agoitz,Aoiz,Aoiz/Agoitz,Aoiz/Agoitz,Agoitz,Aoiz/Agoitz,Aoiz/Agoitz,Europe/Madrid
+es:partido:3103,3103,31,31232,Tudela,Tudela,Tudela,Tudela,Tudela,Tudela,Tudela,Tudela,Europe/Madrid
+es:partido:3104,3104,31,31201,Pamplona/Iruña,Pamplona/Iruña,Pamplona,Pamplona/Iruña,Pamplona/Iruña,Iruña,Pamplona/Iruña,Pamplona/Iruña,Europe/Madrid
+es:partido:3105,3105,31,31227,Tafalla,Tafalla,Tafalla,Tafalla,Tafalla,Tafalla,Tafalla,Tafalla,Europe/Madrid
+es:partido:3201,3201,32,32054,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Ourense,Europe/Madrid
+es:partido:3202,3202,32,32069,Ribadavia,Ribadavia,Ribadavia,Ribadavia,Ribadavia,Ribadavia,Ribadavia,Ribadavia,Europe/Madrid
+es:partido:3203,3203,32,32032,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Xinzo de Limia,Europe/Madrid
+es:partido:3204,3204,32,32063,"Pobra de Trives, A",A Pobra de Trives,A Pobra de Trives,A Pobra de Trives,A Pobra de Trives,A Pobra de Trives,A Pobra de Trives,A Pobra de Trives,Europe/Madrid
+es:partido:3205,3205,32,32085,Verín,Verín,Verín,Verín,Verín,Verín,Verín,Verín,Europe/Madrid
+es:partido:3206,3206,32,32009,"Barco de Valdeorras, O",O Barco de Valdeorras,O Barco de Valdeorras,O Barco de Valdeorras,O Barco de Valdeorras,O Barco de Valdeorras,O Barco de Valdeorras,O Barco de Valdeorras,Europe/Madrid
+es:partido:3207,3207,32,32019,"Carballiño, O",O Carballiño,O Carballiño,O Carballiño,O Carballiño,O Carballiño,O Carballiño,O Carballiño,Europe/Madrid
+es:partido:3208,3208,32,32006,Bande,Bande,Bande,Bande,Bande,Bande,Bande,Bande,Europe/Madrid
+es:partido:3209,3209,32,32024,Celanova,Celanova,Celanova,Celanova,Celanova,Celanova,Celanova,Celanova,Europe/Madrid
+es:partido:3301,3301,33,33011,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Cangas del Narcea,Europe/Madrid
+es:partido:3302,3302,33,33033,Lena,Lena,Lena,Lena,Lena,Lena,Lena,Lena,Europe/Madrid
+es:partido:3303,3303,33,33012,Cangas de Onís,Cangas de Onís,Cangas de Onís,Cangas de Onís,Cangas de Onís,Cangas de Onís,Cangas de Onís,Cangas de Onís,Europe/Madrid
+es:partido:3304,3304,33,33004,Avilés,Avilés,Avilés,Avilés,Avilés,Avilés,Avilés,Avilés,Europe/Madrid
+es:partido:3305,3305,33,33026,Grado,Grado,Grado,Grado,Grado,Grado,Grado,Grado,Europe/Madrid
+es:partido:3306,3306,33,33066,Siero,Siero,Siero,Siero,Siero,Siero,Siero,Siero,Europe/Madrid
+es:partido:3307,3307,33,33017,Castropol,Castropol,Castropol,Castropol,Castropol,Castropol,Castropol,Castropol,Europe/Madrid
+es:partido:3308,3308,33,33024,Gijón,Gijón,Gijón,Gijón,Gijón,Gijón,Gijón,Gijón,Europe/Madrid
+es:partido:3309,3309,33,33032,Laviana,Laviana,Laviana,Laviana,Laviana,Laviana,Laviana,Laviana,Europe/Madrid
+es:partido:3310,3310,33,33044,Oviedo,Oviedo,Oviedo,Oviedo,Oviedo,Oviedo,Oviedo,Oviedo,Europe/Madrid
+es:partido:3311,3311,33,33036,Llanes,Llanes,Llanes,Llanes,Llanes,Llanes,Llanes,Llanes,Europe/Madrid
+es:partido:3312,3312,33,33037,Mieres,Mieres,Mieres,Mieres,Mieres,Mieres,Mieres,Mieres,Europe/Madrid
+es:partido:3313,3313,33,33031,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,Langreo,Europe/Madrid
+es:partido:3314,3314,33,33073,Tineo,Tineo,Tineo,Tineo,Tineo,Tineo,Tineo,Tineo,Europe/Madrid
+es:partido:3315,3315,33,33034,Valdés,Valdés,Valdés,Valdés,Valdés,Valdés,Valdés,Valdés,Europe/Madrid
+es:partido:3316,3316,33,33051,Pravia,Pravia,Pravia,Pravia,Pravia,Pravia,Pravia,Pravia,Europe/Madrid
+es:partido:3317,3317,33,33076,Villaviciosa,Villaviciosa,Villaviciosa,Villaviciosa,Villaviciosa,Villaviciosa,Villaviciosa,Villaviciosa,Europe/Madrid
+es:partido:3318,3318,33,33049,Piloña,Piloña,Piloña,Piloña,Piloña,Piloña,Piloña,Piloña,Europe/Madrid
+es:partido:3401,3401,34,34120,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Europe/Madrid
+es:partido:3402,3402,34,34047,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Carrión de los Condes,Europe/Madrid
+es:partido:3403,3403,34,34056,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Cervera de Pisuerga,Europe/Madrid
+es:partido:3501,3501,35,35004,Arrecife,Arrecife,Arrecife,Arrecife,Arrecife,Arrecife,Arrecife,Arrecife,Atlantic/Canary
+es:partido:3502,3502,35,35016,"Palmas de Gran Canaria, Las",Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Las Palmas de Gran Canaria,Atlantic/Canary
+es:partido:3503,3503,35,35017,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Puerto del Rosario,Atlantic/Canary
+es:partido:3504,3504,35,35023,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Santa María de Guía de Gran Canaria,Atlantic/Canary
+es:partido:3505,3505,35,35026,Telde,Telde,Telde,Telde,Telde,Telde,Telde,Telde,Atlantic/Canary
+es:partido:3506,3506,35,35019,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,San Bartolomé de Tirajana,Atlantic/Canary
+es:partido:3507,3507,35,35006,Arucas,Arucas,Arucas,Arucas,Arucas,Arucas,Arucas,Arucas,Atlantic/Canary
+es:partido:3601,3601,36,36042,Ponteareas,Ponteareas,Ponteareas,Ponteareas,Ponteareas,Ponteareas,Ponteareas,Ponteareas,Europe/Madrid
+es:partido:3602,3602,36,36060,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Vilagarcía de Arousa,Europe/Madrid
+es:partido:3603,3603,36,36057,Vigo,Vigo,Vigo,Vigo,Vigo,Vigo,Vigo,Vigo,Europe/Madrid
+es:partido:3604,3604,36,36038,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Europe/Madrid
+es:partido:3605,3605,36,36017,"Estrada, A",A Estrada,A Estrada,A Estrada,A Estrada,A Estrada,A Estrada,A Estrada,Europe/Madrid
+es:partido:3606,3606,36,36055,Tui,Tui,Tui,Tui,Tui,Tui,Tui,Tui,Europe/Madrid
+es:partido:3607,3607,36,36008,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Cangas de Morrazo,Europe/Madrid
+es:partido:3608,3608,36,36024,Lalín,Lalín,Lalín,Lalín,Lalín,Lalín,Lalín,Lalín,Europe/Madrid
+es:partido:3609,3609,36,36006,Cambados,Cambados,Cambados,Cambados,Cambados,Cambados,Cambados,Cambados,Europe/Madrid
+es:partido:3610,3610,36,36045,Redondela,Redondela,Redondela,Redondela,Redondela,Redondela,Redondela,Redondela,Europe/Madrid
+es:partido:3611,3611,36,36039,"Porriño, O",O Porriño,O Porriño,O Porriño,O Porriño,O Porriño,O Porriño,O Porriño,Europe/Madrid
+es:partido:3612,3612,36,36005,Caldas de Reis,Caldas de Reis,Caldas de Reis,Caldas de Reis,Caldas de Reis,Caldas de Reis,Caldas de Reis,Caldas de Reis,Europe/Madrid
+es:partido:3613,3613,36,36026,Marín,Marín,Marín,Marín,Marín,Marín,Marín,Marín,Europe/Madrid
+es:partido:3701,3701,37,37274,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Europe/Madrid
+es:partido:3702,3702,37,37107,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Ciudad Rodrigo,Europe/Madrid
+es:partido:3703,3703,37,37376,Vitigudino,Vitigudino,Vitigudino,Vitigudino,Vitigudino,Vitigudino,Vitigudino,Vitigudino,Europe/Madrid
+es:partido:3704,3704,37,37046,Béjar,Béjar,Béjar,Béjar,Béjar,Béjar,Béjar,Béjar,Europe/Madrid
+es:partido:3705,3705,37,37246,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Peñaranda de Bracamonte,Europe/Madrid
+es:partido:3801,3801,38,38017,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Granadilla de Abona,Atlantic/Canary
+es:partido:3802,3802,38,38036,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,San Sebastián de la Gomera,Atlantic/Canary
+es:partido:3803,3803,38,38038,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Atlantic/Canary
+es:partido:3804,3804,38,38037,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Santa Cruz de la Palma,Atlantic/Canary
+es:partido:3805,3805,38,38022,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Icod de los Vinos,Atlantic/Canary
+es:partido:3806,3806,38,38048,Valverde,Valverde,Valverde,Valverde,Valverde,Valverde,Valverde,Valverde,Atlantic/Canary
+es:partido:3807,3807,38,38023,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,San Cristóbal de La Laguna,Atlantic/Canary
+es:partido:3808,3808,38,38026,"Orotava, La",La Orotava,La Orotava,La Orotava,La Orotava,La Orotava,La Orotava,La Orotava,Atlantic/Canary
+es:partido:3809,3809,38,38024,"Llanos de Aridane, Los",Los Llanos de Aridane,Los Llanos de Aridane,Los Llanos de Aridane,Los Llanos de Aridane,Los Llanos de Aridane,Los Llanos de Aridane,Los Llanos de Aridane,Atlantic/Canary
+es:partido:3810,3810,38,38028,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Puerto de la Cruz,Atlantic/Canary
+es:partido:3811,3811,38,38020,Güímar,Güímar,Güímar,Güímar,Güímar,Güímar,Güímar,Güímar,Atlantic/Canary
+es:partido:3812,3812,38,38006,Arona,Arona,Arona,Arona,Arona,Arona,Arona,Arona,Atlantic/Canary
+es:partido:3901,3901,39,39087,Torrelavega,Torrelavega,Torrelavega,Torrelavega,Torrelavega,Torrelavega,Torrelavega,Torrelavega,Europe/Madrid
+es:partido:3902,3902,39,39035,Laredo,Laredo,Laredo,Laredo,Laredo,Laredo,Laredo,Laredo,Europe/Madrid
+es:partido:3903,3903,39,39075,Santander,Santander,Santander,Santander,Santander,Santander,Santander,Santander,Europe/Madrid
+es:partido:3904,3904,39,39080,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,San Vicente de la Barquera,Europe/Madrid
+es:partido:3905,3905,39,39059,Reinosa,Reinosa,Reinosa,Reinosa,Reinosa,Reinosa,Reinosa,Reinosa,Europe/Madrid
+es:partido:3906,3906,39,39079,Santoña,Santoña,Santoña,Santoña,Santoña,Santoña,Santoña,Santoña,Europe/Madrid
+es:partido:3907,3907,39,39042,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Medio Cudeyo,Europe/Madrid
+es:partido:3908,3908,39,39020,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Castro-Urdiales,Europe/Madrid
+es:partido:4001,4001,40,40194,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Segovia,Europe/Madrid
+es:partido:4002,4002,40,40063,Cuéllar,Cuéllar,Cuéllar,Cuéllar,Cuéllar,Cuéllar,Cuéllar,Cuéllar,Europe/Madrid
+es:partido:4003,4003,40,40195,Sepúlveda,Sepúlveda,Sepúlveda,Sepúlveda,Sepúlveda,Sepúlveda,Sepúlveda,Sepúlveda,Europe/Madrid
+es:partido:4004,4004,40,40185,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Santa María la Real de Nieva,Europe/Madrid
+es:partido:4101,4101,41,41068,Osuna,Osuna,Osuna,Osuna,Osuna,Osuna,Osuna,Osuna,Europe/Madrid
+es:partido:4102,4102,41,41032,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Cazalla de la Sierra,Europe/Madrid
+es:partido:4103,4103,41,41087,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Sanlúcar la Mayor,Europe/Madrid
+es:partido:4104,4104,41,41024,Carmona,Carmona,Carmona,Carmona,Carmona,Carmona,Carmona,Carmona,Europe/Madrid
+es:partido:4105,4105,41,41055,Lora del Río,Lora del Río,Lora del Río,Lora del Río,Lora del Río,Lora del Río,Lora del Río,Lora del Río,Europe/Madrid
+es:partido:4106,4106,41,41091,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Sevilla,Europe/Madrid
+es:partido:4107,4107,41,41065,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Morón de la Frontera,Europe/Madrid
+es:partido:4108,4108,41,41053,Lebrija,Lebrija,Lebrija,Lebrija,Lebrija,Lebrija,Lebrija,Lebrija,Europe/Madrid
+es:partido:4109,4109,41,41095,Utrera,Utrera,Utrera,Utrera,Utrera,Utrera,Utrera,Utrera,Europe/Madrid
+es:partido:4110,4110,41,41039,Écija,Écija,Écija,Écija,Écija,Écija,Écija,Écija,Europe/Madrid
+es:partido:4111,4111,41,41004,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Alcalá de Guadaíra,Europe/Madrid
+es:partido:4112,4112,41,41038,Dos Hermanas,Dos Hermanas,Dos Hermanas,Dos Hermanas,Dos Hermanas,Dos Hermanas,Dos Hermanas,Dos Hermanas,Europe/Madrid
+es:partido:4113,4113,41,41060,Marchena,Marchena,Marchena,Marchena,Marchena,Marchena,Marchena,Marchena,Europe/Madrid
+es:partido:4114,4114,41,41034,Coria del Río,Coria del Río,Coria del Río,Coria del Río,Coria del Río,Coria del Río,Coria del Río,Coria del Río,Europe/Madrid
+es:partido:4115,4115,41,41041,Estepa,Estepa,Estepa,Estepa,Estepa,Estepa,Estepa,Estepa,Europe/Madrid
+es:partido:4201,4201,42,42020,Almazán,Almazán,Almazán,Almazán,Almazán,Almazán,Almazán,Almazán,Europe/Madrid
+es:partido:4202,4202,42,42043,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Burgo de Osma-Ciudad de Osma,Europe/Madrid
+es:partido:4203,4203,42,42173,Soria,Soria,Soria,Soria,Soria,Soria,Soria,Soria,Europe/Madrid
+es:partido:4301,4301,43,43163,"Vendrell, El",El Vendrell,El Vendrell,El Vendrell,El Vendrell,El Vendrell,El Vendrell,El Vendrell,Europe/Madrid
+es:partido:4302,4302,43,43123,Reus,Reus,Reus,Reus,Reus,Reus,Reus,Reus,Europe/Madrid
+es:partido:4303,4303,43,43014,Amposta,Amposta,Amposta,Amposta,Amposta,Amposta,Amposta,Amposta,Europe/Madrid
+es:partido:4304,4304,43,43161,Valls,Valls,Valls,Valls,Valls,Valls,Valls,Valls,Europe/Madrid
+es:partido:4305,4305,43,43064,Gandesa,Gandesa,Gandesa,Gandesa,Gandesa,Gandesa,Gandesa,Gandesa,Europe/Madrid
+es:partido:4306,4306,43,43148,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Tarragona,Europe/Madrid
+es:partido:4307,4307,43,43155,Tortosa,Tortosa,Tortosa,Tortosa,Tortosa,Tortosa,Tortosa,Tortosa,Europe/Madrid
+es:partido:4308,4308,43,43055,Falset,Falset,Falset,Falset,Falset,Falset,Falset,Falset,Europe/Madrid
+es:partido:4401,4401,44,44013,Alcañiz,Alcañiz,Alcañiz,Alcañiz,Alcañiz,Alcañiz,Alcañiz,Alcañiz,Europe/Madrid
+es:partido:4402,4402,44,44050,Calamocha,Calamocha,Calamocha,Calamocha,Calamocha,Calamocha,Calamocha,Calamocha,Europe/Madrid
+es:partido:4403,4403,44,44216,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Teruel,Europe/Madrid
+es:partido:4501,4501,45,45121,Ocaña,Ocaña,Ocaña,Ocaña,Ocaña,Ocaña,Ocaña,Ocaña,Europe/Madrid
+es:partido:4502,4502,45,45124,Orgaz,Orgaz,Orgaz,Orgaz,Orgaz,Orgaz,Orgaz,Orgaz,Europe/Madrid
+es:partido:4503,4503,45,45081,Illescas,Illescas,Illescas,Illescas,Illescas,Illescas,Illescas,Illescas,Europe/Madrid
+es:partido:4504,4504,45,45165,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Talavera de la Reina,Europe/Madrid
+es:partido:4505,4505,45,45168,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Toledo,Europe/Madrid
+es:partido:4506,4506,45,45173,Torrijos,Torrijos,Torrijos,Torrijos,Torrijos,Torrijos,Torrijos,Torrijos,Europe/Madrid
+es:partido:4507,4507,45,45142,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Quintanar de la Orden,Europe/Madrid
+es:partido:4601,4601,46,46147,Llíria,Llíria,Llíria,Llíria,Llíria,Llíria,Llíria,Llíria,Europe/Madrid
+es:partido:4602,4602,46,46131,Gandia,Gandia,Gandia,Gandia,Gandia,Gandia,Gandia,Gandia,Europe/Madrid
+es:partido:4603,4603,46,46184,Ontinyent,Ontinyent,Ontinyent,Ontinyent,Ontinyent,Ontinyent,Ontinyent,Ontinyent,Europe/Madrid
+es:partido:4604,4604,46,46244,Torrent,Torrent,Torrent,Torrent,Torrent,Torrent,Torrent,Torrent,Europe/Madrid
+es:partido:4605,4605,46,46235,Sueca,Sueca,Sueca,Sueca,Sueca,Sueca,Sueca,Sueca,Europe/Madrid
+es:partido:4606,4606,46,46250,València,València,València,València,València,València,València,València,Europe/Madrid
+es:partido:4607,4607,46,46220,Sagunt/Sagunto,Sagunt/Sagunto,Sagunto,Sagunt,Sagunt/Sagunto,Sagunt/Sagunto,Sagunt/Sagunto,Sagunt/Sagunto,Europe/Madrid
+es:partido:4608,4608,46,46017,Alzira,Alzira,Alzira,Alzira,Alzira,Alzira,Alzira,Alzira,Europe/Madrid
+es:partido:4609,4609,46,46085,Carlet,Carlet,Carlet,Carlet,Carlet,Carlet,Carlet,Carlet,Europe/Madrid
+es:partido:4610,4610,46,46145,Xàtiva,Xàtiva,Xàtiva,Xàtiva,Xàtiva,Xàtiva,Xàtiva,Xàtiva,Europe/Madrid
+es:partido:4611,4611,46,46213,Requena,Requena,Requena,Requena,Requena,Requena,Requena,Requena,Europe/Madrid
+es:partido:4612,4612,46,46094,Catarroja,Catarroja,Catarroja,Catarroja,Catarroja,Catarroja,Catarroja,Catarroja,Europe/Madrid
+es:partido:4613,4613,46,46171,Montcada/Moncada,Montcada/Moncada,Moncada,Montcada,Montcada/Moncada,Montcada/Moncada,Montcada/Moncada,Montcada/Moncada,Europe/Madrid
+es:partido:4614,4614,46,46190,Paterna,Paterna,Paterna,Paterna,Paterna,Paterna,Paterna,Paterna,Europe/Madrid
+es:partido:4615,4615,46,46102,Quart de Poblet,Quart de Poblet,Quart de Poblet,Quart de Poblet,Quart de Poblet,Quart de Poblet,Quart de Poblet,Quart de Poblet,Europe/Madrid
+es:partido:4616,4616,46,46169,Mislata,Mislata,Mislata,Mislata,Mislata,Mislata,Mislata,Mislata,Europe/Madrid
+es:partido:4617,4617,46,46164,Massamagrell,Massamagrell,Massamagrell,Massamagrell,Massamagrell,Massamagrell,Massamagrell,Massamagrell,Europe/Madrid
+es:partido:4618,4618,46,46194,Picassent,Picassent,Picassent,Picassent,Picassent,Picassent,Picassent,Picassent,Europe/Madrid
+es:partido:4701,4701,47,47186,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Valladolid,Europe/Madrid
+es:partido:4702,4702,47,47085,Medina del Campo,Medina del Campo,Medina del Campo,Medina del Campo,Medina del Campo,Medina del Campo,Medina del Campo,Medina del Campo,Europe/Madrid
+es:partido:4703,4703,47,47086,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Medina de Rioseco,Europe/Madrid
+es:partido:4801,4801,48,48027,Durango,Durango,Durango,Durango,Durango,Durango,Durango,Durango,Europe/Madrid
+es:partido:4802,4802,48,48013,Barakaldo,Barakaldo,Barakaldo,Barakaldo,Barakaldo,Barakaldo,Barakaldo,Barakaldo,Europe/Madrid
+es:partido:4803,4803,48,48046,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Gernika-Lumo,Europe/Madrid
+es:partido:4804,4804,48,48020,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Bilbao,Europe/Madrid
+es:partido:4805,4805,48,48090,Balmaseda,Balmaseda,Balmaseda,Balmaseda,Balmaseda,Balmaseda,Balmaseda,Balmaseda,Europe/Madrid
+es:partido:4806,4806,48,48044,Getxo,Getxo,Getxo,Getxo,Getxo,Getxo,Getxo,Getxo,Europe/Madrid
+es:partido:4901,4901,49,49219,Toro,Toro,Toro,Toro,Toro,Toro,Toro,Toro,Europe/Madrid
+es:partido:4902,4902,49,49275,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Zamora,Europe/Madrid
+es:partido:4903,4903,49,49021,Benavente,Benavente,Benavente,Benavente,Benavente,Benavente,Benavente,Benavente,Europe/Madrid
+es:partido:4904,4904,49,49166,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Puebla de Sanabria,Europe/Madrid
+es:partido:4905,4905,49,49250,Villalpando,Villalpando,Villalpando,Villalpando,Villalpando,Villalpando,Villalpando,Villalpando,Europe/Madrid
+es:partido:5001,5001,50,50067,Calatayud,Calatayud,Calatayud,Calatayud,Calatayud,Calatayud,Calatayud,Calatayud,Europe/Madrid
+es:partido:5002,5002,50,50251,Tarazona,Tarazona,Tarazona,Tarazona,Tarazona,Tarazona,Tarazona,Tarazona,Europe/Madrid
+es:partido:5003,5003,50,50297,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Zaragoza,Europe/Madrid
+es:partido:5004,5004,50,50074,Caspe,Caspe,Caspe,Caspe,Caspe,Caspe,Caspe,Caspe,Europe/Madrid
+es:partido:5005,5005,50,50095,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Ejea de los Caballeros,Europe/Madrid
+es:partido:5006,5006,50,50094,Daroca,Daroca,Daroca,Daroca,Daroca,Daroca,Daroca,Daroca,Europe/Madrid
+es:partido:5007,5007,50,50025,"Almunia de Doña Godina, La",La Almunia de Doña Godina,La Almunia de Doña Godina,La Almunia de Doña Godina,La Almunia de Doña Godina,La Almunia de Doña Godina,La Almunia de Doña Godina,La Almunia de Doña Godina,Europe/Madrid
+es:partido:5112,5112,51,51001,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Ceuta,Africa/Ceuta
+es:partido:5208,5208,52,52001,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Melilla,Africa/Ceuta

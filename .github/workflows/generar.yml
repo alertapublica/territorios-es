@@ -3,7 +3,8 @@ name: Generar datos
 # Descarga las fuentes (INE, Eurostat, Catastro, IGN, Wikidata), regenera datos/ y escribe el informe de
 # discrepancias. No se lanza en las PR: la CI ya prueba el código sin red, y cada descarga son
 # ~20 minutos y unas 90 peticiones a terceros. Para probar un lector nuevo, una vez y a mano sobre
-# la rama: gh workflow run generar.yml --ref <rama> (deja el artefacto y el resumen, no publica).
+# la rama: gh workflow run generar.yml --ref <rama> (deja el artefacto y el resumen, sube datos/ a esa
+# rama con un commit y vuelve a lanzar la CI, que un push de Actions no dispara).
 # En main, a mano o cada mes, además abre una PR con los datos y actualiza el issue del informe.
 
 on:
@@ -92,3 +93,29 @@ jobs:
           else
             gh issue create --title "$titulo" --body-file informe.md
           fi
+
+  # Lanzado a mano en otra rama (la de una PR que cambia el generador): datos/ va a esa misma rama, sin
+  # bajarlo a ningún ordenador. El push de Actions no dispara la CI, así que se lanza aparte.
+  subir-a-la-rama:
+    needs: generar
+    if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: datos
+      - name: Commit de datos/ en la rama y CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add datos
+          if git diff --cached --quiet; then echo "Sin cambios en los datos"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "datos: generación $GITHUB_RUN_ID"
+          git push -q origin "HEAD:$GITHUB_REF_NAME"
+          gh workflow run ci.yml --ref "$GITHUB_REF_NAME"

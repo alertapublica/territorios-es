@@ -2,6 +2,8 @@
 import gzip
 import io
 import json
+import shutil
+import tempfile
 import unittest
 import zipfile
 from collections import Counter
@@ -9,7 +11,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import catastro, codigos_postales, eurostat, exportar, ign, ine, limites, wikidata
+from generador import catastro, codigos_postales, eurostat, exportar, ign, ine, justicia, limites, wikidata
 from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -56,6 +58,32 @@ class Readers(unittest.TestCase):
                     ["07", "072", "Ibiza", "26", "0", "Eivissa"]):  # short code
             self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": sheet(title, [row])}))
         self.assertRaises(ValueError, ine.parse_islands, xlsx({"07": [["Sin cabecera"]]}))
+
+    def test_censo_judicial(self):
+        header = ["CODLEY", "CPRO", "CPJ", "PJ", "CODM\nPJ", "PARTIDO", "CODM", "LOCALIDAD"]
+        rows = [["1", "7", "", "5", "07026", "EIVISSA", "07024", "FORMENTERA"],
+                ["1", "7", "SI", "5", "07026", "EIVISSA", "07026", "EIVISSA"],
+                ["1", "7", "SI", "3", "07040", "PALMA", "07040", "PALMA"]]
+        stamp = [["Actualizado a 25/03/2026"]]
+        self.assertEqual(justicia.parse_census(xlsx({"Censo": [header, *rows, *stamp]})),
+                         ([["07024", "0705", "07026"], ["07026", "0705", "07026"], ["07040", "0703", "07040"]],
+                          "2026-03-25"))
+        self.assertEqual(justicia.parse_census(xlsx({"Censo": [header, *rows]}))[1], None)
+        for broken in ([["1", "7", "SI", "5", "07999", "OTRA", "07999", "OTRA"]],  # two seats for 0705
+                       [["1", "7", "", "8", "07999", "OTRA", "07999", "OTRA"]],  # seat not marked
+                       [["1", "7", "", "6", "08019", "BARCELONA", "07999", "OTRO"]],  # seat in another province
+                       [["1", "7", "", "5", "07026", "EIVISSA", "07024", "FORMENTERA"]],  # repeated municipality
+                       [["1", "7", "", "6", "07999", "SIN SEDE", "07998", "OTRO"]],  # seat missing from the table
+                       [["1", "7", "", "", "07998", "OTRA", "07997", "OTRO"],  # no district number
+                        ["1", "7", "SI", "", "07998", "OTRA", "07998", "OTRA"]],
+                       [["1", "7", "SI", "0", "07998", "OTRA", "07998", "OTRA"]]):  # district 0
+            self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header, *rows, *broken]}))
+        # The seat of a district must belong to that district.
+        moved = [["1", "7", "", "5", "07026", "EIVISSA", "07024", "FORMENTERA"],
+                 ["1", "7", "SI", "3", "07026", "EIVISSA", "07026", "EIVISSA"]]
+        self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header, *moved]}))
+        self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header[:4], *rows]}))
+        self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header, *stamp]}))
 
     def test_ine_population(self):
         tables = [{"Id": 2855, "Nombre": "Albacete: Población por municipios y sexo.", "Codigo": "PROV-MUN"},
@@ -300,6 +328,13 @@ class Build(unittest.TestCase):
         self.assertEqual((folder / "territorios.json").read_text(encoding="utf-8"), exportar.territories_json(self.data))
         self.assertEqual(exportar.check(folder), [])
 
+    def test_check_reports_a_missing_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "datos"
+            shutil.copytree(ROOT / "pruebas" / "datos", folder)
+            (folder / "partidos-judiciales.csv").unlink()
+            self.assertEqual(exportar.check(folder), ["partidos-judiciales.csv is missing"])
+
     def test_report_lists_discrepancies(self):
         sections = self.report.sections
         self.assertIn("08184: varios elementos Q9000018, Q9000019; no se enlaza", sections["Wikidata: código INE"])
@@ -376,6 +411,26 @@ class Build(unittest.TestCase):
         self.assertNotIn("island", by_id["es:municipio:36038"])
         self.assertIn("074 está en fuentes/islas.csv pero no en la tabla de islas del INE", self.report.sections["Islas"])
         self.assertIn("es:isla:073 «Mallorca» (Q8828)", self.report.sections["Wikidata: sin elemento"])
+
+    def test_judicial_districts(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        # Named after its seat, with the province as parent; the municipalities keep theirs.
+        self.assertEqual(by_id["es:partido:0705"], {
+            "id": "es:partido:0705", "level": "judicial_district", "parent": "es:provincia:07",
+            "codes": {"mjusticia:partido": "0705"}, "names": {"official": "Eivissa", "display": "Eivissa"},
+            "seat": "es:municipio:07026", "slug": "eivissa", "time_zone": "Europe/Madrid"})
+        self.assertEqual(by_id["es:partido:0303"]["names"]["parts"], {"ca": "Alacant", "es": "Alicante"})
+        self.assertEqual(by_id["es:municipio:07024"]["judicial_district"], "es:partido:0705")
+        self.assertEqual(by_id["es:municipio:07024"]["parent"], "es:provincia:07")
+        self.assertEqual(by_id["es:partido:5112"]["parent"], "es:provincia:51")
+        # A seat that is not in the dictionary: no district, and its municipalities without one.
+        self.assertNotIn("es:partido:0401", by_id)
+        self.assertNotIn("judicial_district", by_id["es:municipio:04078"])
+        self.assertEqual(sorted(self.report.sections["Partidos judiciales"]), [
+            "36999 está en el Censo Judicial (partido 3604) pero no en el diccionario de municipios",
+            "Partido 0401: su sede 04013 no está en el diccionario de municipios; no se usa",
+            "es:municipio:04078 «Rioja» sin partido judicial en el Censo Judicial"])
+        self.assertEqual(self.report.summary["Partidos judiciales"], 30)
 
     def test_population(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

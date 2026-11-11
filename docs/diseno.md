@@ -85,7 +85,7 @@ Primera versión:
   convocatorias.
 
 Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
-ya están (versión 0.3):
+ya están (versión 0.3), y los partidos judiciales, desde la 0.4:
 
 - **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
   `island` e identificador con el código de isla del INE (`es:isla:384` es Tenerife; `es:isla:072`,
@@ -95,6 +95,17 @@ ya están (versión 0.3):
   solo sirve para contrastar (Eivissa y Formentera comparten la ES531). Las islas menores van con
   el municipio al que pertenecen (La Graciosa con Teguise, en Lanzarote; Cabrera con Palma, en
   Mallorca). El nombre es el oficial del INE (§4.4) y los demás salen de Wikidata.
+- **Partidos judiciales**: los 431 de la demarcación judicial, con nivel `judicial_district` e
+  identificador con el código del Censo Judicial del Ministerio de Justicia: provincia y número del
+  partido dentro de ella (`es:partido:0705` es Eivissa; `es:partido:5112`, Ceuta). Su padre es la
+  provincia, porque ningún partido la cruza; los municipios no cambian de padre y llevan además el
+  campo `judicial_district`, como con las islas. Los municipios de cada partido y su sede salen del
+  Censo Judicial. El nombre es el de la sede, con sus partes si es bilingüe, porque el Censo lo
+  escribe en mayúsculas y con alguna errata («CATARRO4623548000000JA» por Catarroja). La LO 1/2025
+  mantiene los partidos: cada uno tiene un tribunal de instancia con sede en su capital. `search` y
+  `mentions` no los devuelven salvo que se pidan en `levels`, porque se llaman como su sede.
+
+Las comarcas oficiales están pendientes (§13).
 
 Más adelante: entidades de población del Nomenclátor del INE (núcleos, y parroquias en Galicia y
 Asturias), que son decenas de miles.
@@ -104,6 +115,7 @@ Asturias), que son decenas de miles.
 | Código | Niveles | Fuente | Notas |
 |---|---|---|---|
 | INE | comunidad (2 cifras), provincia (2), isla (3), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
+| Censo Judicial | partido judicial (`mjusticia:partido`, 4 cifras: provincia 2 + número 2) | Censo Judicial del Ministerio de Justicia | El número es el del partido en la demarcación de su provincia. El catálogo técnico de la Generalitat (CTEAJE) usa el mismo código salvo en Ceuta y Melilla (1112 y 2908, frente a 5112 y 5208). |
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
@@ -155,8 +167,9 @@ nombres oficiales, sino alias.
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
 
 - **Comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
-- **Provincias, islas y municipios**: el oficial. Si es bilingüe, solo la parte del idioma de la página
-  («Alacant» en catalán, «San Sebastián» en castellano) y el nombre completo en los demás.
+- **Provincias, islas, partidos judiciales y municipios**: el oficial (el de un partido es el de su
+  sede). Si es bilingüe, solo la parte del idioma de la página («Alacant» en catalán, «San
+  Sebastián» en castellano) y el nombre completo en los demás.
   En castellano se muestra «Girona», no «Gerona».
 - Los nombres habituales en otros idiomas («Gerona», «Seville», «Saragossa») sirven para buscar y
   quedan a mano para quien quiera mostrarlos.
@@ -229,10 +242,10 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 | Función | Qué hace |
 |---|---|
-| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia o a una isla. |
-| `children(id)` | Los territorios cuyo padre es este; en una isla, sus municipios. Los de una provincia de Baleares o Canarias incluyen sus islas y sus municipios. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla o a un partido judicial. Los partidos judiciales solo salen si se piden en `levels`. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla o en un partido judicial, sus municipios. Los de una provincia incluyen sus partidos judiciales y, en Baleares y Canarias, sus islas. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -358,7 +371,7 @@ fuente), pero varios sirven para contrastar o como inspiración:
 | EU Vocabularies: tablas de autoridad ATU y Country (Oficina de Publicaciones) | Unidades administrativas de los Estados miembros, actuales y pasadas, con URIs estables. | Contraste y enlace, si su cobertura de España llega a municipios. |
 | Eurostat GISCO | Tablas LAU–NUTS y límites. | Las tablas y los códigos, sí. Los límites no: su licencia excluye el uso comercial. |
 | EuroGeographics, Open Maps For Europe | Límites europeos. | Descartado: la licencia es propia de EuroGeographics, EuroBoundaryMap no es abierto y los datos de España salen del IGN, que usamos directamente. |
-| Unicode CLDR y Debian iso-codes | Nombres traducidos de países y de subdivisiones ISO 3166-2. | Candidato para los nombres de países por idioma (hoy, de Wikidata); licencia de Unicode para CLDR. |
+| Unicode CLDR y Debian iso-codes | Nombres traducidos de países y de subdivisiones ISO 3166-2. | Revisado el 11 de noviembre de 2026 (CLDR 49): descartado para los nombres de países, que siguen saliendo de Wikidata. No trae aranés y usa nombres de interfaz («Congo - Kinshasa», «RAE de Hong Kong (China)», «Côte d’Ivoire» en castellano). |
 | mapSpain y giscoR (paquetes de R) | Mapas de España y diccionarios de códigos y nombres. | Inspiración. |
 | datos.gob.es | URIs de comunidades y provincias. | Identificador adicional (§4.2). |
 | Base de datos general de entidades locales (Ministerio de Hacienda) | Entidades locales con código INE y NIF. | Para el repo hermano de organismos. |
@@ -410,6 +423,15 @@ Tomadas el 10 de noviembre de 2026:
     unidades, y las demás fuentes que lo tienen (`also`). Si falla una descarga no se escribe nada.
     La API va en los dos sentidos y queda fuera de `resolve`.
 
+Tomada el 11 de noviembre de 2026:
+
+15. Partidos judiciales: nivel `judicial_district` con padre en la provincia, como las islas, a
+    partir del Censo Judicial del Ministerio de Justicia en cada generación mensual. Identificador
+    `es:partido:PPNN` (provincia y número del Ministerio), nombre de la sede y fuera de `search` y
+    `mentions` salvo que se pidan. La descarga es obligatoria: si el Ministerio no responde, la
+    generación falla antes de escribir nada, en lugar de publicar los municipios sin partido. Sin
+    repositorios ajenos: ninguno está mantenido ni mejora la fuente oficial.
+
 ## 13. Pendiente
 
 - Traducir este documento y el README al catalán, gallego, euskera y aranés.
@@ -422,9 +444,25 @@ Tomadas el 10 de noviembre de 2026:
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
 - Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
   recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
-  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
-  Locales anota islas, comarcas y mancomunidades); nombres de países desde CLDR; acciones de
-  GitHub que aún usan Node 20.
+  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales (hecho); comarcas
+  oficiales; acciones de GitHub que aún usan Node 20 (las actualiza Dependabot).
+- Comarcas oficiales: solo son entidad local en Aragón, Castilla y León (El Bierzo), Cataluña y
+  País Vasco (las cuadrillas de Álava), las cuatro comunidades del Registro de Entidades Locales.
+  Cataluña tiene tabla oficial en Idescat (43 comarcas con Aran y Lluçanès) y Aragón en Aragón Open
+  Data (33, con la Central; nombres en mayúsculas y sin tildes). La exportación del Registro se
+  baja con una petición normal (`…/export_excel/comarcas/all`), sin navegador. Las de Galicia, la
+  Comunitat Valenciana, Asturias o Navarra son estadísticas o de planificación, no entidades
+  locales.
+- Cruces de los partidos judiciales, como capas posteriores: su elemento de Wikidata (390 de 431,
+  enlazables por la sede) y sus nombres en otros idiomas; la población por partido del CGPJ; las
+  demás demarcaciones del Censo Judicial (sección de la Audiencia, Tribunal Superior, fiscalía,
+  registro civil).
+- Nombres de países: siguen saliendo de Wikidata, que tiene alguna errata. Revisarlos, corregir
+  aquí las erratas con un fichero en `fuentes/` y corregirlas también en Wikidata.
+- Códigos postales en Andalucía: el CDAU trae 526 pares que no tiene el INE, que decide allí;
+  176 los confirma el Catastro (Vera Playa, 04621, entre ellos). Probablemente son zonas de segunda
+  residencia que no salen en el censo electoral, del que sale el dato del INE. Valorar si el CDAU
+  debe aportar esos pares.
 - Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde
   2004 y páginas de modificaciones de cada año), búsqueda aproximada.
 
@@ -523,6 +561,22 @@ Comprobado el 10 de noviembre de 2026:
   de diciembre de 2025. Los municipios que ya no existen siguen con su serie, vacía (Cesuras). Las tablas
   de comunidades (2853) e islas (2910) acaban en 2021. La tabla nacional por municipio (29005)
   pasa de 10 MB.
+
+Comprobado el 11 de noviembre de 2026:
+
+- **Censo Judicial (Ministerio de Justicia)**: XLSX en la zona de descargas del Ministerio y en el
+  catálogo de datos.gob.es (`e05228601-censo-judicial`); según los metadatos del conjunto, sus
+  condiciones de uso son las generales del catálogo (`https://datos.gob.es/avisolegal`). El aviso
+  legal del portal del Ministerio limita sus demás contenidos al uso privado.
+  Una fila por municipio con `CPRO`, `PJ` (número del partido), `CODM PJ` (sede), `CODM` y `CPJ`
+  («SI» en la sede), y una última fila «Actualizado a 25/03/2026». Trae los 8.132 municipios del
+  diccionario y 431 partidos, cada uno con una sede en su provincia, y coincide fila a fila con el
+  Nomenclátor de Partidos Judiciales en PDF del 30 de diciembre de 2025. Su población coincide con
+  la del INE; su código postal es el de la sede del juzgado o del ayuntamiento, no el del municipio.
+  Ninguno de sus partidos reúne dos islas salvo el de Eivissa, que incluye Formentera.
+- **Contraste de partidos**: el CGPJ publica cada año la población por partido y municipio (XLSX,
+  solo con nombres) y la Generalitat el catálogo CTEAJE de partidos de España (código, nombre y
+  sede). Ningún repositorio ajeno con la relación nacional está mantenido.
 
 Por comprobar:
 
