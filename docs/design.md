@@ -55,7 +55,10 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
 ## 3. Principles
 
 - **Everything can be regenerated.** Each data file states the URL it comes from, its SHA-256 hash
-  and the reference date. The generator runs in GitHub Actions, not locally.
+  and the reference date. The generator runs in GitHub Actions, not locally. Servers that do not
+  answer GitHub's IPs (today, the ICGC) are read through a relay with a Spanish IP (`VIA_RELAY` in
+  `generador/descargas.py`, secrets `RELAY_URL` and `RELAY_CLAVE`); the URL recorded is always the
+  source's.
 - **The literal text of the source is kept.** The forms we derive ourselves ("A Coruña", the
   slugs) are stored separately and marked as derived.
 - **A name is not enough to identify a territory.** `search` returns candidates with the reason

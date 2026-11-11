@@ -54,6 +54,9 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
 
 - **Todo se puede regenerar.** Cada fichero de datos indica la URL de la que sale, su huella
   SHA-256 y la fecha de referencia. El generador se ejecuta en GitHub Actions, no en local.
+  Los servidores que no responden a las IP de GitHub (hoy, el ICGC) se leen por un relay con IP
+  española (`VIA_RELAY` en `generador/descargas.py`, secretos `RELAY_URL` y `RELAY_CLAVE`); la
+  URL que consta es siempre la de la fuente.
 - **Se conserva el texto literal de la fuente.** Las formas que derivamos nosotros («A Coruña»,
   los slugs) se guardan aparte y marcadas como derivadas.
 - **Un nombre no basta para identificar un territorio.** `search` devuelve candidatos con el
