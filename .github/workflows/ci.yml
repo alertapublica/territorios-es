@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # generar.yml la lanza tras subir datos/ a la rama de una PR (su push no la dispara).
+  workflow_dispatch:
 
 permissions:
   contents: read
