@@ -25,14 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 270
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       # Los originales del Catastro solo viven en esta caché, nunca en el repo. GitHub la borra a los 7
       # días sin uso: sirve para reanudar una tirada que falla, no de una tirada a la siguiente.
       - name: Recuperar las descargas
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .cache
           key: codigos-postales-${{ github.run_id }}-${{ github.run_attempt }}
@@ -47,7 +47,7 @@ jobs:
         run: python -m generador --codigos-postales --informe informe.md --cache .cache
       - name: Guardar las descargas
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .cache
           key: codigos-postales-${{ github.run_id }}-${{ github.run_attempt }}
@@ -56,7 +56,7 @@ jobs:
         run: if [ -f informe.md ]; then cat informe.md >> "$GITHUB_STEP_SUMMARY"; fi
       - name: Comprobar coherencia
         run: python -m generador --check
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: codigos-postales
@@ -75,8 +75,8 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           name: codigos-postales
       - name: Abrir PR con la tabla

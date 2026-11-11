@@ -23,15 +23,15 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # El commit que pasó la CI, no el último de main.
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: python web/construir.py --salida _site --datos datos
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
   publicar:
@@ -42,4 +42,4 @@ jobs:
       url: ${{ steps.despliegue.outputs.page_url }}
     steps:
       - id: despliegue
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
