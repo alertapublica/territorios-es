@@ -565,6 +565,48 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         municipalities.append(record)
         add_articles(identity, item)
 
+    # Judicial districts -----------------------------------------------------------------------------
+    # The Censo Judicial (Ministerio de Justicia) gives the district of every municipality and its
+    # seat. A district takes the name of its seat; its parent is the province (none crosses one) and,
+    # as with the islands, its municipalities keep the province as parent.
+    district_rows = inputs.get("judicial_districts") or []
+    by_code = {r["codes"]["ine:municipio"]: r for r in municipalities}
+    seats: dict[str, str] = {}
+    for code, district, seat in district_rows:
+        seats.setdefault(district, seat)
+        if code not in by_code:
+            report.add("Partidos judiciales", f"{code} está en el Censo Judicial (partido {district}) pero no en el "
+                                              f"diccionario de municipios")
+    districts = []
+    for district, seat in sorted(seats.items()):
+        head = by_code.get(seat)
+        if head is None:
+            report.add("Partidos judiciales", f"Partido {district}: su sede {seat} no está en el diccionario de "
+                                              f"municipios; no se usa")
+            continue
+        if district[:2] not in province_ccaa:
+            raise ValueError(f"Judicial district {district} of an unknown province")
+        names = {"official": head["names"]["official"], "display": head["names"]["display"]}
+        if "parts" in head["names"]:
+            names["parts"] = dict(head["names"]["parts"])
+        if aliases.get(f"es:partido:{district}"):
+            names["aliases"] = aliases[f"es:partido:{district}"]
+        districts.append({"id": f"es:partido:{district}", "level": "judicial_district",
+                          "parent": f"es:provincia:{district[:2]}", "codes": {"mjusticia:partido": district},
+                          "names": names, "seat": head["id"], "slug": head["slug"], "time_zone": head["time_zone"]})
+    kept = {r["codes"]["mjusticia:partido"] for r in districts}
+    for code, district, _ in district_rows:
+        if code in by_code and district in kept:
+            by_code[code]["judicial_district"] = f"es:partido:{district}"
+    if district_rows:
+        for record in municipalities:
+            if "judicial_district" not in record:
+                report.add("Partidos judiciales", f"{record['id']} «{record['names']['display']}» sin partido "
+                                                  f"judicial en el Censo Judicial")
+    else:
+        report.add("Partidos judiciales", "Sin datos del Censo Judicial")
+
+
     missing = [row["ine"] for row in hand["provinces"] if row["ine"] not in population]
     if missing:
         report.add("INE: población", f"Provincias sin población del INE: {', '.join(missing)}")
@@ -639,7 +681,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
-    for record in countries + communities + provinces + islands + municipalities:
+    for record in countries + communities + provinces + islands + municipalities + districts:
         for system in ("osm:relation", "geonames"):
             if system in record["codes"]:
                 holders.setdefault((system, record["codes"][system]), []).append(record)
@@ -649,7 +691,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                 del record["codes"][system]
             report.add("Wikidata: código repetido",
                        f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
-    known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities}
+    known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities + districts}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")
 
@@ -663,7 +705,9 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Municipios con capital (IGN)": sum("capital" in r for r in municipalities),
         "Municipios con límites (IGN)": sum("ign:bddae" in r["codes"] for r in municipalities),
         "Municipios con isla": sum("island" in r for r in municipalities),
+        "Partidos judiciales": len(districts),
+        "Municipios con partido judicial": sum("judicial_district" in r for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
-            "territories": countries + communities + provinces + islands + municipalities}
+            "territories": countries + communities + provinces + islands + municipalities + districts}
     return data, report, articles

@@ -19,11 +19,14 @@ CODE_SOURCES = {
     "ine:municipio:dc": "ine",
     "iso3166-1:alpha2": "wikidata", "iso3166-1:alpha3": "wikidata", "iso3166-1:numeric": "wikidata",
     "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro", "ign:bddae": "ign",
+    "mjusticia:partido": "mjusticia",
     "wikidata": "wikidata", "osm:relation": "wikidata", "geonames": "wikidata",
 }
 
 
 def _name_source(level: str, kind: str, lang: str | None = None) -> str:
+    if level == "judicial_district":
+        return "derivado"  # the names of its seat
     if kind == "official":
         return "wikidata" if level == "country" else ("ine" if level in ("island", "municipality") else "fuentes")
     if kind in ("display", "parts", "short", "aliases"):
@@ -81,13 +84,19 @@ def tables(data: dict) -> dict[str, str]:
           code(t, "osm:relation"), code(t, "geonames"), t["names"]["official"], t["names"]["display"], *names(t),
           t["time_zone"]]
          for t in by_level.get("island", [])])
+    files["partidos-judiciales.csv"] = _table(
+        ["id", "mjusticia", "provincia", "sede", "official", "display", *name_cols, "time_zone"],
+        [[t["id"], code(t, "mjusticia:partido"), t["parent"].rsplit(":", 1)[1], t["seat"].rsplit(":", 1)[1],
+          t["names"]["official"], t["names"]["display"], *names(t), t["time_zone"]]
+         for t in by_level.get("judicial_district", [])])
     files["municipios.csv"] = _table(
-        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "lau", "nuts3", "wikidata",
+        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "partido", "lau", "nuts3", "wikidata",
          "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
          "lon", "lat", "altitude", "time_zone", "slug"],
         [[t["id"], code(t, "ine:municipio"), code(t, "ine:municipio:dc"), code(t, "dgc:municipio"),
           code(t, "ign:bddae"), t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1],
           t["island"].rsplit(":", 1)[1] if "island" in t else None,
+          t["judicial_district"].rsplit(":", 1)[1] if "judicial_district" in t else None,
           code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
           t["names"]["official"], t["names"]["display"], *names(t), t.get("stats", {}).get("population"),
           t.get("stats", {}).get("area_km2"), *[t.get("capital", {}).get(k) for k in ("name", "lon", "lat", "altitude")],
@@ -152,10 +161,15 @@ def check(folder: Path) -> list[str]:
     if (folder / "territorios.json").read_text(encoding="utf-8") != territories_json(data):
         problems.append("territorios.json is not in canonical form")
     for name, text in tables(data).items():
-        if (folder / name).read_text(encoding="utf-8") != text:
+        if not (folder / name).exists():
+            problems.append(f"{name} is missing")
+        elif (folder / name).read_text(encoding="utf-8") != text:
             problems.append(f"{name} does not match territorios.json")
     for name, digest in manifest["files"].items():
-        if _sha((folder / name).read_text(encoding="utf-8")) != digest:
+        if not (folder / name).exists():
+            if f"{name} is missing" not in problems:
+                problems.append(f"{name} is missing")
+        elif _sha((folder / name).read_text(encoding="utf-8")) != digest:
             problems.append(f"{name} does not match manifiesto.json")
     for name, header in ((codigos_postales.FILE, codigos_postales.HEADER),
                          (codigos_postales.OBSERVATIONS, codigos_postales.OBSERVATION_HEADER)):

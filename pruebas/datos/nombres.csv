@@ -528,3 +528,77 @@ es:municipio:51001,official,,Ceuta,ine
 es:municipio:51001,display,,Ceuta,derivado
 es:municipio:52001,official,,Melilla,ine
 es:municipio:52001,display,,Melilla,derivado
+es:partido:0102,official,,Vitoria-Gasteiz,derivado
+es:partido:0102,display,,Vitoria-Gasteiz,derivado
+es:partido:0303,official,,Alacant/Alicante,derivado
+es:partido:0303,display,,Alacant/Alicante,derivado
+es:partido:0303,parts,ca,Alacant,derivado
+es:partido:0303,parts,es,Alicante,derivado
+es:partido:0305,official,,"Vila Joiosa, la/Villajoyosa",derivado
+es:partido:0305,display,,la Vila Joiosa/Villajoyosa,derivado
+es:partido:0305,parts,ca,la Vila Joiosa,derivado
+es:partido:0305,parts,es,Villajoyosa,derivado
+es:partido:0703,official,,Palma,derivado
+es:partido:0703,display,,Palma,derivado
+es:partido:0705,official,,Eivissa,derivado
+es:partido:0705,display,,Eivissa,derivado
+es:partido:0817,official,,"Hospitalet de Llobregat, L'",derivado
+es:partido:0817,display,,L'Hospitalet de Llobregat,derivado
+es:partido:0824,official,,Rubí,derivado
+es:partido:0824,display,,Rubí,derivado
+es:partido:1201,official,,Castelló de la Plana/Castellón de la Plana,derivado
+es:partido:1201,display,,Castelló de la Plana/Castellón de la Plana,derivado
+es:partido:1201,parts,ca,Castelló de la Plana,derivado
+es:partido:1201,parts,es,Castellón de la Plana,derivado
+es:partido:1504,official,,"Coruña, A",derivado
+es:partido:1504,display,,A Coruña,derivado
+es:partido:1702,official,,Girona,derivado
+es:partido:1702,display,,Girona,derivado
+es:partido:2005,official,,Donostia/San Sebastián,derivado
+es:partido:2005,display,,Donostia/San Sebastián,derivado
+es:partido:2005,parts,eu,Donostia,derivado
+es:partido:2005,parts,es,San Sebastián,derivado
+es:partido:2504,official,,Lleida,derivado
+es:partido:2504,display,,Lleida,derivado
+es:partido:2506,official,,Vielha e Mijaran,derivado
+es:partido:2506,display,,Vielha e Mijaran,derivado
+es:partido:2603,official,,Logroño,derivado
+es:partido:2603,display,,Logroño,derivado
+es:partido:2811,official,,Madrid,derivado
+es:partido:2811,display,,Madrid,derivado
+es:partido:3104,official,,Pamplona/Iruña,derivado
+es:partido:3104,display,,Pamplona/Iruña,derivado
+es:partido:3104,parts,es,Pamplona,derivado
+es:partido:3104,parts,eu,Iruña,derivado
+es:partido:3201,official,,Ourense,derivado
+es:partido:3201,display,,Ourense,derivado
+es:partido:3313,official,,Langreo,derivado
+es:partido:3313,display,,Langreo,derivado
+es:partido:3502,official,,"Palmas de Gran Canaria, Las",derivado
+es:partido:3502,display,,Las Palmas de Gran Canaria,derivado
+es:partido:3604,official,,Pontevedra,derivado
+es:partido:3604,display,,Pontevedra,derivado
+es:partido:3607,official,,Cangas de Morrazo,derivado
+es:partido:3607,display,,Cangas de Morrazo,derivado
+es:partido:3803,official,,Santa Cruz de Tenerife,derivado
+es:partido:3803,display,,Santa Cruz de Tenerife,derivado
+es:partido:4106,official,,Sevilla,derivado
+es:partido:4106,display,,Sevilla,derivado
+es:partido:4606,official,,València,derivado
+es:partido:4606,display,,València,derivado
+es:partido:4607,official,,Sagunt/Sagunto,derivado
+es:partido:4607,display,,Sagunt/Sagunto,derivado
+es:partido:4607,parts,ca,Sagunt,derivado
+es:partido:4607,parts,es,Sagunto,derivado
+es:partido:4613,official,,Montcada/Moncada,derivado
+es:partido:4613,display,,Montcada/Moncada,derivado
+es:partido:4613,parts,ca,Montcada,derivado
+es:partido:4613,parts,es,Moncada,derivado
+es:partido:4804,official,,Bilbao,derivado
+es:partido:4804,display,,Bilbao,derivado
+es:partido:5003,official,,Zaragoza,derivado
+es:partido:5003,display,,Zaragoza,derivado
+es:partido:5112,official,,Ceuta,derivado
+es:partido:5112,display,,Ceuta,derivado
+es:partido:5208,official,,Melilla,derivado
+es:partido:5208,display,,Melilla,derivado

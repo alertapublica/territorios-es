@@ -12,6 +12,8 @@
 - Municipios con capital (IGN): 3
 - Municipios con límites (IGN): 5
 - Municipios con isla: 5
+- Partidos judiciales: 30
+- Municipios con partido judicial: 32
 
 ## Catastro (22)
 
@@ -225,6 +227,12 @@
 - es:provincia:35 reparte sus municipios en las NUTS 3 ES705
 - es:provincia:38 reparte sus municipios en las NUTS 3 ES709
 - es:provincia:51: 1 municipio(s) con la delegación 55 del Catastro
+
+## Partidos judiciales (3)
+
+- 36999 está en el Censo Judicial (partido 3604) pero no en el diccionario de municipios
+- Partido 0401: su sede 04013 no está en el diccionario de municipios; no se usa
+- es:municipio:04078 «Rioja» sin partido judicial en el Censo Judicial
 
 ## Países (1)
 
