@@ -1,12 +1,15 @@
 // Catalogue of territories built from datos/territorios.json. Mirrors python/territorios_es/catalog.py.
 import { dropArticle, normalize } from './text.js';
 
-export const LEVELS = ['country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district'];
+export const LEVELS = [
+  'country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district', 'warning_zone',
+];
 // Groups of municipalities that do not change their parent: the field of the municipality that names
 // its group is the level of the group.
-const GROUPS = ['island', 'judicial_district'];
-// Levels that search() leaves out unless asked for: a judicial district has the name of its seat.
-const UNSEARCHED_LEVELS = ['judicial_district'];
+const GROUPS = ['island', 'judicial_district', 'warning_zone'];
+// Levels that search() leaves out unless asked for: a judicial district has the name of its seat, and a
+// warning zone of AEMET is not an administration.
+const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone'];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -52,8 +55,8 @@ export function createCatalog(data) {
       if (!childrenOf.has(record.parent)) childrenOf.set(record.parent, []);
       childrenOf.get(record.parent).push(id);
     }
-    // An island or a judicial district groups municipalities of its province; their parent stays the
-    // province.
+    // An island, a judicial district or a warning zone groups municipalities of its province; their
+    // parent stays the province.
     for (const group of GROUPS) {
       const memberOf = record[group];
       if (memberOf == null) continue;

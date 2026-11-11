@@ -55,6 +55,7 @@ def load_hand_lists(folder: Path) -> dict:
         "community_names": _csv(folder / "nombres-comunidades.csv"),
         "provinces": _csv(folder / "provincias.csv"),
         "islands": _csv(folder / "islas.csv"),
+        "warning_zones": _csv(folder / "zonas-aviso.csv"),
         "parts": _csv(folder / "partes-bilingues.csv"),
         "aliases": _csv(folder / "alias.csv"),
         "eu": _csv(folder / "paises-ue.csv"),
@@ -606,6 +607,60 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     else:
         report.add("Partidos judiciales", "Sin datos del Censo Judicial")
 
+    # AEMET warning zones ------------------------------------------------------------------------------
+    # Meteoalerta issues its warnings by zone. The zone of each municipality comes from the master of
+    # AEMET OpenData, plus the municipalities checked by hand that it leaves out (fuentes/zonas-aviso.csv,
+    # each with the AEMET page that names its zone); the name of each zone, from the table of the zone
+    # boundaries. Like a judicial district, a zone groups municipalities of one province, which keep
+    # the province as parent. A municipality without a zone is reported, never guessed from a map.
+    zone_rows = inputs.get("aemet_municipalities") or []
+    zone_names = dict(inputs.get("aemet_zones") or [])
+    zone_of: dict[str, str] = {}
+    for code, zone in zone_rows:
+        if code in by_code:
+            zone_of[code] = zone
+        else:
+            report.add("Zonas de aviso", f"{code} está en el maestro de AEMET (zona {zone}) pero no en el "
+                                         f"diccionario de municipios")
+    for row in hand["warning_zones"]:
+        code, zone = row["ine"], row["zona"]
+        if code in zone_of:
+            report.add("Zonas de aviso", f"{code} ya está en el maestro de AEMET (zona {zone_of[code]}): sobra en "
+                                         f"fuentes/zonas-aviso.csv")
+        elif code not in by_code:
+            report.add("Zonas de aviso", f"{code} está en fuentes/zonas-aviso.csv pero no en el diccionario de "
+                                         f"municipios")
+        elif zone_rows:
+            zone_of[code] = zone
+    members: dict[str, list[str]] = {}
+    for code, zone in sorted(zone_of.items()):
+        members.setdefault(zone, []).append(code)
+    zones = []
+    for zone, codes in sorted(members.items()):
+        in_provinces = sorted({code[:2] for code in codes})
+        if zone not in zone_names or len(in_provinces) != 1:
+            why = "no está en la delimitación de AEMET" if zone not in zone_names else \
+                f"tiene municipios de varias provincias ({', '.join(in_provinces)})"
+            report.add("Zonas de aviso", f"Zona {zone}: {why}; quedan sin zona {', '.join(codes)}")
+            continue
+        identity, name = f"es:zona-aviso:{zone}", zone_names[zone]
+        names = {"official": name, "display": name}
+        if aliases.get(identity):
+            names["aliases"] = aliases[identity]
+        zones.append({"id": identity, "level": "warning_zone", "parent": f"es:provincia:{in_provinces[0]}",
+                      "codes": {"aemet:zona": zone}, "names": names, "slug": slugify(name),
+                      "time_zone": by_code[codes[0]]["time_zone"]})
+        for code in codes:
+            by_code[code]["warning_zone"] = identity
+    if zone_rows:
+        for zone in sorted(set(zone_names) - set(members)):
+            report.add("Zonas de aviso", f"Zona {zone} «{zone_names[zone]}» sin municipios en el maestro de AEMET")
+        for record in municipalities:
+            if "warning_zone" not in record:
+                report.add("Zonas de aviso", f"{record['id']} «{record['names']['display']}» sin zona de aviso de "
+                                             f"AEMET")
+    else:
+        report.add("Zonas de aviso", "Sin datos del maestro de municipios de AEMET")
 
     missing = [row["ine"] for row in hand["provinces"] if row["ine"] not in population]
     if missing:
@@ -681,7 +736,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
-    for record in countries + communities + provinces + islands + municipalities + districts:
+    for record in countries + communities + provinces + islands + municipalities + districts + zones:
         for system in ("osm:relation", "geonames"):
             if system in record["codes"]:
                 holders.setdefault((system, record["codes"][system]), []).append(record)
@@ -691,7 +746,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                 del record["codes"][system]
             report.add("Wikidata: código repetido",
                        f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
-    known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities + districts}
+    known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities + districts
+                 + zones}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")
 
@@ -707,7 +763,9 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Municipios con isla": sum("island" in r for r in municipalities),
         "Partidos judiciales": len(districts),
         "Municipios con partido judicial": sum("judicial_district" in r for r in municipalities),
+        "Zonas de aviso (AEMET)": len(zones),
+        "Municipios con zona de aviso": sum("warning_zone" in r for r in municipalities),
     })
     data = {"schema": 1, "reference_date": reference_date,
-            "territories": countries + communities + provinces + islands + municipalities + districts}
+            "territories": countries + communities + provinces + islands + municipalities + districts + zones}
     return data, report, articles

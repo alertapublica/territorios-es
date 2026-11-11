@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 import time
 from collections import Counter
@@ -21,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import catastro, codigos_postales, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
+from . import aemet, catastro, codigos_postales, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 from .limites import build_limits  # noqa: E402
@@ -98,6 +99,33 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     records["mjusticia_censo_judicial"] = got.record(reference_date=date, licence=c["licence"],
                                                      attribution=c["attribution"])
 
+    # AEMET OpenData answers with a temporary link to the data: only the data are kept in the cache,
+    # and the manifest records the address of the API, not the link.
+    c = config["aemet_municipios"]
+    got = None
+    if cache and (cache / "aemet_municipios.json").exists():
+        got = descargas.fetch(c["url"], cache=cache, cache_name="aemet_municipios.json")
+        try:
+            aemet.parse_municipalities(got.content)
+        except ValueError:
+            (cache / "aemet_municipios.json").unlink()  # a broken copy: download it again
+            got = None
+    if got is None:
+        key = os.environ.get(c["key"])
+        if not key:
+            raise RuntimeError(f"Falta {c['key']} (secreto del repositorio) para el maestro de municipios de AEMET")
+        step = descargas.fetch(c["url"], accept="application/json", headers={"api_key": key},
+                               validate=aemet.data_link)
+        got = descargas.fetch(aemet.data_link(step.content), cache=cache, cache_name="aemet_municipios.json",
+                              validate=aemet.parse_municipalities)
+        got.url = c["url"]
+    inputs["aemet_municipalities"] = aemet.parse_municipalities(got.content)
+    records["aemet_municipios"] = got.record(licence=c["licence"], attribution=c["attribution"])
+
+    c = config["aemet_zonas"]
+    got = descargas.fetch(c["url"], cache=cache, cache_name="aemet_zonas.zip", validate=aemet.parse_zones)
+    inputs["aemet_zones"] = aemet.parse_zones(got.content)
+    records["aemet_zonas"] = got.record(licence=c["licence"], attribution=c["attribution"])
 
     c = config["eurostat_lau"]
     page = descargas.fetch(c["page"], cache=cache, cache_name="eurostat_lau.html")

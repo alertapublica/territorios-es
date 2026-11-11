@@ -87,7 +87,7 @@ First version:
   requirement in job calls.
 
 Second version: islands (cabildos and consells), official comarcas and judicial districts. The
-islands are done (version 0.3), and the judicial districts since 0.4:
+islands are done (version 0.3), and the judicial districts and AEMET's warning zones since 0.4:
 
 - **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
   with level `island` and an identifier with the INE island code (`es:isla:384` is Tenerife;
@@ -107,6 +107,19 @@ islands are done (version 0.3), and the judicial districts since 0.4:
   («CATARRO4623548000000JA» for Catarroja). Organic Law 1/2025 keeps the districts: each has a
   court of first instance (tribunal de instancia) seated in its capital. `search` and `mentions`
   leave them out unless asked for in `levels`, since they are named after their seat.
+- **AEMET warning zones**: the 182 land zones of Meteoalerta, by which AEMET (the State
+  Meteorological Agency) issues its warnings, with level `warning_zone` and an identifier with the
+  six-digit AEMET code (`es:zona-aviso:774602` is Litoral norte de Valencia). It is not an
+  administration but the division used to warn about rain, wind, snow or heat, and it covers the
+  whole country. Their parent is the province and municipalities also carry the field
+  `warning_zone`, as with the islands. The zone of each municipality comes from the municipality
+  master of AEMET OpenData, which needs a key (the secret `AEMET_API_KEY`), and the name of each
+  zone from the table of the zone boundaries. The master leaves out some new municipalities and
+  keeps some extinct ones: those that AEMET does place on its website go in
+  `fuentes/zonas-aviso.csv`, with the link to their page, and the rest stay without a zone and are
+  listed in the report; it is never inferred from the map, which dates from 2018 and does not
+  match the current boundaries. The coastal zones (suffix `C`) are left for later. `search` and
+  `mentions` leave them out unless asked for in `levels`.
 
 Official comarcas are pending (§13).
 
@@ -119,6 +132,7 @@ Asturias), which number in the tens of thousands.
 |---|---|---|---|
 | INE | autonomous community (2 digits), province (2), island (3), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
 | Censo Judicial | judicial district (`mjusticia:partido`, 4 digits: province 2 + number 2) | Ministry of Justice's Censo Judicial | The number is the district's in the judicial map of its province. The Generalitat's technical catalogue (CTEAJE) uses the same code except in Ceuta and Melilla (1112 and 2908, against 5112 and 5208). |
+| AEMET | warning zone (`aemet:zona`, 6 digits: community 2 + province or island group 2 + zone 2) | AEMET OpenData municipality master and Meteoalerta zone boundaries | The community and province digits are AEMET's, not the INE's (the Balearic Islands use 53–55 and the Canary Islands 90–96). |
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
@@ -245,10 +259,10 @@ options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
-| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island or a judicial district. Judicial districts only come up if asked for in `levels`. |
-| `children(id)` | The territories whose parent is this one; for an island or a judicial district, its municipalities. Those of a province include its judicial districts and, in the Balearic and Canary Islands, its islands. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district or a warning zone. Judicial districts and warning zones only come up if asked for in `levels`. |
+| `children(id)` | The territories whose parent is this one; for an island, a judicial district or a warning zone, its municipalities. Those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -437,6 +451,15 @@ Taken on 11 November 2026:
     answer, the generation fails before writing anything, instead of publishing the municipalities
     without a district. No third-party repositories: none is maintained or improves on the official
     source.
+16. AEMET warning zones: level `warning_zone` with the province as parent, from the municipality
+    master of AEMET OpenData (with the key as a repository secret) and the table of the zone
+    boundaries, in every monthly generation. Identifier `es:zona-aviso:CCPPZZ` (AEMET code), with
+    its official name and left out of `search` and `mentions` unless asked for. The download is
+    mandatory, as is the Censo Judicial's. The master is preferred to the PDF table of the
+    Meteoalerta plan, which has the same (checked on 11 November 2026: the master's 8,122 rows,
+    without its 2 extinct municipalities and with the 4 exceptions of `fuentes/zonas-aviso.csv`, are
+    the PDF's 8,124 municipalities, with the same zone), because it is JSON and there is no need to
+    read 221 pages.
 
 ## 13. Pending
 
@@ -451,7 +474,7 @@ Taken on 11 November 2026:
   link to open the PR by hand. GitHub Pages is already enabled.
 - Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
   postal-code gatherer (done, with the full run of every source; afterwards, more
-  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); official comarcas;
+  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); AEMET warning zones (done); official comarcas;
   GitHub actions still on Node 20 (Dependabot updates them).
 - Official comarcas: they are a local entity only in Aragon, Castile and León (El Bierzo),
   Catalonia and the Basque Country (the cuadrillas of Álava), the four communities in the Registro
@@ -464,6 +487,9 @@ Taken on 11 November 2026:
   linkable through the seat) and their names in other languages; the CGPJ's population by
   district; the other jurisdictions in the Censo Judicial (section of the Audiencia, High Court,
   public prosecutor, civil registry).
+- AEMET warning zones, later: the 51 coastal ones, linked to their land zone, and their Wikidata
+  item. Ask AEMET to place the municipalities that still have no zone (San Martín del Tesorillo,
+  Usansolo, El Palmar de Troya…).
 - Country names: they still come from Wikidata, which has some typos. Review them, fix the typos
   here with a file in `fuentes/` and fix them in Wikidata too.
 - Postal codes in Andalusia: CDAU has 526 pairs that the INE, which decides there, lacks; the

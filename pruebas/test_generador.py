@@ -11,7 +11,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import catastro, codigos_postales, eurostat, exportar, ign, ine, justicia, limites, wikidata
+from generador import aemet, catastro, codigos_postales, eurostat, exportar, ign, ine, justicia, limites, wikidata
 from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -84,6 +84,45 @@ class Readers(unittest.TestCase):
         self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header, *moved]}))
         self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header[:4], *rows]}))
         self.assertRaises(ValueError, justicia.parse_census, xlsx({"Censo": [header, *stamp]}))
+
+    def test_aemet_master(self):
+        link = b'{"descripcion": "exito", "estado": 200, "datos": "https://opendata.aemet.es/opendata/sh/abc"}'
+        self.assertEqual(aemet.data_link(link), "https://opendata.aemet.es/opendata/sh/abc")
+        for broken in (b'{"descripcion": "API key invalido", "estado": 401}', b"", b"<html>",
+                       b'{"datos": "http://inseguro"}'):
+            self.assertRaises(ValueError, aemet.data_link, broken)
+        rows = [{"id": "id46250", "nombre": "Valencia", "zona_comarcal": "774602"},
+                {"id": "id01059", "nombre": "Vitoria-Gasteiz", "zona_comarcal": "750102"}]
+        content = json.dumps(rows, ensure_ascii=False).encode("iso-8859-15")
+        self.assertEqual(aemet.parse_municipalities(content), [["01059", "750102"], ["46250", "774602"]])
+        for broken in (rows + [rows[0]], [{"id": "46250", "zona_comarcal": "774602"}],
+                       [{"id": "id46250", "zona_comarcal": "77460"}], [], {"estado": 429}):
+            self.assertRaises(ValueError, aemet.parse_municipalities, json.dumps(broken).encode())
+        self.assertRaises(ValueError, aemet.parse_municipalities, b"<html>limite</html>")
+
+    def test_aemet_zones(self):
+        fields = [("COD_Z", 7), ("NOM_Z", 50), ("COD_PROV", 4)]
+        land = dbf(fields, [(False, ["774602", "Litoral norte de Valencia", "7746"]),
+                            (True, ["999999", "Borrada", "9999"]),
+                            (False, ["610401", "Valle del Almanzora y Los Vélez", "6104"])])
+        coast = dbf(fields, [(False, ["774602C", "Costa norte de Valencia", "7746"])])
+        content = zipped({"z/AEMET-meteoalerta-v6-zonas-32630.dbf": land,
+                          "z/AEMET-meteoalerta-v6-zonas-costeras-32630.dbf": coast})
+        self.assertEqual(aemet.parse_zones(content),
+                         [["610401", "Valle del Almanzora y Los Vélez"], ["774602", "Litoral norte de Valencia"]])
+        repeated = dbf(fields, [(False, ["774602", "Uno", "7746"]), (False, ["774602", "Otro", "7746"])])
+        for broken in ({"zonas.dbf": repeated}, {"costeras.dbf": coast}, {"a.dbf": land, "b.dbf": land},
+                       {"zonas.dbf": dbf([("CODIGO", 7)], [(False, ["774602"])])},
+                       {"zonas.dbf": dbf(fields, [(False, ["7746", "Corto", "7746"])])}):
+            self.assertRaises(ValueError, aemet.parse_zones, zipped(broken))
+        self.assertRaises(ValueError, aemet.parse_zones, b"no es un zip")
+        # A damaged download is a ValueError, so fetch() retries it.
+        good = zipped({"zonas.dbf": land})
+        crc = bytearray(good)
+        crc[good.index(b"Litoral")] ^= 0xFF
+        self.assertRaises(ValueError, aemet.parse_zones, bytes(crc))
+        self.assertRaises(ValueError, aemet.parse_zones, zipped({"zonas.dbf": land[:40]}))
+        self.assertRaises(ValueError, aemet.parse_zones, zipped({"zonas.dbf": land[:-30]}))
 
     def test_ine_population(self):
         tables = [{"Id": 2855, "Nombre": "Albacete: Población por municipios y sexo.", "Codigo": "PROV-MUN"},
@@ -431,6 +470,57 @@ class Build(unittest.TestCase):
             "Partido 0401: su sede 04013 no está en el diccionario de municipios; no se usa",
             "es:municipio:04078 «Rioja» sin partido judicial en el Censo Judicial"])
         self.assertEqual(self.report.summary["Partidos judiciales"], 30)
+
+    def test_warning_zones(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        self.assertEqual(by_id["es:zona-aviso:774602"], {
+            "id": "es:zona-aviso:774602", "level": "warning_zone", "parent": "es:provincia:46",
+            "codes": {"aemet:zona": "774602"},
+            "names": {"official": "Litoral norte de Valencia", "display": "Litoral norte de Valencia"},
+            "slug": "litoral-norte-de-valencia", "time_zone": "Europe/Madrid"})
+        self.assertEqual(by_id["es:zona-aviso:659602"]["time_zone"], "Atlantic/Canary")
+        self.assertEqual(by_id["es:municipio:46220"]["warning_zone"], "es:zona-aviso:774602")
+        self.assertEqual(by_id["es:municipio:46220"]["parent"], "es:provincia:46")
+        # Two islands, one zone: Ibiza y Formentera.
+        self.assertEqual(by_id["es:municipio:07024"]["warning_zone"], by_id["es:municipio:07026"]["warning_zone"])
+        # A zone missing from the boundaries leaves its municipalities without one; never guessed.
+        self.assertNotIn("es:zona-aviso:633304", by_id)
+        self.assertNotIn("warning_zone", by_id["es:municipio:33031"])
+        self.assertEqual(sorted(self.report.sections["Zonas de aviso"]), [
+            "04904 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios",
+            "18106 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios",
+            "18915 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios",
+            "36011 está en el maestro de AEMET (zona 713602) pero no en el diccionario de municipios",
+            "36902 está en fuentes/zonas-aviso.csv pero no en el diccionario de municipios",
+            "Zona 610401 «Valle del Almanzora y Los Vélez» sin municipios en el maestro de AEMET",
+            "Zona 633304: no está en la delimitación de AEMET; quedan sin zona 33031",
+            "es:municipio:04078 «Rioja» sin zona de aviso de AEMET",
+            "es:municipio:33031 «Langreo» sin zona de aviso de AEMET"])
+        self.assertEqual(self.report.summary["Zonas de aviso (AEMET)"], 25)
+
+    def test_warning_zones_from_hand_list_and_across_provinces(self):
+        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
+        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
+        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
+        # Melilla in Ceuta's zone.
+        inputs["aemet_municipalities"] = [[c, "785101" if c == "52001" else z] for c, z in inputs["aemet_municipalities"]]
+        with tempfile.TemporaryDirectory() as tmp:
+            fuentes = Path(tmp) / "fuentes"
+            shutil.copytree(ROOT / "fuentes", fuentes)
+            (fuentes / "zonas-aviso.csv").write_text(
+                "ine,zona,municipio,evidencia\n04078,610403,Rioja,https://example.org\n"
+                "28079,722801,Madrid,https://example.org\n", encoding="utf-8")
+            inputs["aemet_zones"].append(["610403", "Poniente y Almería Capital"])
+            data, report, _ = build(inputs, fuentes, "2026-01-01")
+        by_id = {t["id"]: t for t in data["territories"]}
+        self.assertEqual(by_id["es:municipio:04078"]["warning_zone"], "es:zona-aviso:610403")
+        self.assertEqual(by_id["es:municipio:28079"]["warning_zone"], "es:zona-aviso:722802")  # the master wins
+        self.assertNotIn("es:zona-aviso:785101", by_id)
+        self.assertNotIn("warning_zone", by_id["es:municipio:52001"])
+        self.assertIn("28079 ya está en el maestro de AEMET (zona 722802): sobra en fuentes/zonas-aviso.csv",
+                      report.sections["Zonas de aviso"])
+        self.assertIn("Zona 785101: tiene municipios de varias provincias (51, 52); quedan sin zona 51001, 52001",
+                      report.sections["Zonas de aviso"])
 
     def test_population(self):
         by_id = {t["id"]: t for t in self.data["territories"]}

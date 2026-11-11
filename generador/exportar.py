@@ -19,7 +19,7 @@ CODE_SOURCES = {
     "ine:municipio:dc": "ine",
     "iso3166-1:alpha2": "wikidata", "iso3166-1:alpha3": "wikidata", "iso3166-1:numeric": "wikidata",
     "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro", "ign:bddae": "ign",
-    "mjusticia:partido": "mjusticia",
+    "mjusticia:partido": "mjusticia", "aemet:zona": "aemet",
     "wikidata": "wikidata", "osm:relation": "wikidata", "geonames": "wikidata",
 }
 
@@ -27,6 +27,8 @@ CODE_SOURCES = {
 def _name_source(level: str, kind: str, lang: str | None = None) -> str:
     if level == "judicial_district":
         return "derivado"  # the names of its seat
+    if level == "warning_zone":
+        return "aemet" if kind in ("official", "display") else "fuentes"
     if kind == "official":
         return "wikidata" if level == "country" else ("ine" if level in ("island", "municipality") else "fuentes")
     if kind in ("display", "parts", "short", "aliases"):
@@ -89,14 +91,20 @@ def tables(data: dict) -> dict[str, str]:
         [[t["id"], code(t, "mjusticia:partido"), t["parent"].rsplit(":", 1)[1], t["seat"].rsplit(":", 1)[1],
           t["names"]["official"], t["names"]["display"], *names(t), t["time_zone"]]
          for t in by_level.get("judicial_district", [])])
+    files["zonas-aviso.csv"] = _table(
+        ["id", "aemet", "provincia", "official", "display", "time_zone"],
+        [[t["id"], code(t, "aemet:zona"), t["parent"].rsplit(":", 1)[1], t["names"]["official"], t["names"]["display"],
+          t["time_zone"]]
+         for t in by_level.get("warning_zone", [])])
     files["municipios.csv"] = _table(
-        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "partido", "lau", "nuts3", "wikidata",
-         "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
+        ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "partido", "zona_aviso", "lau", "nuts3",
+         "wikidata", "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",
          "lon", "lat", "altitude", "time_zone", "slug"],
         [[t["id"], code(t, "ine:municipio"), code(t, "ine:municipio:dc"), code(t, "dgc:municipio"),
           code(t, "ign:bddae"), t["parent"].rsplit(":", 1)[1], catalog.ancestors(t["id"])[1].rsplit(":", 1)[1],
           t["island"].rsplit(":", 1)[1] if "island" in t else None,
           t["judicial_district"].rsplit(":", 1)[1] if "judicial_district" in t else None,
+          t["warning_zone"].rsplit(":", 1)[1] if "warning_zone" in t else None,
           code(t, "lau"), t.get("nuts3"), code(t, "wikidata"), code(t, "osm:relation"), code(t, "geonames"),
           t["names"]["official"], t["names"]["display"], *names(t), t.get("stats", {}).get("population"),
           t.get("stats", {}).get("area_km2"), *[t.get("capital", {}).get(k) for k in ("name", "lon", "lat", "altitude")],

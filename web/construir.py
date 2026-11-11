@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "https://github.com/alertapublica/territorios-es"
 FILES = ["territorios.json", "paises.csv", "comunidades.csv", "provincias.csv", "islas.csv", "partidos-judiciales.csv",
-         "municipios.csv", "codigos.csv", "codigos-postales.csv", "codigos-postales-fuentes.csv", "nombres.csv",
+         "zonas-aviso.csv", "municipios.csv", "codigos.csv", "codigos-postales.csv", "codigos-postales-fuentes.csv", "nombres.csv",
          "wikipedia.csv", "manifiesto.json"]
 GENERIC = {"name_": "name_xx", "short_": "short_xx"}
 
