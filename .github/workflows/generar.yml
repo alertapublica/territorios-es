@@ -28,6 +28,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Descargar y generar
+        env:
+          # Relay con IP española para los hosts de VIA_RELAY (generador/descargas.py); sin clave, directa.
+          RELAY_CLAVE: ${{ secrets.RELAY_CLAVE }}
+          RELAY_URL: ${{ secrets.RELAY_URL }}
         run: python -m generador --informe informe.md --cache .cache
       - name: Resumen
         if: always()
