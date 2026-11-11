@@ -427,7 +427,7 @@ Taken on 10 November 2026:
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
 - Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
-  postal-code gatherer (done; the full run with every source is missing and, afterwards, more
+  postal-code gatherer (done, with the full run of every source; afterwards, more
   sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts and official comarcas (find a source: the Registro de
   Entidades Locales records islands, comarcas and associations of municipalities); country names
   from CLDR; GitHub actions still on Node 20.

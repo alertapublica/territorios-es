@@ -241,6 +241,8 @@ def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, d
                 seen[dgc], latin = _Seen(got), latin + encoding
             except (RuntimeError, ValueError) as error:
                 failed.append(f"{dgc}: {error}")
+                if cache:  # a ZIP that does not read must not come back from the cache on the next try
+                    (cache / f"cp_catastro_{dgc}.zip").unlink(missing_ok=True)
             del future
             if done % 250 == 0 or done == len(files):
                 mb = sum(s.bytes for s in seen.values()) / 1e6

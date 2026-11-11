@@ -421,7 +421,7 @@ Tomadas el 10 de noviembre de 2026:
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
 - Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
-  recopilador de códigos postales (hecho; falta la tirada completa con todas las fuentes y, después,
+  recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
   más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
   Locales anota islas, comarcas y mancomunidades); nombres de países desde CLDR; acciones de
   GitHub que aún usan Node 20.
