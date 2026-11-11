@@ -4,11 +4,12 @@ import io
 import json
 import unittest
 import zipfile
+from collections import Counter
 from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import catastro, eurostat, exportar, ign, ine, limites, wikidata
+from generador import catastro, codigos_postales, eurostat, exportar, ign, ine, limites, wikidata
 from generador.construir import build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -444,6 +445,397 @@ class Build(unittest.TestCase):
             inputs["ine_islands"] = broken
             with self.assertRaises(ValueError):
                 build(inputs, ROOT / "fuentes", "2026-01-01")
+
+
+def zipped(files: dict[str, bytes]) -> bytes:
+    out = io.BytesIO()
+    with ZipFile(out, "w") as archive:
+        for name, content in files.items():
+            archive.writestr(name, content)
+    return out.getvalue()
+
+
+def catastro_gml(addresses: list[tuple[str, str]], descriptors: dict[str, str]) -> bytes:
+    """INSPIRE AD GML in the shape of the Catastro files (seen on 2026-11-10); values invented.
+    `addresses` are (descriptor id or "", unit id); descriptors come after the addresses, as there."""
+    members = []
+    for i, (descriptor, unit) in enumerate(addresses):
+        links = (f'<AD:component xlink:href="#{descriptor}" />' if descriptor else "") + \
+                '<AD:component xlink:href="#ES.SDGC.TN.02.001.1" />' + f'<AD:component xlink:href="#{unit}" />'
+        members.append(f'<gml:featureMember><AD:Address gml:id="ES.SDGC.AD.{i}"><AD:inspireId><base:Identifier>'
+                       f'<base:localId>{i}</base:localId></base:Identifier></AD:inspireId>{links}</AD:Address>'
+                       '</gml:featureMember>')
+    for identity, code in descriptors.items():
+        members.append(f'<gml:featureMember><AD:PostalDescriptor gml:id="{identity}"><AD:postName><GN:GeographicalName>'
+                       f'<GN:text /></GN:GeographicalName></AD:postName><AD:postCode>{code}</AD:postCode>'
+                       '</AD:PostalDescriptor></gml:featureMember>')
+    gml = ('<?xml version="1.0" encoding="ISO-8859-1"?><gml:FeatureCollection gml:id="ES.SDGC.AD" '
+           'xmlns:GN="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" '
+           'xmlns:base="urn:x-inspire:specification:gmlas:BaseTypes:3.2" xmlns:gml="http://www.opengis.net/gml/3.2" '
+           'xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:AD="urn:x-inspire:specification:gmlas:Addresses:3.0">'
+           + "".join(members) + "</gml:FeatureCollection>")
+    return zipped({"A.ES.SDGC.AD.02900.gml": gml.encode("iso-8859-1"), "A.ES.SDGC.AD.MD.02900.xml": b"<md/>"})
+
+
+def dbf(fields: list[tuple[str, int]], records: list[tuple[bool, list[str]]]) -> bytes:
+    """Minimal dBASE III file (type C fields), as in the IDENA shapefile; values invented."""
+    size = 1 + sum(length for _, length in fields)
+    header = 32 + 32 * len(fields) + 1
+    out = bytearray(b"\x03\x7e\x0a\x02" + len(records).to_bytes(4, "little") + header.to_bytes(2, "little")
+                    + size.to_bytes(2, "little") + bytes(20))
+    for name, length in fields:
+        out += name.encode().ljust(11, b"\0") + b"C" + bytes(4) + bytes([length, 0]) + bytes(14)
+    out += b"\r"
+    for deleted, values in records:
+        out += b"*" if deleted else b" "
+        for (_, length), value in zip(fields, values):
+            out += value.encode("cp1252").ljust(length)[:length]
+    return bytes(out + b"\x1a")
+
+
+def prefixed_xlsx(rows: list[list[str]]) -> bytes:
+    """XLSX with the x: prefix and shared strings, as Eustat writes it."""
+    main = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+    strings = sorted({v for row in rows for v in row if v})
+    cells = "".join(
+        f'<x:row r="{r}">' + "".join(f'<x:c r="{chr(65 + c)}{r}" t="s"><x:v>{strings.index(v)}</x:v></x:c>'
+                                    for c, v in enumerate(row) if v) + "</x:row>" for r, row in enumerate(rows, 1))
+    return zipped({
+        "xl/workbook.xml": f'<x:workbook xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" '
+                           f'xmlns:x="{main}"><x:sheets><x:sheet name="Sheet1" sheetId="1" r:id="rId1"/></x:sheets></x:workbook>',
+        "xl/_rels/workbook.xml.rels": '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                                      '<Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>',
+        "xl/sharedStrings.xml": f'<x:sst xmlns:x="{main}">' + "".join(f"<x:si><x:t>{v}</x:t></x:si>" for v in strings) + "</x:sst>",
+        "xl/worksheets/sheet1.xml": f'<x:worksheet xmlns:x="{main}"><x:sheetData>{cells}</x:sheetData></x:worksheet>'})
+
+
+EUSKADI_HEADER = ["LH Kodea/Código TH", "Lurralde historikoa/Territorio histórico", "Udalerri-kodea/Código Municipio",
+                  "Udalerria/Municipio", *[f"c{i}" for i in range(4, 18)], "Posta-kodea/Código Postal",
+                  "Posta-helbidea/Dirección postal"]
+
+
+def euskadi_row(province: str, number: str, code: str) -> list[str]:
+    return [province, "Araba/Álava", number, "Inventado", *["x"] * 14, code, "Kalea, 1"]
+
+
+class PostalCodes(unittest.TestCase):
+    def test_postal_code_and_valid(self):
+        self.assertEqual(codigos_postales.postal_code(" 2250"), "02250")
+        self.assertEqual(codigos_postales.postal_code("28001"), "28001")
+        self.assertEqual(codigos_postales.postal_code("0"), "0")
+        self.assertEqual(codigos_postales.postal_code(None), "")
+        self.assertTrue(codigos_postales.valid("52001"))
+        for bad in ("00043", "53001", "2800", "28 01", "0"):
+            self.assertFalse(codigos_postales.valid(bad), bad)
+
+    def test_catastro_feeds(self):
+        atom = '<feed xmlns="http://www.w3.org/2005/Atom">{}</feed>'
+        entry = '<entry><title>{}</title><link rel="enclosure" href="{}" type="application/atom+xml" /></entry>'
+        general = atom.format(
+            "<updated>2026-08-21T00:00:00Z</updated>"
+            + entry.format("Territorial office 02 Albacete",
+                           "http://www.catastro.hacienda.gob.es/INSPIRE/addresses/02/ES.SDGC.ad.atom_02.xml")
+            + entry.format("", "http://www.catastro.hacienda.gob.es/INSPIRE/addresses/56/ES.SDGC.ad.atom_56.xml")
+            + entry.format("Provincial Council of Navarra", "https://filescartografia.navarra.es/AD/Addresses.xml")
+        ).encode()
+        self.assertEqual(codigos_postales.parse_catastro_feed(general), ["02", "56"])
+        self.assertEqual(codigos_postales.feed_updated(general), "2026-08-21")
+        self.assertRaises(ValueError, codigos_postales.parse_catastro_feed, atom.format("").encode())
+        self.assertEqual(codigos_postales.office_feed_url("02"),
+                         "https://www.catastro.hacienda.gob.es/INSPIRE/Addresses/02/ES.SDGC.ad.atom_02.xml")
+        base = "https://www.catastro.hacienda.gob.es/INSPIRE/Addresses/02/"
+        office = ('<?xml version="1.0" encoding="ISO-8859-1"?>' + atom.format(
+            entry.format(" 02024-CASAS IBAÑEZ addresses", base + "02024-CASAS IBAÑEZ/A.ES.SDGC.AD.02024.zip")
+            + entry.format(" 02001-ABENGIBRE addresses", base.replace("https", "http") + "02001-ABENGIBRE/A.ES.SDGC.AD.02001.zip")
+            + '<entry><link rel="self" href="https://example.org/feed.xml" /></entry>')).encode("iso-8859-1")
+        self.assertEqual(codigos_postales.parse_office_feed(office), [
+            ["02001", [base + "02001-ABENGIBRE/A.ES.SDGC.AD.02001.zip"]],
+            ["02024", [base + "02024-CASAS%20IBA%C3%91EZ/A.ES.SDGC.AD.02024.zip",
+                       base + "02024-CASAS%20IBA%D1EZ/A.ES.SDGC.AD.02024.zip"]]])
+        self.assertRaises(ValueError, codigos_postales.parse_office_feed, atom.format("").encode())
+
+    def test_catastro_addresses(self):
+        unit = "ES.SDGC.AU.02.900"
+        content = catastro_gml(
+            [("ES.SDGC.PD.02.900.2250", unit)] * 3 + [("ES.SDGC.PD.02.900.02001", unit),
+                                                      ("ES.SDGC.PD.02.900.", unit),  # broken link, as in Madrid
+                                                      ("", unit)],
+            {"ES.SDGC.PD.02.900.2250": "2250", "ES.SDGC.PD.02.900.02001": "02001"})
+        self.assertEqual(codigos_postales.parse_catastro_ad(content),
+                         {("02250", "02900"): 3, ("02001", "02900"): 1, ("", "02900"): 2})
+        self.assertRaises(ValueError, codigos_postales.parse_catastro_ad, content[:100])
+        self.assertRaises(ValueError, codigos_postales.parse_catastro_ad, zipped({"a.txt": b"x"}))
+        without_unit = catastro_gml([("ES.SDGC.PD.02.900.2250", "ES.SDGC.TN.02.900.1")], {})
+        self.assertRaises(ValueError, codigos_postales.parse_catastro_ad, without_unit)
+        codigos_postales.check_zip(content)
+        self.assertRaises(ValueError, codigos_postales.check_zip, b"<html>")
+
+    def test_navarra(self):
+        fields = [("FEATURE", 8), ("CMUNICIPIO", 11), ("MUNICIPIO", 100), ("CODPOSTAL", 50)]
+        records = [(False, ["1", "1".rjust(11), "Abáigar", "31280"]), (False, ["2", "201".rjust(11), "Pamplona", "31001"]),
+                   (False, ["3", "201".rjust(11), "Pamplona", "31001"]), (True, ["4", "201".rjust(11), "Pamplona", "31002"]),
+                   (False, ["5", "35".rjust(11), "Bera", "0"]), (False, ["6", "35".rjust(11), "Bera", ""])]
+        content = zipped({"DIRECC_Txt_Direcciones.dbf": dbf(fields, records), "DIRECC_Txt_Direcciones.shp": b""})
+        self.assertEqual(codigos_postales.parse_navarra(content),
+                         {("31280", "31001"): 1, ("31001", "31201"): 2, ("0", "31035"): 1, ("", "31035"): 1})
+        self.assertRaises(ValueError, codigos_postales.parse_navarra, zipped({"a.shp": b""}))
+        cut = zipped({"a.dbf": dbf(fields, records)[:-200]})
+        self.assertRaises(ValueError, codigos_postales.parse_navarra, cut)
+        other = zipped({"a.dbf": dbf([("CMUN", 3), ("CP", 5)], [(False, ["1", "31280"])])})
+        self.assertRaises(ValueError, codigos_postales.parse_navarra, other)
+
+    def test_euskadi(self):
+        rows = [euskadi_row("01", "059", " 01001"), euskadi_row("01", "059", " 01001"), euskadi_row("1", "1", " 01240")]
+        text = "\r\n".join(";".join(r) for r in [EUSKADI_HEADER, *rows]) + "\r\n"
+        expected = {("01001", "01059"): 2, ("01240", "01001"): 1}
+        self.assertEqual(codigos_postales.parse_euskadi(("﻿" + text).encode("utf-8")), expected)
+        self.assertEqual(codigos_postales.parse_euskadi(prefixed_xlsx([EUSKADI_HEADER, *rows])), expected)
+        self.assertRaises(ValueError, codigos_postales.parse_euskadi, b"a;b;c\r\n")
+        bad = "\r\n".join(";".join(r) for r in [EUSKADI_HEADER, euskadi_row("Araba", "059", "01001")])
+        self.assertRaises(ValueError, codigos_postales.parse_euskadi, bad.encode())
+        codigos_postales.check_euskadi(("﻿" + text).encode("utf-8"))
+        codigos_postales.check_euskadi(prefixed_xlsx([EUSKADI_HEADER]))
+        self.assertRaises(ValueError, codigos_postales.check_euskadi, b"<html>")
+
+    def test_icgc(self):
+        header = "idadrvia;codmuni;nommuni;codpostal;coor_utmx;coor_utmy"
+        via = "\n".join([header, "av1;081038;Jorba;08719;1;2", "av2;081038;Jorba;08719;1;2", "av3;080193;Barcelona;8001;1;2",
+                          "av4;080193;Barcelona;-;1;2"])
+        edi = "\n".join(["idadredi;codmuni;nommuni;codpostal;coor_utmx;coor_utmy", "ae1;081038;Jorba;08719;1;2"])
+        content = zipped({"adreces-simplificat-v1r0-adrecavia-20261009.csv": ("\ufeff" + via).encode(),
+                          "adreces-simplificat-v1r0-adrecaedi-20261009.csv": edi.encode(),
+                          "adreces-simplificat-v1r0-municipi-20261009.csv": b"codmuni;nommuni\n"})
+        self.assertEqual(codigos_postales.parse_icgc(content),
+                         {("08719", "08103"): 3, ("08001", "08019"): 1, ("-", "08019"): 1})
+        self.assertRaises(ValueError, codigos_postales.parse_icgc, zipped({"a.csv": b"x"}))
+        bad = zipped({"x-adrecavia-1.csv": b"codmuni;codpostal\n8103;08719\n", "x-adrecaedi-1.csv": b"codmuni;codpostal\n"})
+        self.assertRaises(ValueError, codigos_postales.parse_icgc, bad)
+
+    def test_madrid(self):
+        text = "COD_VIA;VIA_CLASE;VIA_NOMBRE;NUMERO;COD_POSTAL;LATITUD\n1;CALLE;ÁLAMO;2;28022;x\n2;AUTOVÍA;A-1;10000;28050;x\n3;CALLE;B;1;28022;x\n"
+        self.assertEqual(codigos_postales.parse_madrid(text.encode("cp1252")), {("28022", "28079"): 2, ("28050", "28079"): 1})
+        self.assertRaises(ValueError, codigos_postales.parse_madrid, b"COD_VIA;NUMERO\n1;2\n")
+        codigos_postales.check_madrid(text.encode("cp1252"))
+        self.assertRaises(ValueError, codigos_postales.check_madrid, b"<html>")
+        catalogue = json.dumps({"result": {"resources": [
+            {"id": "x-1-csv", "url": "https://datos.madrid.es/x/direccionesevolucionhistorica_20261109.csv"},
+            {"id": "x-4-csv", "url": "https://datos.madrid.es/x/direccionesvigentes_20261109.csv"}]}}).encode()
+        self.assertEqual(codigos_postales.madrid_csv_url(catalogue, "x-4-csv"),
+                         "https://datos.madrid.es/x/direccionesvigentes_20261109.csv")
+        self.assertRaises(ValueError, codigos_postales.madrid_csv_url, catalogue, "x-9-csv")
+        self.assertRaises(ValueError, codigos_postales.madrid_csv_url, b"<html>", "x-4-csv")
+
+    def test_icgc_directory(self):
+        base = "https://datacloud.icgc.cat/datacloud/adreces-simplificat/csv/"
+        listing = (b'<pre><A HREF="/datacloud/adreces-simplificat/">[To Parent Directory]</A>'
+                   b'<A HREF="/datacloud/adreces-simplificat/csv/adreces-simplificat-v1r0-20261009.zip">a</A>'
+                   b'<A HREF="/datacloud/adreces-simplificat/csv/adreces-simplificat-v1r0-20260410.zip">b</A></pre>')
+        self.assertEqual(codigos_postales.icgc_zip_url(listing, base), base + "adreces-simplificat-v1r0-20261009.zip")
+        self.assertRaises(ValueError, codigos_postales.icgc_zip_url, b"<pre></pre>", base)
+
+    def test_cdau(self):
+        header = 'id_vial;ine_via;nom_via;num_por_desde;ine_mun;nom_municipio;cod_postal;x;y'
+        rows = ['1;"4109100001";"CALLE INVENTADA";5;"41091";"Sevilla";"41001";1;2',
+                '2;"4109100001";"CALLE INVENTADA";7;"41091";"Sevilla";"41001";1;2',
+                '3;"0400300002";"CALLE INVENTADA";1;"04003";"Abla";"4510";1;2']
+        content = zipped({"portal_Andalucia.csv": ("\ufeff" + "\n".join([header, *rows]) + "\n").encode("utf-8")})
+        self.assertEqual(codigos_postales.parse_cdau(content), {("41001", "41091"): 2, ("04510", "04003"): 1})
+        self.assertRaises(ValueError, codigos_postales.parse_cdau, zipped({"a.txt": b"x"}))
+        self.assertRaises(ValueError, codigos_postales.parse_cdau, zipped({"a.csv": b"ine_mun;cp\n41091;41001\n"}))
+        bad = zipped({"a.csv": b"ine_mun;cod_postal\n4109;41001\n"})
+        self.assertRaises(ValueError, codigos_postales.parse_cdau, bad)
+
+    def test_ideib(self):
+        rows = ['"ADRECA_DET"',
+                '"CARRER INVENTAT 30  07200 Felanitx Felanitx / INE_VIA:0702200036 / ID_VIAL:70220000357 / ID_PORTAL:70220060079"',
+                '"CARRER INVENTAT 13 C 07839 Vista Alegre Sant Josep / INE_VIA:-997 / ID_VIAL:70480000033 / ID_PORTAL:70480003622"',
+                '"CARRER INVENTAT 15 C 07839 Vista Alegre Sant Josep / INE_VIA:-997 / ID_VIAL:70480000033 / ID_PORTAL:70480003623"',
+                '"PASSEIG INVENTAT 9   Port de Pollença Pollença / INE_VIA:0704200048 / ID_VIAL:70420000380 / ID_PORTAL:70420283755"']
+        content = ("\ufeff" + "\r\n".join(rows) + "\r\n").encode("utf-8")
+        self.assertEqual(codigos_postales.parse_ideib(content),
+                         {("07200", "07022"): 1, ("07839", "07048"): 2, ("", "07042"): 1})
+        codigos_postales.check_ideib(content)
+        self.assertRaises(ValueError, codigos_postales.check_ideib, b"<html>")
+        self.assertRaises(ValueError, codigos_postales.parse_ideib, b"ADRECA;CP\r\n")
+        self.assertRaises(ValueError, codigos_postales.parse_ideib, ('"ADRECA_DET"\r\n"CARRER 1  07200 X"\r\n').encode())
+
+    def test_ine_streets(self):
+        line = lambda municipality, code: (municipality + "0" * 37 + code + " CALLE INVENTADA").ljust(80) + "\r\n"
+        tramos = (line("15030", "15001") + line("15030", "15001") + line("29067", "29620")).encode("cp1252")
+        expected = {("15001", "15030"): 2, ("29620", "29067"): 1}
+        self.assertEqual(codigos_postales.parse_ine_streets(zipped({"TRAMOS-NAL.F260701": tramos})), expected)
+        nested = zipped({"caj_esp_072026/TRAM.zip": zipped({"TRAMOS-NAL.F260701": tramos}), "VIAS-NAL": b""})
+        self.assertEqual(codigos_postales.parse_ine_streets(nested), expected)
+        self.assertRaises(ValueError, codigos_postales.parse_ine_streets, zipped({"VIAS-NAL": b""}))
+        self.assertRaises(ValueError, codigos_postales.parse_ine_streets, zipped({"TRAMOS": b"otra forma\r\n" * 5}))
+        template = "https://www.ine.es/prodyser/callejero/caj_esp/caj_esp_{month}{year}.zip"
+        self.assertEqual([u[-10:] for u in codigos_postales.ine_street_urls(template, "2026-11-10")],
+                         ["072026.zip", "012026.zip", "072025.zip"])
+        self.assertEqual([u[-10:] for u in codigos_postales.ine_street_urls(template, "2026-03-01")],
+                         ["012026.zip", "072025.zip", "012025.zip"])
+
+    def _data(self):
+        town = lambda ine, province, name, dgc=None: {
+            "id": f"es:municipio:{ine}", "level": "municipality", "parent": f"es:provincia:{province}",
+            "names": {"display": name}, "codes": {"ine:municipio": ine, **({"dgc:municipio": dgc} if dgc else {})}}
+        return {"territories": [town("02003", "02", "Albacete", "02900"), town("02001", "02", "Abengibre", "02001"),
+                                town("31201", "31", "Pamplona/Iruña", "31900"), town("01059", "01", "Vitoria-Gasteiz"),
+                                town("02002", "02", "Sin direcciones", "02002"), town("15902", "15", "Oza-Cesuras"),
+                                {"id": "es:provincia:02", "level": "province"}]}
+
+    def test_build(self):
+        counts = {"catastro": Counter({("02001", "02900"): 500, ("02002", "02900"): 2, ("02250", "02001"): 2,
+                                       ("02250", "02900"): 7, ("", "02900"): 4, ("53001", "02001"): 9,
+                                       ("02005", "02999"): 3, ("02000", "02900"): 6, ("31009", "31900"): 4,
+                                       ("15680", "15026"): 30, ("15680", "15064"): 12}),
+                  "ine": Counter({("02001", "02003"): 40, ("02250", "02003"): 3, ("31001", "31201"): 5,
+                                  ("02000", "02003"): 1, ("31009", "31201"): 2}),
+                  "idena": Counter({("31001", "31201"): 50, ("02001", "31201"): 3}),
+                  "eustat": Counter({("01001", "01059"): 10, ("01001", "31201"): 1})}
+        rows, observations, report = codigos_postales.build(counts, self._data())
+        self.assertEqual(rows, [
+            ["01001", "es:municipio:01059", "01059", "eustat", 10, "portals", ""],
+            ["02001", "es:municipio:02003", "02003", "ine", 40, "street_sections", "catastro"],
+            ["02001", "es:municipio:31201", "31201", "idena", 3, "addresses", ""],
+            # Two units: by the street sections of the INE (Abengibre has none), not by identifier.
+            ["02250", "es:municipio:02003", "02003", "ine", 3, "street_sections", "catastro"],
+            ["02250", "es:municipio:02001", "02001", "catastro", 2, "addresses", ""],  # no INE: the Catastro
+            ["15680", "es:municipio:15902", "15902", "catastro", 42, "addresses", ""],  # two old DGC codes
+            ["31001", "es:municipio:31201", "31201", "idena", 50, "addresses", "ine"]])
+        self.assertIn(["02002", "es:municipio:02003", "02003", "catastro", 2, "addresses"], observations)
+        self.assertEqual(observations[:3], [["01001", "es:municipio:01059", "01059", "eustat", 10, "portals"],
+                                            ["02001", "es:municipio:02003", "02003", "ine", 40, "street_sections"],
+                                            ["02001", "es:municipio:02003", "02003", "catastro", 500, "addresses"]])
+        self.assertEqual(len(observations), 13)
+        sections = report.sections
+        self.assertEqual(sections["Códigos postales: código no válido (no se publica)"],
+                         ["catastro: «53001» en Abengibre (es:municipio:02001), 9 direcciones"])
+        self.assertEqual(sections["Códigos postales: código de relleno XX000 (no se publica)"],
+                         ["ine: 02000 en Albacete (es:municipio:02003), 1 tramo",
+                          "catastro: 02000 en Albacete (es:municipio:02003), 6 direcciones"])
+        self.assertEqual(sections["Códigos postales: municipio sin cruce en catastro (no se publica)"],
+                         ["02999: 3 direcciones"])
+        self.assertEqual(sections["Códigos postales: municipio fuera del ámbito de la fuente (no se publica)"],
+                         ["eustat: Pamplona/Iruña (es:municipio:31201), 1 portal"])
+        self.assertEqual(sections["Códigos postales: municipio sin datos en su fuente (decide la siguiente)"],
+                         ["Abengibre (es:municipio:02001): decide catastro; sin datos en ine",
+                          "Oza-Cesuras (es:municipio:15902): decide catastro; sin datos en ine"])
+        self.assertEqual(sections["Códigos postales: pares de dos o más fuentes que no se publican"],
+                         ["31009 Pamplona/Iruña (es:municipio:31201): ine 2 tramos; catastro 4 direcciones"])
+        self.assertEqual(sections["Códigos postales: pares publicados que no tiene ninguna otra fuente"], [
+            "01001 Vitoria-Gasteiz (es:municipio:01059): eustat, 10 portales",
+            "02001 Pamplona/Iruña (es:municipio:31201): idena, 3 direcciones",
+            "02250 Abengibre (es:municipio:02001): catastro, 2 direcciones",
+            "15680 Oza-Cesuras (es:municipio:15902): catastro, 42 direcciones"])
+        self.assertEqual(sections["Códigos postales: código de otra provincia"],
+                         ["02001 Pamplona/Iruña (es:municipio:31201): idena, 3 direcciones"])
+        self.assertEqual(sections["Códigos postales: municipios sin código postal"], ["Sin direcciones (es:municipio:02002)"])
+        self.assertEqual(report.summary["fuente catastro"], "579 direcciones; sin código postal: 4; 6 pares")
+        self.assertEqual(report.summary["pares que tiene también otra fuente"], "3 (42,9%)")
+        self.assertEqual(report.summary["municipios que decide catastro"], "2")
+
+        previous = [r[:2] for r in rows[:5]] + [["01002", "es:municipio:01059"], ["03001", "es:municipio:03014"]]
+        _, _, report = codigos_postales.build(counts, self._data(), previous)
+        self.assertEqual(report.sections["Códigos postales: pares que desaparecen"],
+                         ["01002 Vitoria-Gasteiz (es:municipio:01059)", "03001 es:municipio:03014"])
+        self.assertEqual(report.sections["Códigos postales: pares nuevos"],
+                         ["15680 Oza-Cesuras (es:municipio:15902)", "31001 Pamplona/Iruña (es:municipio:31201)"])
+        self.assertIn("Códigos postales: aviso", report.sections)
+        _, _, report = codigos_postales.build(counts, self._data(), [r[:2] for r in rows])
+        self.assertNotIn("Códigos postales: aviso", report.sections)
+
+    def test_ordered(self):
+        item = lambda identity, count, unit: {"id": identity, "count": count, "unit": unit}
+        same = [item("es:municipio:29067", 8, "portals"), item("es:municipio:29901", 900, "portals")]
+        self.assertEqual([i["id"] for i in codigos_postales.ordered(same)], ["es:municipio:29901", "es:municipio:29067"])
+        mixed = [item("es:municipio:28079", 2, "addresses"), item("es:municipio:28006", 90, "street_sections")]
+        self.assertEqual(codigos_postales.ordered(mixed), mixed)  # as in the table
+
+    def test_cases_check_and_orphans(self):
+        import tempfile
+        row = lambda code, ine, n, source="ine", also="": [code, f"es:municipio:{ine}", ine, source, n,
+                                                           codigos_postales.SOURCES[source]["unit"], also]
+        rows = [row(f"080{n:02d}", "08019", 10, "icgc", "ine") for n in range(1, 43)]
+        rows += [row("29620", "29067", 5), row("29620", "29901", 90), row("31001", "31201", 9, "idena"),
+                 row("01001", "01059", 9, "eustat", "ine catastro"), row("02250", "02001", 9),
+                 row("28760", "28903", 367), row("28760", "28079", 33, "madrid", "ine")]
+        self.assertEqual(codigos_postales.check_cases(rows), [])
+        rows[42][4] = 100  # Málaga ahead of Torremolinos
+        self.assertEqual(codigos_postales.check_cases(rows[1:-2] + rows[-1:] + rows[-2:-1]), [
+            "es:municipio:08019 no tiene 08001",
+            "29620 da ['es:municipio:29067'], se esperaba ['es:municipio:29901']",
+            "28760 da ['es:municipio:28079', 'es:municipio:28903'], se esperaba ['es:municipio:28903', 'es:municipio:28079']"])
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / codigos_postales.FILE
+            good = codigos_postales._canonical(rows)
+            path.write_text(codigos_postales.table(good), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path), [])
+            self.assertEqual(codigos_postales.orphans(path, {"territories": [{"id": "es:municipio:08019"}]}),
+                             ["es:municipio:01059: relanzar codigos-postales.yml",
+                              "es:municipio:02001: relanzar codigos-postales.yml",
+                              "es:municipio:28079: relanzar codigos-postales.yml",
+                              "es:municipio:28903: relanzar codigos-postales.yml",
+                              "es:municipio:29067: relanzar codigos-postales.yml",
+                              "es:municipio:29901: relanzar codigos-postales.yml",
+                              "es:municipio:31201: relanzar codigos-postales.yml"])
+            path.write_text(codigos_postales.table(rows), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path), [f"{codigos_postales.FILE} no está en forma canónica"])
+            # A code of two units keeps its order (set by build); one of a single unit goes by count.
+            swapped = good[:]
+            i = next(n for n, r in enumerate(swapped) if r[0] == "28760")
+            swapped[i], swapped[i + 1] = swapped[i + 1], swapped[i]
+            path.write_text(codigos_postales.table(swapped), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path), [])
+            i = next(n for n, r in enumerate(swapped) if r[0] == "29620")
+            swapped[i], swapped[i + 1] = swapped[i + 1], swapped[i]
+            path.write_text(codigos_postales.table(swapped), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path), [f"{codigos_postales.FILE} no está en forma canónica"])
+            for bad in (["2800", "es:municipio:28079", "28079", "madrid", 5, "addresses", ""],
+                        ["28000", "es:municipio:28079", "28079", "madrid", 5, "addresses", ""],
+                        ["28001", "es:municipio:28079", "28078", "madrid", 5, "addresses", ""],
+                        ["28001", "es:municipio:28079", "28079", "madrid", 0, "addresses", ""],
+                        ["28001", "es:municipio:28079", "28079", "correos", 5, "addresses", ""],
+                        ["28001", "es:municipio:28079", "28079", "madrid", 5, "portals", ""],
+                        ["28001", "es:municipio:28079", "28079", "madrid", 5, "addresses", "madrid"],
+                        ["28001", "es:municipio:28079", "28079", "madrid", 5, "addresses", "catastro ine"],
+                        ["28001", "es:municipio:28079", "28079", "madrid", 5, "addresses"]):
+                path.write_text(codigos_postales.table([bad]), encoding="utf-8")
+                self.assertEqual(len(codigos_postales.check(path)), 1, bad)
+            path.write_text("codigo,municipio\n", encoding="utf-8")
+            self.assertEqual(len(codigos_postales.check(path)), 1)
+            # The observations: one row per pair and source, in the order of the sources.
+            path = Path(folder) / codigos_postales.OBSERVATIONS
+            header = codigos_postales.OBSERVATION_HEADER
+            obs = [["28001", "es:municipio:28079", "28079", "madrid", 5, "addresses"],
+                   ["28001", "es:municipio:28079", "28079", "ine", 2, "street_sections"]]
+            path.write_text(codigos_postales.table(obs, header), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path, header), [])
+            path.write_text(codigos_postales.table(obs[::-1], header), encoding="utf-8")
+            self.assertEqual(codigos_postales.check(path, header), [f"{codigos_postales.OBSERVATIONS} no está en forma canónica"])
+            path.write_text(codigos_postales.table(obs + obs[:1], header), encoding="utf-8")
+            self.assertEqual(len(codigos_postales.check(path, header)), 1)
+
+    def test_manifest_keeps_postal_entries(self):
+        """generar.yml rewrites the manifest; the entries of the postal-code workflow stay."""
+        import shutil
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            folder = Path(folder)
+            for name in ("territorios.json", "manifiesto.json", codigos_postales.FILE, codigos_postales.OBSERVATIONS):
+                shutil.copy(ROOT / "pruebas" / "datos" / name, folder / name)
+            data = json.loads((folder / "territorios.json").read_text(encoding="utf-8"))
+            exportar.write(folder, data, [], {"otra": {"url": "u"}})
+            manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
+            self.assertIn(codigos_postales.FILE, manifest["files"])
+            self.assertIn(codigos_postales.OBSERVATIONS, manifest["files"])
+            self.assertEqual(list(manifest["sources"]), ["otra"])  # the fixture source is not a postal one
+            codigos_postales.write(folder, [["15001", "es:municipio:15030", "15030", "catastro", 9, "addresses", ""]],
+                                   [["15001", "es:municipio:15030", "15030", "catastro", 9, "addresses"]],
+                                   {"catastro_direcciones": {"url": "c"}})
+            exportar.write(folder, data, [], {"otra": {"url": "u"}})
+            manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
+            self.assertEqual(list(manifest["sources"]), ["otra", "catastro_direcciones"])
+            self.assertEqual(exportar.check(folder), [])
 
 
 class HandLists(unittest.TestCase):

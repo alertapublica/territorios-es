@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { createCatalog } from './catalog.js';
 import { createLimits } from './limits.js';
+import { createPostalCodes } from './postal.js';
 
 export * from './index.js';
 
@@ -17,4 +18,11 @@ export function loadLimits(path) {
   let raw = readFileSync(path);
   if (raw[0] === 0x1f && raw[1] === 0x8b) raw = gunzipSync(raw);
   return createLimits(JSON.parse(raw.toString('utf8')));
+}
+
+// Postal codes from datos/codigos-postales.csv (by default, the bundled one).
+export function loadPostalCodes(path = process.env.TERRITORIOS_ES_DATOS
+  ? `${process.env.TERRITORIOS_ES_DATOS}/codigos-postales.csv`
+  : new URL('../datos/codigos-postales.csv', import.meta.url)) {
+  return createPostalCodes(readFileSync(path, 'utf8'));
 }

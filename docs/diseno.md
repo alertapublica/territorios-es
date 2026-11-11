@@ -113,7 +113,7 @@ Asturias), que son decenas de miles.
 | Wikidata | todos | SPARQL a partir del código INE | CC0. Aporta nombres por idioma, enlaces a Wikipedia y otros identificadores. |
 | OpenStreetMap | todos | Identificador de la relación, desde Wikidata y contrastado con OSM | El identificador de Wikidata es CC0; lo que se copie de OSM va aparte con ODbL (§7). |
 | GeoNames | todos | Desde Wikidata | CC BY 4.0. Muy usado por otras herramientas. |
-| Código postal | municipio (relación de muchos a muchos) | Por decidir: el callejero del censo electoral del INE, si se confirma que trae el código postal y se puede reutilizar | Útil para leer direcciones. CartoCiudad no sirve: los códigos postales son de Correos y su convenio con el CNIG solo permite consultarlos, no descargarlos. |
+| Código postal | municipio (relación de muchos a muchos, `datos/codigos-postales.csv`) | Lo que publican las administraciones: Ayuntamiento de Madrid, ICGC (Cataluña), IDENA (Navarra), Eustat (País Vasco), IDEIB (Baleares), callejero del censo electoral del INE (toda España), CDAU (Andalucía, solo contraste) y Catastro (INSPIRE Addresses, régimen común) | Útil para leer direcciones. No es un sistema de `resolve` (§6). En cada municipio decide la primera fuente que lo cubre y tiene datos (decisión 14); cada par lleva su fuente, su recuento en la unidad de esa fuente y las demás fuentes que lo tienen (`also`). `codigos-postales-fuentes.csv` guarda lo que dice cada fuente, para contrastar y para atender reclamaciones. Lo regenera su propio workflow dos veces al año. Fuentes descartadas: CartoCiudad (su convenio con Correos solo permite consultar los códigos, no descargarlos) y la web de Correos. |
 | datos.gob.es | comunidad y provincia | URIs de la Norma Técnica de reutilización (anexo V) | Identificador adicional para enlazar con el catálogo nacional de datos abiertos; no hay URIs de municipio. |
 | EU Vocabularies (ATU) | por confirmar | Oficina de Publicaciones de la UE | Lista de unidades administrativas de los Estados miembros con URIs; se enlaza si llega a municipios. |
 
@@ -241,6 +241,13 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 | `parse_cadastral_reference(text)` | Partes de una referencia catastral de 14, 18 o 20 caracteres: parcela, tipo (rústica o urbana), cargo, letras de control y si son correctas, y, si es rústica, el código DGC del municipio. Sin red. |
 | `relate_cadastral_reference(text)` | El municipio de una referencia catastral: resuelto si es rústica y su código DGC está en el catálogo; pendiente si es urbana (no lleva el municipio), si las letras de control no cuadran o si el código no se conoce. |
 | `locate(lon, lat, limits)` | El paso de punto a municipio de Voceiro, con el fichero de límites de la versión (`load_limits`; en JS, `loadLimits` en Node o `createLimits` en el navegador): resuelto dentro de un municipio y a más de 50 m de cualquier otro; pendiente cerca de un límite, en una zona común o fuera de todos (el mar, el extranjero); conflicto si cae en dos. Nunca devuelve «el más cercano». |
+| `postal_codes(id)` | Los códigos postales de un municipio, por código, cada uno con su fuente, su recuento, su unidad y las demás fuentes que lo tienen (`also`). |
+| `municipalities(code)` | Los municipios de un código postal: por recuento si todos tienen la misma unidad (direcciones, portales o tramos) y, si no, por los tramos del INE (0 si no tiene el par), porque recuentos de unidades distintas no se comparan. |
+| `relate_postal_code(code)` | Resuelto si el código es de un solo municipio; pendiente si es de varios o de ninguno. Las evidencias traen la fuente, el recuento, la unidad y `also` de cada candidato. Con `combine` y el nombre del municipio se deshace la ambigüedad. |
+
+Los códigos postales van en su propia tabla (`load_postal_codes`; en JS, `loadPostalCodes` en Node o
+`createPostalCodes` en el navegador), no en `resolve`: un código abarca varios municipios y un
+municipio tiene varios códigos, y `resolve` devuelve un solo territorio.
 
 La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para más adelante.
 
@@ -294,6 +301,12 @@ evidencias. Cada proyecto conserva solo lo suyo (por ejemplo, la cobertura de un
     catastral». Publicamos el cruce de códigos con nuestros identificadores, citando la fuente; las
     respuestas originales se quedan en la caché de Actions y nunca entran en el repo (las pruebas
     usan respuestas inventadas con la misma forma);
+  - códigos postales: cada fuente con su licencia y su atribución (tabla del README): Ayuntamiento
+    de Madrid, ICGC, IDENA, Eustat, INE y CDAU, CC BY 4.0; IDEIB, CC BY; Catastro, la licencia de la
+    DGC, citando la fuente y la fecha de acceso (`retrieved` en el manifiesto). Solo se publican los
+    pares código postal–municipio con su recuento, nunca las direcciones. El código postal es de
+    Correos: no se copia su base de datos, se recopila lo que publican las administraciones, y hay
+    una vía de reclamación (issue «Reclamación sobre datos»);
   - lo que se copie de OpenStreetMap va en ficheros aparte con ODbL, porque esa licencia obliga a
     publicar con ODbL cualquier base de datos que mezcle sus datos.
 
@@ -382,6 +395,21 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
 12. Los organismos, en un repo hermano.
 13. La web de datos se publica con la primera versión.
 
+Tomadas el 10 de noviembre de 2026:
+
+14. Códigos postales: en este repo, con un workflow propio dos veces al año que solo escribe
+    `datos/codigos-postales.csv`, `datos/codigos-postales-fuentes.csv` y sus entradas del manifiesto
+    (que el generador mensual conserva). Es un recopilador de lo que publican las administraciones,
+    con la procedencia de cada par y una vía de reclamación; no se copia la base de Correos. En cada
+    municipio decide la primera fuente que lo cubre y tiene datos: Ayuntamiento de Madrid; ICGC,
+    IDENA, Eustat e IDEIB; INE; CDAU; Catastro. Se publican todos sus pares de ese municipio, sin
+    umbrales (o sale o no sale), y ninguna otra fuente rellena pares sueltos, porque volverían los
+    códigos antiguos del Catastro. Reglas fijas para todas: cinco cifras con provincia 01–52, fuera
+    los XX000 (relleno) y las fusiones que el Catastro sigue archivando con los códigos DGC antiguos
+    (Oza-Cesuras, Cerdedo-Cotobade). Cada par lleva el recuento de su fuente en su unidad, sin sumar
+    unidades, y las demás fuentes que lo tienen (`also`). Si falla una descarga no se escribe nada.
+    La API va en los dos sentidos y queda fuera de `resolve`.
+
 ## 13. Pendiente
 
 - Traducir este documento y el README al catalán, gallego, euskera y aranés.
@@ -393,9 +421,8 @@ Tomadas con el responsable del proyecto el 9 de noviembre de 2026:
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
 - Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
-  códigos postales del callejero del censo electoral (cada tramo lleva
-  su distrito postal; antes hay que aclarar si la licencia del INE cubre ese dato, cuyo origen es
-  Correos); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
+  recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
+  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales y comarcas oficiales (buscar fuente: el Registro de Entidades
   Locales anota islas, comarcas y mancomunidades); nombres de países desde CLDR; acciones de
   GitHub que aún usan Node 20.
 - Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde
@@ -457,7 +484,38 @@ Comprobado el 10 de noviembre de 2026:
 - **Capitales del IGN**: 79 municipios sin capital en `nuc`; la colección `opob` marca la de 54 (dos
   de ellos con dos, que quedan sin capital) y en las demás colecciones no hay ninguna.
 - **Callejero del censo electoral (INE)**: ficheros nacionales y provinciales en enero y julio, con
-  el distrito postal de cada tramo de vía.
+  el distrito postal de cada tramo de vía (el de Correos). La edición de julio de 2026 trae 13.988
+  pares en 8.132 municipios; 4 son XX000 (28000 en Madrid, entre ellos). Es la fuente de toda España.
+- **Contraste entre fuentes de códigos postales**: donde hay tres, parte de lo que publicaría cada una
+  que tiene también otra. Cataluña: ICGC 98,6 %, INE 98,8 %, Catastro 89,6 %. Madrid capital:
+  Ayuntamiento 88,9 % (siete pares de borde, de una o dos direcciones), INE 98,2 %. Baleares: IDEIB
+  92,9 %, INE 98,8 %. Andalucía: CDAU 78,7 % (402 pares que no tiene nadie más), INE 98,0 %,
+  Catastro 95,7 %. Ninguna acierta siempre: el ICGC pone el 17811 de Santa Pau en Olot (2.968
+  direcciones), la IDEIB el 07010 de Palma en Santa Margalida y el INE conserva el 08240 de Manresa.
+- **ICGC, Adreces (versión simplificada)**: un ZIP para toda Cataluña en un directorio con la fecha
+  en el nombre (`adreces-simplificat-v1r0-AAAAMMDD.zip`); dos tablas CSV («;») con `codmuni` (INE y
+  dígito de control) y `codpostal`. Ningún XX000.
+- **Ayuntamiento de Madrid, callejero oficial**: CSV de direcciones vigentes (Windows-1252, «;»),
+  con la fecha en el nombre; su URL sale de la API del catálogo (`package_show`). `COD_POSTAL` por
+  dirección; ningún 28000.
+- **IDEIB, portales de Baleares**: un CSV de una columna (`ADRECA_DET`) con el código postal detrás
+  del número y el municipio del INE dentro de `ID_PORTAL`. 308.733 portales, 3 sin código.
+- **CDAU, portales de Andalucía**: un ZIP de 200 MB con un CSV de 700 MB, `ine_mun` y `cod_postal`.
+  Solo contraste: una quinta parte de sus pares no está en ninguna otra fuente.
+- **Catastro, INSPIRE Addresses**: un ATOM general con 52 gerencias (y entradas de los catastros
+  forales, que apuntan a otros servidores), un ATOM por gerencia (ISO-8859-1) y un ZIP por municipio
+  con un GML (EPSG:25830). Cada dirección enlaza su código postal (`AD:PostalDescriptor`) y su
+  municipio (código DGC). El código va sin el cero inicial (`2250` es 02250); en Madrid, 282
+  direcciones enlazan un descriptor que no está en el fichero. Hay que usar `https://` y
+  `/INSPIRE/Addresses/`, y codificar los espacios y las eñes de los enlaces. La licencia de descarga
+  (cláusulas 3, 5–8 y 12) no excluye datos de terceros, permite el uso público y comercial de la
+  información transformada y pide citar a la DGC y la fecha de acceso.
+- **IDENA, direcciones de Navarra**: shapefile cuyo DBF trae el municipio del INE sin la provincia
+  (`CMUNICIPIO`) y `CODPOSTAL`. CC BY 4.0 según sus metadatos, con la atribución «Información
+  geográfica propiedad del Gobierno de Navarra.».
+- **Eustat, callejero NORA**: un fichero por territorio histórico, CSV (UTF-8 con BOM, «;») o XLSX
+  (prefijo `x:`). El CSV de Gipuzkoa se corta siempre a mitad de descarga; el XLSX baja entero.
+  CC BY 4.0, con la atribución «Eusko Jaurlaritza / Gobierno Vasco; Eustat; geoEuskadi».
 - **Población oficial del INE**: operación 22 (`DPOP`) de la API JSON. `TABLAS_OPERACION/22` da 52
   tablas con el código `PROV-MUN` («Población por municipios y sexo», una por provincia, con Ceuta y
   Melilla) y `DATOS_TABLA/{id}?nult=1&tip=AM&tv=18:451`, el último año del total de ambos sexos con
@@ -468,6 +526,4 @@ Comprobado el 10 de noviembre de 2026:
 
 Por comprobar:
 
-- callejero del censo electoral: si la licencia del INE cubre el código postal (su origen es
-  Correos);
 - licencias de iso-codes y EU Vocabularies.

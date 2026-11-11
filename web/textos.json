@@ -35,7 +35,9 @@
       "codigos.csv": "Cruce de códigos: una fila por territorio, sistema y código, con su fuente.",
       "nombres.csv": "Todos los nombres: oficial, visible, por idioma, partes de los nombres bilingües y alias, con su fuente.",
       "wikipedia.csv": "Artículos de Wikipedia de cada territorio en cada idioma.",
-      "manifiesto.json": "Fuentes usadas (dirección, huella SHA-256, fecha y licencia) y huella de cada fichero."
+      "manifiesto.json": "Fuentes usadas (dirección, huella SHA-256, fecha y licencia) y huella de cada fichero.",
+      "codigos-postales.csv": "Códigos postales: una fila por código y municipio, con la fuente que decide en ese municipio, su recuento y las demás fuentes que lo tienen. Un código puede abarcar varios municipios.",
+      "codigos-postales-fuentes.csv": "Lo que dice cada fuente de códigos postales: una fila por código, municipio y fuente, también los pares que no se publican. Sirve para contrastar y para reclamar."
     },
     "columns": {
       "id": "Identificador estable del territorio (es:municipio:36038).",
@@ -74,12 +76,16 @@
       "in_eea": "1 si forma parte del Espacio Económico Europeo.",
       "system": "Sistema del código (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Código en ese sistema.",
-      "source": "De dónde sale el dato (ine, catastro, ign, eurostat, wikidata, fuentes: listas revisadas a mano; derivado: calculado por nosotros).",
+      "source": "De dónde sale el dato (ine, catastro, ign, eurostat, wikidata, fuentes: listas revisadas a mano; derivado: calculado por nosotros; en los ficheros de códigos postales, madrid, icgc, idena, eustat, ideib, ine, cdau o catastro).",
       "kind": "Tipo de nombre (official, display, parts, lang, short, alias).",
       "lang": "Idioma del nombre (código BCP 47).",
       "name": "Nombre.",
       "title": "Título del artículo.",
-      "url": "Dirección del artículo."
+      "url": "Dirección del artículo.",
+      "postal_code": "Código postal (cinco cifras; las dos primeras son la provincia).",
+      "count": "Recuento de la fuente con ese código en ese municipio, en su unidad (unit). Ordena los municipios de un código compartido cuando todos tienen la misma unidad.",
+      "unit": "Unidad del recuento: addresses (direcciones), portals (portales) o street_sections (tramos de calle del INE).",
+      "also": "Otras fuentes que tienen el mismo par, separadas por espacios; vacío si solo lo tiene la que decide."
     }
   },
   "en": {
@@ -118,7 +124,9 @@
       "codigos.csv": "Code crosswalk: one row per territory, system and code, with its source.",
       "nombres.csv": "All names: official, display, by language, parts of bilingual names and aliases, with their source.",
       "wikipedia.csv": "Wikipedia articles about each territory in each language.",
-      "manifiesto.json": "Sources used (address, SHA-256 fingerprint, date and licence) and the fingerprint of each file."
+      "manifiesto.json": "Sources used (address, SHA-256 fingerprint, date and licence) and the fingerprint of each file.",
+      "codigos-postales.csv": "Postal codes: one row per code and municipality, with the source that decides in that municipality, its count and the other sources that have it. A code can span several municipalities.",
+      "codigos-postales-fuentes.csv": "What each source says about postal codes: one row per code, municipality and source, including the pairs that are not published. For cross-checking and for claims."
     },
     "columns": {
       "id": "Stable identifier of the territory (es:municipio:36038).",
@@ -157,12 +165,16 @@
       "in_eea": "1 if it belongs to the European Economic Area.",
       "system": "Code system (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Code in that system.",
-      "source": "Where the datum comes from (ine, catastro, ign, eurostat, wikidata, fuentes: hand-reviewed lists; derivado: computed by us).",
+      "source": "Where the datum comes from (ine, catastro, ign, eurostat, wikidata, fuentes: hand-reviewed lists; derivado: computed by us; in the postal-code files, madrid, icgc, idena, eustat, ideib, ine, cdau or catastro).",
       "kind": "Kind of name (official, display, parts, lang, short, alias).",
       "lang": "Language of the name (BCP 47 code).",
       "name": "Name.",
       "title": "Article title.",
-      "url": "Article address."
+      "url": "Article address.",
+      "postal_code": "Postal code (five digits; the first two are the province).",
+      "count": "Count of the source with that code in that municipality, in its unit (unit). It orders the municipalities of a shared code when all have the same unit.",
+      "unit": "Unit of the count: addresses, portals or street_sections (street sections of the INE).",
+      "also": "Other sources that have the same pair, separated by spaces; empty if only the deciding one has it."
     }
   },
   "ca": {
@@ -201,7 +213,9 @@
       "codigos.csv": "Creuament de codis: una fila per territori, sistema i codi, amb la seva font.",
       "nombres.csv": "Tots els noms: oficial, visible, per idioma, parts dels noms bilingües i àlies, amb la seva font.",
       "wikipedia.csv": "Articles de la Viquipèdia de cada territori en cada idioma.",
-      "manifiesto.json": "Fonts utilitzades (adreça, empremta SHA-256, data i llicència) i empremta de cada fitxer."
+      "manifiesto.json": "Fonts utilitzades (adreça, empremta SHA-256, data i llicència) i empremta de cada fitxer.",
+      "codigos-postales.csv": "Codis postals: una fila per codi i municipi, amb la font que decideix en aquest municipi, el seu recompte i les altres fonts que el tenen. Un codi pot abastar diversos municipis.",
+      "codigos-postales-fuentes.csv": "El que diu cada font de codis postals: una fila per codi, municipi i font, també els parells que no es publiquen. Serveix per contrastar i per reclamar."
     },
     "columns": {
       "id": "Identificador estable del territori (es:municipio:36038).",
@@ -240,12 +254,16 @@
       "in_eea": "1 si forma part de l'Espai Econòmic Europeu.",
       "system": "Sistema del codi (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Codi en aquest sistema.",
-      "source": "D'on surt la dada (ine, catastro, ign, eurostat, wikidata, fuentes: llistes revisades a mà; derivado: calculat per nosaltres).",
+      "source": "D'on surt la dada (ine, catastro, ign, eurostat, wikidata, fuentes: llistes revisades a mà; derivado: calculat per nosaltres; als fitxers de codis postals, madrid, icgc, idena, eustat, ideib, ine, cdau o catastro).",
       "kind": "Tipus de nom (official, display, parts, lang, short, alias).",
       "lang": "Idioma del nom (codi BCP 47).",
       "name": "Nom.",
       "title": "Títol de l'article.",
-      "url": "Adreça de l'article."
+      "url": "Adreça de l'article.",
+      "postal_code": "Codi postal (cinc xifres; les dues primeres són la província).",
+      "count": "Recompte de la font amb aquest codi en aquest municipi, en la seva unitat (unit). Ordena els municipis d'un codi compartit quan tots tenen la mateixa unitat.",
+      "unit": "Unitat del recompte: addresses (adreces), portals (portals) o street_sections (trams de carrer de l'INE).",
+      "also": "Altres fonts que tenen el mateix parell, separades per espais; buit si només el té la que decideix."
     }
   },
   "gl": {
@@ -284,7 +302,9 @@
       "codigos.csv": "Cruce de códigos: unha fila por territorio, sistema e código, coa súa fonte.",
       "nombres.csv": "Todos os nomes: oficial, visible, por idioma, partes dos nomes bilingües e alias, coa súa fonte.",
       "wikipedia.csv": "Artigos da Wikipedia de cada territorio en cada idioma.",
-      "manifiesto.json": "Fontes usadas (enderezo, pegada SHA-256, data e licenza) e pegada de cada ficheiro."
+      "manifiesto.json": "Fontes usadas (enderezo, pegada SHA-256, data e licenza) e pegada de cada ficheiro.",
+      "codigos-postales.csv": "Códigos postais: unha fila por código e concello, coa fonte que decide nese concello, o seu reconto e as demais fontes que o teñen. Un código pode abranguer varios concellos.",
+      "codigos-postales-fuentes.csv": "O que di cada fonte de códigos postais: unha fila por código, concello e fonte, tamén os pares que non se publican. Serve para contrastar e para reclamar."
     },
     "columns": {
       "id": "Identificador estable do territorio (es:municipio:36038).",
@@ -323,12 +343,16 @@
       "in_eea": "1 se forma parte do Espazo Económico Europeo.",
       "system": "Sistema do código (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Código nese sistema.",
-      "source": "De onde sae o dato (ine, catastro, ign, eurostat, wikidata, fuentes: listas revisadas a man; derivado: calculado por nós).",
+      "source": "De onde sae o dato (ine, catastro, ign, eurostat, wikidata, fuentes: listas revisadas a man; derivado: calculado por nós; nos ficheiros de códigos postais, madrid, icgc, idena, eustat, ideib, ine, cdau ou catastro).",
       "kind": "Tipo de nome (official, display, parts, lang, short, alias).",
       "lang": "Idioma do nome (código BCP 47).",
       "name": "Nome.",
       "title": "Título do artigo.",
-      "url": "Enderezo do artigo."
+      "url": "Enderezo do artigo.",
+      "postal_code": "Código postal (cinco cifras; as dúas primeiras son a provincia).",
+      "count": "Reconto da fonte con ese código nese concello, na súa unidade (unit). Ordena os concellos dun código compartido cando todos teñen a mesma unidade.",
+      "unit": "Unidade do reconto: addresses (enderezos), portals (portais) ou street_sections (tramos de rúa do INE).",
+      "also": "Outras fontes que teñen o mesmo par, separadas por espazos; baleiro se só o ten a que decide."
     }
   },
   "eu": {
@@ -367,7 +391,9 @@
       "codigos.csv": "Kodeen gurutzaketa: lerro bat lurralde, sistema eta kode bakoitzeko, bere iturriarekin.",
       "nombres.csv": "Izen guztiak: ofiziala, ikusgaia, hizkuntzaka, izen elebidunen zatiak eta aliasak, iturriarekin.",
       "wikipedia.csv": "Lurralde bakoitzaren Wikipedia artikuluak hizkuntza bakoitzean.",
-      "manifiesto.json": "Erabilitako iturriak (helbidea, SHA-256 aztarna, data eta lizentzia) eta fitxategi bakoitzaren aztarna."
+      "manifiesto.json": "Erabilitako iturriak (helbidea, SHA-256 aztarna, data eta lizentzia) eta fitxategi bakoitzaren aztarna.",
+      "codigos-postales.csv": "Posta-kodeak: lerro bat kode eta udalerri bakoitzeko, udalerri horretan erabakitzen duen iturriarekin, haren zenbaketarekin eta hura duten beste iturriekin. Kode batek hainbat udalerri har ditzake.",
+      "codigos-postales-fuentes.csv": "Iturri bakoitzak posta-kodeei buruz dioena: lerro bat kode, udalerri eta iturri bakoitzeko, argitaratzen ez diren bikoteak barne. Egiaztatzeko eta erreklamatzeko balio du."
     },
     "columns": {
       "id": "Lurraldearen identifikatzaile egonkorra (es:municipio:36038).",
@@ -406,12 +432,16 @@
       "in_eea": "1 Europako Esparru Ekonomikokoa bada.",
       "system": "Kodearen sistema (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Sistema horretako kodea.",
-      "source": "Datua nondik datorren (ine, catastro, ign, eurostat, wikidata, fuentes: eskuz berrikusitako zerrendak; derivado: guk kalkulatua).",
+      "source": "Datua nondik datorren (ine, catastro, ign, eurostat, wikidata, fuentes: eskuz berrikusitako zerrendak; derivado: guk kalkulatua; posta-kodeen fitxategietan, madrid, icgc, idena, eustat, ideib, ine, cdau edo catastro).",
       "kind": "Izen mota (official, display, parts, lang, short, alias).",
       "lang": "Izenaren hizkuntza (BCP 47 kodea).",
       "name": "Izena.",
       "title": "Artikuluaren izenburua.",
-      "url": "Artikuluaren helbidea."
+      "url": "Artikuluaren helbidea.",
+      "postal_code": "Posta-kodea (bost zifra; lehen biak probintzia dira).",
+      "count": "Iturriaren zenbaketa kode horrekin udalerri horretan, bere unitatean (unit). Kode partekatu baten udalerriak ordenatzen ditu, guztiek unitate bera dutenean.",
+      "unit": "Zenbaketaren unitatea: addresses (helbideak), portals (atariak) edo street_sections (INEren kale-zatiak).",
+      "also": "Bikote bera duten beste iturriak, zuriunez bereizita; hutsik, erabakitzen duenak bakarrik badu."
     }
   },
   "oc": {
@@ -450,7 +480,9 @@
       "codigos.csv": "Crotzament de còdis: ua linha per territòri, sistèma e còdi, damb era sua hònt.",
       "nombres.csv": "Toti es noms: oficiau, visible, per lengua, parts des noms bilingües e àlias, damb era sua hònt.",
       "wikipedia.csv": "Articles dera Wikipèdia de cada territòri en cada lengua.",
-      "manifiesto.json": "Hònts utilizades (adreça, emprenta SHA-256, data e licéncia) e emprenta de cada fichièr."
+      "manifiesto.json": "Hònts utilizades (adreça, emprenta SHA-256, data e licéncia) e emprenta de cada fichièr.",
+      "codigos-postales.csv": "Còdis postaus: ua linha per còdi e municipi, damb era hònt que decidís en aguest municipi, eth sòn compde e es autes hònts que l'an. Un còdi pòt cubrir diuèrsi municipis.",
+      "codigos-postales-fuentes.csv": "Çò que ditz cada hònt de còdis postaus: ua linha per còdi, municipi e hònt, tanben es parelhs que non se publiquen. Servís entà contrastar e entà reclamar."
     },
     "columns": {
       "id": "Identificador estable deth territòri (es:municipio:36038).",
@@ -489,12 +521,16 @@
       "in_eea": "1 se ei part der Espaci Economic European.",
       "system": "Sistèma deth còdi (ine:municipio, iso3166-2, nuts, lau, wikidata…).",
       "code": "Còdi en aguest sistèma.",
-      "source": "Dautrò vien era dada (ine, catastro, ign, eurostat, wikidata, fuentes: listes revisades a man; derivado: calculat per nosati).",
+      "source": "Dautrò vien era dada (ine, catastro, ign, eurostat, wikidata, fuentes: listes revisades a man; derivado: calculat per nosati; enes fichèrs de còdis postaus, madrid, icgc, idena, eustat, ideib, ine, cdau o catastro).",
       "kind": "Tipe de nom (official, display, parts, lang, short, alias).",
       "lang": "Lengua deth nom (còdi BCP 47).",
       "name": "Nom.",
       "title": "Títol der article.",
-      "url": "Adreça der article."
+      "url": "Adreça der article.",
+      "postal_code": "Còdi postau (cinc chifres; es dues prumères son era província).",
+      "count": "Compde dera hònt damb aguest còdi en aguest municipi, ena sua unitat (unit). Ordene es municipis d'un còdi compartit quan toti an era madeisha unitat.",
+      "unit": "Unitat deth compde: addresses (adreces), portals (portaus) o street_sections (trams de carrèr der INE).",
+      "also": "Autes hònts que an eth madeish parelh, separades per espacis; voeit se sonque l'a era que decidís."
     }
   }
 }

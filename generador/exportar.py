@@ -10,6 +10,7 @@ from pathlib import Path
 
 from territorios_es.catalog import Catalog
 
+from . import codigos_postales
 from .construir import UI_LANGS
 
 # Where each kind of datum comes from (design §5). Used for the provenance columns.
@@ -127,8 +128,17 @@ def write(folder: Path, data: dict, articles: list[list[str]], sources: dict):
                 "wikipedia.csv": wikipedia_csv(articles)}
     for name, text in contents.items():
         (folder / name).write_text(text, encoding="utf-8")
+    files = {name: _sha(text) for name, text in contents.items()}
+    # The postal-code table has its own workflow (codigos-postales.yml): keep its entries.
+    path = folder / "manifiesto.json"
+    if path.exists() and (folder / codigos_postales.FILE).exists():
+        old = json.loads(path.read_text(encoding="utf-8"))
+        sources = {**sources, **{k: v for k, v in old["sources"].items() if k in codigos_postales.ENTRIES}}
+        for name in (codigos_postales.FILE, codigos_postales.OBSERVATIONS):
+            if name in old["files"]:
+                files[name] = old["files"][name]
     manifest = {"schema": data["schema"], "reference_date": data["reference_date"], "sources": sources,
-                "files": {name: _sha(text) for name, text in sorted(contents.items())}}
+                "files": dict(sorted(files.items()))}
     (folder / "manifiesto.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
                                             encoding="utf-8")
 
@@ -147,4 +157,10 @@ def check(folder: Path) -> list[str]:
     for name, digest in manifest["files"].items():
         if _sha((folder / name).read_text(encoding="utf-8")) != digest:
             problems.append(f"{name} does not match manifiesto.json")
+    for name, header in ((codigos_postales.FILE, codigos_postales.HEADER),
+                         (codigos_postales.OBSERVATIONS, codigos_postales.OBSERVATION_HEADER)):
+        if (folder / name).exists():
+            if name not in manifest["files"]:
+                problems.append(f"{name} is not in manifiesto.json")
+            problems += codigos_postales.check(folder / name, header)
     return problems

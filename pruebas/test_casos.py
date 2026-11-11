@@ -5,6 +5,7 @@ from pathlib import Path
 
 from pruebas import ROOT
 from territorios_es import Catalog, combine, load_limits, locate, relation
+from territorios_es.postal import PostalCodes, load_postal_codes
 from territorios_es.catastro import check_letters, parse_cadastral_reference, relate_cadastral_reference
 from territorios_es.relation import relate_name
 from territorios_es.text import display_name, normalize
@@ -63,6 +64,40 @@ class SharedCases(unittest.TestCase):
         for text, status, territory, reason in CASES["relate_cadastral_reference"]:
             found = relate_cadastral_reference(CATALOG, text)
             self.assertEqual((found["status"], found["territory"], found["reason"]), (status, territory, reason), text)
+
+
+class PostalCodeCases(unittest.TestCase):
+    TABLE = load_postal_codes(ROOT / "pruebas" / "datos" / "codigos-postales.csv")
+
+    def test_postal_codes(self):
+        for identity, expected in CASES["postal_codes"]:
+            self.assertEqual([i["postal_code"] for i in self.TABLE.postal_codes(identity)], expected, identity)
+
+    def test_municipalities(self):
+        for code, expected in CASES["municipalities"]:
+            self.assertEqual([[i["id"], i["count"], i["unit"]] for i in self.TABLE.municipalities(code)], expected, code)
+
+    def test_relate_postal_code(self):
+        for code, status, territory, candidates, reason in CASES["relate_postal_code"]:
+            found = self.TABLE.relate(code)
+            self.assertEqual((found["status"], found["territory"], found["candidates"], found["reason"]),
+                             (status, territory, candidates, reason), code)
+
+    def test_evidence_and_combine(self):
+        found = self.TABLE.relate("15001")
+        self.assertEqual([(e["territory"], e["origin"], e["count"], e["unit"], e["also"]) for e in found["evidence"]],
+                         [("es:municipio:15030", "ine", 30, "street_sections", ["catastro"]),
+                          ("es:municipio:36038", "catastro", 40, "addresses", [])])
+        self.assertEqual(combine(found, relate_name(CATALOG, "A Coruña", levels=["municipality"]))["territory"],
+                         "es:municipio:15030")
+        first = self.TABLE.municipalities("15001")[0]
+        self.assertEqual((first["source"], first["also"]), ("ine", ["catastro"]))
+        first["count"], first["also"][0] = 0, "x"  # a copy: the table does not change
+        self.assertEqual(self.TABLE.municipalities("15001")[0], {
+            "postal_code": "15001", "id": "es:municipio:15030", "source": "ine", "count": 30,
+            "unit": "street_sections", "also": ["catastro"]})
+        self.assertEqual(len(self.TABLE), 23)
+        self.assertRaises(ValueError, PostalCodes, "codigo,municipio\n")
 
 
 class Locate(unittest.TestCase):

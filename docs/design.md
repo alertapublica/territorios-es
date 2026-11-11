@@ -115,7 +115,7 @@ Asturias), which number in the tens of thousands.
 | Wikidata | all | SPARQL from the INE code | CC0. Provides names per language, links to Wikipedia and other identifiers. |
 | OpenStreetMap | all | Relation identifier, from Wikidata and cross-checked with OSM | The Wikidata identifier is CC0; whatever is copied from OSM goes separately under ODbL (§7). |
 | GeoNames | all | From Wikidata | CC BY 4.0. Widely used by other tools. |
-| Postal code | municipality (many-to-many relationship) | To be decided: the INE electoral roll street directory, if it is confirmed that it includes the postal code and can be reused | Useful for reading addresses. CartoCiudad is not suitable: the postal codes belong to Correos and its agreement with the CNIG only allows consulting them, not downloading them. |
+| Postal code | municipality (many-to-many relationship, `datos/codigos-postales.csv`) | What the public administrations publish: Madrid city council, ICGC (Catalonia), IDENA (Navarre), Eustat (Basque Country), IDEIB (Balearic Islands), the INE electoral roll street directory (all Spain), CDAU (Andalusia, cross-checking only) and the Catastro (INSPIRE Addresses, common regime) | Useful for reading addresses. Not a `resolve` system (§6). In each municipality the first source that covers it and has data decides (decision 14); each pair carries its source, its count in that source's unit and the other sources that have it (`also`). `codigos-postales-fuentes.csv` keeps what each source says, for cross-checking and for claims. Its own workflow rebuilds it twice a year. Discarded sources: CartoCiudad (its agreement with Correos only allows consulting the codes, not downloading them) and the Correos website. |
 | datos.gob.es | autonomous community and province | URIs of the Norma Técnica de reutilización (annex V) | Additional identifier for linking with the national open data catalogue; there are no municipality URIs. |
 | EU Vocabularies (ATU) | to be confirmed | Publications Office of the EU | List of administrative units of the Member States with URIs; linked if it reaches municipalities. |
 
@@ -244,6 +244,13 @@ options go in an object (`search(text, { within, levels })`).
 | `parse_cadastral_reference(text)` | Parts of a 14, 18 or 20-character cadastral reference: parcel, kind (rustic or urban), property, check letters and whether they are right, and, for a rustic parcel, the DGC code of its municipality. Offline. |
 | `relate_cadastral_reference(text)` | The municipality of a cadastral reference: resolved for a rustic parcel whose DGC code is in the catalogue; pending for an urban one (it does not carry the municipality), when the check letters are wrong or when the code is unknown. |
 | `locate(lon, lat, limits)` | Voceiro's point-to-municipality mapping, with the release boundaries file (`load_limits`; in JS, `loadLimits` in Node or `createLimits` in the browser): resolved inside one municipality and more than 50 m from any other; pending near a boundary, in a shared area or outside all of them (the sea, abroad); conflict if it falls in two. It never returns "the nearest". |
+| `postal_codes(id)` | The postal codes of a municipality, by code, each with its source, its count, its unit and the other sources that have it (`also`). |
+| `municipalities(code)` | The municipalities of a postal code: by count when all have the same unit (addresses, portals or street sections), otherwise by the street sections of the INE (0 if it lacks the pair), because counts in different units do not compare. |
+| `relate_postal_code(code)` | Resolved if the code belongs to a single municipality; pending if it belongs to several or to none. The evidence carries each candidate's source, count, unit and `also`. `combine` with the municipality's name removes the ambiguity. |
+
+Postal codes have their own table (`load_postal_codes`; in JS, `loadPostalCodes` in Node or
+`createPostalCodes` in the browser), not `resolve`: a code spans several municipalities and a
+municipality has several codes, while `resolve` returns a single territory.
 
 Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
 
@@ -298,6 +305,12 @@ evidence. Each project keeps only what is its own (for example, the coverage of 
     We publish the crosswalk of codes with our identifiers, citing the source; the original answers
     stay in the Actions cache and never enter the repository (tests use invented answers of the
     same shape);
+  - postal codes: each source with its licence and attribution (table in the README): Madrid city
+    council, ICGC, IDENA, Eustat, INE and CDAU, CC BY 4.0; IDEIB, CC BY; Catastro, the DGC licence,
+    citing the source and the access date (`retrieved` in the manifest). Only the postal
+    code–municipality pairs with their count are published, never the addresses. The postal code is
+    Correos's: its database is not copied, what the administrations publish is gathered, and there
+    is a way to claim (issue «Reclamación sobre datos»);
   - whatever is copied from OpenStreetMap goes in separate files under ODbL, because that licence
     requires publishing under ODbL any database that mixes its data.
 
@@ -387,6 +400,21 @@ Taken with the project owner on 9 November 2026:
 12. Public bodies, in a sibling repo.
 13. The data website is published with the first version.
 
+Taken on 10 November 2026:
+
+14. Postal codes: in this repo, with their own workflow twice a year that only writes
+    `datos/codigos-postales.csv`, `datos/codigos-postales-fuentes.csv` and their manifest entries
+    (which the monthly generator keeps). It gathers what the administrations publish, with the
+    source of each pair and a way to claim; the Correos database is not copied. In each municipality
+    the first source that covers it and has data decides: Madrid city council; ICGC, IDENA, Eustat and
+    IDEIB; INE; CDAU; Catastro. All its pairs of that municipality are published, with no threshold
+    (a pair is in or out), and no other source fills in single pairs, because the old codes of the
+    Catastro would come back. Fixed rules for all: five digits with a province 01–52, no XX000
+    (filler), and the mergers that the Catastro still files under the old DGC codes (Oza-Cesuras,
+    Cerdedo-Cotobade). Each pair carries its source's count in its unit, never adding up units, and
+    the other sources that have it (`also`). If a download fails nothing is written. The API works
+    both ways and stays out of `resolve`.
+
 ## 13. Pending
 
 - Translate this document and the README into Catalan, Galician, Basque and Aranese.
@@ -399,9 +427,8 @@ Taken with the project owner on 9 November 2026:
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
 - Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
-  postal codes from the electoral roll street directory (each street section
-  carries its postal district; first, clarify whether the INE licence covers that datum, which
-  comes from Correos); judicial districts and official comarcas (find a source: the Registro de
+  postal-code gatherer (done, with the full run of every source; afterwards, more
+  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts and official comarcas (find a source: the Registro de
   Entidades Locales records islands, comarcas and associations of municipalities); country names
   from CLDR; GitHub actions still on Node 20.
 - Later: population entities, historical INE changes (annual dictionaries since 2004 and each
@@ -465,7 +492,40 @@ Checked on 10 November 2026:
 - **IGN capitals**: 79 municipalities without a capital in `nuc`; the collection `opob` marks it for
   54 (two of them with two, which stay without a capital) and the other collections have none.
 - **Electoral roll street directory (INE)**: national and provincial files in January and July,
-  with the postal district of each street section.
+  with the postal district of each street section (Correos's). The July 2026 edition has 13,988
+  pairs in 8,132 municipalities; 4 are XX000 (28000 in Madrid among them). It is the source for all
+  Spain.
+- **Cross-check of postal-code sources**: where there are three, the share of what each would publish
+  that another one also has. Catalonia: ICGC 98.6 %, INE 98.8 %, Catastro 89.6 %. Madrid city: city
+  council 88.9 % (seven border pairs of one or two addresses), INE 98.2 %. Balearic Islands: IDEIB
+  92.9 %, INE 98.8 %. Andalusia: CDAU 78.7 % (402 pairs no one else has), INE 98.0 %, Catastro
+  95.7 %. None is always right: the ICGC puts Santa Pau's 17811 in Olot (2,968 addresses), the IDEIB
+  Palma's 07010 in Santa Margalida, and the INE keeps Manresa's 08240.
+- **ICGC, Adreces (simplified version)**: one ZIP for all Catalonia in a directory with the date in
+  the name (`adreces-simplificat-v1r0-YYYYMMDD.zip`); two CSV tables (";") with `codmuni` (INE code
+  and check digit) and `codpostal`. No XX000.
+- **Madrid city council, official street directory**: CSV of current addresses (Windows-1252, ";"),
+  with the date in its name; its URL comes from the catalogue API (`package_show`). `COD_POSTAL` per
+  address; no 28000.
+- **IDEIB, portals of the Balearic Islands**: a one-column CSV (`ADRECA_DET`) with the postal code
+  after the number and the INE municipality inside `ID_PORTAL`. 308,733 portals, 3 without a code.
+- **CDAU, portals of Andalusia**: a 200 MB ZIP with a 700 MB CSV, `ine_mun` and `cod_postal`.
+  Cross-checking only: a fifth of its pairs are in no other source.
+- **Catastro, INSPIRE Addresses**: a general ATOM with 52 territorial offices (plus entries for the
+  foral cadastres, which point to other servers), one ATOM per office (ISO-8859-1) and one ZIP per
+  municipality with a GML (EPSG:25830). Each address links its postal code (`AD:PostalDescriptor`)
+  and its municipality (DGC code). The code drops its leading zero (`2250` is 02250); in Madrid, 282
+  addresses link a descriptor that is not in the file. Use `https://` and `/INSPIRE/Addresses/`, and
+  encode the spaces and eñes of the links. The download licence (clauses 3, 5–8 and 12) does not
+  exclude third-party data, allows public and commercial use of transformed information and asks
+  to cite the DGC and the access date.
+- **IDENA, addresses of Navarre**: a shapefile whose DBF has the INE municipality without the
+  province (`CMUNICIPIO`) and `CODPOSTAL`. CC BY 4.0 according to its metadata, with the attribution
+  "Información geográfica propiedad del Gobierno de Navarra.".
+- **Eustat, NORA street directory**: one file per historical territory, CSV (UTF-8 with BOM, ";") or
+  XLSX (prefix `x:`). The Gipuzkoa CSV is always cut halfway through the download; the XLSX comes
+  down whole. CC BY 4.0, with the attribution "Eusko Jaurlaritza / Gobierno Vasco; Eustat;
+  geoEuskadi".
 - **Official INE population**: operation 22 (`DPOP`) of the JSON API. `TABLAS_OPERACION/22` gives
   52 tables with the code `PROV-MUN` («Población por municipios y sexo», one per province,
   including Ceuta and Melilla) and `DATOS_TABLA/{id}?nult=1&tip=AM&tv=18:451` the latest year of
@@ -477,6 +537,4 @@ Checked on 10 November 2026:
 
 To be checked:
 
-- electoral roll street directory: whether the INE licence covers the postal code (it comes from
-  Correos);
 - licences of iso-codes and EU Vocabularies.

@@ -1,0 +1,24 @@
+postal_code,id,ine,source,count,unit,also
+01001,es:municipio:01059,01059,eustat,700,portals,ine
+01002,es:municipio:01059,01059,eustat,650,portals,
+07800,es:municipio:07026,07026,ideib,1500,portals,ine
+07817,es:municipio:07026,07026,ideib,40,portals,
+08901,es:municipio:08101,08101,icgc,900,addresses,ine catastro
+08902,es:municipio:08101,08101,icgc,400,addresses,ine
+08903,es:municipio:08101,08101,icgc,3,addresses,
+15001,es:municipio:15030,15030,ine,30,street_sections,catastro
+15001,es:municipio:36038,36038,catastro,40,addresses,
+15002,es:municipio:15030,15030,ine,20,street_sections,catastro
+15003,es:municipio:15030,15030,ine,1,street_sections,catastro
+20001,es:municipio:20069,20069,eustat,500,portals,ine
+28001,es:municipio:28079,28079,madrid,500,addresses,ine
+28050,es:municipio:28079,28079,madrid,300,addresses,
+28906,es:municipio:28079,28079,madrid,2,addresses,
+31001,es:municipio:31201,31201,idena,900,addresses,ine
+31002,es:municipio:31201,31201,idena,600,addresses,
+32001,es:municipio:32054,32054,ine,3,street_sections,catastro
+36001,es:municipio:36038,36038,catastro,700,addresses,
+41001,es:municipio:41091,41091,ine,50,street_sections,cdau
+48001,es:municipio:48020,48020,eustat,800,portals,ine
+48001,es:municipio:20069,20069,eustat,5,portals,
+51001,es:municipio:51001,51001,ine,4,street_sections,catastro

@@ -366,9 +366,76 @@
       "retrieved": "2026-11-10",
       "licence": "CC0 1.0",
       "attribution": "Wikidata"
+    },
+    "catastro_direcciones": {
+      "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Addresses/ES.SDGC.AD.atom.xml (7611 municipios de 52 gerencias)",
+      "sha256": "ecf1b2d9643b8378822a9e3491fc27010810e6e1b1fdadd321d5d16cd577f9d9",
+      "bytes": 708849615,
+      "retrieved": "2026-11-11",
+      "reference_date": "2026-08-21",
+      "licence": "Licencia de la DGC (julio de 2016): uso público y comercial de la información transformada; no se redistribuye la original",
+      "attribution": "Fuente: Dirección General del Catastro (fecha de acceso en «retrieved»)"
+    },
+    "idena_direcciones": {
+      "url": "https://idena.navarra.es/descargas/DIRECC_Txt_Direcciones.zip",
+      "sha256": "b117545c0761b05c67fb20a7762f1d585a84c566ae7329500a6e090d8345d37e",
+      "bytes": 3904479,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Información geográfica propiedad del Gobierno de Navarra."
+    },
+    "eustat_portales": {
+      "url": "https://www.eustat.eus/comun/ExtractorBlob.ashx?id=01_Atariak_Portales.csv https://www.eustat.eus/comun/ExtractorBlob.ashx?id=20_Atariak_Portales.xlsx https://www.eustat.eus/comun/ExtractorBlob.ashx?id=48_Atariak_Portales.csv",
+      "sha256": "e63f040144c2c67f09ecb3f5aa2b8e36bc6ef9ed958b4f3edc021d55ce05db0b",
+      "bytes": 45160718,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Eusko Jaurlaritza / Gobierno Vasco; Eustat; geoEuskadi"
+    },
+    "icgc_direcciones": {
+      "url": "https://datacloud.icgc.cat/datacloud/adreces-simplificat/csv/adreces-simplificat-v1r0-20261009.zip",
+      "sha256": "3061e7e4a3cc178213bdf845995aa2a36619b45644afae227b5575c796429af3",
+      "bytes": 48621862,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Institut Cartogràfic i Geològic de Catalunya (ICGC)"
+    },
+    "madrid_direcciones": {
+      "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/direccionesvigentes_20261109.csv",
+      "sha256": "85dd4b54cf6bf62603f04b20633f8e856978e18f52d401b623c96d08f316c110",
+      "bytes": 34642441,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Ayuntamiento de Madrid"
+    },
+    "ideib_portales": {
+      "url": "https://intranet.caib.es/opendatacataleg/files/dataset/portals/portals.csv",
+      "sha256": "58847c74cced0ec0046f346980d0719ab103ef62bcb8182a24058126eb4c3baa",
+      "bytes": 37305878,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY",
+      "attribution": "Govern de les Illes Balears, IDEIB"
+    },
+    "cdau_portales": {
+      "url": "https://www.juntadeandalucia.es/institutodeestadisticaycartografia/cdau/portales/portal_Andalucia.zip",
+      "sha256": "c92265ceb67f32a2c19b840df877c1e2c7c246ed33672dc14e19a8f677ecfc52",
+      "bytes": 200319273,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Fuente: CDAU (Entidades Locales-Junta de Andalucía- IGN)"
+    },
+    "ine_callejero": {
+      "url": "https://www.ine.es/prodyser/callejero/caj_esp/caj_esp_072026.zip",
+      "sha256": "b2e4522a8870558f7300a44b4575ec32b45d2c19f60b8324dd5c951609a3cac6",
+      "bytes": 49804674,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0 (aviso legal del INE)",
+      "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es (callejero del censo electoral)"
     }
   },
   "files": {
+    "codigos-postales-fuentes.csv": "996eab78ed39888a7e542d7afb5dbe24737c0a149603c5d037f55d78a7da6af1",
+    "codigos-postales.csv": "682a7221b153303e3b1212779db32a1b05926adf4970a047310e674f834c0200",
     "codigos.csv": "73c580fdefa83c0734b167a3e0bf347a091ebeb3415f04b297a1b43796636ff2",
     "comunidades.csv": "48f043aef12f72c9ebaa0bac50ba6cbb9dd5758fa07e47abe0ec112bd6a3bcb1",
     "islas.csv": "090251dc58b0791fc5dcf1a380ebb3555aec50532730c89261a6f7ba39a07940",
