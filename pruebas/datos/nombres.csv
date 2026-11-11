@@ -652,3 +652,17 @@ es:zona-aviso:785101,official,,Ceuta,aemet
 es:zona-aviso:785101,display,,Ceuta,aemet
 es:zona-aviso:795201,official,,Melilla,aemet
 es:zona-aviso:795201,display,,Melilla,aemet
+es:comarca:0217,official,,Central,fuentes
+es:comarca:0217,display,,Central,fuentes
+es:comarca:0913,official,,Barcelonès,fuentes
+es:comarca:0913,display,,Barcelonès,fuentes
+es:comarca:0920,official,,Gironès,fuentes
+es:comarca:0920,display,,Gironès,fuentes
+es:comarca:0939,official,,Aran,fuentes
+es:comarca:0939,display,,Aran,fuentes
+es:comarca:0940,official,,Vallès Occidental,fuentes
+es:comarca:0940,display,,Vallès Occidental,fuentes
+es:comarca:1604,official,,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,fuentes
+es:comarca:1604,display,,Cuadrilla de Vitoria-Gasteiz/Vitoria-Gasteizko Kuadrilla,fuentes
+es:comarca:1604,parts,es,Cuadrilla de Vitoria-Gasteiz,fuentes
+es:comarca:1604,parts,eu,Vitoria-Gasteizko Kuadrilla,fuentes

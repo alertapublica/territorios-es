@@ -16,6 +16,8 @@
 - Municipios con partido judicial: 32
 - Zonas de aviso (AEMET): 25
 - Municipios con zona de aviso: 31
+- Comarcas: 6
+- Municipios con comarca: 7
 
 ## Catastro (22)
 
@@ -49,6 +51,14 @@
 ## Catastro: nombre distinto (1)
 
 - es:municipio:08101 «L'Hospitalet de Llobregat»: «HOSPITALET» (08102)
+
+## Comarcas (5)
+
+- Comarcas sin municipios, que no se publican: 0201 «Jacetania, La», 0202 «Alto Gállego», 0203 «Sobrarbe», 0204 «Ribagorza», 0205 «Cinco Villas», 0206 «Hoya de Huesca/Plana de Uesca», 0207 «Somontano de Barbastro», 0208 «Cinca Medio», 0209 «Litera, La/Llitera, la», 0210 «Monegros, Los», 0211 «Bajo Cinca/Baix Cinca», 0212 «Tarazona y el Moncayo», 0213 «Campo de Borja», 0214 «Aranda», 0215 «Ribera Alta del Ebro», 0216 «Valdejalón», 0218 «Ribera Baja del Ebro», 0219 «Bajo Aragón-Caspe/Baix Aragó-Casp», 0220 «Comunidad de Calatayud», 0221 «Campo de Cariñena», 0222 «Campo de Belchite», 0223 «Bajo Martín», 0224 «Campo de Daroca», 0225 «Jiloca», 0226 «Cuencas Mineras», 0227 «Andorra-Sierra de Arcos», 0228 «Bajo Aragón», 0229 «Comunidad de Teruel», 0230 «Maestrazgo», 0231 «Sierra de Albarracín», 0232 «Gúdar-Javalambre», 0233 «Matarraña/Matarranya», 0701 «Bierzo, El», 0901 «Alt Camp», 0902 «Alt Empordà», 0903 «Alt Penedès», 0904 «Alt Urgell», 0905 «Alta Ribagorça», 0906 «Anoia», 0907 «Bages», 0908 «Baix Camp», 0909 «Baix Ebre», 0910 «Baix Empordà», 0911 «Baix Llobregat», 0912 «Baix Penedès», 0914 «Berguedà», 0915 «Cerdanya», 0916 «Conca de Barberà», 0917 «Garraf», 0918 «Garrigues», 0919 «Garrotxa», 0921 «Maresme», 0922 «Montsià», 0923 «Noguera», 0924 «Osona», 0925 «Pallars Jussà», 0926 «Pallars Sobirà», 0927 «Pla d'Urgell», 0928 «Pla de l'Estany», 0929 «Priorat», 0930 «Ribera d'Ebre», 0931 «Ripollès», 0932 «Segarra», 0933 «Segrià», 0934 «Selva», 0935 «Solsonès», 0936 «Tarragonès», 0937 «Terra Alta», 0938 «Urgell», 0941 «Vallès Oriental», 0942 «Moianès», 0943 «Lluçanès», 1601 «Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa», 1602 «Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa», 1603 «Cuadrilla de Añana/Añanako Kuadrilla», 1605 «Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla», 1606 «Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea», 1607 «Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla»
+- En fuentes/comarcas-municipios.csv pero no en el diccionario de municipios: 01001, 01002, 01003, 01004, 01006, 01008, 01009, 01010, 01011, 01013, 01014, 01016, 01017, 01018, 01019, 01020, 01021, 01022, 01023, 01027, 01028, 01030, 01031, 01032, 01033, 01034, 01036, 01037, 01039, 01041, 01042, 01043, 01044, 01046, 01047, 01049, 01051, 01052, 01053, 01054, 01055, 01056, 01057, 01058, 01060, 01061, 01062, 01063, 01901, 01902, 24007, 24009, 24011, 24014, 24016, 24019, 24022, 24027, 24030, 24034, 24036, 24038, 24041, 24049, 24057, 24059, 24064, 24070, 24071, 24083, 24100, 24102, 24103, 24109, 24110, 24112, 24115, 24119, 24122, 24143, 24165, 24169, 24170, 24171, 24196, 24198, 24206, 24209
+- Idescat: 08999 en la comarca 99, que no está en fuentes/comarcas.csv
+- Idescat: 43001 (comarca 36) no es un municipio de la comunidad 09 en el diccionario
+- es:municipio:25120 «Lleida» sin comarca
 
 ## Eurostat LAU (3)
 
@@ -159,8 +169,20 @@
 - 382 está en fuentes/islas.csv pero no en la tabla de islas del INE
 - 383 está en fuentes/islas.csv pero no en la tabla de islas del INE
 
-## Nombres bilingües (124)
+## Nombres bilingües (136)
 
+- es:comarca:0206 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:0209 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:0211 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:0219 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:0233 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1601 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1602 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1603 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1604 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1605 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1606 está en fuentes/partes-bilingues.csv pero no en el INE
+- es:comarca:1607 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:01010 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:01011 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:01017 está en fuentes/partes-bilingues.csv pero no en el INE
@@ -209,19 +231,7 @@
 - es:municipio:31004 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:31009 está en fuentes/partes-bilingues.csv pero no en el INE
 - es:municipio:31010 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31011 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31014 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31016 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31019 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31021 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31028 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31041 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31058 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31059 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31060 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31071 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31074 está en fuentes/partes-bilingues.csv pero no en el INE
-- … y 64 más
+- … y 76 más
 
 ## Notas (4)
 

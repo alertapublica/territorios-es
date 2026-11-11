@@ -1,6 +1,6 @@
 name: Generar datos
 
-# Descarga las fuentes (INE, Eurostat, Catastro, IGN, Justicia, AEMET, Wikidata), regenera datos/ y escribe el informe de
+# Descarga las fuentes (INE, Eurostat, Catastro, IGN, Justicia, AEMET, Idescat, Aragón, Wikidata), regenera datos/ y escribe el informe de
 # discrepancias. No se lanza en las PR: la CI ya prueba el código sin red, y cada descarga son
 # ~20 minutos y unas 90 peticiones a terceros. Para probar un lector nuevo, una vez y a mano sobre
 # la rama: gh workflow run generar.yml --ref <rama> (deja el artefacto y el resumen, sube datos/ a esa

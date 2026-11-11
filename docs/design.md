@@ -87,7 +87,8 @@ First version:
   requirement in job calls.
 
 Second version: islands (cabildos and consells), official comarcas and judicial districts. The
-islands are done (version 0.3), and the judicial districts and AEMET's warning zones since 0.4:
+islands are done (version 0.3); the judicial districts, AEMET's warning zones and the comarcas,
+since 0.4:
 
 - **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
   with level `island` and an identifier with the INE island code (`es:isla:384` is Tenerife;
@@ -120,8 +121,26 @@ islands are done (version 0.3), and the judicial districts and AEMET's warning z
   listed in the report; it is never inferred from the map, which dates from 2018 and does not
   match the current boundaries. The coastal zones (suffix `C`) are left for later. `search` and
   `mentions` leave them out unless asked for in `levels`.
-
-Official comarcas are pending (§13).
+- **Comarcas**: only those that are a local entity, those in the Registro de Entidades Locales: the
+  42 of Catalonia plus Aran, the 33 of Aragon, the 7 cuadrillas of Álava and El Bierzo, plus the
+  Lluçanès, created as a comarca by Law 7/2023 although its council will not be set up until after
+  the 2027 local elections (the Registro will register it then). They are 84, with 1,767
+  municipalities. Level `comarca`, with the community as parent, since some cross a provincial
+  border; municipalities keep their parent and also carry the field `comarca`. The identifier is
+  our own and does not change: `es:comarca:CCNN`, with the INE community and a number, which in
+  Catalonia and Aragon is that of the comarca at Idescat and in the Government of Aragon
+  (`es:comarca:0943` is the Lluçanès; `es:comarca:0217`, the Central one) and in Álava and El
+  Bierzo the order of its number in the Registro (`es:comarca:1604`, the cuadrilla of
+  Vitoria-Gasteiz). The Registro number (8 digits) and the regional code are kept as codes.
+  `fuentes/comarcas.csv` lists them with their type (`comarca`, `cuadrilla` or `aran`, a unique
+  territorial entity) and their name: Idescat's in Catalonia and the Registro's elsewhere. The
+  municipalities of each come every month from Idescat and Aragón Open Data, by INE code, and in
+  Álava and El Bierzo from `fuentes/comarcas-municipios.csv`, taken from the Registro. The Barcelonès
+  is still a comarca although its council was abolished in 2019. The comarcas of Galicia, the
+  Valencian Community or Asturias, which are statistical or planning areas, are left out; if they
+  are added, they will have another type. `search` and `mentions` leave them out unless asked for
+  in `levels`, since they only exist in four communities and some share their name with a
+  municipality.
 
 Later: population entities from the INE Nomenclátor (núcleos, and parishes in Galicia and
 Asturias), which number in the tens of thousands.
@@ -133,6 +152,7 @@ Asturias), which number in the tens of thousands.
 | INE | autonomous community (2 digits), province (2), island (3), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
 | Censo Judicial | judicial district (`mjusticia:partido`, 4 digits: province 2 + number 2) | Ministry of Justice's Censo Judicial | The number is the district's in the judicial map of its province. The Generalitat's technical catalogue (CTEAJE) uses the same code except in Ceuta and Melilla (1112 and 2908, against 5112 and 5208). |
 | AEMET | warning zone (`aemet:zona`, 6 digits: community 2 + province or island group 2 + zone 2) | AEMET OpenData municipality master and Meteoalerta zone boundaries | The community and province digits are AEMET's, not the INE's (the Balearic Islands use 53–55 and the Canary Islands 90–96). |
+| Comarca | comarca (`rel:comarca`, 8 digits; `idescat:comarca` and `aragon:comarca`, 2 digits) | Registro de Entidades Locales, Idescat and Government of Aragon | The Registro number starts with 06 and the community; the Registro's Excel drops the leading zero. The Lluçanès does not have one yet. |
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
@@ -259,10 +279,10 @@ options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
-| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district or a warning zone. Judicial districts and warning zones only come up if asked for in `levels`. |
-| `children(id)` | The territories whose parent is this one; for an island, a judicial district or a warning zone, its municipalities. Those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca. Judicial districts, warning zones and comarcas only come up if asked for in `levels`. |
+| `children(id)` | The territories whose parent is this one; for an island, a judicial district, a warning zone or a comarca, its municipalities. Those of a community include its comarcas; those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -460,6 +480,14 @@ Taken on 11 November 2026:
     without its 2 extinct municipalities and with the 4 exceptions of `fuentes/zonas-aviso.csv`, are
     the PDF's 8,124 municipalities, with the same zone), because it is JSON and there is no need to
     read 221 pages.
+17. Comarcas: only those that are a local entity, with the Lluçanès from now on (it is created by
+    law and its council comes in 2027), level `comarca` with the community as parent and our own
+    identifier `es:comarca:CCNN`, which does not depend on the Registro registering it and does not
+    change if it is renamed (the cuadrilla of Ayala is now Aiaraldea's). The municipalities of
+    Catalonia and Aragon come every month from Idescat and Aragón Open Data; the list of comarcas
+    and the municipalities of Álava and El Bierzo, from a hand-reviewed export of the Registro,
+    because it is an old binary Excel file and they change very little. Municipalities of other
+    communities are not filled in with statistical comarcas.
 
 ## 13. Pending
 
@@ -474,15 +502,15 @@ Taken on 11 November 2026:
   link to open the PR by hand. GitHub Pages is already enabled.
 - Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
   postal-code gatherer (done, with the full run of every source; afterwards, more
-  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); AEMET warning zones (done); official comarcas;
-  GitHub actions still on Node 20 (Dependabot updates them).
-- Official comarcas: they are a local entity only in Aragon, Castile and León (El Bierzo),
-  Catalonia and the Basque Country (the cuadrillas of Álava), the four communities in the Registro
-  de Entidades Locales. Catalonia has an official table at Idescat (43 comarcas with Aran and
-  Lluçanès) and Aragon at Aragón Open Data (33, with the Central one; names in capitals and without
-  accents). The Registro export is downloaded with a plain request (`…/export_excel/comarcas/all`),
-  without a browser. Those of Galicia, the Valencian Community, Asturias or Navarre are statistical or
-  planning areas, not local entities.
+  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); AEMET warning zones
+  (done); comarcas that are a local entity (done); GitHub actions still on Node 20 (Dependabot
+  updates them).
+- Comarcas, later: check them every month against the Registro de Entidades Locales export (it is
+  downloaded without a browser from `…/export_excel/comarcas/all`, but it is an old binary Excel
+  file, .xls, that would have to be read); their Wikidata item and their names in other languages;
+  register the Lluçanès when the Registro does, after the 2027 elections. Statistical or planning
+  comarcas (Galicia, Valencian Community, Asturias, Navarre's zoning) would go with another type,
+  if wanted.
 - Cross-references of the judicial districts, as later layers: their Wikidata item (390 of 431,
   linkable through the seat) and their names in other languages; the CGPJ's population by
   district; the other jurisdictions in the Censo Judicial (section of the Audiencia, High Court,

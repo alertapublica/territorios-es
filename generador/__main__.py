@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import aemet, catastro, codigos_postales, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
+from . import aemet, catastro, codigos_postales, comarcas, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 from .limites import build_limits  # noqa: E402
@@ -126,6 +126,12 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     got = descargas.fetch(c["url"], cache=cache, cache_name="aemet_zonas.zip", validate=aemet.parse_zones)
     inputs["aemet_zones"] = aemet.parse_zones(got.content)
     records["aemet_zonas"] = got.record(licence=c["licence"], attribution=c["attribution"])
+
+    for name, parse in (("idescat_comarcas", comarcas.parse_idescat), ("aragon_comarcas", comarcas.parse_aragon)):
+        c = config[name]
+        got = descargas.fetch(c["url"], cache=cache, cache_name=f"{name}.csv", validate=parse)
+        inputs[name] = parse(got.content)
+        records[name] = got.record(licence=c["licence"], attribution=c["attribution"])
 
     c = config["eurostat_lau"]
     page = descargas.fetch(c["page"], cache=cache, cache_name="eurostat_lau.html")
