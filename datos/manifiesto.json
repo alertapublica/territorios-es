@@ -71,6 +71,22 @@
       "licence": "Nota legal de AEMET: reutilización, también comercial, citando la fuente",
       "attribution": "Fuente: AEMET (delimitación de zonas de Meteoalerta)"
     },
+    "idescat_comarcas": {
+      "url": "https://www.idescat.cat/codis/?f=ssv&id=50&n=9",
+      "sha256": "25c1277a50d8d66a726c7707d9d65585c7d6d562149bc1a4eda24919dfb5f84e",
+      "bytes": 33638,
+      "retrieved": "2026-11-11",
+      "licence": "Reutilización autorizada citando la fuente (condiciones de uso de la web de Idescat)",
+      "attribution": "Fuente: Idescat"
+    },
+    "aragon_comarcas": {
+      "url": "https://opendata.aragon.es/GA_OD_Core/download?resource_id=11&formato=csv",
+      "sha256": "07f948d4297b9563d6b5ceabdd932984b466f6e0701a87f72acdd1e762bd131b",
+      "bytes": 167076,
+      "retrieved": "2026-11-11",
+      "licence": "CC BY 4.0",
+      "attribution": "Fuente: Aragón Open Data, Gobierno de Aragón"
+    },
     "eurostat_lau": {
       "url": "https://ec.europa.eu/eurostat/documents/345175/501971/EU-27-LAU-2024-NUTS-2024.xlsx/12971f56-c035-dbab-4d9f-ff1dcc617bb3?t=1737036272863",
       "sha256": "1528df47dfc8fa6815e3e7b9fca78b38d40c1142c6b4748ff5fa512f281b5446",
@@ -106,7 +122,7 @@
     },
     "ign_poblaciones": {
       "url": "https://api-features.ign.es/collections/nuc/items (37497 núcleos) y https://api-features.ign.es/collections/opob/items?capital=000100 (56 capitales que no son núcleos); 9 páginas",
-      "sha256": "974d34058f14cdf65535c906e1668bf1f0574d819ff83fc5761d695f77deb35b",
+      "sha256": "5399d05a14db6d6963cda9bda540af1909256000a17b2076f3fe6bca8aa6c09b",
       "bytes": 14367943,
       "retrieved": "2026-11-11",
       "licence": "CC BY 4.0 (Orden FOM/2807/2015)",
@@ -122,7 +138,7 @@
     },
     "wikidata_spain_codes": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_codes)",
-      "sha256": "310b74f5278294f2fcc45f78c04ab7a259f12352e7810ff7046e683e4abbb1dc",
+      "sha256": "06a5e63de6a33e616de6cc731d4ac1299e6ecb0b3214bb32d9b6c47b8b5e9182",
       "bytes": 3025871,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -130,7 +146,7 @@
     },
     "wikidata_spain_labels_es": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_es)",
-      "sha256": "0ac2de7ce6acdc7671d737b6a164d064934df7281ae86e377d1aa5b3d76d6310",
+      "sha256": "e1038dba2291e1c23e3f6f2b7f2580f7399aaa256b678bc5138713aff37a0e26",
       "bytes": 1922554,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -138,7 +154,7 @@
     },
     "wikidata_spain_articles_es": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_es)",
-      "sha256": "6acb92b9a5279cc46fc829aa0e58b4f2788e2de12cd9261b1d4c6b1d38a4a89f",
+      "sha256": "a53db517906c37592f62f3e18188a568360e571389b5853eeda2a5570cccf7f6",
       "bytes": 1944151,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -146,7 +162,7 @@
     },
     "wikidata_spain_labels_ca": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_ca)",
-      "sha256": "152a64e4fd6d21012d86893f6a770f983aa3198071aaf4b2ed7a1c777292f1ba",
+      "sha256": "2de4d3e9cdc2933a4649efa5be0dea6c975c6da0714ff2d109e3078e163a6f54",
       "bytes": 1915060,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -154,7 +170,7 @@
     },
     "wikidata_spain_articles_ca": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_ca)",
-      "sha256": "1c5ca22bed3efb3a2e11dbdfe1231c758e489a1ea993b83cd8312e6c4ec8b338",
+      "sha256": "fc61eb096cfb035010f106f7391adfb4bf2038e00892b134326a4128184c5f0b",
       "bytes": 1936923,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -162,7 +178,7 @@
     },
     "wikidata_spain_labels_gl": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_gl)",
-      "sha256": "4aa265933b598ae7d3196fe9c60b8afa301ad5e31a2360e23572df6540386f6b",
+      "sha256": "22457566c6241a46c1fd61917561c8dd604ae398582d7fc7697d24b911653704",
       "bytes": 1911166,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -170,7 +186,7 @@
     },
     "wikidata_spain_articles_gl": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_gl)",
-      "sha256": "46dcda7543e6150314872096ba74ff9389552e188c446b775ba193f4649b0e61",
+      "sha256": "d52b19e8fc36d0ca2c69ca4480a45ca252702c0c64c11bed9967e6c4bf761541",
       "bytes": 1930339,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -178,7 +194,7 @@
     },
     "wikidata_spain_labels_eu": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_eu)",
-      "sha256": "55eb8f3b1f9b53c49eeb2134f7e947f3c5732e7beefbb014a30ee031c61836d6",
+      "sha256": "6685f8190edbc65ff0127a3818ad0c66fba7955cb6e2b1e8a79f325bddcc0c6f",
       "bytes": 1909801,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -186,7 +202,7 @@
     },
     "wikidata_spain_articles_eu": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_eu)",
-      "sha256": "5f426fe45884b3f12766d0b35c04981a19ef3cb4d3e773fd95f323764c789269",
+      "sha256": "9d92a3edc72926562979a5ec917eb12002bb539ee13b97a1de7fdc2a3f746dd8",
       "bytes": 1933213,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -194,7 +210,7 @@
     },
     "wikidata_spain_labels_oc": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_oc)",
-      "sha256": "edb8face63f7b69fba32fafd26f3d2fc60ba875479c174599c12eda0e72300c5",
+      "sha256": "fa06f2a32307b044fb10653fadbd70f97eebaa78db657deea87e4e4a10968307",
       "bytes": 1902910,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -202,7 +218,7 @@
     },
     "wikidata_spain_articles_oc": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_oc)",
-      "sha256": "fbae2d1ca240d258a8c52cb87cdc33bb682a931e4d7ad30a80693a5571a49696",
+      "sha256": "adb500f489aaa002f1df10dec79c5f29d600ce5a7d31b1e18396e368412fdf32",
       "bytes": 1922261,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -210,7 +226,7 @@
     },
     "wikidata_spain_labels_en": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_en)",
-      "sha256": "973df78671db783ee5ea47bcf4e8d49ff0d74936a7652bdabc15f880f15c52ad",
+      "sha256": "8f3b414746efcd10cfd14808ebf78be387be6f87fc3365e6f6f49b04044d3870",
       "bytes": 1917127,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -218,7 +234,7 @@
     },
     "wikidata_spain_articles_en": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_en)",
-      "sha256": "4e1d427875eeba121deaf14e84b51f7ecb6f99e143dd8e61fc05d79d8a507694",
+      "sha256": "4ff2e5fc6a5403c241fac7fa03b64a389b91b028e08d5ba93f3b97c961c41bc6",
       "bytes": 1937316,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -226,7 +242,7 @@
     },
     "wikidata_spain_labels_ast": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_ast)",
-      "sha256": "82cb2bf3f2b2c4e2233bd0846a1ea0e492a166710b5ed7dad0caece7c00f5fd4",
+      "sha256": "725683c9719c3e3deca620258da7b355f7c3b7b6ffc67eac27baf3c8f1450604",
       "bytes": 1749993,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -234,7 +250,7 @@
     },
     "wikidata_spain_articles_ast": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_ast)",
-      "sha256": "4dd8b32649feaf83e6d1f9f30c51e0de8666ecc3f4906705b0dd9d61d71b1c1f",
+      "sha256": "de21d53c3ad11abdc54b044eb4551383c2fddf96ef6fa8836847c668bd5aa97e",
       "bytes": 1325361,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -242,7 +258,7 @@
     },
     "wikidata_spain_labels_an": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_labels_an)",
-      "sha256": "c1af648c59a2e7477ebf0ae33d88f0d13b7d392700ab26136616dbdf4d204ec8",
+      "sha256": "5520159c0cf894449c9abebcdfc985263c340af598c0f7d78a0e50c20766b363",
       "bytes": 1901689,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -250,7 +266,7 @@
     },
     "wikidata_spain_articles_an": {
       "url": "https://query.wikidata.org/sparql (SPARQL: spain_articles_an)",
-      "sha256": "f6bded0b8ac0069c67b180b0835462221b367966d57162b122e88afe1166b3bd",
+      "sha256": "9075ba487eb9510725e9b3663f4cc0f32c9ecdf9d44a21a8aed935281b867ec5",
       "bytes": 1927604,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -258,7 +274,7 @@
     },
     "wikidata_country_codes": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_codes)",
-      "sha256": "b00c8f49d16a835ee0b4768bbb8dc04a5e00ca7286165a0311f67eb2bde6b76c",
+      "sha256": "5fc02ca28cfbd740e38f8115068b3b5afde99a666e1b5c08ab05dc1b3f0cef01",
       "bytes": 146054,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -266,7 +282,7 @@
     },
     "wikidata_country_labels_es": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_es)",
-      "sha256": "d25e4ddbbac793bcf58538b86c3c25ad12465a42eb5f278517a1ea4f01578bdf",
+      "sha256": "f31316d81cd9489d6708ca2d0940600aed4e1d3ab1dd2ec92ac9d121425ee3ce",
       "bytes": 59235,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -274,7 +290,7 @@
     },
     "wikidata_country_articles_es": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_es)",
-      "sha256": "0e91befcbb01724ce8d68a617c1c8bc674332aeff7c9d4d5f3dfb780e200e803",
+      "sha256": "c238f352194ba2eedc7b1f17fd1cf3d8d0679f0c6e226859c8e33087d90d72ce",
       "bytes": 60002,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -282,7 +298,7 @@
     },
     "wikidata_country_labels_ca": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_ca)",
-      "sha256": "7a023feb7a14361e8a61f61bcb074ac6b043da9f097e060c177ec52d2e89f334",
+      "sha256": "0f4badc4160da153ad7f80c2a0011f6a978570e00fbdc90e8e4efa0a1be577bf",
       "bytes": 59479,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -290,7 +306,7 @@
     },
     "wikidata_country_articles_ca": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_ca)",
-      "sha256": "471855316257d70c43fc791bb0a75e8d7ae4cdd59558f322e91eb5ba12d44cbb",
+      "sha256": "f4f4a5977c9568b41535a681b6e34b813da5d0c436f57aa3dec0eb35b82b54b3",
       "bytes": 59854,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -298,7 +314,7 @@
     },
     "wikidata_country_labels_gl": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_gl)",
-      "sha256": "6f9d8fe6bf56307b0fc9e2b0eb824bfb858b62ed69c31f90a21ab4de61a9c1d5",
+      "sha256": "020bfb20d12db92309b73d403bfb273edf84dc9f1152c6cae826c0d623a7a80b",
       "bytes": 58993,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -306,7 +322,7 @@
     },
     "wikidata_country_articles_gl": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_gl)",
-      "sha256": "6f043d7442c407602e6e506b652149dcc985eeee4fd206faae0056daa5b76bf8",
+      "sha256": "42d82e469750aeee95df508c7102a9a8f4228a4013662bb50c0f17d5ceafb221",
       "bytes": 59353,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -314,7 +330,7 @@
     },
     "wikidata_country_labels_eu": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_eu)",
-      "sha256": "1faab30e83d1471c1afb8daedfa940e8f55d6b4109a14de73afc2cf284070f62",
+      "sha256": "6d862b6533483bec67b89cfb4baa42c301e67db3bfbb09d314436f4869f72fc2",
       "bytes": 58979,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -322,7 +338,7 @@
     },
     "wikidata_country_articles_eu": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_eu)",
-      "sha256": "a1d99810129467089016ab19d04a34e067a7f672018d6bef037da1612baf8b7c",
+      "sha256": "e1e229ef05817eff7e2de394bd50bad120d581a157be8edd69086e51a7208776",
       "bytes": 59311,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -330,7 +346,7 @@
     },
     "wikidata_country_labels_oc": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_oc)",
-      "sha256": "615978ca47a5fa2d38e5e8f217f4eab2411db6461a032b0b2e0c4e6bdc138c83",
+      "sha256": "b1e7e4290b1f99b10ca8b0b7a609b3d71829cb664f6b08dd3bd1ce359fe76615",
       "bytes": 57934,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -338,7 +354,7 @@
     },
     "wikidata_country_articles_oc": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_oc)",
-      "sha256": "2126ee70284442ffa161a2848e101570892f157c641ace63ebcc2fe844d65bfa",
+      "sha256": "7af27c6d81960cfab7b317c6906ee89bf4f6d00844411e884159c8fdd7714e89",
       "bytes": 58280,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -346,7 +362,7 @@
     },
     "wikidata_country_labels_en": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_en)",
-      "sha256": "e0ab2165d0b239a7d8b2ea25bcf58a5b26d194204b56ec67608b53dab4ee3bf6",
+      "sha256": "1853f2f442b53cd0dd11b3b254c04ec4117a049d0460c094eec451e48e1eac31",
       "bytes": 59850,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -354,7 +370,7 @@
     },
     "wikidata_country_articles_en": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_en)",
-      "sha256": "690be317f1a1bd6cb17e1f0744c07bdb0f914c0d8ed31b2966c937f92c517a2a",
+      "sha256": "013446f0b885dde825b3fe2ad0e2c35acd7b968306ec53f8566b5ba6efa46018",
       "bytes": 59466,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -362,7 +378,7 @@
     },
     "wikidata_country_labels_ast": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_ast)",
-      "sha256": "0bb7dbca18b35348e83ff1feed410ccf0ee3ade1f00731d1b26a805fdb3c9961",
+      "sha256": "aca13aa29edc04e8462e82aaecd828b481aee1ed881fde5c6a243808ded83597",
       "bytes": 59062,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -370,7 +386,7 @@
     },
     "wikidata_country_articles_ast": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_ast)",
-      "sha256": "9f8aa89ec7754d5b759a9e721740ab825116844e6f551025ce0ee8e035a55a55",
+      "sha256": "716876bf04f4de16fdfa17e8f212a5da8791a22894e6f75aa696bd20962be3a0",
       "bytes": 59326,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -378,7 +394,7 @@
     },
     "wikidata_country_labels_an": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_labels_an)",
-      "sha256": "bed30cb6c269eff9f97f803f15e9db9aacdb416c4b527ad2553d72703f10313a",
+      "sha256": "532175e81cdef66a601eea2f4a20cf23c4c5ec66f7a7d299b10a8e7c0bc1e175",
       "bytes": 56348,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -386,7 +402,7 @@
     },
     "wikidata_country_articles_an": {
       "url": "https://query.wikidata.org/sparql (SPARQL: country_articles_an)",
-      "sha256": "d9c76e0f674894d829477955089960a819e9dc9be532dd06dc6359c2a62399f8",
+      "sha256": "6be7f4360999768efd8dbf00bca8fdaa0f26ba2f6916aa7ddb8f9ff9592372da",
       "bytes": 56594,
       "retrieved": "2026-11-11",
       "licence": "CC0 1.0",
@@ -461,15 +477,16 @@
   "files": {
     "codigos-postales-fuentes.csv": "996eab78ed39888a7e542d7afb5dbe24737c0a149603c5d037f55d78a7da6af1",
     "codigos-postales.csv": "682a7221b153303e3b1212779db32a1b05926adf4970a047310e674f834c0200",
-    "codigos.csv": "85b3692ca42118c52637b9b0c6341cf4e626a65f1812a953cc7a465315aee811",
+    "codigos.csv": "6a2e057e36ff6794667196af30f2ce258cf98ed84d4671cb738d454934ce51f8",
+    "comarcas.csv": "290ab33f682482758a48a21f877c3d970c7d243d8e6bd00f8ae85728da315d84",
     "comunidades.csv": "48f043aef12f72c9ebaa0bac50ba6cbb9dd5758fa07e47abe0ec112bd6a3bcb1",
     "islas.csv": "090251dc58b0791fc5dcf1a380ebb3555aec50532730c89261a6f7ba39a07940",
-    "municipios.csv": "0d430a0a885ee9c9ae4d3e3e9eb0dd8661c762ef23c6834453b69730a9964d41",
-    "nombres.csv": "f9fc876c43ebf0ab542c69fb19579c2c8ebe704232b931dc0fc2e73b78e96b5b",
+    "municipios.csv": "e61f81218ddbda7c09742373dfc285a15967a5a0ab3e766c077ac219fdf0daea",
+    "nombres.csv": "69fe460e08eaf29eb25a138c8b819671299fa1a0c8616cf4b7828d3c68fae808",
     "paises.csv": "40caa05fe810c9ecf9f900428c50f6eb9dfbe5ca28aeb88266d8c4e0b9bbaaa2",
     "partidos-judiciales.csv": "128efa19e55119b145843d3557d850f504d03952ae5fbb808786c877f59d540b",
     "provincias.csv": "38d4dd87f786e94edf6bd789fac35e0bc78a9f328d27a60c907e641fc8279d37",
-    "territorios.json": "b51ade46a6e86649a8d52797e6031f47d2d38d9b2cd78d56e7f0baf573f0d47e",
+    "territorios.json": "6922bf83a71f6f7f9e01fce923fa8c418b2c00e660deafc74a7e9a7c7a6ab117",
     "wikipedia.csv": "9d955e557980113b55791bad640621eb1f1310bd6bc727bad60f1b935ced660c",
     "zonas-aviso.csv": "1b4eafae7ae9886c0cc614fad1b3869066c3fe14595b10e3e8075b91ad289cfa"
   }
