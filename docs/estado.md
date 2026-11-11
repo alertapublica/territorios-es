@@ -2,7 +2,7 @@
 
 Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md).
 
-| **9.076** | **7 de 8** | **8.132** | **24** | **14.054** | **11** |
+| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** | **11** |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio | puntos pendientes |
 
@@ -20,7 +20,7 @@ flowchart TB
   island["Islas<br>11"]:::done
   judicial_district["Partidos judiciales<br>431"]:::done
   warning_zone["Zonas de aviso de AEMET<br>182"]:::done
-  comarca["Comarcas<br>sin generar · prueba: 6"]:::todo
+  comarca["Comarcas<br>84"]:::done
   country["Países<br>249"]:::done
   autonomous_community --> comarca
   autonomous_community --> province
@@ -30,7 +30,7 @@ flowchart TB
   province --> municipality
   province --> warning_zone
   judicial_district -.->|"sede: 431 de 431"| municipality
-  municipality -.->|"comarca"| comarca
+  municipality -.->|"comarca: 1.767 de 8.132"| comarca
   municipality -.->|"isla: 155 de 8.132"| island
   municipality -.->|"partido judicial: 8.132 de 8.132"| judicial_district
   municipality -.->|"zona de aviso: 8.124 de 8.132"| warning_zone
@@ -48,7 +48,7 @@ Cuántos municipios tienen cada dato en `municipios.csv`. Las barras son sobre t
 | población (INE) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | partido judicial (Justicia) | 8.132 de 8.132 | 100 % | `████████████████████` |
 | zona de aviso (AEMET) | 8.124 de 8.132 | 99,9 % | `███████████████████░` |
-| comarca · Cataluña, Aragón, Álava y El Bierzo | sin generar |  |  |
+| comarca · Cataluña, Aragón, Álava y El Bierzo | 1.767 de 8.132 | 21,7 % | `████░░░░░░░░░░░░░░░░` |
 | isla (INE) · Baleares y Canarias | 155 de 8.132 | 1,9 % | `█░░░░░░░░░░░░░░░░░░░` |
 | código postal | 8.132 de 8.132 | 100 % | `████████████████████` |
 | LAU (Eurostat) | 8.132 de 8.132 | 100 % | `████████████████████` |
@@ -93,27 +93,27 @@ pie showData
 
 ## Por comunidad
 
-| Comunidad | Municipios | Población | Partidos | Zonas de aviso | Islas | Con código postal | Fuente que decide (municipios) |
-|---|---:|---:|---:|---:|---:|---:|---|
-| Andalucía | 785 | 8.666.412 | 85 | 29 | — | 100 % | INE 785 |
-| Aragón | 731 | 1.358.812 | 16 | 9 | — | 100 % | INE 731 |
-| Principado de Asturias | 78 | 1.013.529 | 18 | 5 | — | 100 % | INE 78 |
-| Illes Balears | 67 | 1.237.480 | 6 | 7 | 4 | 100 % | IDEIB 67 |
-| Canarias | 88 | 2.249.976 | 19 | 13 | 7 | 100 % | INE 88 |
-| Cantabria | 102 | 593.964 | 8 | 4 | — | 100 % | INE 102 |
-| Castilla y León | 2.248 | 2.398.500 | 41 | 24 | — | 100 % | INE 2.248 |
-| Castilla-La Mancha | 919 | 2.119.234 | 31 | 17 | — | 100 % | INE 919 |
-| Cataluña | 947 | 8.146.265 | 49 | 16 | — | 100 % | ICGC 947 |
-| Comunitat Valenciana | 542 | 5.415.843 | 36 | 11 | — | 100 % | INE 542 |
-| Extremadura | 388 | 1.051.638 | 21 | 8 | — | 100 % | INE 388 |
-| Galicia | 313 | 2.713.169 | 45 | 16 | — | 100 % | INE 313 |
-| Comunidad de Madrid | 179 | 7.137.031 | 21 | 3 | — | 100 % | INE 178 · Ayto. de Madrid 1 |
-| Región de Murcia | 45 | 1.589.138 | 11 | 5 | — | 100 % | INE 45 |
-| Comunidad Foral de Navarra | 272 | 683.500 | 5 | 4 | — | 100 % | IDENA 272 |
-| País Vasco | 252 | 2.242.342 | 14 | 7 | — | 100 % | Eustat 252 |
-| La Rioja | 174 | 327.286 | 3 | 2 | — | 100 % | INE 174 |
-| Ceuta | 1 | 83.595 | 1 | 1 | — | 100 % | INE 1 |
-| Melilla | 1 | 86.780 | 1 | 1 | — | 100 % | INE 1 |
+| Comunidad | Municipios | Población | Partidos | Zonas de aviso | Islas | Comarcas | Con código postal | Fuente que decide (municipios) |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Andalucía | 785 | 8.666.412 | 85 | 29 | — | — | 100 % | INE 785 |
+| Aragón | 731 | 1.358.812 | 16 | 9 | — | 33 | 100 % | INE 731 |
+| Principado de Asturias | 78 | 1.013.529 | 18 | 5 | — | — | 100 % | INE 78 |
+| Illes Balears | 67 | 1.237.480 | 6 | 7 | 4 | — | 100 % | IDEIB 67 |
+| Canarias | 88 | 2.249.976 | 19 | 13 | 7 | — | 100 % | INE 88 |
+| Cantabria | 102 | 593.964 | 8 | 4 | — | — | 100 % | INE 102 |
+| Castilla y León | 2.248 | 2.398.500 | 41 | 24 | — | 1 | 100 % | INE 2.248 |
+| Castilla-La Mancha | 919 | 2.119.234 | 31 | 17 | — | — | 100 % | INE 919 |
+| Cataluña | 947 | 8.146.265 | 49 | 16 | — | 43 | 100 % | ICGC 947 |
+| Comunitat Valenciana | 542 | 5.415.843 | 36 | 11 | — | — | 100 % | INE 542 |
+| Extremadura | 388 | 1.051.638 | 21 | 8 | — | — | 100 % | INE 388 |
+| Galicia | 313 | 2.713.169 | 45 | 16 | — | — | 100 % | INE 313 |
+| Comunidad de Madrid | 179 | 7.137.031 | 21 | 3 | — | — | 100 % | INE 178 · Ayto. de Madrid 1 |
+| Región de Murcia | 45 | 1.589.138 | 11 | 5 | — | — | 100 % | INE 45 |
+| Comunidad Foral de Navarra | 272 | 683.500 | 5 | 4 | — | — | 100 % | IDENA 272 |
+| País Vasco | 252 | 2.242.342 | 14 | 7 | — | 7 | 100 % | Eustat 252 |
+| La Rioja | 174 | 327.286 | 3 | 2 | — | — | 100 % | INE 174 |
+| Ceuta | 1 | 83.595 | 1 | 1 | — | — | 100 % | INE 1 |
+| Melilla | 1 | 86.780 | 1 | 1 | — | — | 100 % | INE 1 |
 
 ## Repositorio
 
@@ -128,7 +128,7 @@ flowchart TB
   construir["construir<br>cruza las fuentes y arma el catálogo"]
   exportar["exportar<br>escribe datos/ y comprueba su coherencia"]
   limites["limites<br>simplifica los límites a GeoJSON"]
-  datos[("datos/<br>14 ficheros")]
+  datos[("datos/<br>15 ficheros")]
   geo[("limites-municipios.geojson.gz<br>adjunto a cada versión")]
   report["informe de discrepancias (issue)"]
   lib["librería Python y JavaScript"]
@@ -169,7 +169,7 @@ flowchart TB
 
 | Workflow | Cuándo | Qué hace |
 |---|---|---|
-| [CI](../.github/workflows/ci.yml) | push, PR | pruebas de Python y JS, datos de prueba al día, coherencia de datos/, paquetes instalables y este mapa |
+| [CI](../.github/workflows/ci.yml) | push, PR, a mano | pruebas de Python y JS, datos de prueba al día, coherencia de datos/, paquetes instalables y este mapa |
 | [Generar datos](../.github/workflows/generar.yml) | a mano, programado (`17 5 3 * *`) | descarga las fuentes y regenera datos/ y este mapa; en main abre una PR y actualiza el issue del informe |
 | [Códigos postales](../.github/workflows/codigos-postales.yml) | a mano, programado (`41 4 10 1,7 *`) | recopila los códigos postales de todas las fuentes, regenera este mapa y abre una PR |
 | [Límites de la versión](../.github/workflows/limites.yml) | al publicar una versión | adjunta limites-municipios.geojson.gz a cada versión |
@@ -225,7 +225,7 @@ flowchart LR
   f_codigos_postales_fuentes_csv[("codigos-postales-fuentes.csv")]:::done
   f_codigos_postales_csv[("codigos-postales.csv")]:::done
   f_codigos_csv[("codigos.csv")]:::done
-  f_comarcas_csv[("comarcas.csv")]:::todo
+  f_comarcas_csv[("comarcas.csv")]:::done
   f_comunidades_csv[("comunidades.csv")]:::done
   f_islas_csv[("islas.csv")]:::done
   f_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::done
@@ -296,8 +296,8 @@ flowchart LR
 | `mjusticia_censo_judicial` | Justicia | `generador/justicia.py` | partido judicial de cada municipio y su sede | 2026-11-11 |
 | `aemet_municipios` | AEMET | `generador/aemet.py` | zona de aviso de cada municipio | 2026-11-11 |
 | `aemet_zonas` | AEMET | `generador/aemet.py` | nombre de cada zona de aviso | 2026-11-11 |
-| `idescat_comarcas` | Idescat | `generador/comarcas.py` | comarca de cada municipio de Cataluña | aún no |
-| `aragon_comarcas` | Aragón | `generador/comarcas.py` | comarca de cada municipio de Aragón | aún no |
+| `idescat_comarcas` | Idescat | `generador/comarcas.py` | comarca de cada municipio de Cataluña | 2026-11-11 |
+| `aragon_comarcas` | Aragón | `generador/comarcas.py` | comarca de cada municipio de Aragón | 2026-11-11 |
 | `rel_comarcas` | REL | `fuentes/` | comarcas que son entidad local; cuadrillas de Álava y El Bierzo (exportación revisada a mano) | aún no |
 | `eurostat_lau` | Eurostat | `generador/eurostat.py` | LAU, NUTS 3 y superficie | 2026-11-11 |
 | `wikidata` | Wikidata | `generador/wikidata.py` | nombres por idioma, enlaces e identificadores | 2026-11-11 |
@@ -323,17 +323,17 @@ flowchart LR
 |---|---:|---:|---|---|---|
 | [`codigos-postales-fuentes.csv`](../datos/codigos-postales-fuentes.csv) | 33.537 | 1,7 MB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos-postales-fuentes.csv) |
 | [`codigos-postales.csv`](../datos/codigos-postales.csv) | 14.054 | 865 KB | Ayto. de Madrid, CDAU, Catastro, Eustat, ICGC, IDEIB, IDENA, INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos-postales.csv) |
-| [`codigos.csv`](../datos/codigos.csv) | 66.924 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos.csv) |
-| `comarcas.csv` | 6 |  | Aragón, Idescat, REL | solo en pruebas |  |
+| [`codigos.csv`](../datos/codigos.csv) | 67.083 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcodigos.csv) |
+| [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcomarcas.csv) |
 | [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fcomunidades.csv) |
 | [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fislas.csv) |
-| [`manifiesto.json`](../datos/manifiesto.json) |  | 21 KB |  | en datos/ |  |
-| [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,2 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fmunicipios.csv) |
-| [`nombres.csv`](../datos/nombres.csv) | 24.202 | 1,1 MB | INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fnombres.csv) |
+| [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | en datos/ |  |
+| [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fmunicipios.csv) |
+| [`nombres.csv`](../datos/nombres.csv) | 24.394 | 1,1 MB | INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fnombres.csv) |
 | [`paises.csv`](../datos/paises.csv) | 249 | 23 KB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fpaises.csv) |
 | [`partidos-judiciales.csv`](../datos/partidos-judiciales.csv) | 431 | 58 KB | Justicia | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fpartidos-judiciales.csv) |
 | [`provincias.csv`](../datos/provincias.csv) | 52 | 8 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fprovincias.csv) |
-| [`territorios.json`](../datos/territorios.json) | 9.076 | 5,5 MB |  | en datos/ |  |
+| [`territorios.json`](../datos/territorios.json) | 9.160 | 5,5 MB |  | en datos/ |  |
 | [`wikipedia.csv`](../datos/wikipedia.csv) | 64.898 | 4,9 MB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fwikipedia.csv) |
 | [`zonas-aviso.csv`](../datos/zonas-aviso.csv) | 182 | 15 KB | AEMET | en datos/ | [explorar](https://lite.datasette.io/?csv=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fzonas-aviso.csv) |
 
@@ -390,8 +390,8 @@ flowchart LR
 
 ## Avance
 
-- **Niveles en `datos/`**: Comunidades y ciudades autónomas, Provincias, Municipios, Islas, Partidos judiciales, Zonas de aviso de AEMET, Países.
-- **Niveles hechos en el código que faltan en `datos/` (hay que lanzar «Generar datos»)**: Comarcas.
+- **Niveles en `datos/`**: Comunidades y ciudades autónomas, Provincias, Municipios, Islas, Partidos judiciales, Zonas de aviso de AEMET, Comarcas, Países.
+- **Niveles hechos en el código que faltan en `datos/` (hay que lanzar «Generar datos»)**: ninguno.
 
 Del [apartado 13 del diseño](../docs/diseno.md#13-pendiente):
 
