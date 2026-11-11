@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import hashlib
+import hmac
 import http.client
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -12,6 +14,23 @@ from pathlib import Path
 
 USER_AGENT = "territorios-es/0.3 (+https://github.com/alertapublica/territorios-es)"
 PAUSE = 2.0
+
+# Hosts that drop connections from GitHub Actions' IPs: read through a relay with a Spanish IP, signed
+# with RELAY_CLAVE and located at RELAY_URL (repository secrets). Each host must also be in the relay's
+# list of allowed hosts. Without the secrets they are read directly.
+VIA_RELAY = {"datacloud.icgc.cat"}
+
+
+def relay(url: str) -> tuple[str, dict[str, str]]:
+    """URL and headers to read `url` with: through the relay if its host needs it and there is a key;
+    otherwise direct. The signature, HMAC-SHA256(key, ts + newline + url), expires after 120 s, so it is
+    computed on each attempt. GET only."""
+    key, base = os.environ.get("RELAY_CLAVE"), os.environ.get("RELAY_URL")
+    if not (key and base) or urllib.parse.urlsplit(url).hostname not in VIA_RELAY:
+        return url, {}
+    ts = str(int(time.time()))
+    signature = hmac.new(key.encode(), f"{ts}\n{url}".encode(), hashlib.sha256).hexdigest()
+    return base.rstrip("/") + "/?" + urllib.parse.urlencode({"url": url}), {"x-ts": ts, "x-firma": signature}
 
 
 class Download:
@@ -41,7 +60,9 @@ def fetch(url: str, data: dict | None = None, accept: str | None = None, cache: 
         if attempt:
             time.sleep(PAUSE * 2 ** attempt)
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, data=body, headers=headers), timeout=180) as r:
+            target, signed = relay(url) if body is None else (url, {})
+            request = urllib.request.Request(target, data=body, headers={**headers, **signed})
+            with urllib.request.urlopen(request, timeout=180) as r:
                 content = r.read()
             time.sleep(PAUSE)
             if validate:
