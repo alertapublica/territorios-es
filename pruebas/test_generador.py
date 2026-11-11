@@ -572,7 +572,8 @@ class Build(unittest.TestCase):
         for name, broken in (("comarcas.csv", "0939,08,39,06090180,aran,Aran\n"),  # code of another community
                              ("comarcas.csv", "0939,09,39,6090180,aran,Aran\n"),  # REL number without its zero
                              ("comarcas.csv", "0939,09,39,06090180,valle,Aran\n"),  # unknown type
-                             ("comarcas-municipios.csv", "01059,0939\n")):  # a comarca with a regional source
+                             ("comarcas-municipios.csv", "01059,0939\n"),  # a comarca with a regional source
+                             ("comarcas-municipios.csv", "28079,1604\n")):  # Madrid in a cuadrilla of Álava
             with self.subTest(broken=broken), tempfile.TemporaryDirectory() as tmp:
                 fuentes = Path(tmp) / "fuentes"
                 shutil.copytree(ROOT / "fuentes", fuentes)

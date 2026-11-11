@@ -122,10 +122,10 @@ since 0.4:
   match the current boundaries. The coastal zones (suffix `C`) are left for later. `search` and
   `mentions` leave them out unless asked for in `levels`.
 - **Comarcas**: only those that are a local entity, those in the Registro de Entidades Locales: the
-  42 of Catalonia plus Aran, the 33 of Aragon, the 7 cuadrillas of Álava and El Bierzo, plus the
-  Lluçanès, created as a comarca by Law 7/2023 although its council will not be set up until after
-  the 2027 local elections (the Registro will register it then). They are 84, with 1,767
-  municipalities. Level `comarca`, with the community as parent, since some cross a provincial
+  42 comarcas of Catalonia plus Aran, the 33 of Aragon, the 7 cuadrillas of Álava and El Bierzo. Of
+  the 42 Catalan ones, the Registro does not have the Lluçanès yet, created as a comarca by Law
+  7/2023 although its council will not be set up until after the 2027 local elections (the Registro
+  will register it then); it is already here. They are 84, with 1,767 municipalities. Level `comarca`, with the community as parent, since some cross a provincial
   border; municipalities keep their parent and also carry the field `comarca`. The identifier is
   our own and does not change: `es:comarca:CCNN`, with the INE community and a number, which in
   Catalonia and Aragon is that of the comarca at Idescat and in the Government of Aragon

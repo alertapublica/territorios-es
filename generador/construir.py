@@ -701,8 +701,9 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
     unknown = []
     for row in hand["comarca_members"]:
         code, comarca = row["ine"], row["comarca"]
-        if comarca not in comarca_rows or comarca_rows[comarca]["autonomico"] or code in comarca_of:
-            raise ValueError(f"fuentes/comarcas-municipios.csv: fila no válida o repetida: {row}")
+        if comarca not in comarca_rows or comarca_rows[comarca]["autonomico"] or code in comarca_of \
+                or (code in by_code and province_ccaa[code[:2]] != comarca_rows[comarca]["autonomia"]):
+            raise ValueError(f"fuentes/comarcas-municipios.csv: fila no válida, repetida o de otra comunidad: {row}")
         if code in by_code:
             comarca_of[code] = comarca
         else:

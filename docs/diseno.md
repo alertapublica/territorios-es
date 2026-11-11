@@ -117,10 +117,11 @@ ya están (versión 0.3); los partidos judiciales, las zonas de aviso de AEMET y
   informe; nunca se deduce del mapa, que es de 2018 y no casa con los límites actuales. Las zonas
   costeras (sufijo `C`) quedan para más adelante. `search` y `mentions` no las devuelven salvo que
   se pidan en `levels`.
-- **Comarcas**: solo las que son entidad local, las del Registro de Entidades Locales: las 42 de
-  Cataluña más Aran, las 33 de Aragón, las 7 cuadrillas de Álava y El Bierzo, más el Lluçanès, que
-  la Ley 7/2023 creó como comarca aunque su consejo no se constituye hasta después de las
-  elecciones municipales de 2027 (el Registro la inscribirá entonces). Son 84 y 1.767 municipios.
+- **Comarcas**: solo las que son entidad local, las del Registro de Entidades Locales: las 42
+  comarcas de Cataluña más Aran, las 33 de Aragón, las 7 cuadrillas de Álava y El Bierzo. De las 42
+  catalanas, el Registro aún no tiene el Lluçanès, que la Ley 7/2023 creó como comarca aunque su
+  consejo no se constituye hasta después de las elecciones municipales de 2027 (el Registro la
+  inscribirá entonces); aquí ya está. Son 84 y 1.767 municipios.
   Nivel `comarca`, con padre en la comunidad, porque alguna cruza el límite provincial; los
   municipios no cambian de padre y llevan además el campo `comarca`. El identificador es propio y
   no cambia: `es:comarca:CCNN`, con la comunidad del INE y un número, que en Cataluña y Aragón es
