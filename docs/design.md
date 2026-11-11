@@ -371,6 +371,17 @@ each new mapping. We write the translations ourselves when writing them (they ar
 run time) and they are marked as pending review until someone with command of the language reviews
 them.
 
+Every page links to the status page (`<language>/estado/`, in the same six languages): levels and
+relations of the published data, coverage of each datum over the municipalities where it exists
+(listing those missing it, when few), each community, sources, files, library and workflows, with
+Mermaid diagrams. «Explore» opens each table in Datasette Lite from a SQLite database the website
+publishes with every CSV and the codes as text, so that 01001 does not become 1001. `web/estado.py`
+builds it from `datos/`, `fuentes/` and the repository itself, and it is published when CI passes on
+`main`. The same script writes `docs/estado.md` and `docs/status.md` (Spanish and English), which
+GitHub renders: CI checks they are up to date and the data workflows regenerate them in their PRs.
+If a source, module, workflow, level or column appears that is not on its map, or the map names
+something that no longer exists, the check fails.
+
 ## 9. Ready for the EU
 
 The first version is Spain only, but nothing prevents extending it:
@@ -492,19 +503,22 @@ Taken on 11 November 2026:
 ## 13. Pending
 
 - Translate this document and the README into Catalan, Galician, Basque and Aranese.
-- Review the translations of the website and of the names of autonomous communities (marked as
-  pending).
+- Review the translations of the website, of its status page and of the names of autonomous
+  communities (marked as pending).
 - Review the discrepancy report of the first generation: Wikidata labels that are the name of
   another municipality, repeated identifiers and former municipalities with an INE code in
   Wikidata; fix in Wikidata what is their error.
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Version 0.4, in order: official INE population as of 1 January instead of Eurostat's (done);
-  postal-code gatherer (done, with the full run of every source; afterwards, more
-  sources: La Rioja, Gipuzkoa, Málaga, Barcelona…); judicial districts (done); AEMET warning zones
-  (done); comarcas that are a local entity (done); GitHub actions still on Node 20 (Dependabot
-  updates them).
+- Release version 0.4. Already on `main`: official INE population, postal-code gatherer, judicial
+  districts, AEMET warning zones, comarcas that are a local entity and status page. Before, the
+  GitHub actions still on Node 20 (Dependabot PR). Afterwards, more postal-code sources: La Rioja,
+  Gipuzkoa, Málaga, Barcelona…
+- Status page, later (Codex review of PR #19): operational state (age of each source, coverage
+  regressions, open discrepancies, published version); diagrams drawn as SVG in CI so as not to
+  depend on jsDelivr; data PRs opened by Actions should trigger CI; bars instead of pies if these
+  fall short.
 - Comarcas, later: check them every month against the Registro de Entidades Locales export (it is
   downloaded without a browser from `…/export_excel/comarcas/all`, but it is an old binary Excel
   file, .xls, that would have to be read); their Wikidata item and their names in other languages;

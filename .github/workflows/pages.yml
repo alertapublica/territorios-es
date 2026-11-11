@@ -1,12 +1,12 @@
 name: Web de datos
 
+# Con cualquier cambio en main, cuando la CI pasa: la página de estado mira datos/, fuentes/, docs/, el código y
+# los workflows, y lo que no pasa la CI no se publica.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
-    paths:
-      - "datos/**"
-      - "web/**"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,9 +20,13 @@ concurrency:
 
 jobs:
   construir:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # El commit que pasó la CI, no el último de main.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

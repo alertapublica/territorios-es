@@ -364,6 +364,17 @@ las atribuciones, en castellano, catalán, gallego, euskera, aranés e inglés. 
 nuevo. Las traducciones las redactamos nosotros al escribirlas (no se generan en ejecución) y
 quedan marcadas como pendientes de revisión hasta que alguien con dominio del idioma las revise.
 
+Cada página enlaza con la de estado (`<idioma>/estado/`, en los mismos seis idiomas): niveles y
+relaciones de los datos publicados, cobertura de cada dato sobre los municipios donde existe (con
+los que faltan, si son pocos), cada comunidad, fuentes, ficheros, librería y workflows, con
+diagramas de Mermaid. «Explorar» abre cada tabla en Datasette Lite desde una base SQLite que la web
+publica con todos los CSV y los códigos como texto, para que 01001 no pase a 1001. La genera
+`web/estado.py` desde `datos/`, `fuentes/` y el propio repositorio, y se publica cuando la CI pasa
+en `main`. El mismo script escribe `docs/estado.md` y `docs/status.md` (castellano e inglés), que se
+ven en GitHub: la CI comprueba que están al día y los workflows de datos los regeneran en sus PR. Si
+aparece una fuente, un módulo, un workflow, un nivel o una columna que no está en su mapa, o si el
+mapa nombra algo que ya no existe, la comprobación falla.
+
 ## 9. Preparado para la UE
 
 La primera versión es solo España, pero nada impide ampliarla:
@@ -482,18 +493,22 @@ Tomada el 11 de noviembre de 2026:
 ## 13. Pendiente
 
 - Traducir este documento y el README al catalán, gallego, euskera y aranés.
-- Revisar las traducciones de la web y de los nombres de comunidades (marcadas como pendientes).
+- Revisar las traducciones de la web, de su página de estado y de los nombres de comunidades
+  (marcadas como pendientes).
 - Revisar el informe de discrepancias de la primera generación: etiquetas de Wikidata que son el
   nombre de otro municipio, identificadores repetidos y municipios antiguos con código INE en
   Wikidata; corregir en Wikidata lo que sea error suyo.
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Versión 0.4, por orden: población oficial del INE a 1 de enero en lugar de la de Eurostat (hecho);
-  recopilador de códigos postales (hecho, con la tirada completa de todas las fuentes; después,
-  más fuentes: La Rioja, Gipuzkoa, Málaga, Barcelona…); partidos judiciales (hecho); zonas de aviso
-  de AEMET (hecho); comarcas que son entidad local (hecho); acciones de GitHub que aún usan Node 20
-  (las actualiza Dependabot).
+- Publicar la versión 0.4. Ya está en `main`: población oficial del INE, recopilador de códigos
+  postales, partidos judiciales, zonas de aviso de AEMET, comarcas que son entidad local y página de
+  estado. Antes, las acciones de GitHub que aún usan Node 20 (PR de Dependabot). Después, más fuentes
+  de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
+- Página de estado, más adelante (review de Codex de la PR #19): estado operativo (antigüedad de cada
+  fuente, regresiones de cobertura, discrepancias abiertas, versión publicada); diagramas dibujados
+  como SVG en la CI para no depender de jsDelivr; que las PR de datos que abre Actions lancen la CI;
+  barras en lugar de tartas si se quedan cortas.
 - Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales
   (se baja sin navegador de `…/export_excel/comarcas/all`, pero es un Excel binario antiguo, .xls,
   que habría que leer); su elemento de Wikidata y sus nombres en otros idiomas; inscribir el

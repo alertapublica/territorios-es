@@ -7,10 +7,18 @@ One page per language plus a language chooser; the data files are copied under d
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import re
 import shutil
+import sqlite3
 from html import escape
 from pathlib import Path
+
+try:
+    from . import estado
+except ImportError:  # run as a script: python web/construir.py
+    import estado
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "https://github.com/alertapublica/territorios-es"
@@ -33,7 +41,8 @@ display:flex;flex-wrap:wrap;gap:.4em 1em}nav a[aria-current]{font-weight:700;tex
 table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{text-align:left;vertical-align:top;
 padding:.45em .6em;border-bottom:1px solid var(--line)}td.n{text-align:right;white-space:nowrap}
 code{font-size:.9em;overflow-wrap:anywhere}dt{font-family:ui-monospace,monospace;margin-top:.6em}dd{margin:0 0 0 1.2em}
-footer{color:var(--muted);padding-bottom:32px;margin-top:3em}"""
+footer{color:var(--muted);padding-bottom:32px;margin-top:3em}
+.top{display:flex;flex-wrap:wrap;gap:.4em 1.2em;align-items:center;margin-bottom:.8em}.top .langs{margin-left:auto}"""
 
 
 def _size(n: int) -> str:
@@ -64,6 +73,45 @@ def _columns(datos: Path) -> list[str]:
             if column not in seen:
                 seen.append(column)
     return seen
+
+
+INTEGER = re.compile(r"-?(0|[1-9][0-9]*)")
+REAL = re.compile(r"-?(0|[1-9][0-9]*)\.[0-9]+")
+
+
+def database(path: Path, datos: Path):
+    """Every published CSV in one SQLite file, to explore it in Datasette Lite. A column is a number only if all its
+    values are written as numbers with no leading zero, so codes such as 01001 stay text."""
+    path.unlink(missing_ok=True)
+    db = sqlite3.connect(path)
+    try:
+        for name in FILES:
+            source = datos / name
+            if source.suffix != ".csv" or not source.exists():
+                continue
+            with source.open(encoding="utf-8", newline="") as f:
+                rows = list(csv.reader(f))
+            header, rows = rows[0], rows[1:]
+            types = []
+            for i in range(len(header)):
+                values = [row[i] for row in rows if row[i] != ""]
+                kind = ("INTEGER" if values and all(INTEGER.fullmatch(v) for v in values) else
+                        "REAL" if values and all(INTEGER.fullmatch(v) or REAL.fullmatch(v) for v in values) else "TEXT")
+                types.append(kind)
+            table = source.stem
+            db.execute(f'CREATE TABLE "{table}" (' + ", ".join(f'"{c}" {k}' for c, k in zip(header, types)) + ")")
+            db.executemany(f'INSERT INTO "{table}" VALUES (' + ", ".join("?" * len(header)) + ")",
+                           [[None if v == "" else v for v in row] for row in rows])
+        db.commit()
+    finally:
+        db.close()
+
+
+def top_nav(lang: str, t: dict, status: bool) -> str:
+    """Data · Status · GitHub, the same on the data pages and on the status page."""
+    link = f'<a href="estado/">{escape(t["nav_status"])}</a>' if status else ""
+    return (f'<nav class="top"><strong>{escape(t["nav_data"])}</strong>{link}'
+            f'<a href="{REPO}">GitHub</a></nav>')
 
 
 def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
@@ -113,7 +161,7 @@ def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{escape(t["title"])}</title><meta name="description" content="{escape(t["subtitle"])}">'
             f'{alternates}<link rel="stylesheet" href="../estilo.css"></head><body>'
-            f'<header><nav aria-label="{escape(t["languages"])}"><ul>{nav}</ul></nav>'
+            f'<header>{top_nav(lang, t, bool(datos))}<nav aria-label="{escape(t["languages"])}"><ul>{nav}</ul></nav>'
             f'<h1>{escape(t["title"])}</h1><p class="sub">{escape(t["subtitle"])}</p></header>'
             f'<main>{"".join(parts)}</main>'
             f'<footer><p><a href="{REPO}">{escape(t["repository"])}</a>. {escape(t["licence_code"])}</p></footer>'
@@ -151,6 +199,10 @@ def build(out: Path, datos: Path | None):
         for name in FILES:
             if (datos / name).exists():
                 shutil.copy2(datos / name, out / "datos" / name)
+        database(out / "datos" / estado.DATABASE, datos)
+        for lang in texts:
+            (out / lang / "estado").mkdir()
+            (out / lang / "estado" / "index.html").write_text(estado.page(lang, datos), encoding="utf-8")
 
 
 def main():
