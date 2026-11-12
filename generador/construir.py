@@ -23,6 +23,10 @@ UI_LANGS = ("es", "ca", "gl", "eu", "oc", "en")
 # Kinds of comarca in fuentes/comarcas.csv, and the code system of each community's own numbering.
 COMARCA_TYPES = ("comarca", "cuadrilla", "aran")
 REGIONAL_COMARCA_CODES = {"09": "idescat:comarca", "02": "aragon:comarca"}
+# Legal category of each minor local entity in fuentes/entidades-menores.csv, as each community's law
+# names it (design §4.1).
+MINOR_ENTITY_TYPES = ("concejo", "entidad_local_menor", "entidad_local_autonoma", "entitat_municipal_descentralitzada",
+                      "parroquia_rural", "eatim")
 
 
 class Report:
@@ -62,6 +66,7 @@ def load_hand_lists(folder: Path) -> dict:
         "warning_zones": _csv(folder / "zonas-aviso.csv"),
         "comarcas": _csv(folder / "comarcas.csv"),
         "comarca_members": _csv(folder / "comarcas-municipios.csv"),
+        "minor_entities": _csv(folder / "entidades-menores.csv"),
         "parts": _csv(folder / "partes-bilingues.csv"),
         "aliases": _csv(folder / "alias.csv"),
         "eu": _csv(folder / "paises-ue.csv"),
@@ -324,7 +329,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("Nombres bilingües", f"{identity}: «{official}» sin idiomas revisados en fuentes/partes-bilingues.csv")
             return {}
         first, second = official.split("/", 1)
-        return {row["first"]: flip_article(first), row["second"]: flip_article(second)}
+        return {row["first"]: flip_article(first.strip()), row["second"]: flip_article(second.strip())}
 
     ine_provinces = {p: (c, n) for p, c, n in inputs.get("ine_provinces") or []}
     if not ine_provinces:
@@ -748,6 +753,38 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         if "comarca" not in record and (province_ccaa[code[:2]] in ("02", "09") or code[:2] == "01"):
             report.add("Comarcas", f"{record['id']} «{record['names']['display']}» sin comarca")
 
+    # Minor local entities ----------------------------------------------------------------------------
+    # The entities below the municipality that the Registro de Entidades Locales lists (EATIM): concejos
+    # of Álava and Navarra, entidades locales menores, parroquias rurales of Asturias, entidades locales
+    # autónomas of Andalucía, entitats municipals descentralitzades of Catalonia. fuentes/entidades-menores.csv
+    # comes from an export of the Registro reviewed by hand, with the municipality by INE code and the
+    # legal category; the REL number (04, province and order) is the identifier. Its parent is the
+    # municipality; no match with the population entities of the INE is assumed.
+    minor_entities, minor_seen, minor_missing = [], set(), {}
+    for row in hand["minor_entities"]:
+        rel, code = row["rel"], row["ine"]
+        if not re.fullmatch(r"04[0-9]{6}", rel) or not re.fullmatch(r"[0-9]{5}", code) or rel[2:4] != code[:2] \
+                or row["tipo"] not in MINOR_ENTITY_TYPES or not row["official"].strip() or rel in minor_seen:
+            raise ValueError(f"fuentes/entidades-menores.csv: fila no válida o repetida: {row}")
+        minor_seen.add(rel)
+        municipality = by_code.get(code)
+        if municipality is None:
+            minor_missing[code] = minor_missing.get(code, 0) + 1
+            continue
+        identity, official = f"es:entidad-menor:{rel}", row["official"]
+        names = {"official": official, "display": display_name(official)}
+        parts = parts_of(identity, official)
+        if parts:
+            names["parts"] = parts
+        if aliases.get(identity):
+            names["aliases"] = aliases[identity]
+        minor_entities.append({"id": identity, "level": "minor_local_entity", "parent": municipality["id"],
+                               "codes": {"rel:eatim": rel}, "names": names, "type": row["tipo"],
+                               "slug": slugify(names["display"]), "time_zone": municipality["time_zone"]})
+    for code, count in sorted(minor_missing.items()):
+        report.add("Entidades locales menores", f"{code} no está en el diccionario de municipios; no se publican "
+                                                f"{count} entidad(es) de fuentes/entidades-menores.csv")
+
     missing = [row["ine"] for row in hand["provinces"] if row["ine"] not in population]
     if missing:
         report.add("INE: población", f"Provincias sin población del INE: {', '.join(missing)}")
@@ -804,8 +841,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("Islas", f"{record['id']} sin municipios")
     for province, nuts in sorted(island_nuts.items()):
         report.add("Notas", f"es:provincia:{province} reparte sus municipios en las NUTS 3 {', '.join(sorted(nuts))}")
-    for identity in sorted(set(parts_by_id) - {r["id"] for r in provinces + municipalities}):
-        report.add("Nombres bilingües", f"{identity} está en fuentes/partes-bilingues.csv pero no en el INE")
+    for identity in sorted(set(parts_by_id) - {r["id"] for r in provinces + municipalities + comarcas + minor_entities}):
+        report.add("Nombres bilingües", f"{identity} está en fuentes/partes-bilingues.csv pero no en el catálogo")
     # A Wikidata label that is the name of another municipality is either a real homonym or an
     # error in Wikidata: listed for review, never removed silently.
     by_name: dict[str, set[str]] = {}
@@ -822,7 +859,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         report.add("Países", f"{len(countries)} países en lugar de los 249 códigos asignados de ISO 3166-1")
     # A code from Wikidata that two territories share identifies neither of them.
     holders: dict[tuple[str, str], list[dict]] = {}
-    for record in countries + communities + provinces + islands + municipalities + districts + zones + comarcas:
+    for record in countries + communities + provinces + islands + municipalities + districts + zones + comarcas \
+            + minor_entities:
         for system in ("osm:relation", "geonames"):
             if system in record["codes"]:
                 holders.setdefault((system, record["codes"][system]), []).append(record)
@@ -833,7 +871,7 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             report.add("Wikidata: código repetido",
                        f"{system} {value} en {', '.join(r['id'] for r in records)}; no se usa en ninguno")
     known_ids = {r["id"] for r in countries + communities + provinces + islands + municipalities + districts
-                 + zones + comarcas}
+                 + zones + comarcas + minor_entities}
     for identity in sorted(set(aliases) - known_ids):
         raise ValueError(f"Alias for unknown territory {identity}")
 
@@ -853,8 +891,9 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
         "Municipios con zona de aviso": sum("warning_zone" in r for r in municipalities),
         "Comarcas": len(comarcas),
         "Municipios con comarca": sum("comarca" in r for r in municipalities),
+        "Entidades locales menores": len(minor_entities),
     })
     data = {"schema": 1, "reference_date": reference_date,
             "territories": countries + communities + provinces + islands + municipalities + districts + zones
-                          + comarcas}
+                          + comarcas + minor_entities}
     return data, report, articles

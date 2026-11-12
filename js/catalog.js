@@ -3,15 +3,16 @@ import { dropArticle, normalize } from './text.js';
 
 export const LEVELS = [
   'country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district', 'warning_zone',
-  'comarca',
+  'comarca', 'minor_local_entity',
 ];
 // Groups of municipalities that do not change their parent: the field of the municipality that names
 // its group is the level of the group.
 const GROUPS = ['island', 'judicial_district', 'warning_zone', 'comarca'];
 // Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
-// warning zone of AEMET is not an administration and a comarca exists only in some communities (and
-// some share their name with a municipality).
-const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone', 'comarca'];
+// warning zone of AEMET is not an administration, a comarca exists only in some communities (and
+// some share their name with a municipality) and a minor local entity, below the municipality, is
+// often named like its municipality or another one.
+const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone', 'comarca', 'minor_local_entity'];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -108,7 +109,10 @@ export function createCatalog(data) {
   const accept = (id, within, levels) => {
     const level = byId.get(id).level;
     if (levels != null ? !levels.includes(level) : UNSEARCHED_LEVELS.includes(level)) return false;
-    return within == null || ancestors(id).includes(within) || GROUPS.some((group) => byId.get(id)[group] === within);
+    if (within == null) return true;
+    // A territory below a municipality (a minor local entity) is also within the groups of its municipality.
+    const chain = [id, ...ancestors(id)];
+    return chain.slice(1).includes(within) || chain.some((i) => GROUPS.some((group) => byId.get(i)[group] === within));
   };
   const territory = (id) => {
     const record = typeof id === 'string' ? byId.get(id) : undefined;

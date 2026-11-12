@@ -2,7 +2,7 @@
 
 Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md). Lo que falta, en los [issues «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo).
 
-| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** |
+| **9.160** | **8 de 9** | **8.132** | **25** | **14.054** |
 |:---:|:---:|:---:|:---:|:---:|
 | territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio |
 
@@ -22,10 +22,12 @@ flowchart TB
   judicial_district["Partidos judiciales<br>431"]:::done
   warning_zone["Zonas de aviso de AEMET<br>182"]:::done
   comarca["Comarcas<br>84"]:::done
+  minor_local_entity["Entidades locales menores<br>sin generar · prueba: 72"]:::todo
   country["Países<br>249"]:::done
   autonomous_community --> comarca
   autonomous_community --> province
   country --> autonomous_community
+  municipality --> minor_local_entity
   province --> island
   province --> judicial_district
   province --> municipality
@@ -139,8 +141,8 @@ De las fuentes a los datos y de los datos a la librería, la web y las pruebas. 
 ```mermaid
 flowchart TB
   accTitle: Repositorio
-  ext(["24 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
-  hand[/"fuentes/<br>13 listas revisadas a mano"/]
+  ext(["25 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
+  hand[/"fuentes/<br>14 listas revisadas a mano"/]
   descargas["descargas<br>descarga con caché, huella SHA-256 y relay"]
   readers["lectores<br>aemet · catastro · codigos_postales · comarcas · eurostat · ign · ine · justicia · wikidata"]
   construir["construir<br>cruza las fuentes y arma el catálogo"]
@@ -246,6 +248,7 @@ flowchart LR
   f_codigos_csv[("codigos.csv")]:::done
   f_comarcas_csv[("comarcas.csv")]:::done
   f_comunidades_csv[("comunidades.csv")]:::done
+  f_entidades_menores_csv[("entidades-menores.csv")]:::todo
   f_islas_csv[("islas.csv")]:::done
   f_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::box
   f_municipios_csv[("municipios.csv")]:::done
@@ -292,6 +295,7 @@ flowchart LR
   o_Justicia --> f_municipios_csv
   o_Justicia --> f_partidos_judiciales_csv
   o_REL --> f_comarcas_csv
+  o_REL --> f_entidades_menores_csv
   o_REL --> f_municipios_csv
   o_Wikidata --> f_codigos_csv
   o_Wikidata --> f_nombres_csv
@@ -303,7 +307,7 @@ flowchart LR
 ```
 
 <details>
-<summary>Las 24 fuentes, con su lector y la fecha de descarga</summary>
+<summary>Las 25 fuentes, con su lector y la fecha de descarga</summary>
 
 | Fuente | Organismo | Lector | Aporta | Descargada |
 |---|---|---|---|---|
@@ -318,6 +322,7 @@ flowchart LR
 | `idescat_comarcas` | Idescat | `generador/comarcas.py` | comarca de cada municipio de Cataluña | 2026-11-11 |
 | `aragon_comarcas` | Aragón | `generador/comarcas.py` | comarca de cada municipio de Aragón | 2026-11-11 |
 | `rel_comarcas` | REL | `fuentes/` | comarcas que son entidad local; cuadrillas de Álava y El Bierzo (exportación revisada a mano) | aún no |
+| `rel_eatim` | REL | `fuentes/` | entidades locales menores, con su municipio y su tipo (exportación revisada a mano) | aún no |
 | `eurostat_lau` | Eurostat | `generador/eurostat.py` | LAU, NUTS 3 y superficie | 2026-11-11 |
 | `wikidata` | Wikidata | `generador/wikidata.py` | nombres por idioma, enlaces e identificadores | 2026-11-11 |
 | `catastro` | Catastro | `generador/catastro.py` | código DGC de cada municipio | 2026-11-11 |
@@ -345,6 +350,7 @@ flowchart LR
 | [`codigos.csv`](../datos/codigos.csv) | 67.083 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos) |
 | [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comarcas) |
 | [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comunidades) |
+| `entidades-menores.csv` | 72 |  | REL | solo en pruebas |  |
 | [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/islas) |
 | [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | en datos/ |  |
 | [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/municipios) |
@@ -357,7 +363,7 @@ flowchart LR
 | [`zonas-aviso.csv`](../datos/zonas-aviso.csv) | 182 | 15 KB | AEMET | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/zonas-aviso) |
 
 <details>
-<summary>Las 13 listas revisadas a mano (<code>fuentes/</code>)</summary>
+<summary>Las 14 listas revisadas a mano (<code>fuentes/</code>)</summary>
 
 | Lista | Filas | Aporta |
 |---|---:|---|
@@ -368,9 +374,10 @@ flowchart LR
 | `islas.csv` | 11 | Wikidata y NUTS 3 de cada isla |
 | `comarcas.csv` | 84 | comarcas: tipo, nombre y códigos |
 | `comarcas-municipios.csv` | 89 | municipios de las cuadrillas de Álava y de El Bierzo |
+| `entidades-menores.csv` | 3.674 | entidades locales menores: número del Registro, municipio, tipo, nombre, capitalidad y fecha de inscripción |
 | `zonas-aviso.csv` | 4 | zona de los municipios que faltan en el maestro de AEMET |
 | `alias.csv` | 23 | alias |
-| `partes-bilingues.csv` | 147 | partes de los nombres bilingües |
+| `partes-bilingues.csv` | 273 | partes de los nombres bilingües |
 | `descartes-wikidata.csv` | 7 | etiquetas de Wikidata descartadas |
 | `paises-ue.csv` | 30 | países de la UE y del EEE |
 | `paises-excluidos.csv` | 6 | códigos ISO que no son países |

@@ -18,6 +18,7 @@
 - Municipios con zona de aviso: 31
 - Comarcas: 6
 - Municipios con comarca: 7
+- Entidades locales menores: 72
 
 ## Catastro (22)
 
@@ -59,6 +60,70 @@
 - Idescat: 08999 en la comarca 99, que no está en fuentes/comarcas.csv
 - Idescat: 43001 (comarca 36) no es un municipio de la comunidad 09 en el diccionario
 - es:municipio:25120 «Lleida» sin comarca
+
+## Entidades locales menores (771)
+
+- 01001 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 01002 no está en el diccionario de municipios; no se publican 9 entidad(es) de fuentes/entidades-menores.csv
+- 01003 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 01006 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 01008 no está en el diccionario de municipios; no se publican 10 entidad(es) de fuentes/entidades-menores.csv
+- 01009 no está en el diccionario de municipios; no se publican 9 entidad(es) de fuentes/entidades-menores.csv
+- 01010 no está en el diccionario de municipios; no se publican 23 entidad(es) de fuentes/entidades-menores.csv
+- 01013 no está en el diccionario de municipios; no se publican 13 entidad(es) de fuentes/entidades-menores.csv
+- 01014 no está en el diccionario de municipios; no se publican 6 entidad(es) de fuentes/entidades-menores.csv
+- 01016 no está en el diccionario de municipios; no se publican 11 entidad(es) de fuentes/entidades-menores.csv
+- 01017 no está en el diccionario de municipios; no se publican 5 entidad(es) de fuentes/entidades-menores.csv
+- 01018 no está en el diccionario de municipios; no se publican 16 entidad(es) de fuentes/entidades-menores.csv
+- 01020 no está en el diccionario de municipios; no se publican 10 entidad(es) de fuentes/entidades-menores.csv
+- 01021 no está en el diccionario de municipios; no se publican 6 entidad(es) de fuentes/entidades-menores.csv
+- 01027 no está en el diccionario de municipios; no se publican 11 entidad(es) de fuentes/entidades-menores.csv
+- 01028 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 01030 no está en el diccionario de municipios; no se publican 3 entidad(es) de fuentes/entidades-menores.csv
+- 01031 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 01037 no está en el diccionario de municipios; no se publican 10 entidad(es) de fuentes/entidades-menores.csv
+- 01043 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 01044 no está en el diccionario de municipios; no se publican 6 entidad(es) de fuentes/entidades-menores.csv
+- 01046 no está en el diccionario de municipios; no se publican 20 entidad(es) de fuentes/entidades-menores.csv
+- 01047 no está en el diccionario de municipios; no se publican 6 entidad(es) de fuentes/entidades-menores.csv
+- 01049 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 01053 no está en el diccionario de municipios; no se publican 15 entidad(es) de fuentes/entidades-menores.csv
+- 01054 no está en el diccionario de municipios; no se publican 10 entidad(es) de fuentes/entidades-menores.csv
+- 01055 no está en el diccionario de municipios; no se publican 22 entidad(es) de fuentes/entidades-menores.csv
+- 01056 no está en el diccionario de municipios; no se publican 4 entidad(es) de fuentes/entidades-menores.csv
+- 01058 no está en el diccionario de municipios; no se publican 5 entidad(es) de fuentes/entidades-menores.csv
+- 01062 no está en el diccionario de municipios; no se publican 4 entidad(es) de fuentes/entidades-menores.csv
+- 01063 no está en el diccionario de municipios; no se publican 11 entidad(es) de fuentes/entidades-menores.csv
+- 01901 no está en el diccionario de municipios; no se publican 5 entidad(es) de fuentes/entidades-menores.csv
+- 01902 no está en el diccionario de municipios; no se publican 12 entidad(es) de fuentes/entidades-menores.csv
+- 02003 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 03006 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 03063 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 04046 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 05247 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 06001 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 06044 no está en el diccionario de municipios; no se publican 6 entidad(es) de fuentes/entidades-menores.csv
+- 06060 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 06072 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 06088 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 06153 no está en el diccionario de municipios; no se publican 3 entidad(es) de fuentes/entidades-menores.csv
+- 06156 no está en el diccionario de municipios; no se publican 2 entidad(es) de fuentes/entidades-menores.csv
+- 07010 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 08205 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 08218 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 08266 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 08269 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 09006 no está en el diccionario de municipios; no se publican 3 entidad(es) de fuentes/entidades-menores.csv
+- 09011 no está en el diccionario de municipios; no se publican 8 entidad(es) de fuentes/entidades-menores.csv
+- 09012 no está en el diccionario de municipios; no se publican 3 entidad(es) de fuentes/entidades-menores.csv
+- 09014 no está en el diccionario de municipios; no se publican 11 entidad(es) de fuentes/entidades-menores.csv
+- 09018 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 09023 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 09026 no está en el diccionario de municipios; no se publican 4 entidad(es) de fuentes/entidades-menores.csv
+- 09029 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 09030 no está en el diccionario de municipios; no se publican 1 entidad(es) de fuentes/entidades-menores.csv
+- 09032 no está en el diccionario de municipios; no se publican 3 entidad(es) de fuentes/entidades-menores.csv
+- … y 711 más
 
 ## Eurostat LAU (3)
 
@@ -169,69 +234,69 @@
 - 382 está en fuentes/islas.csv pero no en la tabla de islas del INE
 - 383 está en fuentes/islas.csv pero no en la tabla de islas del INE
 
-## Nombres bilingües (136)
+## Nombres bilingües (244)
 
-- es:comarca:0206 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:0209 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:0211 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:0219 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:0233 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1601 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1602 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1603 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1604 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1605 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1606 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:comarca:1607 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01010 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01011 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01017 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01021 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01023 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01028 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01032 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01036 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01039 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01046 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01047 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01051 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01053 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01055 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01056 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01057 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01060 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:01901 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03009 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03042 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03051 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03065 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03077 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03082 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03083 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03084 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03089 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03105 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03122 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:03132 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12028 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12032 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12053 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12055 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12072 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12085 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12089 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12099 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12108 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12122 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12129 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:12901 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:20055 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31002 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31003 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31004 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31009 está en fuentes/partes-bilingues.csv pero no en el INE
-- es:municipio:31010 está en fuentes/partes-bilingues.csv pero no en el INE
-- … y 76 más
+- es:comarca:0206 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:0209 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:0211 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:0219 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:0233 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1601 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1602 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1603 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1605 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1606 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:comarca:1607 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010005 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010020 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010024 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010026 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010027 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010032 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010048 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010058 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010077 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010083 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010084 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010085 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010090 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010091 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010092 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010094 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010098 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010106 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010108 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010109 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010119 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010126 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010154 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010156 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010158 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010159 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010172 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010202 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010207 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010219 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010220 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010225 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010229 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010235 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010237 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010248 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010265 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010272 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010274 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010291 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010298 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010303 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010307 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010309 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010313 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04010334 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04310012 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04310016 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- es:entidad-menor:04310017 está en fuentes/partes-bilingues.csv pero no en el catálogo
+- … y 184 más
 
 ## Notas (4)
 

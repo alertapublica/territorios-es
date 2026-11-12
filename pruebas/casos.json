@@ -93,7 +93,9 @@
     ["aemet:zona", "74602", null, null],
     ["rel:comarca", "06090180", "es:comarca:0939", ["es:autonomia:09", "pais:ES"]],
     ["idescat:comarca", "39", "es:comarca:0939", ["es:autonomia:09", "pais:ES"]],
-    ["rel:comarca", "6090180", null, null]
+    ["rel:comarca", "6090180", null, null],
+    ["rel:eatim", "04200003", "es:entidad-menor:04200003", ["es:municipio:20069", "es:provincia:20", "es:autonomia:16", "pais:ES"]],
+    ["rel:eatim", "4200003", null, null]
   ],
   "children": [
     ["es:isla:071", ["es:municipio:07024"]],
@@ -102,7 +104,8 @@
     ["es:provincia:38", ["es:isla:384", "es:municipio:38038", "es:partido:3803", "es:zona-aviso:659602"]],
     ["es:partido:0705", ["es:municipio:07024", "es:municipio:07026"]],
     ["es:zona-aviso:774602", ["es:municipio:46171", "es:municipio:46220", "es:municipio:46250"]],
-    ["es:comarca:0939", ["es:municipio:25057", "es:municipio:25243"]]
+    ["es:comarca:0939", ["es:municipio:25057", "es:municipio:25243"]],
+    ["es:municipio:20069", ["es:entidad-menor:04200003"]]
   ],
   "name": [
     ["es:autonomia:09", "es", false, "Cataluña"],
@@ -127,7 +130,10 @@
     ["es:municipio:03139", "ca", false, "la Vila Joiosa"],
     ["pais:ES", "en", false, "Spain"],
     ["pais:ES", "oc", false, "Espanha"],
-    ["es:municipio:99999", "es", false, null]
+    ["es:municipio:99999", "es", false, null],
+    ["es:entidad-menor:04010028", "es", false, "Crispijana"],
+    ["es:entidad-menor:04010028", "eu", false, "Krispiña"],
+    ["es:entidad-menor:04010028", "ca", false, "Krispiña/Crispijana"]
   ],
   "search": [
     ["Orense", null, null, [["es:provincia:32", "lang"], ["es:municipio:32054", "lang"]]],
@@ -167,7 +173,14 @@
     ["Gironès", null, null, []],
     ["Gironès", null, ["comarca"], [["es:comarca:0920", "official"]]],
     ["Vitoria-Gasteizko Kuadrilla", null, ["comarca"], [["es:comarca:1604", "part"]]],
-    ["Vielha e Mijaran", "es:comarca:0939", null, [["es:municipio:25243", "official"]]]
+    ["Vielha e Mijaran", "es:comarca:0939", null, [["es:municipio:25243", "official"]]],
+    ["Igeldo", null, null, []],
+    ["Igeldo", null, ["minor_local_entity"], [["es:entidad-menor:04200003", "official"]]],
+    ["Igeldo", "es:municipio:20069", ["minor_local_entity"], [["es:entidad-menor:04200003", "official"]]],
+    ["Igeldo", "es:partido:2005", ["minor_local_entity"], [["es:entidad-menor:04200003", "official"]]],
+    ["Igeldo", "es:zona-aviso:752001", ["minor_local_entity"], [["es:entidad-menor:04200003", "official"]]],
+    ["Crispijana", "es:comarca:1604", ["minor_local_entity"], [["es:entidad-menor:04010028", "part"]]],
+    ["Crispijana", "es:comarca:0939", ["minor_local_entity"], []]
   ],
   "mentions": [
     ["Moncada (Valencia)", null, [["valencia", ["es:provincia:46"]]]],
@@ -178,7 +191,8 @@
     ["Vivo en Pontevedra", ["municipality"], [["pontevedra", ["es:municipio:36038"]]]],
     ["Juzgado de Eivissa", ["judicial_district"], [["eivissa", ["es:partido:0705"]]]],
     ["Aviso naranja en el Litoral norte de Valencia", ["warning_zone"], [["litoral norte de valencia", ["es:zona-aviso:774602"]]]],
-    ["Consell Comarcal del Gironès", ["comarca"], [["girones", ["es:comarca:0920"]]]]
+    ["Consell Comarcal del Gironès", ["comarca"], [["girones", ["es:comarca:0920"]]]],
+    ["Concejo de Krispiña (Vitoria-Gasteiz)", ["minor_local_entity"], [["krispina", ["es:entidad-menor:04010028"]]]]
   ],
   "relate_name": [
     ["Ourense", null, ["municipality"], "resolved", "es:municipio:32054", ["es:municipio:32054"], "name"],

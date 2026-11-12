@@ -35,7 +35,7 @@ TEXTS = ROOT / "web" / "textos.json"  # every visible text, under "estado", in e
 
 # What is drawn and in which order; the names of each item are in web/textos.json.
 LEVELS = ["autonomous_community", "province", "municipality", "island", "judicial_district", "warning_zone", "comarca",
-          "country"]
+          "minor_local_entity", "country"]
 LINKS = ["island", "judicial_district", "warning_zone", "comarca", "seat", "capital"]  # fields pointing to another territory
 COVERAGE = ["population", "partido", "zona_aviso", "comarca", "isla", "postal_code", "lau", "nuts3", "area_km2", "dgc",
             "bddae", "capital", "lon", "altitude", "wikidata", "osm_relation", "geonames"]  # columns of municipios.csv
@@ -62,6 +62,7 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "idescat_comarcas": ("Idescat", "comarcas", ["comarcas.csv", "municipios.csv"]),
     "aragon_comarcas": ("Aragón", "comarcas", ["comarcas.csv", "municipios.csv"]),
     "rel_comarcas": ("REL", "fuentes/", ["comarcas.csv", "municipios.csv"]),
+    "rel_eatim": ("REL", "fuentes/", ["entidades-menores.csv"]),
     "eurostat_lau": ("Eurostat", "eurostat", ["municipios.csv", "codigos.csv"]),
     "wikidata": ("Wikidata", "wikidata", ["nombres.csv", "codigos.csv", "wikipedia.csv", "paises.csv"]),
     "catastro": ("Catastro", "catastro", ["municipios.csv", "codigos.csv"]),
@@ -77,8 +78,8 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "catastro_direcciones": ("Catastro", "codigos_postales", POSTAL),
 }
 HAND_LISTS = ["fuentes.json", "comunidades.csv", "nombres-comunidades.csv", "provincias.csv", "islas.csv", "comarcas.csv",
-              "comarcas-municipios.csv", "zonas-aviso.csv", "alias.csv", "partes-bilingues.csv", "descartes-wikidata.csv",
-              "paises-ue.csv", "paises-excluidos.csv"]
+              "comarcas-municipios.csv", "entidades-menores.csv", "zonas-aviso.csv", "alias.csv", "partes-bilingues.csv",
+              "descartes-wikidata.csv", "paises-ue.csv", "paises-excluidos.csv"]
 GENERATOR = ["__main__", "descargas", "xlsx", "construir", "exportar", "limites"]  # generator modules that read no source
 LIBRARY = {  # module (Python .py and JavaScript .js): data it reads, what it offers
     "catalog": ("territorios.json", "resolve · territory · search · mentions · name · children"),

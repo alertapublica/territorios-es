@@ -7,14 +7,15 @@ from copy import deepcopy
 from .text import drop_article, normalize
 
 LEVELS = ("country", "autonomous_community", "province", "island", "municipality", "judicial_district",
-          "warning_zone", "comarca")
+          "warning_zone", "comarca", "minor_local_entity")
 # Groups of municipalities that do not change their parent: the field of the municipality that names
 # its group is the level of the group.
 GROUPS = ("island", "judicial_district", "warning_zone", "comarca")
 # Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
-# warning zone of AEMET is not an administration and a comarca exists only in some communities (and
-# some share their name with a municipality).
-UNSEARCHED_LEVELS = ("judicial_district", "warning_zone", "comarca")
+# warning zone of AEMET is not an administration, a comarca exists only in some communities (and
+# some share their name with a municipality) and a minor local entity, below the municipality, is
+# often named like its municipality or another one.
+UNSEARCHED_LEVELS = ("judicial_district", "warning_zone", "comarca", "minor_local_entity")
 # Order of the reasons why a text matches a territory, best first.
 REASONS = ("official", "part", "lang", "alias", "variant")
 DEFAULT_MENTION_LEVELS = ("autonomous_community", "province")
@@ -160,9 +161,12 @@ class Catalog:
         level = self._by_id[identity]["level"]
         if level not in (levels if levels is not None else set(LEVELS) - set(UNSEARCHED_LEVELS)):
             return False
-        if within is None or within in self.ancestors(identity):
+        if within is None:
             return True
-        return any(self._by_id[identity].get(group) == within for group in GROUPS)
+        # A territory below a municipality (a minor local entity) is also within the groups of its
+        # municipality.
+        chain = [identity, *self.ancestors(identity)]
+        return within in chain[1:] or any(self._by_id[i].get(group) == within for i in chain for group in GROUPS)
 
     # Search ----------------------------------------------------------------------------------------
 

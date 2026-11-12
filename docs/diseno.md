@@ -15,7 +15,7 @@ códigos. Sus datos se regeneran desde las fuentes oficiales, y las abiertas (Wi
 OpenStreetMap) sirven de apoyo y de contraste. Ofrece tres cosas:
 
 1. **Catálogo**: España, sus comunidades y ciudades autónomas, provincias, islas, municipios,
-   partidos judiciales, zonas de aviso de AEMET y comarcas, y los países del mundo, con su jerarquía, sus nombres (oficial, visible, por idioma y alias) y sus
+   partidos judiciales, zonas de aviso de AEMET, comarcas y entidades locales menores, y los países del mundo, con su jerarquía, sus nombres (oficial, visible, por idioma y alias) y sus
    códigos (INE, Catastro, ISO, europeos y otros).
 2. **Herramientas** en Python y JavaScript: resolver un código, buscar un nombre dentro de un
    ámbito, encontrar menciones en un texto, elegir el nombre que se muestra en cada idioma y
@@ -130,6 +130,36 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   de Galicia, la Comunitat Valenciana o Asturias, que son estadísticas o de planificación, quedan
   fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
   pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
+- **Entidades locales menores**: las entidades de ámbito territorial inferior al municipio que
+  tiene inscritas el Registro de Entidades Locales, 3.674 en 776 municipios de 15 comunidades (León
+  1.225, Burgos 643, Cantabria 514, Navarra 344, Álava 333, Palencia 223; en Galicia, 9). Nivel
+  `minor_local_entity`, el primero por debajo del municipio, que es su padre. El identificador es
+  el número del Registro, de ocho cifras: 04, la provincia del INE y un número de orden
+  (`es:entidad-menor:04360001` es Arcos da Condesa, en Caldas de Reis); va también como código
+  `rel:eatim`. `fuentes/entidades-menores.csv` sale de la exportación del Registro, revisada a mano,
+  con el municipio por su código del INE (el Registro solo da su nombre; las 3.674 casan con un
+  único municipio de su provincia), el tipo, la capitalidad (76 la tienen) y la fecha de inscripción,
+  que no es la de creación. Las dos últimas solo sirven para contrastar con el Registro y no se
+  publican. El nombre es el del Registro, con el artículo delante para mostrarlo, y los 126
+  bilingües llevan sus partes revisadas en `partes-bilingues.csv` («Brañas/Leitariegos», en
+  Asturias, no es bilingüe y sale en el informe). El tipo es la categoría de la ley de cada
+  comunidad:
+
+  | Tipo | Dónde | Norma |
+  |---|---|---|
+  | `concejo` | Álava y Navarra (677) | Norma Foral 11/1995 de Concejos de Álava; [Ley Foral 6/1990, art. 37](https://www.boe.es/buscar/act.php?id=BOE-A-1990-19817) |
+  | `parroquia_rural` | Asturias (39) | [Ley 11/1986, art. 1](https://www.boe.es/buscar/act.php?id=BOE-A-1987-773) |
+  | `entidad_local_autonoma` | Andalucía (36) | [Ley 5/2010, art. 113](https://www.boe.es/buscar/act.php?id=BOE-A-2010-11491); las 36 son las del anexo del [Decreto 76/2023](https://www.juntadeandalucia.es/boja/2023/64/BOJA23-064-00003-6113-01_00281152.pdf) |
+  | `entitat_municipal_descentralitzada` | Cataluña (65) | [Decreto Legislativo 2/2003, art. 2](https://www.boe.es/buscar/act.php?id=DOGC-f-2003-90008) |
+  | `eatim` | Castilla-La Mancha (42) | [Ley 3/1991, art. 24](https://www.boe.es/buscar/act.php?id=BOE-A-1991-10111) |
+  | `entidad_local_menor` | las demás (2.815) | Castilla y León, [Ley 1/1998, art. 49](https://www.boe.es/buscar/act.php?id=BOE-A-1998-20054); Cantabria, [Ley 3/2022, art. 2](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12386); Aragón, [Ley 7/1999, arts. 85–89](https://www.boe.es/buscar/act.php?id=BOE-A-1999-10151); Galicia, [Ley 5/1997, art. 153](https://www.boe.es/buscar/act.php?id=BOE-A-1997-21040); Extremadura, [Ley 17/2010, art. 70](https://www.boe.es/buscar/act.php?id=BOE-A-2011-555); Comunitat Valenciana, [Ley 8/2010, art. 54](https://www.boe.es/buscar/act.php?id=BOE-A-2010-11729); La Rioja, [Ley 1/2003, art. 76](https://www.boe.es/buscar/act.php?id=BOE-A-2003-5909); Madrid, [Ley 2/2003, art. 81](https://www.boe.es/buscar/act.php?id=BOE-A-2003-10722); Illes Balears, [Ley 20/2006, art. 53](https://www.boe.es/buscar/act.php?id=BOE-A-2007-1893); Bizkaia, Norma Foral 9/2012, art. 58; Gipuzkoa, Norma Foral 2/2003, arts. 26–29 |
+
+  «Junta vecinal» es el órgano de gobierno en Castilla y León, y en Cantabria la ley la reconoce
+  como nombre tradicional, pero el tipo es entidad local menor. Las 36 del Condado de Treviño son
+  de Burgos. No se supone ninguna correspondencia con las entidades de población del INE (decisión
+  18). `search` y `mentions` no las devuelven salvo que se pidan en `levels`, porque 244 se llaman
+  igual que su municipio y otras como otro municipio; con `within`, una entidad está también en la
+  isla, el partido judicial, la zona de aviso y la comarca de su municipio.
 
 ### 4.2 Códigos
 
@@ -139,6 +169,7 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
 | Censo Judicial | partido judicial (`mjusticia:partido`, 4 cifras: provincia 2 + número 2) | Censo Judicial del Ministerio de Justicia | El número es el del partido en la demarcación de su provincia. El catálogo técnico de la Generalitat (CTEAJE) usa el mismo código salvo en Ceuta y Melilla (1112 y 2908, frente a 5112 y 5208). |
 | AEMET | zona de aviso (`aemet:zona`, 6 cifras: comunidad 2 + provincia o grupo de islas 2 + zona 2) | Maestro de municipios de AEMET OpenData y delimitación de zonas de Meteoalerta | Las cifras de comunidad y provincia son de AEMET, no del INE (Baleares usa 53–55 y Canarias 90–96). |
 | Comarca | comarca (`rel:comarca`, 8 cifras; `idescat:comarca` y `aragon:comarca`, 2 cifras) | Registro de Entidades Locales, Idescat y Gobierno de Aragón | El número del Registro empieza por 06 y la comunidad; el Excel del Registro pierde el cero inicial. El Lluçanès aún no lo tiene. |
+| Entidad local menor | entidad local menor (`rel:eatim`, 8 cifras) | Registro de Entidades Locales | Empieza por 04 y la provincia del INE; el Excel del Registro pierde el cero inicial. |
 | ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata | |
 | ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano; enlaza con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
@@ -192,7 +223,7 @@ nombres oficiales, sino alias.
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
 
 - **Países y comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
-- **Provincias, islas, comarcas, partidos judiciales, zonas de aviso y municipios**: el oficial (el de un partido es el de su
+- **Provincias, islas, comarcas, partidos judiciales, zonas de aviso, municipios y entidades locales menores**: el oficial (el de un partido es el de su
   sede). Si es bilingüe, solo la parte del idioma de la página («Alacant» en catalán, «San
   Sebastián» en castellano) y el nombre completo en los demás.
   En castellano se muestra «Girona», no «Gerona».
@@ -263,10 +294,10 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 
 | Función | Qué hace |
 |---|---|
-| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `rel:eatim`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca. Los partidos judiciales, las zonas de aviso y las comarcas solo salen si se piden en `levels`. |
-| `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial, una zona de aviso o una comarca, sus municipios. Los de una comunidad incluyen sus comarcas; los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca; una entidad local menor está en los de su municipio. Los partidos judiciales, las zonas de aviso, las comarcas y las entidades locales menores solo salen si se piden en `levels`. |
+| `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial, una zona de aviso o una comarca, sus municipios. Los de una comunidad incluyen sus comarcas; los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas; los de un municipio son sus entidades locales menores. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
 | `name(id, lang, short)` | El nombre que se muestra, según §4.4. |
@@ -485,6 +516,17 @@ Tomada el 12 de noviembre de 2026:
     entidades costaba de 5 a 9 s y unos 350 MB de memoria, y cada mes quedaban miles de avisos de
     nombres. Lo comprobado, y por dónde empezar si se retoma, está en #31.
 
+Tomada el 13 de noviembre de 2026:
+
+19. Entidades locales menores (#48): las del Registro de Entidades Locales, nivel
+    `minor_local_entity` con padre en el municipio e identificador `es:entidad-menor:` más el número
+    del Registro, que es el único código que tienen. La lista sale de una exportación del Registro
+    revisada a mano, como las comarcas, con el municipio por código del INE y el tipo según la ley de
+    cada comunidad, comprobada artículo por artículo (en Andalucía, entidad por entidad). Fuera de
+    `search` y `mentions` salvo que se pidan. Sin cruce con las entidades de población, que siguen
+    aparcadas. El DIR3 y el NIF de los organismos, también de estas entidades, no van aquí (§4.2): irán
+    al repositorio de organismos (§10).
+
 ## 13. Comprobaciones de las fuentes
 
 Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo ya comprobado el
@@ -596,3 +638,13 @@ Comprobado el 11 de noviembre de 2026:
 - **Contraste de partidos**: el CGPJ publica cada año la población por partido y municipio (XLSX,
   solo con nombres) y la Generalitat el catálogo CTEAJE de partidos de España (código, nombre y
   sede). Ningún repositorio ajeno con la relación nacional está mantenido.
+
+Comprobado el 13 de noviembre de 2026:
+
+- **Entidades locales menores en el Registro de Entidades Locales**: se exportan sin formulario en
+  `…/export_excel/eatimes/all/all` (comunidad y provincia; con un solo `all` el servidor da un error
+  de PHP), en el mismo Excel binario antiguo que las comarcas. Columnas: comunidad, provincia,
+  denominación, número de inscripción (sin el cero inicial), fecha de inscripción, capitalidad y
+  municipio, solo por nombre. Sin coordenadas, código de entidad de población ni Wikidata (en
+  Wikidata, 226 elementos son entidad local menor, Q3333989). Las últimas inscritas son Igeldo y
+  Aizarotz, en 2025.

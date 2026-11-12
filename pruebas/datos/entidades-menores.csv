@@ -1,0 +1,73 @@
+id,rel,municipio,provincia,autonomia,tipo,official,display,name_es,name_ca,name_gl,name_eu,name_oc,name_en,time_zone
+es:entidad-menor:04010010,04010010,01059,01,16,concejo,Argandoña,Argandoña,Argandoña,Argandoña,Argandoña,Argandoña,Argandoña,Argandoña,Europe/Madrid
+es:entidad-menor:04010011,04010011,01059,01,16,concejo,Armentia,Armentia,Armentia,Armentia,Armentia,Armentia,Armentia,Armentia,Europe/Madrid
+es:entidad-menor:04010015,04010015,01059,01,16,concejo,Askartza,Askartza,Askartza,Askartza,Askartza,Askartza,Askartza,Askartza,Europe/Madrid
+es:entidad-menor:04010022,04010022,01059,01,16,concejo,Zerio,Zerio,Zerio,Zerio,Zerio,Zerio,Zerio,Zerio,Europe/Madrid
+es:entidad-menor:04010028,04010028,01059,01,16,concejo,Krispiña/Crispijana,Krispiña/Crispijana,Crispijana,Krispiña/Crispijana,Krispiña/Crispijana,Krispiña,Krispiña/Crispijana,Krispiña/Crispijana,Europe/Madrid
+es:entidad-menor:04010037,04010037,01059,01,16,concejo,Estarrona,Estarrona,Estarrona,Estarrona,Estarrona,Estarrona,Estarrona,Estarrona,Europe/Madrid
+es:entidad-menor:04010049,04010049,01059,01,16,concejo,Ilarratza,Ilarratza,Ilarratza,Ilarratza,Ilarratza,Ilarratza,Ilarratza,Ilarratza,Europe/Madrid
+es:entidad-menor:04010056,04010056,01059,01,16,concejo,Lasarte,Lasarte,Lasarte,Lasarte,Lasarte,Lasarte,Lasarte,Lasarte,Europe/Madrid
+es:entidad-menor:04010059,04010059,01059,01,16,concejo,Lermanda,Lermanda,Lermanda,Lermanda,Lermanda,Lermanda,Lermanda,Lermanda,Europe/Madrid
+es:entidad-menor:04010061,04010061,01059,01,16,concejo,Lubiano,Lubiano,Lubiano,Lubiano,Lubiano,Lubiano,Lubiano,Lubiano,Europe/Madrid
+es:entidad-menor:04010065,04010065,01059,01,16,concejo,Margarita,Margarita,Margarita,Margarita,Margarita,Margarita,Margarita,Margarita,Europe/Madrid
+es:entidad-menor:04010067,04010067,01059,01,16,concejo,Matauko,Matauko,Matauko,Matauko,Matauko,Matauko,Matauko,Matauko,Europe/Madrid
+es:entidad-menor:04010069,04010069,01059,01,16,concejo,Mendiola,Mendiola,Mendiola,Mendiola,Mendiola,Mendiola,Mendiola,Mendiola,Europe/Madrid
+es:entidad-menor:04010072,04010072,01059,01,16,concejo,Miñao/Miñano Mayor,Miñao/Miñano Mayor,Miñano Mayor,Miñao/Miñano Mayor,Miñao/Miñano Mayor,Miñao,Miñao/Miñano Mayor,Miñao/Miñano Mayor,Europe/Madrid
+es:entidad-menor:04010073,04010073,01059,01,16,concejo,Miñano Menor/Miñao Gutxia,Miñano Menor/Miñao Gutxia,Miñano Menor,Miñano Menor/Miñao Gutxia,Miñano Menor/Miñao Gutxia,Miñao Gutxia,Miñano Menor/Miñao Gutxia,Miñano Menor/Miñao Gutxia,Europe/Madrid
+es:entidad-menor:04010074,04010074,01059,01,16,concejo,Monasterioguren,Monasterioguren,Monasterioguren,Monasterioguren,Monasterioguren,Monasterioguren,Monasterioguren,Monasterioguren,Europe/Madrid
+es:entidad-menor:04010086,04010086,01059,01,16,concejo,Oreitia,Oreitia,Oreitia,Oreitia,Oreitia,Oreitia,Oreitia,Oreitia,Europe/Madrid
+es:entidad-menor:04010088,04010088,01059,01,16,concejo,Erretana,Erretana,Erretana,Erretana,Erretana,Erretana,Erretana,Erretana,Europe/Madrid
+es:entidad-menor:04010095,04010095,01059,01,16,concejo,Subijana de Álava/Subillana-Gasteiz,Subijana de Álava/Subillana-Gasteiz,Subijana de Álava,Subijana de Álava/Subillana-Gasteiz,Subijana de Álava/Subillana-Gasteiz,Subillana-Gasteiz,Subijana de Álava/Subillana-Gasteiz,Subijana de Álava/Subillana-Gasteiz,Europe/Madrid
+es:entidad-menor:04010100,04010100,01059,01,16,concejo,Ullibarri-Viña/Uribarri-Dibiña,Ullibarri-Viña/Uribarri-Dibiña,Ullibarri-Viña,Ullibarri-Viña/Uribarri-Dibiña,Ullibarri-Viña/Uribarri-Dibiña,Uribarri-Dibiña,Ullibarri-Viña/Uribarri-Dibiña,Ullibarri-Viña/Uribarri-Dibiña,Europe/Madrid
+es:entidad-menor:04010116,04010116,01059,01,16,concejo,Betoño,Betoño,Betoño,Betoño,Betoño,Betoño,Betoño,Betoño,Europe/Madrid
+es:entidad-menor:04010130,04010130,01059,01,16,concejo,Ullibarri de los Olleros/Uribarri Nagusia,Ullibarri de los Olleros/Uribarri Nagusia,Ullibarri de los Olleros,Ullibarri de los Olleros/Uribarri Nagusia,Ullibarri de los Olleros/Uribarri Nagusia,Uribarri Nagusia,Ullibarri de los Olleros/Uribarri Nagusia,Ullibarri de los Olleros/Uribarri Nagusia,Europe/Madrid
+es:entidad-menor:04010132,04010132,01059,01,16,concejo,Zuazo de Vitoria/Zuhatzu,Zuazo de Vitoria/Zuhatzu,Zuazo de Vitoria,Zuazo de Vitoria/Zuhatzu,Zuazo de Vitoria/Zuhatzu,Zuhatzu,Zuazo de Vitoria/Zuhatzu,Zuazo de Vitoria/Zuhatzu,Europe/Madrid
+es:entidad-menor:04010149,04010149,01059,01,16,concejo,Lopidana,Lopidana,Lopidana,Lopidana,Lopidana,Lopidana,Lopidana,Lopidana,Europe/Madrid
+es:entidad-menor:04010151,04010151,01059,01,16,concejo,Mendiguren,Mendiguren,Mendiguren,Mendiguren,Mendiguren,Mendiguren,Mendiguren,Mendiguren,Europe/Madrid
+es:entidad-menor:04010162,04010162,01059,01,16,concejo,Abetxuko,Abetxuko,Abetxuko,Abetxuko,Abetxuko,Abetxuko,Abetxuko,Abetxuko,Europe/Madrid
+es:entidad-menor:04010163,04010163,01059,01,16,concejo,Aberasturi,Aberasturi,Aberasturi,Aberasturi,Aberasturi,Aberasturi,Aberasturi,Aberasturi,Europe/Madrid
+es:entidad-menor:04010164,04010164,01059,01,16,concejo,Amarita,Amarita,Amarita,Amarita,Amarita,Amarita,Amarita,Amarita,Europe/Madrid
+es:entidad-menor:04010167,04010167,01059,01,16,concejo,Arangiz,Arangiz,Arangiz,Arangiz,Arangiz,Arangiz,Arangiz,Arangiz,Europe/Madrid
+es:entidad-menor:04010174,04010174,01059,01,16,concejo,Berrostegieta,Berrostegieta,Berrostegieta,Berrostegieta,Berrostegieta,Berrostegieta,Berrostegieta,Berrostegieta,Europe/Madrid
+es:entidad-menor:04010176,04010176,01059,01,16,concejo,Bolibar,Bolibar,Bolibar,Bolibar,Bolibar,Bolibar,Bolibar,Bolibar,Europe/Madrid
+es:entidad-menor:04010185,04010185,01059,01,16,concejo,Eskibel,Eskibel,Eskibel,Eskibel,Eskibel,Eskibel,Eskibel,Eskibel,Europe/Madrid
+es:entidad-menor:04010188,04010188,01059,01,16,concejo,Gamiz,Gamiz,Gamiz,Gamiz,Gamiz,Gamiz,Gamiz,Gamiz,Europe/Madrid
+es:entidad-menor:04010189,04010189,01059,01,16,concejo,Gardelegi,Gardelegi,Gardelegi,Gardelegi,Gardelegi,Gardelegi,Gardelegi,Gardelegi,Europe/Madrid
+es:entidad-menor:04010191,04010191,01059,01,16,concejo,Gometxa,Gometxa,Gometxa,Gometxa,Gometxa,Gometxa,Gometxa,Gometxa,Europe/Madrid
+es:entidad-menor:04010193,04010193,01059,01,16,concejo,Gereña,Gereña,Gereña,Gereña,Gereña,Gereña,Gereña,Gereña,Europe/Madrid
+es:entidad-menor:04010196,04010196,01059,01,16,concejo,Hueto Abajo/Otobarren,Hueto Abajo/Otobarren,Hueto Abajo,Hueto Abajo/Otobarren,Hueto Abajo/Otobarren,Otobarren,Hueto Abajo/Otobarren,Hueto Abajo/Otobarren,Europe/Madrid
+es:entidad-menor:04010197,04010197,01059,01,16,concejo,Jungitu,Jungitu,Jungitu,Jungitu,Jungitu,Jungitu,Jungitu,Jungitu,Europe/Madrid
+es:entidad-menor:04010203,04010203,01059,01,16,concejo,Legarda,Legarda,Legarda,Legarda,Legarda,Legarda,Legarda,Legarda,Europe/Madrid
+es:entidad-menor:04010210,04010210,01059,01,16,concejo,Mendoza,Mendoza,Mendoza,Mendoza,Mendoza,Mendoza,Mendoza,Mendoza,Europe/Madrid
+es:entidad-menor:04010230,04010230,01059,01,16,concejo,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Uribarri Arrazua,Europe/Madrid
+es:entidad-menor:04010244,04010244,01059,01,16,concejo,Martioda,Martioda,Martioda,Martioda,Martioda,Martioda,Martioda,Martioda,Europe/Madrid
+es:entidad-menor:04010246,04010246,01059,01,16,concejo,Ariñiz/Aríñez,Ariñiz/Aríñez,Aríñez,Ariñiz/Aríñez,Ariñiz/Aríñez,Ariñiz,Ariñiz/Aríñez,Ariñiz/Aríñez,Europe/Madrid
+es:entidad-menor:04010247,04010247,01059,01,16,concejo,Villafranca,Villafranca,Villafranca,Villafranca,Villafranca,Villafranca,Villafranca,Villafranca,Europe/Madrid
+es:entidad-menor:04010250,04010250,01059,01,16,concejo,Ehari/Ali,Ehari/Ali,Ali,Ehari/Ali,Ehari/Ali,Ehari,Ehari/Ali,Ehari/Ali,Europe/Madrid
+es:entidad-menor:04010252,04010252,01059,01,16,concejo,Andollu,Andollu,Andollu,Andollu,Andollu,Andollu,Andollu,Andollu,Europe/Madrid
+es:entidad-menor:04010255,04010255,01059,01,16,concejo,Aretxabaleta,Aretxabaleta,Aretxabaleta,Aretxabaleta,Aretxabaleta,Aretxabaleta,Aretxabaleta,Aretxabaleta,Europe/Madrid
+es:entidad-menor:04010260,04010260,01059,01,16,concejo,Gamarra Gutxia/Gamarra Menor,Gamarra Gutxia/Gamarra Menor,Gamarra Menor,Gamarra Gutxia/Gamarra Menor,Gamarra Gutxia/Gamarra Menor,Gamarra Gutxia,Gamarra Gutxia/Gamarra Menor,Gamarra Gutxia/Gamarra Menor,Europe/Madrid
+es:entidad-menor:04010261,04010261,01059,01,16,concejo,Gobeo,Gobeo,Gobeo,Gobeo,Gobeo,Gobeo,Gobeo,Gobeo,Europe/Madrid
+es:entidad-menor:04010264,04010264,01059,01,16,concejo,Otazu,Otazu,Otazu,Otazu,Otazu,Otazu,Otazu,Otazu,Europe/Madrid
+es:entidad-menor:04010268,04010268,01059,01,16,concejo,Yurre/Ihurre,Yurre/Ihurre,Yurre,Yurre/Ihurre,Yurre/Ihurre,Ihurre,Yurre/Ihurre,Yurre/Ihurre,Europe/Madrid
+es:entidad-menor:04010269,04010269,01059,01,16,concejo,Arkauti/Arcaute,Arkauti/Arcaute,Arcaute,Arkauti/Arcaute,Arkauti/Arcaute,Arkauti,Arkauti/Arcaute,Arkauti/Arcaute,Europe/Madrid
+es:entidad-menor:04010271,04010271,01059,01,16,concejo,Castillo/Gaztelu,Castillo/Gaztelu,Castillo,Castillo/Gaztelu,Castillo/Gaztelu,Gaztelu,Castillo/Gaztelu,Castillo/Gaztelu,Europe/Madrid
+es:entidad-menor:04010282,04010282,01059,01,16,concejo,Zumeltzu,Zumeltzu,Zumeltzu,Zumeltzu,Zumeltzu,Zumeltzu,Zumeltzu,Zumeltzu,Europe/Madrid
+es:entidad-menor:04010283,04010283,01059,01,16,concejo,Astegieta,Astegieta,Astegieta,Astegieta,Astegieta,Astegieta,Astegieta,Astegieta,Europe/Madrid
+es:entidad-menor:04010292,04010292,01059,01,16,concejo,Elorriaga,Elorriaga,Elorriaga,Elorriaga,Elorriaga,Elorriaga,Elorriaga,Elorriaga,Europe/Madrid
+es:entidad-menor:04010293,04010293,01059,01,16,concejo,Gamarra Mayor/Gamarra Nagusia,Gamarra Mayor/Gamarra Nagusia,Gamarra Mayor,Gamarra Mayor/Gamarra Nagusia,Gamarra Mayor/Gamarra Nagusia,Gamarra Nagusia,Gamarra Mayor/Gamarra Nagusia,Gamarra Mayor/Gamarra Nagusia,Europe/Madrid
+es:entidad-menor:04010319,04010319,01059,01,16,concejo,Antezana/Andetxa,Antezana/Andetxa,Antezana,Antezana/Andetxa,Antezana/Andetxa,Andetxa,Antezana/Andetxa,Antezana/Andetxa,Europe/Madrid
+es:entidad-menor:04010320,04010320,01059,01,16,concejo,Arkaia,Arkaia,Arkaia,Arkaia,Arkaia,Arkaia,Arkaia,Arkaia,Europe/Madrid
+es:entidad-menor:04010321,04010321,01059,01,16,concejo,Foronda,Foronda,Foronda,Foronda,Foronda,Foronda,Foronda,Foronda,Europe/Madrid
+es:entidad-menor:04010322,04010322,01059,01,16,concejo,Otogoien/Hueto Arriba,Otogoien/Hueto Arriba,Hueto Arriba,Otogoien/Hueto Arriba,Otogoien/Hueto Arriba,Otogoien,Otogoien/Hueto Arriba,Otogoien/Hueto Arriba,Europe/Madrid
+es:entidad-menor:04200003,04200003,20069,20,16,entidad_local_menor,Igeldo,Igeldo,Igeldo,Igeldo,Igeldo,Igeldo,Igeldo,Igeldo,Europe/Madrid
+es:entidad-menor:04250007,04250007,25057,25,09,entitat_municipal_descentralitzada,Arró,Arró,Arró,Arró,Arró,Arró,Arró,Arró,Europe/Madrid
+es:entidad-menor:04250008,04250008,25243,25,09,entitat_municipal_descentralitzada,Arròs e Vila,Arròs e Vila,Arròs e Vila,Arròs e Vila,Arròs e Vila,Arròs e Vila,Arròs e Vila,Arròs e Vila,Europe/Madrid
+es:entidad-menor:04250012,04250012,25243,25,09,entitat_municipal_descentralitzada,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Aubèrt e Betlan,Europe/Madrid
+es:entidad-menor:04250018,04250018,25243,25,09,entitat_municipal_descentralitzada,Betren,Betren,Betren,Betren,Betren,Betren,Betren,Betren,Europe/Madrid
+es:entidad-menor:04250020,04250020,25243,25,09,entitat_municipal_descentralitzada,Casau,Casau,Casau,Casau,Casau,Casau,Casau,Casau,Europe/Madrid
+es:entidad-menor:04250024,04250024,25243,25,09,entitat_municipal_descentralitzada,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Escunhau e Casarilh,Europe/Madrid
+es:entidad-menor:04250027,04250027,25243,25,09,entitat_municipal_descentralitzada,Gausac,Gausac,Gausac,Gausac,Gausac,Gausac,Gausac,Gausac,Europe/Madrid
+es:entidad-menor:04250047,04250047,25120,25,09,entitat_municipal_descentralitzada,Sucs,Sucs,Sucs,Sucs,Sucs,Sucs,Sucs,Sucs,Europe/Madrid
+es:entidad-menor:04250050,04250050,25243,25,09,entitat_municipal_descentralitzada,Vilac,Vilac,Vilac,Vilac,Vilac,Vilac,Vilac,Vilac,Europe/Madrid
+es:entidad-menor:04250058,04250058,25120,25,09,entitat_municipal_descentralitzada,Raimat,Raimat,Raimat,Raimat,Raimat,Raimat,Raimat,Raimat,Europe/Madrid

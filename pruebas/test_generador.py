@@ -594,6 +594,40 @@ class Build(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     build(inputs, fuentes, "2026-01-01")
 
+    def test_minor_local_entities(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        # Parent in the municipality; the REL number is the identifier and the code.
+        self.assertEqual(by_id["es:entidad-menor:04200003"], {
+            "id": "es:entidad-menor:04200003", "level": "minor_local_entity", "parent": "es:municipio:20069",
+            "codes": {"rel:eatim": "04200003"}, "names": {"official": "Igeldo", "display": "Igeldo"},
+            "type": "entidad_local_menor", "slug": "igeldo", "time_zone": "Europe/Madrid"})
+        krispina = by_id["es:entidad-menor:04010028"]
+        self.assertEqual((krispina["type"], krispina["names"]["parts"]), ("concejo", {"eu": "Krispiña", "es": "Crispijana"}))
+        # The municipality gets no field: it is the parent.
+        self.assertNotIn("minor_local_entity", by_id["es:municipio:01059"])
+        self.assertEqual(self.report.summary["Entidades locales menores"], 72)
+        self.assertIn("01001 no está en el diccionario de municipios; no se publican 2 entidad(es) de "
+                      "fuentes/entidades-menores.csv", self.report.sections["Entidades locales menores"])
+
+    def test_minor_local_entities_hand_list_is_checked(self):
+        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
+        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
+        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
+        for broken in ("4200003,20069,entidad_local_menor,Igeldo,,2025-04-02\n",  # REL number without its zero
+                       "04200003,48020,entidad_local_menor,Igeldo,,2025-04-02\n",  # municipality of another province
+                       "04200003,20069,junta_vecinal,Igeldo,,2025-04-02\n",  # unknown type
+                       "04200003,20069,entidad_local_menor, ,,2025-04-02\n",  # no name
+                       "04010028,01059,concejo,Krispiña/Crispijana,,1986-12-09\n"):  # repeated number
+            with self.subTest(broken=broken), tempfile.TemporaryDirectory() as tmp:
+                fuentes = Path(tmp) / "fuentes"
+                shutil.copytree(ROOT / "fuentes", fuentes)
+                path = fuentes / "entidades-menores.csv"
+                lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+                lines = [line for line in lines if not line.startswith("04200003,")]
+                path.write_text("".join(lines) + broken, encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    build(inputs, fuentes, "2026-01-01")
+
     def test_population(self):
         by_id = {t["id"]: t for t in self.data["territories"]}
         self.assertEqual(by_id["es:municipio:28079"]["stats"], {"population": 3422416, "area_km2": 12.346})
