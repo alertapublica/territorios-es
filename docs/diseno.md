@@ -165,7 +165,7 @@ Idiomas, con su código BCP 47:
 | euskera | `eu` | cooficial en el País Vasco y en la zona vascófona de Navarra |
 | aranés (occitano) | `oc` | oficial en Cataluña; nombre oficial de los nueve municipios del Arán. Las etiquetas de Wikidata en `oc` son de occitano general, no siempre de la norma aranesa. |
 | inglés | `en` | no oficial; para el público internacional |
-| asturiano, aragonés | `ast`, `an` | protegidos, no oficiales. Se guardan en los datos, marcados así, pero no se usan en la interfaz. |
+| asturiano, aragonés | `ast`, `an` | protegidos, no oficiales. Se guardan en los datos con su código, pero no se usan en la interfaz. |
 
 Campos de nombre de cada territorio:
 
@@ -174,7 +174,7 @@ Campos de nombre de cada territorio:
 | `official` | «Coruña, A», «Alicante/Alacant», «Balears, Illes» | INE, literal |
 | `display` | «A Coruña», «Alicante/Alacant», «Illes Balears» | Derivado: el artículo pasa delante. Se puede corregir a mano. |
 | `parts` | `{"es": "Alicante", "ca": "Alacant"}` | Solo en los nombres oficiales bilingües. El idioma de cada parte sale de una lista revisada a mano y contrastada con Wikidata. |
-| `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Nombre habitual en cada idioma. En las comunidades, lista revisada a mano; en provincias y municipios, Wikidata, solo si difiere del oficial. |
+| `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Nombre habitual en cada idioma. En las comunidades, lista revisada a mano; en provincias, islas y municipios, Wikidata, sin la aclaración final entre paréntesis («Neda (A Coruña)») y solo si difiere del oficial sin contar tildes, mayúsculas ni puntuación (para buscar son el mismo nombre). |
 | `short` | «Baleares», «Navarra» | Comunidades; lista revisada a mano, por idioma. |
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Lista revisada a mano, con su idioma y su tipo (exónimo, histórico, abreviatura). |
 | `slug` | `a-coruna` | Derivado |
@@ -187,8 +187,8 @@ nombres oficiales, sino alias.
 
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
 
-- **Comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
-- **Provincias, islas, partidos judiciales y municipios**: el oficial (el de un partido es el de su
+- **Países y comunidades**: el nombre en el idioma de la página («Catalonia», «Katalunia», «Cataluña»).
+- **Provincias, islas, comarcas, partidos judiciales, zonas de aviso y municipios**: el oficial (el de un partido es el de su
   sede). Si es bilingüe, solo la parte del idioma de la página («Alacant» en catalán, «San
   Sebastián» en castellano) y el nombre completo en los demás.
   En castellano se muestra «Girona», no «Gerona».

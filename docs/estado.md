@@ -371,7 +371,7 @@ flowchart LR
 | `zonas-aviso.csv` | 4 | zona de los municipios que faltan en el maestro de AEMET |
 | `alias.csv` | 23 | alias |
 | `partes-bilingues.csv` | 147 | partes de los nombres bilingües |
-| `descartes-wikidata.csv` | 5 | etiquetas de Wikidata descartadas |
+| `descartes-wikidata.csv` | 7 | etiquetas de Wikidata descartadas |
 | `paises-ue.csv` | 30 | países de la UE y del EEE |
 | `paises-excluidos.csv` | 6 | códigos ISO que no son países |
 

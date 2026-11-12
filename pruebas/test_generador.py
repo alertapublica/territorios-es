@@ -12,7 +12,7 @@ from zipfile import ZipFile
 
 from pruebas import ROOT
 from generador import aemet, catastro, codigos_postales, comarcas, eurostat, exportar, ign, ine, justicia, limites, wikidata
-from generador.construir import build, catastro_name_matches
+from generador.construir import _other_names, build, catastro_name_matches
 from generador.xlsx import read_rows
 
 
@@ -465,6 +465,15 @@ class Build(unittest.TestCase):
         self.assertNotIn("island", by_id["es:municipio:36038"])
         self.assertIn("074 está en fuentes/islas.csv pero no en la tabla de islas del INE", self.report.sections["Islas"])
         self.assertIn("es:isla:073 «Mallorca» (Q8828)", self.report.sections["Wikidata: sin elemento"])
+
+    def test_wikidata_labels_lose_a_qualifier_in_brackets(self):
+        by_id = {t["id"]: t for t in self.data["territories"]}
+        self.assertEqual(by_id["es:municipio:41091"]["names"]["lang"], {"en": "Seville"})  # «Sevilla (Andalosia)»
+        self.assertEqual(by_id["es:municipio:46250"]["names"]["lang"], {"eu": "Valentzia"})
+        # A discard matches the label as Wikidata has it or as it is published.
+        item = {"labels": {"ca": "Cervo (Lugo)", "gl": "Cervo (Lugo)"}}
+        self.assertEqual(_other_names(item, set(), "x", set()), {"ca": "Cervo", "gl": "Cervo"})
+        self.assertEqual(_other_names(item, set(), "x", {("x", "ca", "Cervo"), ("x", "gl", "Cervo (Lugo)")}), {})
 
     def test_judicial_districts(self):
         by_id = {t["id"]: t for t in self.data["territories"]}
