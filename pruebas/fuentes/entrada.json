@@ -1414,7 +1414,8 @@
    "dissolved": false,
    "labels": {
     "en": "Seville",
-    "es": "Sevilla"
+    "es": "Sevilla",
+    "oc": "Sevilla (Andalosia)"
    }
   },
   "Q9000013": {
@@ -1427,7 +1428,8 @@
    "dissolved": false,
    "labels": {
     "ca": "València",
-    "es": "Valencia"
+    "es": "Valencia",
+    "eu": "Valentzia (Espainia)"
    }
   },
   "Q9000014": {

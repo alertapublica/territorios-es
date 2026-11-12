@@ -371,7 +371,7 @@ flowchart LR
 | `zonas-aviso.csv` | 4 | zone of the municipalities missing from AEMET's list |
 | `alias.csv` | 23 | aliases |
 | `partes-bilingues.csv` | 147 | parts of bilingual names |
-| `descartes-wikidata.csv` | 5 | discarded Wikidata labels |
+| `descartes-wikidata.csv` | 7 | discarded Wikidata labels |
 | `paises-ue.csv` | 30 | EU and EEA countries |
 | `paises-excluidos.csv` | 6 | ISO codes that are not countries |
 

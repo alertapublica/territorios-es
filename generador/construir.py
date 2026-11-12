@@ -111,11 +111,19 @@ def catastro_name_matches(dgc_name: str, names: dict) -> bool:
 
 def _other_names(item: dict | None, known: set[str], identity: str, discarded: set) -> dict[str, str]:
     """Wikidata labels that differ from the names we already have, minus the ones discarded by
-    hand (fuentes/descartes-wikidata.csv)."""
+    hand (fuentes/descartes-wikidata.csv). A final qualifier in brackets («Neda (A Coruña)») is
+    Wikidata disambiguation, not part of the name: no official name in Spain has brackets. A
+    discard matches the label with or without it."""
     if not item:
         return {}
-    return {lang: label for lang, label in sorted(item["labels"].items())
-            if lang in LANGS and normalize(label) not in known and (identity, lang, label) not in discarded}
+    names = {}
+    for lang, raw in sorted(item["labels"].items()):
+        label = re.sub(r"\s*\([^()]*\)$", "", raw)
+        if lang not in LANGS or {(identity, lang, raw), (identity, lang, label)} & discarded:
+            continue
+        if normalize(label) not in known:
+            names[lang] = label
+    return names
 
 
 def _attach_wikidata(record: dict, item: dict | None, qid: str | None, report: Report):

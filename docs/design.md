@@ -171,7 +171,7 @@ Languages, with their BCP 47 code:
 | Basque | `eu` | co-official in the Basque Country and in the Basque-speaking area of Navarre |
 | Aranese (Occitan) | `oc` | official in Catalonia; official name of the nine municipalities of the Val d'Aran. The Wikidata labels in `oc` are general Occitan, not always the Aranese standard. |
 | English | `en` | not official; for the international public |
-| Asturian, Aragonese | `ast`, `an` | protected, not official. They are stored in the data, marked as such, but are not used in the interface. |
+| Asturian, Aragonese | `ast`, `an` | protected, not official. They are stored in the data with their code, but are not used in the interface. |
 
 Name fields of each territory:
 
@@ -180,7 +180,7 @@ Name fields of each territory:
 | `official` | «Coruña, A», «Alicante/Alacant», «Balears, Illes» | INE, literal |
 | `display` | «A Coruña», «Alicante/Alacant», «Illes Balears» | Derived: the article moves to the front. It can be corrected by hand. |
 | `parts` | `{"es": "Alicante", "ca": "Alacant"}` | Only in bilingual official names. The language of each part comes from a hand-reviewed list cross-checked with Wikidata. |
-| `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Usual name in each language. For autonomous communities, a hand-reviewed list; for provinces and municipalities, Wikidata, only if it differs from the official one. |
+| `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Usual name in each language. For autonomous communities, a hand-reviewed list; for provinces, islands and municipalities, Wikidata, without a final qualifier in brackets («Neda (A Coruña)») and only if it differs from the official one leaving aside accents, capitals and punctuation (for searching they are the same name). |
 | `short` | «Baleares», «Navarra» | Autonomous communities; hand-reviewed list, per language. |
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Hand-reviewed list, with its language and its type (exonym, historical, abbreviation). |
 | `slug` | `a-coruna` | Derived |
@@ -193,9 +193,9 @@ are not official names, but aliases.
 
 The data stores all the names; this is the default rule of `name(id, lang)`:
 
-- **Autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
+- **Countries and autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
   "Cataluña").
-- **Provinces, islands, judicial districts and municipalities**: the official one (a district's is
+- **Provinces, islands, comarcas, judicial districts, warning zones and municipalities**: the official one (a district's is
   its seat's). If it is bilingual, only the part in the language of the page ("Alacant" in Catalan,
   "San Sebastián" in Spanish) and the full name in the others. In Spanish "Girona" is shown, not "Gerona".
 - The usual names in other languages ("Gerona", "Seville", "Saragossa") are used for searching and

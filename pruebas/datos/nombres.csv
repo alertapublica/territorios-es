@@ -146,7 +146,7 @@ es:autonomia:04,lang,en,Balearic Islands,fuentes
 es:autonomia:04,lang,es,Illes Balears,fuentes
 es:autonomia:04,lang,eu,Balear Uharteak,fuentes
 es:autonomia:04,lang,gl,Illas Baleares,fuentes
-es:autonomia:04,lang,oc,Illes Balears,fuentes
+es:autonomia:04,lang,oc,Isles Balears,fuentes
 es:autonomia:04,short,ca,Balears,fuentes
 es:autonomia:04,short,es,Baleares,fuentes
 es:autonomia:04,short,gl,Baleares,fuentes
@@ -180,7 +180,7 @@ es:autonomia:07,lang,oc,Castelha e Leon,fuentes
 es:autonomia:08,official,,Castilla - La Mancha,fuentes
 es:autonomia:08,display,,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,ca,Castella-la Manxa,fuentes
-es:autonomia:08,lang,en,Castilla–La Mancha,fuentes
+es:autonomia:08,lang,en,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,es,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,eu,Gaztela-Mantxa,fuentes
 es:autonomia:08,lang,gl,Castela-A Mancha,fuentes
@@ -518,6 +518,7 @@ es:municipio:46220,parts,ca,Sagunt,fuentes
 es:municipio:46220,parts,es,Sagunto,fuentes
 es:municipio:46250,official,,València,ine
 es:municipio:46250,display,,València,derivado
+es:municipio:46250,lang,eu,Valentzia,wikidata
 es:municipio:48020,official,,Bilbao,ine
 es:municipio:48020,display,,Bilbao,derivado
 es:municipio:48020,alias:other_language,eu,Bilbo,fuentes
