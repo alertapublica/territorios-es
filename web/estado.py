@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = {"es": ROOT / "docs" / "estado.md", "en": ROOT / "docs" / "status.md"}
 REPO = "https://github.com/alertapublica/territorios-es"
 PAGES = "https://alertapublica.github.io/territorios-es"
+ISSUES = REPO + "/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo"  # what is missing
 DATASETTE = "https://lite.datasette.io/?url="
 DATABASE = "territorios-es.db"  # SQLite built by web/construir.py with every CSV, codes as text
 
@@ -108,7 +109,7 @@ STYLE = ["classDef done fill:#d8f0d8,stroke:#2e7d32,color:#173d17",
 PIE = ('%%{init: {"themeVariables": {' + ", ".join(f'"pie{n}": "{c}"' for n, c in enumerate(
     ["#4e8fd6", "#f2a33a", "#4cb08a", "#d98cb8", "#8cc8ef", "#e6794a", "#e8dc4a", "#b0b0b0"], 1))
        + ', "pieSectionTextColor": "#111111", "pieStrokeColor": "#ffffff", "pieOpacity": "1"}}}%%')
-TABS = {"summary": ["levels", "progress"], "coverage": ["coverage"], "communities": ["communities"], "repo": ["repo"],
+TABS = {"summary": ["levels"], "coverage": ["coverage"], "communities": ["communities"], "repo": ["repo"],
         "sources": ["sources"], "files": ["files"], "library": ["library"]}
 MERMAID = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
 
@@ -183,22 +184,6 @@ def _workflow_triggers(path: Path) -> tuple[list[str], list[str]]:
         block = re.search(r"^on:[ \t]*\n((?:[ \t]+.*\n|\n)+)", text, re.M)
         triggers = re.findall(r"^  (\w+):", block.group(1), re.M) if block else []
     return triggers, re.findall(r"""cron:\s*["']([^"']+)["']""", text)
-
-
-def _pending(lang: str) -> list[str]:
-    doc = ROOT / "docs" / ("design.md" if lang == "en" else "diseno.md")
-    text = doc.read_text(encoding="utf-8")
-    section = re.search(r"^## 13\..*?\n(.*?)(?=^## )", text, re.M | re.S)
-    items = []
-    for bullet in re.findall(r"^- (.*?)(?=^- |\Z)", section.group(1) if section else "", re.M | re.S):
-        # The first sentence, as written (with its parentheses, such as «(hecho)»); a long one keeps what comes
-        # before its colon, if that says enough, or is cut.
-        sentence = re.split(r"(?<=[.;])\s", " ".join(bullet.split()))[0].rstrip(".;")
-        lead, sep, _ = sentence.partition(": ")
-        if len(sentence) > 140 and sep and len(lead) >= 30:
-            sentence = lead
-        items.append(sentence if len(sentence) <= 140 else sentence[:137].rsplit(" ", 1)[0] + "…")
-    return items
 
 
 def _published() -> list[str]:
@@ -290,7 +275,6 @@ def collect(lang: str, datos: Path, html: bool = False):
     levels = [lv for lv in LEVELS if lv in counts or lv in test[0]]
     munis = _csv(datos / "municipios.csv")
     postal = _csv(datos / "codigos-postales.csv")
-    pending = _pending(lang)
     sections = {}
 
     # Territories
@@ -455,21 +439,14 @@ def collect(lang: str, datos: Path, html: bool = False):
     code += ["  m_text --> m_catalog", "  m_catalog --> m_relation", "  m_geo --> m_limits", *[f"  {s}" for s in STYLE]]
     sections["library"] = [("p", t["library_text"]), ("mermaid", "\n".join(code), t["s_library"])]
 
-    # Progress
-    done = [t["levels"][lv] for lv in levels if lv in counts]
-    todo = [t["levels"][lv] for lv in levels if lv not in counts]
-    sections["progress"] = [("list", [f"**{t['done_levels']}**: {', '.join(done) or t['none']}.",
-                                      f"**{t['todo_levels']}**: {', '.join(todo) or t['none']}."]),
-                            ("p", t["progress_text"].format(repo=repo)),
-                            ("list", pending, None if lang in ("es", "en") else "es")]
+    done = [lv for lv in levels if lv in counts]
 
     last = max((v for v in retrieved.values() if v), default="")
     cards = [(_num(len(territories), lang), t["c_territories"]),
              (f"{len(done)} {t['of']} {len(levels)}", t["c_levels"]),
              (_num(counts.get("municipality", 0), lang), t["c_municipalities"]),
              (str(len(SOURCES)), f"{t['c_sources']} {last}"),
-             (_num(len(postal), lang), t["c_postal"]),
-             (str(len(pending)), t["c_pending"])]
+             (_num(len(postal), lang), t["c_postal"])]
     return cards, sections
 
 
@@ -530,8 +507,7 @@ def markdown(lang: str, datos: Path) -> str:
     t = texts()[lang]["estado"]
     cards, sections = collect(lang, datos)
     order = [s for tab in TABS.values() for s in tab]
-    order = order[:1] + [s for s in order[1:] if s != "progress"] + ["progress"]
-    lines = [f"# {t['title']}", "", t["generated_md"].format(pages=PAGES), "",
+    lines = [f"# {t['title']}", "", t["generated_md"].format(pages=PAGES, issues=ISSUES), "",
              "| " + " | ".join(f"**{value}**" for value, _ in cards) + " |",
              "|" + "|".join(":---:" for _ in cards) + "|",
              "| " + " | ".join(label for _, label in cards) + " |", "",
@@ -669,7 +645,7 @@ def page(lang: str, datos: Path) -> str:
             f'<meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(t["title"])}</title>'
             f'{alternates}<link rel="stylesheet" href="../../estilo.css"><style>{CSS}</style></head><body>'
             f'<header>{nav}<h1>{escape(t["title"])}</h1>'
-            f'<p class="sub">{_inline(t["generated_html"].format(repo=REPO + "/blob/main/"))}</p></header>'
+            f'<p class="sub">{_inline(t["generated_html"].format(repo=REPO + "/blob/main/", issues=ISSUES))}</p></header>'
             f'<main>{review}<div class="cards">{card_html}</div><nav class="tabs" aria-label="{escape(t["index"])}">{tabs}</nav>'
             f'{"".join(panels)}</main>'
             f'<footer><p><a href="{REPO}">GitHub</a>. {escape(web["licence_code"])}</p></footer>'

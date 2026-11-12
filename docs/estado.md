@@ -1,12 +1,12 @@
 # Estado de territorios-es
 
-Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md).
+Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md). Lo que falta, en los [issues «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo).
 
-| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** | **12** |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio | puntos pendientes |
+| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** |
+|:---:|:---:|:---:|:---:|:---:|
+| territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio |
 
-**Índice**: [Territorios](#territorios) · [Cobertura](#cobertura) · [Por comunidad](#por-comunidad) · [Repositorio](#repositorio) · [Fuentes](#fuentes) · [Ficheros](#ficheros) · [Librería](#librería) · [Avance](#avance)
+**Índice**: [Territorios](#territorios) · [Cobertura](#cobertura) · [Por comunidad](#por-comunidad) · [Repositorio](#repositorio) · [Fuentes](#fuentes) · [Ficheros](#ficheros) · [Librería](#librería)
 
 ## Territorios
 
@@ -407,23 +407,3 @@ flowchart LR
   classDef todo fill:#fdecc8,stroke:#b26a00,color:#4a2c00,stroke-dasharray:4 3
   classDef box fill:#e6eef8,stroke:#3b6ea8,color:#14304f
 ```
-
-## Avance
-
-- **Niveles en `datos/`**: Comunidades y ciudades autónomas, Provincias, Municipios, Islas, Partidos judiciales, Zonas de aviso de AEMET, Comarcas, Países.
-- **Niveles hechos en el código que faltan en `datos/` (hay que lanzar «Generar datos»)**: ninguno.
-
-Del [apartado 13 del diseño](../docs/diseno.md#13-pendiente):
-
-- Traducir este documento y el README al catalán, gallego, euskera y aranés
-- Revisar las traducciones de la web, de su página de estado y de los nombres de comunidades (marcadas como pendientes)
-- Revisar el informe de discrepancias de la primera generación
-- Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General → Workflow permissions)
-- Más fuentes de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
-- Página de estado, más adelante (review de Codex de la PR #19)
-- Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales (se baja sin navegador de…
-- Cruces de los partidos judiciales, como capas posteriores
-- Zonas de aviso de AEMET, más adelante: las 51 costeras, ligadas a su zona terrestre, y su elemento de Wikidata
-- Nombres de países: siguen saliendo de Wikidata, que tiene alguna errata
-- Códigos postales en Andalucía: el CDAU trae 526 pares que no tiene el INE, que decide allí
-- Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde 2004 y páginas de modificaciones de…

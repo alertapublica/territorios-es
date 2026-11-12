@@ -1,9 +1,10 @@
 # Design of territorios-es
 
-Draft of 9 November 2026. The decisions already taken are in the section
-[Decisions](#12-decisions); what is missing, in [Pending](#13-pending), and what has to be
-checked for each source, in [To verify](#14-to-verify). There is a Spanish version at
-[`diseno.md`](diseno.md).
+It describes what is in the repository. The decisions taken are in the section
+[Decisions](#12-decisions) and what has been checked for each source, in
+[Source checks](#13-source-checks). What is missing is in the
+[issues labelled «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo). There is a Spanish
+version at [`diseno.md`](diseno.md).
 
 ## 1. Purpose
 
@@ -13,8 +14,9 @@ place, to convert from one code to another and to show the correct name in each 
 of its names and codes. Its data is regenerated from the official sources, and the open ones
 (Wikidata, OpenStreetMap) serve as support and for cross-checking. It offers three things:
 
-1. **Catalogue**: Spain, its autonomous communities and autonomous cities, provinces and
-   municipalities, and the countries of the world, with their hierarchy, their names (official,
+1. **Catalogue**: Spain, its autonomous communities and autonomous cities, provinces, islands,
+   municipalities, judicial districts, AEMET warning zones and comarcas, and the countries of the
+   world, with their hierarchy, their names (official,
    display, per language and aliases) and their codes (INE, Catastro, ISO, European and others).
 2. **Tools** in Python and JavaScript: resolve a code, search for a name within a scope, find
    mentions in a text, choose the name displayed in each language and relate references to their
@@ -71,25 +73,18 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
 - **The network is not used at run time.** The catalogue ships with the package; the boundaries,
   because of their size, are downloaded separately when needed. The only exception is the optional
   `catastro_online` module, which calls the Catastro only when asked to (§6).
-- **Everything is deterministic, no AI.** Fuzzy search is an optional add-on.
+- **Everything is deterministic, no AI.**
 - **All useful sources are used, related with their provenance** (see section 5).
 
 ## 4. Data
 
 ### 4.1 Levels
 
-First version:
-
 - **Spain**: 19 autonomous communities and autonomous cities, 52 provinces and 8,132
   municipalities (those of the INE as of 1 January 2026).
 - **Countries**: the complete ISO 3166-1 list, with its name in each language and whether they
   belong to the EU or the European Economic Area. It is useful, for example, for the nationality
   requirement in job calls.
-
-Second version: islands (cabildos and consells), official comarcas and judicial districts. The
-islands are done (version 0.3); the judicial districts, AEMET's warning zones and the comarcas,
-since 0.4:
-
 - **Islands**: the 11 with a cabildo (Canary Islands) or a consell insular (Balearic Islands),
   with level `island` and an identifier with the INE island code (`es:isla:384` is Tenerife;
   `es:isla:072`, Ibiza). Their parent is the province. Municipalities keep their parent and also
@@ -119,7 +114,7 @@ since 0.4:
   keeps some extinct ones: those that AEMET does place on its website go in
   `fuentes/zonas-aviso.csv`, with the link to their page, and the rest stay without a zone and are
   listed in the report; it is never inferred from the map, which dates from 2018 and does not
-  match the current boundaries. The coastal zones (suffix `C`) are left for later. `search` and
+  match the current boundaries. The coastal zones (suffix `C`) are not included. `search` and
   `mentions` leave them out unless asked for in `levels`.
 - **Comarcas**: only those that are a local entity, those in the Registro de Entidades Locales: the
   42 comarcas of Catalonia plus Aran, the 33 of Aragon, the 7 cuadrillas of Álava and El Bierzo. Of
@@ -142,29 +137,24 @@ since 0.4:
   in `levels`, since they only exist in four communities and some share their name with a
   municipality.
 
-Later: population entities from the INE Nomenclátor (núcleos, and parishes in Galicia and
-Asturias), which number in the tens of thousands.
-
 ### 4.2 Codes
 
 | Code | Levels | Source | Notes |
 |---|---|---|---|
-| INE | autonomous community (2 digits), province (2), island (3), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
+| INE | autonomous community (2 digits), province (2), island (3, `ine:isla`), municipality (5 + check digit) | Annual INE dictionary and island table | Official; it is the basis of identity. |
 | Censo Judicial | judicial district (`mjusticia:partido`, 4 digits: province 2 + number 2) | Ministry of Justice's Censo Judicial | The number is the district's in the judicial map of its province. The Generalitat's technical catalogue (CTEAJE) uses the same code except in Ceuta and Melilla (1112 and 2908, against 5112 and 5208). |
 | AEMET | warning zone (`aemet:zona`, 6 digits: community 2 + province or island group 2 + zone 2) | AEMET OpenData municipality master and Meteoalerta zone boundaries | The community and province digits are AEMET's, not the INE's (the Balearic Islands use 53–55 and the Canary Islands 90–96). |
 | Comarca | comarca (`rel:comarca`, 8 digits; `idescat:comarca` and `aragon:comarca`, 2 digits) | Registro de Entidades Locales, Idescat and Government of Aragon | The Registro number starts with 06 and the community; the Registro's Excel drops the leading zero. The Lluçanès does not have one yet. |
-| ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata, cross-checked with the UN | |
-| ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list, cross-checked with Wikidata | |
+| ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata | |
+| ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list; linked to Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
 | LAU | municipality | Annual Eurostat LAU table | In Spain it is the 5-digit INE code (checked on all 8,132 municipalities); see §4.5 for what else it provides. |
 | DGC (Catastro) | municipality (`dgc:municipio`, 5 digits: office 2 + municipality 3) | Free Catastro web services (`OVCCallejero`, `ConsultaProvincia` and `ConsultaMunicipio`), which give the DGC and the INE code of each municipality | Different from the INE code in many municipalities (A Coruña: INE `15030`, DGC `15900`). The link is by code, not by name; the name is only cross-checked. Álava, Gipuzkoa, Navarre and Biscay have a foral land registry and have no DGC code. |
 | BDDAE (INSPIRE) | municipality (`ign:bddae`, 11 digits: 34 + community 2 + province 2 + INE 5) | IGN boundaries (BDLJE) | Code of the IGN administrative unit and `localId` of its INSPIRE identifier (namespace `ES.IGN.BDDAE`). Linked when the INE code, the province and the community match. |
 | Wikidata | all | SPARQL from the INE code | CC0. Provides names per language, links to Wikipedia and other identifiers. |
-| OpenStreetMap | all | Relation identifier, from Wikidata and cross-checked with OSM | The Wikidata identifier is CC0; whatever is copied from OSM goes separately under ODbL (§7). |
+| OpenStreetMap | all | Relation identifier, from Wikidata | The Wikidata identifier is CC0; whatever is copied from OSM goes separately under ODbL (§7). |
 | GeoNames | all | From Wikidata | CC BY 4.0. Widely used by other tools. |
 | Postal code | municipality (many-to-many relationship, `datos/codigos-postales.csv`) | What the public administrations publish: Madrid city council, ICGC (Catalonia), IDENA (Navarre), Eustat (Basque Country), IDEIB (Balearic Islands), the INE electoral roll street directory (all Spain), CDAU (Andalusia, cross-checking only) and the Catastro (INSPIRE Addresses, common regime) | Useful for reading addresses. Not a `resolve` system (§6). In each municipality the first source that covers it and has data decides (decision 14); each pair carries its source, its count in that source's unit and the other sources that have it (`also`). `codigos-postales-fuentes.csv` keeps what each source says, for cross-checking and for claims. Its own workflow rebuilds it twice a year. Discarded sources: CartoCiudad (its agreement with Correos only allows consulting the codes, not downloading them) and the Correos website. |
-| datos.gob.es | autonomous community and province | URIs of the Norma Técnica de reutilización (annex V) | Additional identifier for linking with the national open data catalogue; there are no municipality URIs. |
-| EU Vocabularies (ATU) | to be confirmed | Publications Office of the EU | List of administrative units of the Member States with URIs; linked if it reaches municipalities. |
 
 DIR3 and the other codes of public bodies do not go here: they identify the town council, not the
 territory (see §10).
@@ -191,7 +181,7 @@ Name fields of each territory:
 | `display` | «A Coruña», «Alicante/Alacant», «Illes Balears» | Derived: the article moves to the front. It can be corrected by hand. |
 | `parts` | `{"es": "Alicante", "ca": "Alacant"}` | Only in bilingual official names. The language of each part comes from a hand-reviewed list cross-checked with Wikidata. |
 | `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Usual name in each language. For autonomous communities, a hand-reviewed list; for provinces and municipalities, Wikidata, only if it differs from the official one. |
-| `short` | «Baleares», «Navarra» | Autonomous communities and provinces; hand-reviewed list, per language. |
+| `short` | «Baleares», «Navarra» | Autonomous communities; hand-reviewed list, per language. |
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Hand-reviewed list, with its language and its type (exonym, historical, abbreviation). |
 | `slug` | `a-coruna` | Derived |
 
@@ -227,8 +217,6 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
   below the boundaries' own uncertainty of about 40 m) and with our identifiers. It includes the
   shared areas that belong to no municipality (comunidades jurisdiccionales), without an
   identifier.
-- **Simplified maps** (TopoJSON of autonomous communities, provinces and municipalities) for
-  drawing on a website, made by us from those of the IGN.
 - **Official population** of provinces and municipalities from the INE (padrón at 1 January),
   from its JSON API: one table per province with its total and that of each municipality. The
   municipalities are checked to add up to their province's total. The INE tables for communities
@@ -238,8 +226,6 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
   urbanisation (city, intermediate, rural), whether it is coastal and which city or functional
   urban area it belongs to. For example, they make it possible to filter job offers in rural areas
   with an official criterion.
-- **European typologies per province** (NUTS 3): urban or rural, metropolitan, mountain, coastal,
-  island and border.
 - **Time zone**: `Europe/Madrid`; `Atlantic/Canary` in the Canary Islands; `Africa/Ceuta` in Ceuta
   and Melilla.
 - **Links to Wikipedia** in each language, from Wikidata.
@@ -298,8 +284,6 @@ options go in an object (`search(text, { within, levels })`).
 Postal codes have their own table (`load_postal_codes`; in JS, `loadPostalCodes` in Node or
 `createPostalCodes` in the browser), not `resolve`: a code spans several municipalities and a
 municipality has several codes, while `resolve` returns a single territory.
-
-Fuzzy search (`fuzzy=True`, with an optional dependency) is left for later.
 
 The rest of the library never calls the Catastro. To place an urban reference or a point there is
 the separate, optional module `catastro_online` (in JS, the subpath
@@ -406,7 +390,6 @@ The first version is Spain only, but nothing prevents extending it:
   They change more often and have other sources, such as the Registro de Entidades Locales.
 - **Non-working days per territory**, to calculate deadlines in working days: another sibling
   dataset.
-- **Change notice**: an automatic PR when the INE publishes a new municipality or a name change.
 
 ## 11. Similar projects
 
@@ -417,13 +400,13 @@ the source), but several are useful for cross-checking or as inspiration:
 | Project | What it provides | Intended use |
 |---|---|---|
 | [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Autonomous communities, provinces, current and historical municipalities (INE dictionaries since 2004) and islands, in CSV and JSON. | Cross-checking only: the repository has no licence. On 10 November 2026 it matched our data in all 8,132 municipalities and 52 provinces. Its sources are the INE's, which we read directly. |
-| [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Mapping of INE and Catastro codes taken from the OVC service. | Cross-checking of the Catastro mapping that we will make. |
+| [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Mapping of INE and Catastro codes taken from the OVC service. | Cross-checking of our Catastro mapping. |
 | EU Vocabularies: ATU and Country authority tables (Publications Office) | Administrative units of the Member States, current and past, with stable URIs. | Cross-checking and linking, if its coverage of Spain reaches municipalities. |
 | Eurostat GISCO | LAU–NUTS tables and boundaries. | The tables and the codes, yes. The boundaries, no: their licence excludes commercial use. |
 | EuroGeographics, Open Maps For Europe | European boundaries. | Discarded: EuroGeographics' own licence, EuroBoundaryMap is not open, and the data for Spain come from the IGN, which we use directly. |
 | Unicode CLDR and Debian iso-codes | Translated names of countries and of ISO 3166-2 subdivisions. | Reviewed on 11 November 2026 (CLDR 49): discarded for country names, which still come from Wikidata. It has no Aranese and uses interface names («Congo - Kinshasa», «RAE de Hong Kong (China)», «Côte d’Ivoire» in Spanish). |
 | mapSpain and giscoR (R packages) | Maps of Spain and dictionaries of codes and names. | Inspiration. |
-| datos.gob.es | URIs of autonomous communities and provinces. | Additional identifier (§4.2). |
+| datos.gob.es | URIs of autonomous communities and provinces. | Possible additional identifier. |
 | Base de datos general de entidades locales (Ministry of Finance) | Local entities with INE code and NIF. | For the sibling repo of public bodies. |
 
 Reviewed on 10 November 2026:
@@ -500,45 +483,7 @@ Taken on 11 November 2026:
     because it is an old binary Excel file and they change very little. Municipalities of other
     communities are not filled in with statistical comarcas.
 
-## 13. Pending
-
-- Translate this document and the README into Catalan, Galician, Basque and Aranese.
-- Review the translations of the website, of its status page and of the names of autonomous
-  communities (marked as pending).
-- Review the discrepancy report of the first generation: Wikidata labels that are the name of
-  another municipality, repeated identifiers and former municipalities with an INE code in
-  Wikidata; fix in Wikidata what is their error.
-- Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
-  Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
-  link to open the PR by hand. GitHub Pages is already enabled.
-- More postal-code sources: La Rioja, Gipuzkoa, Málaga, Barcelona…
-- Status page, later (Codex review of PR #19): operational state (age of each source, coverage
-  regressions, open discrepancies, published version); diagrams drawn as SVG in CI so as not to
-  depend on jsDelivr; data PRs opened by Actions should trigger CI; bars instead of pies if these
-  fall short.
-- Comarcas, later: check them every month against the Registro de Entidades Locales export (it is
-  downloaded without a browser from `…/export_excel/comarcas/all`, but it is an old binary Excel
-  file, .xls, that would have to be read); their Wikidata item and their names in other languages;
-  register the Lluçanès when the Registro does, after the 2027 elections. Statistical or planning
-  comarcas (Galicia, Valencian Community, Asturias, Navarre's zoning) would go with another type,
-  if wanted.
-- Cross-references of the judicial districts, as later layers: their Wikidata item (390 of 431,
-  linkable through the seat) and their names in other languages; the CGPJ's population by
-  district; the other jurisdictions in the Censo Judicial (section of the Audiencia, High Court,
-  public prosecutor, civil registry).
-- AEMET warning zones, later: the 51 coastal ones, linked to their land zone, and their Wikidata
-  item. Ask AEMET to place the municipalities that still have no zone (San Martín del Tesorillo,
-  Usansolo, El Palmar de Troya…).
-- Country names: they still come from Wikidata, which has some typos. Review them, fix the typos
-  here with a file in `fuentes/` and fix them in Wikidata too.
-- Postal codes in Andalusia: CDAU has 526 pairs that the INE, which decides there, lacks; the
-  Cadastre confirms 176 of them (Vera Playa, 04621, among them). They are probably second-home
-  areas missing from the electoral census, where the INE data comes from. Consider whether CDAU
-  should contribute those pairs.
-- Later: population entities, historical INE changes (annual dictionaries since 2004 and each
-  year's page of changes), fuzzy search.
-
-## 14. To verify
+## 13. Source checks
 
 Before using each source, its URL, format and licence have to be checked. Already checked on
 9 November 2026:
@@ -549,8 +494,7 @@ Before using each source, its URL, format and licence have to be checked. Alread
   identical for the 8,132 municipalities of 2026), names, population, area, degree of
   urbanisation, coast, city and functional urban area.
 - **NUTS 2024**: in force since 1 January 2024 (Commission Delegated Regulation (EU) 2023/674);
-  Spain has 7 NUTS 1, 19 NUTS 2 and 59 NUTS 3. It remains to confirm whether there are changes
-  with respect to NUTS 2021.
+  Spain has 7 NUTS 1, 19 NUTS 2 and 59 NUTS 3.
 - **Wikidata**: property P772 (INE code) admits 2 digits (province), 5 (municipality) and 11
   (population entity), so it has to be filtered by length. P782 (LAU) carries the country prefix.
   There is no property for the Catastro code.
@@ -654,7 +598,3 @@ Checked on 11 November 2026:
 - **Cross-checking the districts**: the CGPJ publishes the population by district and municipality
   every year (XLSX, names only) and the Generalitat the CTEAJE catalogue of Spain's districts (code,
   name and seat). No third-party repository with the national relation is maintained.
-
-To be checked:
-
-- licences of iso-codes and EU Vocabularies.
