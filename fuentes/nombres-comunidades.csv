@@ -1,115 +1,115 @@
-ine,lang,name,short,status
-01,es,Andalucía,,revisado
-01,ca,Andalusia,,pendiente
-01,gl,Andalucía,,pendiente
-01,eu,Andaluzia,,pendiente
-01,oc,Andalosia,,pendiente
-01,en,Andalusia,,pendiente
-02,es,Aragón,,revisado
-02,ca,Aragó,,pendiente
-02,gl,Aragón,,pendiente
-02,eu,Aragoi,,pendiente
-02,oc,Aragon,,pendiente
-02,en,Aragon,,pendiente
-03,es,Principado de Asturias,Asturias,revisado
-03,ca,Principat d'Astúries,Astúries,pendiente
-03,gl,Principado de Asturias,Asturias,pendiente
-03,eu,Asturiasko Printzerria,Asturias,pendiente
-03,oc,Principat d'Astúrias,Astúrias,pendiente
-03,en,Principality of Asturias,Asturias,pendiente
-04,es,Illes Balears,Baleares,revisado
-04,ca,Illes Balears,Balears,pendiente
-04,gl,Illas Baleares,Baleares,pendiente
-04,eu,Balear Uharteak,,pendiente
-04,oc,Isles Balears,Balears,pendiente
-04,en,Balearic Islands,,pendiente
-05,es,Canarias,,revisado
-05,ca,Canàries,,pendiente
-05,gl,Canarias,,pendiente
-05,eu,Kanariak,,pendiente
-05,oc,Canàrias,,pendiente
-05,en,Canary Islands,,pendiente
-06,es,Cantabria,,revisado
-06,ca,Cantàbria,,pendiente
-06,gl,Cantabria,,pendiente
-06,eu,Kantabria,,pendiente
-06,oc,Cantàbria,,pendiente
-06,en,Cantabria,,pendiente
-07,es,Castilla y León,,revisado
-07,ca,Castella i Lleó,,pendiente
-07,gl,Castela e León,,pendiente
-07,eu,Gaztela eta Leon,,pendiente
-07,oc,Castelha e Leon,,pendiente
-07,en,Castile and León,,pendiente
-08,es,Castilla-La Mancha,,revisado
-08,ca,Castella-la Manxa,,pendiente
-08,gl,Castela-A Mancha,,pendiente
-08,eu,Gaztela-Mantxa,,pendiente
-08,oc,Castelha-La Mancha,,pendiente
-08,en,Castilla-La Mancha,,pendiente
-09,es,Cataluña,,revisado
-09,ca,Catalunya,,pendiente
-09,gl,Cataluña,,pendiente
-09,eu,Katalunia,,pendiente
-09,oc,Catalonha,,pendiente
-09,en,Catalonia,,pendiente
-10,es,Comunitat Valenciana,,revisado
-10,ca,Comunitat Valenciana,,pendiente
-10,gl,Comunidade Valenciana,,pendiente
-10,eu,Valentziako Erkidegoa,,pendiente
-10,oc,Comunitat Valenciana,,pendiente
-10,en,Valencian Community,,pendiente
-11,es,Extremadura,,revisado
-11,ca,Extremadura,,pendiente
-11,gl,Estremadura,,pendiente
-11,eu,Extremadura,,pendiente
-11,oc,Extremadura,,pendiente
-11,en,Extremadura,,pendiente
-12,es,Galicia,,revisado
-12,ca,Galícia,,pendiente
-12,gl,Galicia,,pendiente
-12,eu,Galizia,,pendiente
-12,oc,Galícia,,pendiente
-12,en,Galicia,,pendiente
-13,es,Comunidad de Madrid,Madrid,revisado
-13,ca,Comunitat de Madrid,Madrid,pendiente
-13,gl,Comunidade de Madrid,Madrid,pendiente
-13,eu,Madrilgo Erkidegoa,Madril,pendiente
-13,oc,Comunautat de Madrid,Madrid,pendiente
-13,en,Community of Madrid,Madrid,pendiente
-14,es,Región de Murcia,Murcia,revisado
-14,ca,Regió de Múrcia,Múrcia,pendiente
-14,gl,Rexión de Murcia,Murcia,pendiente
-14,eu,Murtziako Eskualdea,Murtzia,pendiente
-14,oc,Region de Múrcia,Múrcia,pendiente
-14,en,Region of Murcia,Murcia,pendiente
-15,es,Comunidad Foral de Navarra,Navarra,revisado
-15,ca,Comunitat Foral de Navarra,Navarra,pendiente
-15,gl,Comunidade Foral de Navarra,Navarra,pendiente
-15,eu,Nafarroako Foru Komunitatea,Nafarroa,pendiente
-15,oc,Comunautat Forau de Navarra,Navarra,pendiente
-15,en,Chartered Community of Navarre,Navarre,pendiente
-16,es,País Vasco,,revisado
-16,ca,País Basc,,pendiente
-16,gl,País Vasco,,pendiente
-16,eu,Euskadi,,pendiente
-16,oc,País Basc,,pendiente
-16,en,Basque Country,,pendiente
-17,es,La Rioja,,revisado
-17,ca,La Rioja,,pendiente
-17,gl,A Rioxa,,pendiente
-17,eu,Errioxa,,pendiente
-17,oc,La Rioja,,pendiente
-17,en,La Rioja,,pendiente
-18,es,Ceuta,,revisado
-18,ca,Ceuta,,pendiente
-18,gl,Ceuta,,pendiente
-18,eu,Ceuta,,pendiente
-18,oc,Ceuta,,pendiente
-18,en,Ceuta,,pendiente
-19,es,Melilla,,revisado
-19,ca,Melilla,,pendiente
-19,gl,Melilla,,pendiente
-19,eu,Melilla,,pendiente
-19,oc,Melilla,,pendiente
-19,en,Melilla,,pendiente
+ine,lang,name,short,status,source
+01,es,Andalucía,,revisado,ine
+01,ca,Andalusia,,revisado,optimot
+01,gl,Andalucía,,revisado,rag
+01,eu,Andaluzia,,revisado,euskaltzaindia
+01,oc,Andalosia,,revisado,iea
+01,en,Andalusia,,revisado,uso
+02,es,Aragón,,revisado,ine
+02,ca,Aragó,,revisado,optimot
+02,gl,Aragón,,revisado,rag
+02,eu,Aragoi,,revisado,euskaltzaindia
+02,oc,Aragon,,revisado,iea
+02,en,Aragon,,revisado,uso
+03,es,Principado de Asturias,Asturias,revisado,ine
+03,ca,Principat d'Astúries,Astúries,revisado,optimot
+03,gl,Principado de Asturias,Asturias,revisado,rag
+03,eu,Asturiasko Printzerria,Asturias,revisado,euskaltzaindia
+03,oc,Principat d'Astúries,Astúries,revisado,iea
+03,en,Principality of Asturias,Asturias,revisado,uso
+04,es,Illes Balears,Baleares,revisado,ine
+04,ca,Illes Balears,Balears,revisado,optimot
+04,gl,Illas Baleares,Baleares,revisado,rag
+04,eu,Balear Uharteak,,revisado,euskaltzaindia
+04,oc,Isles Balears,Balears,pendiente,
+04,en,Balearic Islands,,revisado,uso
+05,es,Canarias,,revisado,ine
+05,ca,Canàries,,revisado,optimot
+05,gl,Canarias,,revisado,rag
+05,eu,Kanariak,,revisado,euskaltzaindia
+05,oc,Canàries,,revisado,iea
+05,en,Canary Islands,,revisado,uso
+06,es,Cantabria,,revisado,ine
+06,ca,Cantàbria,,revisado,optimot
+06,gl,Cantabria,,revisado,rag
+06,eu,Kantabria,,revisado,euskaltzaindia
+06,oc,Cantàbria,,revisado,iea
+06,en,Cantabria,,revisado,uso
+07,es,Castilla y León,,revisado,ine
+07,ca,Castella i Lleó,,revisado,optimot
+07,gl,Castela e León,,revisado,rag
+07,eu,Gaztela eta León,,revisado,euskaltzaindia
+07,oc,Castelha e Leon,,pendiente,
+07,en,Castile and León,,revisado,uso
+08,es,Castilla-La Mancha,,revisado,ine
+08,ca,Castella-la Manxa,,revisado,optimot
+08,gl,Castela-A Mancha,,revisado,rag
+08,eu,Gaztela-Mantxa,,revisado,euskaltzaindia
+08,oc,Castelha-La Mancha,,pendiente,
+08,en,Castilla-La Mancha,,revisado,uso
+09,es,Cataluña,,revisado,ine
+09,ca,Catalunya,,revisado,optimot
+09,gl,Cataluña,,revisado,rag
+09,eu,Katalunia,,revisado,euskaltzaindia
+09,oc,Catalonha,,revisado,estatuto
+09,en,Catalonia,,revisado,uso
+10,es,Comunitat Valenciana,,revisado,ine
+10,ca,Comunitat Valenciana,,revisado,optimot
+10,gl,Comunidade Valenciana,,revisado,rag
+10,eu,Valentziako Erkidegoa,,revisado,euskaltzaindia
+10,oc,Comunitat Valenciana,,revisado,iea
+10,en,Valencian Community,,revisado,uso
+11,es,Extremadura,,revisado,ine
+11,ca,Extremadura,,revisado,optimot
+11,gl,Estremadura,,revisado,rag
+11,eu,Extremadura,,revisado,euskaltzaindia
+11,oc,Extremadura,,revisado,iea
+11,en,Extremadura,,revisado,uso
+12,es,Galicia,,revisado,ine
+12,ca,Galícia,,revisado,optimot
+12,gl,Galicia,,revisado,rag
+12,eu,Galizia,,revisado,euskaltzaindia
+12,oc,Galícia,,revisado,iea
+12,en,Galicia,,revisado,uso
+13,es,Comunidad de Madrid,Madrid,revisado,ine
+13,ca,Comunitat de Madrid,Madrid,revisado,optimot
+13,gl,Comunidade de Madrid,Madrid,revisado,rag
+13,eu,Madrilgo Erkidegoa,Madril,revisado,euskaltzaindia
+13,oc,Comunitat de Madrid,Madrid,revisado,iea
+13,en,Community of Madrid,Madrid,revisado,uso
+14,es,Región de Murcia,Murcia,revisado,ine
+14,ca,Regió de Múrcia,Múrcia,revisado,optimot
+14,gl,Rexión de Murcia,Murcia,revisado,rag
+14,eu,Murtziako Erregioa,Murtzia,revisado,euskaltzaindia
+14,oc,Region de Múrcia,Múrcia,revisado,iea
+14,en,Region of Murcia,Murcia,revisado,uso
+15,es,Comunidad Foral de Navarra,Navarra,revisado,ine
+15,ca,Comunitat Foral de Navarra,Navarra,revisado,optimot
+15,gl,Comunidade Foral de Navarra,Navarra,revisado,rag
+15,eu,Nafarroako Foru Komunitatea,Nafarroa,revisado,euskaltzaindia
+15,oc,Comunitat Forau de Navarra,Navarra,pendiente,
+15,en,Chartered Community of Navarre,Navarre,revisado,uso
+16,es,País Vasco,,revisado,ine
+16,ca,País Basc,,revisado,optimot
+16,gl,País Vasco,,revisado,rag
+16,eu,Euskadi,,revisado,euskaltzaindia
+16,oc,País Basc,,revisado,iea
+16,en,Basque Country,,revisado,uso
+17,es,La Rioja,,revisado,ine
+17,ca,La Rioja,,revisado,optimot
+17,gl,A Rioxa,,revisado,rag
+17,eu,Errioxa,,revisado,euskaltzaindia
+17,oc,La Rioja,,pendiente,
+17,en,La Rioja,,revisado,uso
+18,es,Ceuta,,revisado,ine
+18,ca,Ceuta,,revisado,optimot
+18,gl,Ceuta,,revisado,rag
+18,eu,Ceuta,,revisado,euskaltzaindia
+18,oc,Ceuta,,revisado,iea
+18,en,Ceuta,,revisado,uso
+19,es,Melilla,,revisado,ine
+19,ca,Melilla,,revisado,optimot
+19,gl,Melilla,,revisado,rag
+19,eu,Melilla,,revisado,euskaltzaindia
+19,oc,Melilha,,revisado,iea
+19,en,Melilla,,revisado,uso

@@ -132,13 +132,13 @@ es:autonomia:03,lang,en,Principality of Asturias,fuentes
 es:autonomia:03,lang,es,Principado de Asturias,fuentes
 es:autonomia:03,lang,eu,Asturiasko Printzerria,fuentes
 es:autonomia:03,lang,gl,Principado de Asturias,fuentes
-es:autonomia:03,lang,oc,Principat d'Astúrias,fuentes
+es:autonomia:03,lang,oc,Principat d'Astúries,fuentes
 es:autonomia:03,short,ca,Astúries,fuentes
 es:autonomia:03,short,en,Asturias,fuentes
 es:autonomia:03,short,es,Asturias,fuentes
 es:autonomia:03,short,eu,Asturias,fuentes
 es:autonomia:03,short,gl,Asturias,fuentes
-es:autonomia:03,short,oc,Astúrias,fuentes
+es:autonomia:03,short,oc,Astúries,fuentes
 es:autonomia:04,official,,"Balears, Illes",fuentes
 es:autonomia:04,display,,Illes Balears,fuentes
 es:autonomia:04,lang,ca,Illes Balears,fuentes
@@ -160,7 +160,7 @@ es:autonomia:05,lang,en,Canary Islands,fuentes
 es:autonomia:05,lang,es,Canarias,fuentes
 es:autonomia:05,lang,eu,Kanariak,fuentes
 es:autonomia:05,lang,gl,Canarias,fuentes
-es:autonomia:05,lang,oc,Canàrias,fuentes
+es:autonomia:05,lang,oc,Canàries,fuentes
 es:autonomia:06,official,,Cantabria,fuentes
 es:autonomia:06,display,,Cantabria,fuentes
 es:autonomia:06,lang,ca,Cantàbria,fuentes
@@ -174,7 +174,7 @@ es:autonomia:07,display,,Castilla y León,fuentes
 es:autonomia:07,lang,ca,Castella i Lleó,fuentes
 es:autonomia:07,lang,en,Castile and León,fuentes
 es:autonomia:07,lang,es,Castilla y León,fuentes
-es:autonomia:07,lang,eu,Gaztela eta Leon,fuentes
+es:autonomia:07,lang,eu,Gaztela eta León,fuentes
 es:autonomia:07,lang,gl,Castela e León,fuentes
 es:autonomia:07,lang,oc,Castelha e Leon,fuentes
 es:autonomia:08,official,,Castilla - La Mancha,fuentes
@@ -228,7 +228,7 @@ es:autonomia:13,lang,en,Community of Madrid,fuentes
 es:autonomia:13,lang,es,Comunidad de Madrid,fuentes
 es:autonomia:13,lang,eu,Madrilgo Erkidegoa,fuentes
 es:autonomia:13,lang,gl,Comunidade de Madrid,fuentes
-es:autonomia:13,lang,oc,Comunautat de Madrid,fuentes
+es:autonomia:13,lang,oc,Comunitat de Madrid,fuentes
 es:autonomia:13,short,ca,Madrid,fuentes
 es:autonomia:13,short,en,Madrid,fuentes
 es:autonomia:13,short,es,Madrid,fuentes
@@ -240,7 +240,7 @@ es:autonomia:14,display,,Región de Murcia,fuentes
 es:autonomia:14,lang,ca,Regió de Múrcia,fuentes
 es:autonomia:14,lang,en,Region of Murcia,fuentes
 es:autonomia:14,lang,es,Región de Murcia,fuentes
-es:autonomia:14,lang,eu,Murtziako Eskualdea,fuentes
+es:autonomia:14,lang,eu,Murtziako Erregioa,fuentes
 es:autonomia:14,lang,gl,Rexión de Murcia,fuentes
 es:autonomia:14,lang,oc,Region de Múrcia,fuentes
 es:autonomia:14,short,ca,Múrcia,fuentes
@@ -256,7 +256,7 @@ es:autonomia:15,lang,en,Chartered Community of Navarre,fuentes
 es:autonomia:15,lang,es,Comunidad Foral de Navarra,fuentes
 es:autonomia:15,lang,eu,Nafarroako Foru Komunitatea,fuentes
 es:autonomia:15,lang,gl,Comunidade Foral de Navarra,fuentes
-es:autonomia:15,lang,oc,Comunautat Forau de Navarra,fuentes
+es:autonomia:15,lang,oc,Comunitat Forau de Navarra,fuentes
 es:autonomia:15,short,ca,Navarra,fuentes
 es:autonomia:15,short,en,Navarre,fuentes
 es:autonomia:15,short,es,Navarra,fuentes
@@ -296,7 +296,7 @@ es:autonomia:19,lang,en,Melilla,fuentes
 es:autonomia:19,lang,es,Melilla,fuentes
 es:autonomia:19,lang,eu,Melilla,fuentes
 es:autonomia:19,lang,gl,Melilla,fuentes
-es:autonomia:19,lang,oc,Melilla,fuentes
+es:autonomia:19,lang,oc,Melilha,fuentes
 es:provincia:01,official,,Araba/Álava,fuentes
 es:provincia:01,display,,Araba/Álava,fuentes
 es:provincia:01,parts,eu,Araba,fuentes
