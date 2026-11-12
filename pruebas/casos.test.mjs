@@ -46,8 +46,10 @@ test('search', () => {
 });
 
 test('mentions', () => {
-  for (const [text, levels, expected] of CASES.mentions) {
-    const found = CATALOG.mentions(text, levels ? { levels } : {}).map((m) => [m.text, m.candidates.map((c) => c.id)]);
+  for (const [text, levels, expected, within] of CASES.mentions) {  // within is optional
+    const options = levels ? { levels } : {};
+    if (within) options.within = within;
+    const found = CATALOG.mentions(text, options).map((m) => [m.text, m.candidates.map((c) => c.id)]);
     assert.deepEqual(found, expected, text);
   }
 });

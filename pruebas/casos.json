@@ -192,7 +192,12 @@
     ["Juzgado de Eivissa", ["judicial_district"], [["eivissa", ["es:partido:0705"]]]],
     ["Aviso naranja en el Litoral norte de Valencia", ["warning_zone"], [["litoral norte de valencia", ["es:zona-aviso:774602"]]]],
     ["Consell Comarcal del Gironès", ["comarca"], [["girones", ["es:comarca:0920"]]]],
-    ["Concejo de Krispiña (Vitoria-Gasteiz)", ["minor_local_entity"], [["krispina", ["es:entidad-menor:04010028"]]]]
+    ["Concejo de Krispiña (Vitoria-Gasteiz)", ["minor_local_entity"], [["krispina", ["es:entidad-menor:04010028"]]]],
+    ["Concejo de Krispiña (Vitoria-Gasteiz)", ["minor_local_entity"], [["krispina", ["es:entidad-menor:04010028"]]], "es:comarca:1604"],
+    ["Concejo de Krispiña (Vitoria-Gasteiz)", ["minor_local_entity"], [], "es:comarca:0939"],
+    ["EMD de Betren", ["minor_local_entity"], [["betren", ["es:entidad-menor:04250018"]]], "es:partido:2506"],
+    ["EMD de Betren", ["minor_local_entity"], [["betren", ["es:entidad-menor:04250018"]]], "es:zona-aviso:692501"],
+    ["EMD de Betren", ["minor_local_entity"], [], "es:partido:2005"]
   ],
   "relate_name": [
     ["Ourense", null, ["municipality"], "resolved", "es:municipio:32054", ["es:municipio:32054"], "name"],

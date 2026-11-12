@@ -43,8 +43,10 @@ class SharedCases(unittest.TestCase):
             self.assertEqual(found, expected, text)
 
     def test_mentions(self):
-        for text, levels, expected in CASES["mentions"]:
+        for text, levels, expected, *within in CASES["mentions"]:  # within is optional
             options = {"levels": levels} if levels else {}
+            if within:
+                options["within"] = within[0]
             found = [[m["text"], [c["id"] for c in m["candidates"]]] for m in CATALOG.mentions(text, **options)]
             self.assertEqual(found, expected, text)
 

@@ -1,4 +1,5 @@
 """Generator: readers and the build on the fixture inputs (pruebas/fuentes/entrada.json)."""
+import csv
 import gzip
 import io
 import json
@@ -608,6 +609,30 @@ class Build(unittest.TestCase):
         self.assertEqual(self.report.summary["Entidades locales menores"], 72)
         self.assertIn("01001 no está en el diccionario de municipios; no se publican 2 entidad(es) de "
                       "fuentes/entidades-menores.csv", self.report.sections["Entidades locales menores"])
+
+    def test_minor_local_entities_hand_list_matches_the_design(self):
+        """The whole fuentes/entidades-menores.csv, not only the fixture municipalities: the type is the one
+        of the community's law (design §4.1) and every bilingual name has its reviewed parts."""
+        community = {row["ine"]: row["autonomia"] for row in csv.DictReader(
+            (ROOT / "fuentes" / "provincias.csv").open(encoding="utf-8"))}
+        by_province = {"01": "concejo", "31": "concejo", "33": "parroquia_rural"}
+        by_community = {"01": "entidad_local_autonoma", "09": "entitat_municipal_descentralitzada", "08": "eatim"}
+        rows = list(csv.DictReader((ROOT / "fuentes" / "entidades-menores.csv").open(encoding="utf-8")))
+        self.assertEqual(len(rows), 3674)
+        for row in rows:
+            province = row["rel"][2:4]
+            expected = by_province.get(province) or by_community.get(community[province], "entidad_local_menor")
+            self.assertEqual(row["tipo"], expected, row)
+        parts = {row["id"]: row for row in csv.DictReader((ROOT / "fuentes" / "partes-bilingues.csv").open(encoding="utf-8"))
+                 if row["id"].startswith("es:entidad-menor:")}
+        not_bilingual = {"es:entidad-menor:04330039"}  # Brañas/Leitariegos
+        for row in rows:
+            identity = f"es:entidad-menor:{row['rel']}"
+            if "/" in row["official"] and identity not in not_bilingual:
+                part = parts.pop(identity)
+                self.assertEqual((part["official"], {part["first"], part["second"]}), (row["official"], {"es", "eu"}),
+                                 identity)
+        self.assertEqual(parts, {})  # no parts for an entity that is not in the list
 
     def test_minor_local_entities_hand_list_is_checked(self):
         inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
