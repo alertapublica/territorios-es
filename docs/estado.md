@@ -2,7 +2,7 @@
 
 Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md). Lo que falta, en los [issues «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo).
 
-| **9.160** | **8 de 8** | **8.132** | **24** | **14.054** |
+| **9.160** | **8 de 8** | **8.132** | **25** | **14.054** |
 |:---:|:---:|:---:|:---:|:---:|
 | territorios | niveles con datos | municipios | fuentes · descarga 2026-11-11 | pares código postal–municipio |
 
@@ -139,10 +139,10 @@ De las fuentes a los datos y de los datos a la librería, la web y las pruebas. 
 ```mermaid
 flowchart TB
   accTitle: Repositorio
-  ext(["24 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
+  ext(["25 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
   hand[/"fuentes/<br>13 listas revisadas a mano"/]
   descargas["descargas<br>descarga con caché, huella SHA-256 y relay"]
-  readers["lectores<br>aemet · catastro · codigos_postales · comarcas · eurostat · ign · ine · justicia · wikidata"]
+  readers["lectores<br>aemet · catastro · codigos_postales · comarcas · entidades · eurostat · ign · ine · justicia · wikidata"]
   construir["construir<br>cruza las fuentes y arma el catálogo"]
   exportar["exportar<br>escribe datos/ y comprueba su coherencia"]
   limites["limites<br>simplifica los límites a GeoJSON"]
@@ -196,7 +196,7 @@ flowchart TB
 </details>
 
 <details>
-<summary>Los 15 módulos del generador</summary>
+<summary>Los 16 módulos del generador</summary>
 
 | Módulo | Qué hace |
 |---|---|
@@ -204,6 +204,7 @@ flowchart TB
 | `catastro` | código DGC de cada municipio |
 | `codigos_postales` | códigos postales del municipio de Madrid; códigos postales de Cataluña; códigos postales de Navarra; códigos postales del País Vasco; códigos postales de Baleares; códigos postales de toda España (callejero del censo electoral); códigos postales de Andalucía (contraste); códigos postales de los municipios de régimen común |
 | `comarcas` | comarca de cada municipio de Cataluña; comarca de cada municipio de Aragón |
+| `entidades` | entidades de población: colectivas, singulares, núcleos y diseminados (callejero del censo electoral) |
 | `eurostat` | LAU, NUTS 3 y superficie |
 | `ign` | capital de cada municipio, con coordenadas y altitud; código BDDAE y límites municipales |
 | `ine` | códigos y nombres oficiales de los municipios; islas y sus municipios; cambios de nombre del año; provincias y comunidades; población oficial |
@@ -246,6 +247,7 @@ flowchart LR
   f_codigos_csv[("codigos.csv")]:::done
   f_comarcas_csv[("comarcas.csv")]:::done
   f_comunidades_csv[("comunidades.csv")]:::done
+  f_entidades_csv[("entidades.csv")]:::todo
   f_islas_csv[("islas.csv")]:::done
   f_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::box
   f_municipios_csv[("municipios.csv")]:::done
@@ -283,6 +285,7 @@ flowchart LR
   o_INE --> f_codigos_postales_csv
   o_INE --> f_codigos_csv
   o_INE --> f_comunidades_csv
+  o_INE --> f_entidades_csv
   o_INE --> f_islas_csv
   o_INE --> f_municipios_csv
   o_INE --> f_nombres_csv
@@ -303,7 +306,7 @@ flowchart LR
 ```
 
 <details>
-<summary>Las 24 fuentes, con su lector y la fecha de descarga</summary>
+<summary>Las 25 fuentes, con su lector y la fecha de descarga</summary>
 
 | Fuente | Organismo | Lector | Aporta | Descargada |
 |---|---|---|---|---|
@@ -329,6 +332,7 @@ flowchart LR
 | `eustat_portales` | Eustat | `generador/codigos_postales.py` | códigos postales del País Vasco | 2026-11-11 |
 | `ideib_portales` | IDEIB | `generador/codigos_postales.py` | códigos postales de Baleares | 2026-11-11 |
 | `ine_callejero` | INE | `generador/codigos_postales.py` | códigos postales de toda España (callejero del censo electoral) | 2026-11-11 |
+| `ine_entidades` | INE | `generador/entidades.py` | entidades de población: colectivas, singulares, núcleos y diseminados (callejero del censo electoral) | aún no |
 | `cdau_portales` | CDAU | `generador/codigos_postales.py` | códigos postales de Andalucía (contraste) | 2026-11-11 |
 | `catastro_direcciones` | Catastro | `generador/codigos_postales.py` | códigos postales de los municipios de régimen común | 2026-11-11 |
 
@@ -345,6 +349,7 @@ flowchart LR
 | [`codigos.csv`](../datos/codigos.csv) | 67.083 | 2,9 MB | Catastro, Eurostat, INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos) |
 | [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comarcas) |
 | [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comunidades) |
+| `entidades.csv` | 13 |  | INE | solo en pruebas |  |
 | [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/islas) |
 | [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | en datos/ |  |
 | [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/municipios) |
@@ -386,11 +391,12 @@ flowchart LR
   accTitle: Librería
   d_Catastro[("Catastro")]:::box
   d_codigos_postales_csv[("codigos-postales.csv")]:::done
+  d_entidades_csv[("entidades.csv")]:::done
   d_limites_municipios_geojson_gz[("limites-municipios.geojson.gz")]:::box
   d_territorios_json[("territorios.json")]:::done
   m_catalog["catalog<br>resolve · territory · search · mentions · name · children"]
   d_territorios_json --> m_catalog
-  m_relation["relation<br>relate_name · combine"]
+  m_relation["relation<br>relate_name · combine · to_municipality"]
   m_text["text<br>normalize · display_name · slugify"]
   m_geo["geo<br>distances · point in polygon"]
   m_catastro["catastro<br>parse_cadastral_reference · relate_cadastral_reference"]
@@ -400,6 +406,8 @@ flowchart LR
   d_limites_municipios_geojson_gz --> m_limits
   m_postal["postal<br>postal_codes · municipalities · relate_postal_code"]
   d_codigos_postales_csv --> m_postal
+  m_entities["entities<br>load_entities"]
+  d_entidades_csv --> m_entities
   m_text --> m_catalog
   m_catalog --> m_relation
   m_geo --> m_limits

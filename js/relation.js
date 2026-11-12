@@ -38,3 +38,19 @@ export function combine(...relations) {
   }
   return relation('pending', null, possible, 'ambiguous', evidence);
 }
+
+// The same relation about municipalities: each population entity becomes its municipality, so that it
+// can be combined with relations about municipalities. Other territories stay as they are. A pending
+// relation whose candidates all fall in one municipality becomes resolved.
+export function toMunicipality(catalog, rel) {
+  const up = (id) => catalog.territory(id)?.municipality ?? id;
+  const ids = sortedSet([rel.territory, ...rel.candidates].filter((id) => id != null));
+  const evidence = [...rel.evidence, ...ids.filter((id) => up(id) !== id)
+    .map((id) => ({ source: 'municipality', datum: id, territory: up(id) }))];
+  const candidates = sortedSet(rel.candidates.map(up));
+  if (rel.status === 'resolved') return relation('resolved', up(rel.territory), candidates, rel.reason, evidence);
+  if (rel.status === 'pending' && candidates.length === 1) {
+    return relation('resolved', candidates[0], candidates, 'same_municipality', evidence);
+  }
+  return relation(rel.status, null, candidates, rel.reason, evidence);
+}

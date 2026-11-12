@@ -20,3 +20,4 @@ packages = ["python/territorios_es"]
 [tool.hatch.build.targets.wheel.force-include]
 "datos/territorios.json" = "territorios_es/datos/territorios.json"
 "datos/codigos-postales.csv" = "territorios_es/datos/codigos-postales.csv"
+"datos/entidades.csv" = "territorios_es/datos/entidades.csv"

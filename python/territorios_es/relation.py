@@ -52,3 +52,23 @@ def combine(*relations: dict) -> dict:
         (only,) = possible
         return relation("resolved", only, possible, "combined", evidence)
     return relation("pending", None, possible, "ambiguous", evidence)
+
+
+def to_municipality(catalog, relation_: dict) -> dict:
+    """The same relation about municipalities: each population entity becomes its municipality, so
+    that it can be combined with relations about municipalities. Other territories stay as they
+    are. A pending relation whose candidates all fall in one municipality becomes resolved."""
+    def up(identity):
+        found = catalog.territory(identity)
+        return found.get("municipality", identity) if found else identity
+
+    ids = sorted({relation_["territory"], *relation_["candidates"]} - {None})
+    evidence = [*relation_["evidence"], *({"source": "municipality", "datum": i, "territory": up(i)}
+                                          for i in ids if up(i) != i)]
+    candidates = {up(i) for i in relation_["candidates"]}
+    if relation_["status"] == "resolved":
+        return relation("resolved", up(relation_["territory"]), candidates, relation_["reason"], evidence)
+    if relation_["status"] == "pending" and len(candidates) == 1:
+        (only,) = candidates
+        return relation("resolved", only, candidates, "same_municipality", evidence)
+    return relation(relation_["status"], None, candidates, relation_["reason"], evidence)

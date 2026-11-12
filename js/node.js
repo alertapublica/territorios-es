@@ -1,4 +1,5 @@
-// Node entry point: adds loadCatalog(), which reads the bundled datos/territorios.json.
+// Node entry point: adds loadCatalog(), which reads the bundled datos/territorios.json, and the
+// loaders of the other bundled files.
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { createCatalog } from './catalog.js';
@@ -25,4 +26,12 @@ export function loadPostalCodes(path = process.env.TERRITORIOS_ES_DATOS
   ? `${process.env.TERRITORIOS_ES_DATOS}/codigos-postales.csv`
   : new URL('../datos/codigos-postales.csv', import.meta.url)) {
   return createPostalCodes(readFileSync(path, 'utf8'));
+}
+
+// Catalogue with the territories and the population entities of datos/entidades.csv (by default, the
+// bundled ones). It takes a few seconds: loadCatalog() keeps the catalogue without entities.
+const bundled = (name) => (process.env.TERRITORIOS_ES_DATOS
+  ? `${process.env.TERRITORIOS_ES_DATOS}/${name}` : new URL(`../datos/${name}`, import.meta.url));
+export function loadEntities(path = bundled('entidades.csv'), territories = bundled('territorios.json')) {
+  return createCatalog(JSON.parse(readFileSync(territories, 'utf8')), { entities: readFileSync(path, 'utf8') });
 }

@@ -1,5 +1,6 @@
 """Writes datos/: territorios.json (one territory per line), CSV tables and the manifest.
-Every CSV except wikipedia.csv is derived from territorios.json, so --check can rebuild them."""
+Every CSV except wikipedia.csv and entidades.csv is derived from territorios.json, so --check can
+rebuild them."""
 from __future__ import annotations
 
 import csv
@@ -10,7 +11,7 @@ from pathlib import Path
 
 from territorios_es.catalog import Catalog
 
-from . import codigos_postales
+from . import codigos_postales, entidades
 from .construir import UI_LANGS
 
 # Where each kind of datum comes from (design §5). Used for the provenance columns.
@@ -148,10 +149,10 @@ def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def write(folder: Path, data: dict, articles: list[list[str]], sources: dict):
+def write(folder: Path, data: dict, articles: list[list[str]], sources: dict, entities: str):
     folder.mkdir(parents=True, exist_ok=True)
     contents = {"territorios.json": territories_json(data), **tables(data),
-                "wikipedia.csv": wikipedia_csv(articles)}
+                "wikipedia.csv": wikipedia_csv(articles), entidades.FILE: entities}
     for name, text in contents.items():
         (folder / name).write_text(text, encoding="utf-8")
     files = {name: _sha(text) for name, text in contents.items()}
@@ -188,6 +189,18 @@ def check(folder: Path) -> list[str]:
                 problems.append(f"{name} is missing")
         elif _sha((folder / name).read_text(encoding="utf-8")) != digest:
             problems.append(f"{name} does not match manifiesto.json")
+    path = folder / entidades.FILE
+    if path.exists():
+        if entidades.FILE not in manifest["files"]:
+            problems.append(f"{entidades.FILE} is not in manifiesto.json")
+        text = path.read_text(encoding="utf-8")
+        try:
+            Catalog(data, text)  # validates the rows, their municipalities and their parents
+            rows = list(csv.reader(io.StringIO(text)))[1:]
+            if text != entidades.table(sorted(rows, key=lambda row: row[1])):
+                problems.append(f"{entidades.FILE} is not in canonical form")
+        except ValueError as error:
+            problems.append(f"{entidades.FILE}: {error}")
     for name, header in ((codigos_postales.FILE, codigos_postales.HEADER),
                          (codigos_postales.OBSERVATIONS, codigos_postales.OBSERVATION_HEADER)):
         if (folder / name).exists():

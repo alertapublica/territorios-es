@@ -130,7 +130,7 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   de Galicia, la Comunitat Valenciana o Asturias, que son estadísticas o de planificación, quedan
   fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
   pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
-- **Entidades de población** (en preparación, issue #31): las unidades poblacionales del INE, del
+- **Entidades de población** (issue #31; la lectura y la carga, desde #43; lo demás, en preparación): las unidades poblacionales del INE, del
   fichero de unidades (`UP`) del callejero del censo electoral, el mismo ZIP que ya se lee para los
   códigos postales. Cuatro niveles: `collective_entity` (entidad colectiva: las parroquias de
   Galicia y Asturias, las diputaciones de Murcia…, solo donde existen), `singular_entity`, `nucleus`
@@ -138,18 +138,24 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   también los diseminados, porque de ellos cuelgan tramos del callejero, población y lugares del
   IGN. El padre de una entidad singular es su colectiva, si la tiene, o su municipio; el de un
   núcleo o un diseminado, su entidad singular. No se inventan colectivas. Son unos 146.000
-  registros, así que no van en `territorios.json`, sino en un fichero aparte con su cargador, que
-  amplía el catálogo solo si se pide, como los códigos postales; si entra en los paquetes se decide
-  midiendo su tamaño. Identificador `es:entidad:` y las 11 cifras del INE (provincia, municipio,
+  registros, así que no van en `territorios.json`, sino en un fichero aparte con su cargador
+  (`load_entities`; en JS, `loadEntities` en Node o `createCatalog(datos, { entities })` en el
+  navegador), que amplía el catálogo solo si se pide. Es `datos/entidades.csv`, que va en los
+  paquetes: unos 7 MB (1 MB comprimido), con el identificador, el código de 12 cifras y el nombre del
+  INE; el nivel y el padre salen del código. Se regenera cada mes con los demás datos, desde la
+  edición más reciente del callejero, así que nunca apunta a un municipio que ya no existe; lo que
+  no se puede publicar (municipio desconocido, sin nombre, sin su entidad padre) va al informe.
+  Identificador `es:entidad:` y las 11 cifras del INE (provincia, municipio,
   colectiva, singular y núcleo, sin el dígito de control que añade el callejero), asignado la
   primera vez y congelado: si el INE recodifica, el identificador se mantiene y se anota el código
   nuevo (§4.6). Códigos `ine:entidad` (11 cifras) e `ine:entidad:dc` (12). `search`, `mentions` y
   `relate_name` no las devuelven salvo que se pidan en `levels`, porque hay decenas de miles de
   homónimos, y cada candidato lleva su municipio y su colectiva. Para que todo quede enlazado, lo
   que cuelga del municipio (isla, comarca, partido judicial, zona de aviso) vale también para sus
-  entidades, también en `within`; una relación con una entidad se podrá llevar de forma explícita a
-  su municipio para combinarla con otra de municipio (hoy `combine` las daría por contradictorias);
-  y `normalize` tendrá que entender el artículo entre paréntesis del INE («DEVESA (A)»). Una entidad
+  entidades, también en `within`; una relación con una entidad se lleva de forma explícita a su
+  municipio con `to_municipality` para combinarla con otra de municipio (sin ese paso, `combine`
+  las da por contradictorias); y `normalize` entiende el artículo entre paréntesis del INE
+  («DEVESA (A)»). Una entidad
   colectiva no es sin más una parroquia ni una entidad local menor: esas equivalencias, si se hacen,
   llevan su fuente. Un punto no es un límite: `locate` sigue devolviendo municipios.
 
@@ -219,7 +225,8 @@ fuente y del idioma, que no se aplica a ciegas a otros textos (vías, parajes, o
 nombre lleva su procedencia y si está revisado (#40). Un diccionario de tildes solo propone
 correcciones para revisar. Si el IGN da otro nombre («Santiago» frente a «SANTIAGO DE CUDEYO»), va
 al informe como discrepancia, no como alias. Un diseminado se muestra con una etiqueta derivada del
-nombre de su entidad singular («Diseminado de A Devesa»).
+nombre de su entidad singular («Diseminado de A Devesa»). Mientras no esté esta capa (#44),
+`display` es el literal del INE con el artículo delante («A DEVESA») y `names.reviewed` es falso.
 
 ### 4.4 Qué nombre se muestra en cada idioma
 
@@ -306,7 +313,7 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 |---|---|
 | `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca. Los partidos judiciales, las zonas de aviso y las comarcas solo salen si se piden en `levels`. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca. Los partidos judiciales, las zonas de aviso, las comarcas y las entidades de población solo salen si se piden en `levels`. |
 | `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial, una zona de aviso o una comarca, sus municipios. Los de una comunidad incluyen sus comarcas; los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |
@@ -319,6 +326,8 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 | `postal_codes(id)` | Los códigos postales de un municipio, por código, cada uno con su fuente, su recuento, su unidad y las demás fuentes que lo tienen (`also`). |
 | `municipalities(code)` | Los municipios de un código postal: por recuento si todos tienen la misma unidad (direcciones, portales o tramos) y, si no, por los tramos del INE (0 si no tiene el par), porque recuentos de unidades distintas no se comparan. |
 | `relate_postal_code(code)` | Resuelto si el código es de un solo municipio; pendiente si es de varios o de ninguno. Las evidencias traen la fuente, el recuento, la unidad y `also` de cada candidato. Con `combine` y el nombre del municipio se deshace la ambigüedad. |
+| `load_entities(path)` | El catálogo con las entidades de población (§4.1): `resolve` con `ine:entidad` o `ine:entidad:dc`, `children` por la jerarquía y `search` si se piden sus niveles, con el municipio y la colectiva de cada candidato. Tarda unos segundos; las funciones del módulo siguen usando el catálogo sin entidades. |
+| `to_municipality(relation)` | La misma relación llevada a municipios: cada entidad de población pasa a su municipio, con la evidencia del paso. Si todos los candidatos caen en un municipio, resuelta (`same_municipality`). Así se combina con una relación de municipio. |
 
 Los códigos postales van en su propia tabla (`load_postal_codes`; en JS, `loadPostalCodes` en Node o
 `createPostalCodes` en el navegador), no en `resolve`: un código abarca varios municipios y un
@@ -524,7 +533,8 @@ Tomada el 12 de noviembre de 2026, con una revisión independiente de Codex:
     del callejero y carga; nombres para mostrar y cruce con el IGN; población y cambios entre
     ediciones; códigos postales por entidad; Wikidata y alias. Las entidades locales menores del
     Registro de Entidades Locales van aparte. Lo que se publique tiene que quedar enlazado con el
-    municipio y con lo que cuelga de él.
+    municipio y con lo que cuelga de él. El fichero, `datos/entidades.csv`, va en los paquetes
+    (unos 7 MB, 1 MB comprimido) y se genera cada mes con los demás datos (#43).
 
 ## 13. Comprobaciones de las fuentes
 

@@ -73,6 +73,7 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "eustat_portales": ("Eustat", "codigos_postales", POSTAL),
     "ideib_portales": ("IDEIB", "codigos_postales", POSTAL),
     "ine_callejero": ("INE", "codigos_postales", POSTAL),
+    "ine_entidades": ("INE", "entidades", ["entidades.csv"]),
     "cdau_portales": ("CDAU", "codigos_postales", POSTAL),
     "catastro_direcciones": ("Catastro", "codigos_postales", POSTAL),
 }
@@ -82,13 +83,14 @@ HAND_LISTS = ["fuentes.json", "comunidades.csv", "nombres-comunidades.csv", "pro
 GENERATOR = ["__main__", "descargas", "xlsx", "construir", "exportar", "limites"]  # generator modules that read no source
 LIBRARY = {  # module (Python .py and JavaScript .js): data it reads, what it offers
     "catalog": ("territorios.json", "resolve · territory · search · mentions · name · children"),
-    "relation": (None, "relate_name · combine"),
+    "relation": (None, "relate_name · combine · to_municipality"),
     "text": (None, "normalize · display_name · slugify"),
     "geo": (None, "distances · point in polygon"),
     "catastro": (None, "parse_cadastral_reference · relate_cadastral_reference"),
     "catastro_online": ("Catastro", "locate_reference · locate_point"),
     "limits": ("limites-municipios.geojson.gz", "load_limits · locate"),
     "postal": ("codigos-postales.csv", "postal_codes · municipalities · relate_postal_code"),
+    "entities": ("entidades.csv", "load_entities"),
 }
 LIBRARY_GLUE = {"__init__.py", "index.js", "node.js"}
 WORKFLOWS = {"ci.yml": "CI", "generar.yml": "Generar datos", "codigos-postales.yml": "Códigos postales",

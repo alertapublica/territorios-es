@@ -46,6 +46,9 @@
     ["Bòrdes, Es", "es bordes"],
     ["  ÁVILA  ", "avila"],
     ["Sta. Cruz de Tenerife", "sta cruz de tenerife"],
+    ["DEVESA (A)", "a devesa"],
+    ["HOSPITALET DE LLOBREGAT (L')", "l'hospitalet de llobregat"],
+    ["PONTE ULLA (A) (SANTA MARIA MADANELA)", "ponte ulla a santa maria madanela"],
     ["", ""]
   ],
   "display_name": [
@@ -55,6 +58,9 @@
     ["Orxa, l'/Lorcha", "l'Orxa/Lorcha"],
     ["Vila Joiosa, la/Villajoyosa", "la Vila Joiosa/Villajoyosa"],
     ["Saus, Camallera i Llampaies", "Saus, Camallera i Llampaies"],
+    ["DEVESA (A)", "A DEVESA"],
+    ["ANDARUXU (L')", "L'ANDARUXU"],
+    ["BURRES (SAN VICENTE)", "BURRES (SAN VICENTE)"],
     ["Madrid", "Madrid"]
   ],
   "resolve": [
@@ -205,5 +211,44 @@
     ["13096A001001920000YX", "pending", null, "invalid_check"],
     ["ABCDEFGHIJKLMN", "pending", null, "other"],
     ["hola", "pending", null, "not_a_reference"]
-  ]
+  ],
+  "entities": {
+    "resolve": [
+      ["ine:entidad", "36038010101", "es:entidad:36038010101", ["es:entidad:36038010100", "es:entidad:36038010000",
+        "es:municipio:36038", "es:provincia:36", "es:autonomia:12", "pais:ES"]],
+      ["ine:entidad:dc", "330310302999", "es:entidad:33031030299", ["es:entidad:33031030200", "es:entidad:33031030000",
+        "es:municipio:33031", "es:provincia:33", "es:autonomia:03", "pais:ES"]],
+      ["ine:entidad", "36038000100", "es:entidad:36038000100", ["es:municipio:36038", "es:provincia:36",
+        "es:autonomia:12", "pais:ES"]],
+      ["ine:entidad", "36017151100", null, null],
+      ["ine:entidad", "360380101601", null, null]
+    ],
+    "children": [
+      ["es:municipio:36038", ["es:entidad:36038000100", "es:entidad:36038010000"]],
+      ["es:entidad:36038010000", ["es:entidad:36038010100"]],
+      ["es:entidad:36038010100", ["es:entidad:36038010101"]],
+      ["es:partido:3604", ["es:municipio:36038"]]
+    ],
+    "search": [
+      ["A Devesa", null, null, []],
+      ["A Devesa", null, ["singular_entity", "nucleus"], [["es:entidad:36008030700", "official"],
+        ["es:entidad:36038010100", "official"], ["es:entidad:36038010101", "official"]]],
+      ["Devesa", "es:partido:3604", ["singular_entity"], [["es:entidad:36038010100", "variant"]]],
+      ["DEVESA (A)", "es:zona-aviso:713601", ["nucleus"], [["es:entidad:36038010101", "official"]]],
+      ["Hospitalet de Llobregat", "es:comarca:0913", ["nucleus"], [["es:entidad:08101000101", "variant"]]],
+      ["La Felguera", null, ["collective_entity"], [["es:entidad:33031030000", "official"]]],
+      ["Diseminado", null, ["scattered"], [["es:entidad:33031030299", "official"], ["es:entidad:36008030799", "official"]]],
+      ["Pontevedra", null, ["municipality", "singular_entity"], [["es:municipio:36038", "official"],
+        ["es:entidad:36038000100", "official"]]]
+    ],
+    "to_municipality": [
+      ["A Devesa", "es:municipio:36038", ["singular_entity", "nucleus"], "resolved", "es:municipio:36038",
+        ["es:municipio:36038"], "same_municipality"],
+      ["A Devesa", null, ["singular_entity"], "pending", null, ["es:municipio:36008", "es:municipio:36038"], "ambiguous"],
+      ["Talaya", null, ["singular_entity"], "resolved", "es:municipio:33031", ["es:municipio:33031"], "name"],
+      ["Pontevedra", null, ["municipality", "nucleus"], "resolved", "es:municipio:36038", ["es:municipio:36038"],
+        "same_municipality"],
+      ["Nada", null, ["nucleus"], "pending", null, [], "not_found"]
+    ]
+  }
 }

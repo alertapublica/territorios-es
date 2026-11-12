@@ -5,8 +5,9 @@
 Territorios de España —comunidades y ciudades autónomas, provincias, islas, partidos judiciales,
 zonas de aviso de AEMET, comarcas y municipios— y países del mundo, con todos sus nombres (el oficial; en castellano, catalán, gallego, euskera, aranés e
 inglés; y alias), sus códigos (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata, OpenStreetMap,
-GeoNames…), la capital de cada municipio con sus coordenadas, los límites municipales y los
-códigos postales, regenerables desde las fuentes oficiales y abiertas. Incluye una librería pequeña en
+GeoNames…), la capital de cada municipio con sus coordenadas, los límites municipales, los
+códigos postales y las entidades de población (parroquias, núcleos…), regenerables desde las fuentes
+oficiales y abiertas. Incluye una librería pequeña en
 Python y JavaScript para resolver códigos, buscar nombres y elegir el nombre que se muestra en
 cada idioma.
 
@@ -36,16 +37,21 @@ te.parse_cadastral_reference("9872023VH5797S0001WX")["valid"]  # True: letras de
 te.relate_cadastral_reference("13096A001001920000YY")["territory"]  # municipio de una parcela rústica
 [m["id"] for m in te.municipalities("28760")]          # Tres Cantos y Madrid, primero el principal
 te.relate_postal_code("28760")["status"]                # 'pending': el código es de dos municipios
+ent = te.load_entities()                                 # con las entidades de población (unos segundos)
+[c["municipality"] for c in ent.search("A Devesa", levels=["singular_entity"])]   # sus municipios
+found = te.relate_name("A Devesa", within="es:municipio:36038", levels=["singular_entity", "nucleus"], catalog=ent)
+te.to_municipality(found, ent)["territory"]              # 'es:municipio:36038': para combinarla
 ```
 
 ```js
-import { loadCatalog, loadPostalCodes, relateName, relateCadastralReference } from 'territorios-es';   // en el navegador: createCatalog(datos)
+import { loadCatalog, loadEntities, loadPostalCodes, relateName, relateCadastralReference } from 'territorios-es';   // en el navegador: createCatalog(datos)
 const te = loadCatalog();
 te.name('es:municipio:20069', 'eu');                      // 'Donostia'
 te.search('Orense', { within: 'es:autonomia:12' });
 relateName(te, 'Ourense', { levels: ['municipality'] });  // { status: 'resolved', … }
 relateCadastralReference(te, '13096A001001920000YY');     // sin red
 loadPostalCodes().postalCodes('es:municipio:08019');     // en el navegador: createPostalCodes(csv)
+loadEntities().resolve('ine:entidad', '36038010101');      // en el navegador: createCatalog(datos, { entities: csv })
 
 import { locateReference } from 'territorios-es/catastro-online';  // con red; también en el navegador
 await locateReference(te, '9872023VH5797S0001WX');        // { status: 'resolved', territory: 'es:municipio:13077', … }
@@ -55,8 +61,9 @@ Funciones: `resolve`, `territory`, `search`, `mentions`, `name`, `children` (en 
 partido judicial, una zona de aviso de AEMET o una comarca, sus municipios), `normalize`,
 `relate_name` (en JS, `relateName`), `combine`, `parse_cadastral_reference` y
 `relate_cadastral_reference` (referencias catastrales, sin red), `locate` (de un punto a su
-municipio) y `postal_codes`, `municipalities` y `relate_postal_code` (códigos postales). Están
-descritas en el apartado 6 del diseño.
+municipio), `postal_codes`, `municipalities` y `relate_postal_code` (códigos postales) y
+`load_entities` y `to_municipality` (entidades de población). Están descritas en el apartado 6 del
+diseño.
 
 Un código postal puede ser de varios municipios y un municipio tiene varios códigos, así que no es
 un sistema de `resolve`. Cada par lleva la fuente que decide en su municipio, su recuento en la
@@ -64,6 +71,14 @@ unidad de esa fuente (direcciones, portales o tramos) y las demás fuentes que l
 Los municipios de un código compartido van por recuento si todos tienen la misma unidad y, si no,
 por los tramos del INE (la única fuente de toda España). Cuando la relación queda pendiente, sus evidencias traen todo eso de cada
 candidato.
+
+Las entidades de población del callejero del INE (`datos/entidades.csv`: entidades colectivas, como
+las parroquias de Galicia y Asturias; entidades singulares; núcleos y diseminados) son unas 146.000,
+así que se cargan aparte, con `load_entities` (en JS, `loadEntities`). Cada una cuelga de su
+municipio y está en su isla, partido judicial, zona de aviso y comarca, también para `within`.
+`search` solo las devuelve si se piden en `levels`, y cada candidato lleva su municipio y su
+colectiva. `to_municipality` lleva una relación con entidades a su municipio para combinarla con
+otras. Por ahora el nombre es el del INE, en mayúsculas («A DEVESA»), sin revisar.
 
 `locate` usa los límites municipales del IGN, que por tamaño no van en el paquete: cada versión
 lleva adjunto `limites-municipios.geojson.gz` (simplificado a 5 m), que se descarga una vez. Un
@@ -147,7 +162,7 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 | Gobierno de Navarra (IDENA) | códigos postales de Navarra, con el número de direcciones | CC BY 4.0: «Información geográfica propiedad del Gobierno de Navarra.» |
 | Eustat / Gobierno Vasco (callejero NORA) | códigos postales del País Vasco, con el número de portales | CC BY 4.0: «Eusko Jaurlaritza / Gobierno Vasco; Eustat; geoEuskadi» |
 | Govern de les Illes Balears (IDEIB) | códigos postales de Baleares, con el número de portales | CC BY: «Govern de les Illes Balears, IDEIB» |
-| INE (callejero del censo electoral) | códigos postales de toda España, con el número de tramos de calle | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» |
+| INE (callejero del censo electoral) | códigos postales de toda España, con el número de tramos de calle; entidades de población | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» |
 | Instituto de Estadística y Cartografía de Andalucía (CDAU) | códigos postales de Andalucía, con el número de portales (contraste) | CC BY 4.0: «Fuente: CDAU (Entidades Locales-Junta de Andalucía- IGN)» |
 | Dirección General del Catastro | códigos postales de los municipios de régimen común, con el número de direcciones (de INSPIRE Addresses) | licencia de la DGC: uso de la información transformada citando la fuente y la fecha de acceso (en el manifiesto); no es «información catastral» |
 | Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
@@ -164,7 +179,7 @@ Spanish territories —autonomous communities and cities, provinces, islands, ju
 AEMET warning zones, comarcas and municipalities— and the countries of the world, with all their names (official; in Spanish, Catalan, Galician, Basque,
 Aranese and English; aliases), their codes (INE, Catastro, IGN, ISO, NUTS, LAU, Wikidata,
 OpenStreetMap, GeoNames…), the capital of each municipality with its coordinates, the municipal
-boundaries and the postal codes, rebuilt from official and open sources. It ships a small Python and JavaScript library
+boundaries, the postal codes and the population entities (parishes, nuclei…), rebuilt from official and open sources. It ships a small Python and JavaScript library
 to resolve codes, search names, pick the display name for each language and place a point in its
 municipality.
 

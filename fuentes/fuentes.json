@@ -140,6 +140,12 @@
     "licence": "CC BY 4.0 (aviso legal del INE)",
     "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es (callejero del censo electoral)"
   },
+  "ine_entidades": {
+    "url": "https://www.ine.es/prodyser/callejero/caj_esp/caj_esp_{month}{year}.zip",
+    "publisher": "INE (callejero del censo electoral: unidades poblacionales)",
+    "licence": "CC BY 4.0 (aviso legal del INE)",
+    "attribution": "Elaboración propia con datos extraídos del sitio web del INE: www.ine.es (callejero del censo electoral)"
+  },
   "icgc_direcciones": {
     "url": "https://datacloud.icgc.cat/datacloud/adreces-simplificat/csv/",
     "publisher": "Institut Cartogràfic i Geològic de Catalunya (Adreces, versión simplificada)",

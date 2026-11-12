@@ -4,6 +4,7 @@
     te.resolve("ine:municipio", "36038")["id"]   # 'es:municipio:36038'
     te.name("es:provincia:03", "ca")             # 'Alacant'
     te.municipalities("29620")[0]["id"]          # 'es:municipio:29901' (Torremolinos)
+    te.load_entities().resolve("ine:entidad", "36038000101")["parent"]   # 'es:entidad:36038000100'
 """
 from __future__ import annotations
 
@@ -20,13 +21,14 @@ from .postal import PostalCodes
 from .postal import load_postal_codes as _load_postal_codes
 from .relation import STATUSES, combine, relation
 from .relation import relate_name as _relate_name
+from .relation import to_municipality as _to_municipality
 from .text import display_name, normalize, slugify
 
 __all__ = ["Catalog", "LEVELS", "REASONS", "STATUSES", "load", "resolve", "territory", "search",
            "mentions", "name", "children", "normalize", "display_name", "slugify", "relation",
            "relate_name", "combine", "data_dir", "parse_cadastral_reference", "check_letters",
            "relate_cadastral_reference", "Limits", "load_limits", "locate", "PostalCodes", "load_postal_codes",
-           "postal_codes", "municipalities", "relate_postal_code"]
+           "postal_codes", "municipalities", "relate_postal_code", "load_entities", "to_municipality"]
 
 
 def data_dir() -> Path:
@@ -46,6 +48,16 @@ def load(path: str | os.PathLike | None = None) -> Catalog:
     """Catalogue from a territorios.json file (by default, the bundled one)."""
     file = Path(path) if path else data_dir() / "territorios.json"
     return Catalog(json.loads(file.read_text(encoding="utf-8")))
+
+
+@lru_cache(maxsize=2)
+def load_entities(path: str | os.PathLike | None = None, territories: str | os.PathLike | None = None) -> Catalog:
+    """Catalogue with the territories and the population entities of an entidades.csv file (by
+    default, the bundled ones). About 4 s and a few hundred MB: the functions of this module keep
+    using the catalogue without entities."""
+    file = Path(territories) if territories else data_dir() / "territorios.json"
+    entities = Path(path) if path else data_dir() / "entidades.csv"
+    return Catalog(json.loads(file.read_text(encoding="utf-8")), entities.read_text(encoding="utf-8"))
 
 
 def resolve(system, code):
@@ -74,6 +86,10 @@ def children(identity):
 
 def relate_name(text, within=None, levels=None, catalog=None):
     return _relate_name(catalog or load(), text, within=within, levels=levels)
+
+
+def to_municipality(relation_, catalog=None):
+    return _to_municipality(catalog or load_entities(), relation_)
 
 
 def relate_cadastral_reference(text, catalog=None):

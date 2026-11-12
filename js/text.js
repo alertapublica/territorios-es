@@ -6,19 +6,21 @@ export const ARTICLES = {
   ca: ['El', 'La', 'Els', 'Les', "L'", 'Es', 'Sa', 'Ses'],
   oc: ['Eth', 'Era', 'Es', 'Eras'],
 };
-const ALL = new Set(Object.values(ARTICLES).flat());
-for (const a of [...ALL]) ALL.add(a.toLowerCase());
+const ALL = new Set(Object.values(ARTICLES).flat().map((a) => a.toLowerCase()));
 const BY_LENGTH = [...ALL].sort((a, b) => b.length - a.length || (a < b ? -1 : a > b ? 1 : 0));
-const TRAILING_ARTICLE = /^(.+), ([^,/]+)$/;
+// After a comma («Coruña, A») or, in the INE street register, in brackets («DEVESA (A)»).
+const TRAILING_ARTICLES = [/^(.+), ([^,/]+)$/, /^(.+) \(([^()/]+)\)$/];
 const APOSTROPHES = /[’‘´`]/g;
 
 export function flipArticle(name) {
   const trimmed = name.trim();
-  const match = TRAILING_ARTICLE.exec(trimmed);
-  if (!match) return trimmed;
-  const article = match[2].replace(APOSTROPHES, "'");
-  if (!ALL.has(article)) return trimmed;
-  return article + (article.endsWith("'") ? '' : ' ') + match[1];
+  for (const pattern of TRAILING_ARTICLES) {
+    const match = pattern.exec(trimmed);
+    if (!match) continue;
+    const article = match[2].replace(APOSTROPHES, "'");
+    if (ALL.has(article.toLowerCase())) return article + (article.endsWith("'") ? '' : ' ') + match[1];
+  }
+  return trimmed;
 }
 
 export function displayName(official) {
@@ -26,11 +28,12 @@ export function displayName(official) {
 }
 
 export function dropArticle(name) {
+  const lower = name.toLowerCase();
   for (const article of BY_LENGTH) {
-    if (article.endsWith("'") && name.startsWith(article) && name.length > article.length) {
+    if (article.endsWith("'") && lower.startsWith(article) && name.length > article.length) {
       return name.slice(article.length);
     }
-    if (name.startsWith(`${article} `) && name.length > article.length + 1) {
+    if (lower.startsWith(`${article} `) && name.length > article.length + 1) {
       return name.slice(article.length + 1);
     }
   }

@@ -18,6 +18,7 @@
 - Municipios con zona de aviso: 31
 - Comarcas: 6
 - Municipios con comarca: 7
+- entidades de población: 3 colectivas, 5 singulares, 3 núcleos, 2 diseminados
 
 ## Catastro (22)
 
@@ -59,6 +60,12 @@
 - Idescat: 08999 en la comarca 99, que no está en fuentes/comarcas.csv
 - Idescat: 43001 (comarca 36) no es un municipio de la comunidad 09 en el diccionario
 - es:municipio:25120 «Lleida» sin comarca
+
+## Entidades de población que no se publican (3)
+
+- 320540999901 NUCLEO SIN SU ENTIDAD SINGULAR: falta su entidad 32054099900
+- 360171511700 DEVESA (A): el municipio 36017 no está en el catálogo
+- 360380101600: código repetido
 
 ## Eurostat LAU (3)
 

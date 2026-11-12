@@ -4,14 +4,15 @@ import unittest
 from pathlib import Path
 
 from pruebas import ROOT
-from territorios_es import Catalog, combine, load_limits, locate, relation
+from territorios_es import Catalog, combine, load_entities, load_limits, locate, relation
 from territorios_es.postal import PostalCodes, load_postal_codes
 from territorios_es.catastro import check_letters, parse_cadastral_reference, relate_cadastral_reference
-from territorios_es.relation import relate_name
+from territorios_es.relation import relate_name, to_municipality
 from territorios_es.text import display_name, normalize
 
 CASES = json.loads((ROOT / "pruebas" / "casos.json").read_text(encoding="utf-8"))
 CATALOG = Catalog(json.loads((ROOT / "pruebas" / "datos" / "territorios.json").read_text(encoding="utf-8")))
+ENTITIES = load_entities(ROOT / "pruebas" / "datos" / "entidades.csv", ROOT / "pruebas" / "datos" / "territorios.json")
 
 
 class SharedCases(unittest.TestCase):
@@ -38,15 +39,17 @@ class SharedCases(unittest.TestCase):
             self.assertEqual(CATALOG.name(identity, lang, short), expected, (identity, lang, short))
 
     def test_search(self):
-        for text, within, levels, expected in CASES["search"]:
-            found = [[c["id"], c["reason"]] for c in CATALOG.search(text, within=within, levels=levels)]
-            self.assertEqual(found, expected, text)
+        for catalog in (CATALOG, ENTITIES):  # the same unless the entities are asked for
+            for text, within, levels, expected in CASES["search"]:
+                found = [[c["id"], c["reason"]] for c in catalog.search(text, within=within, levels=levels)]
+                self.assertEqual(found, expected, text)
 
     def test_mentions(self):
-        for text, levels, expected in CASES["mentions"]:
-            options = {"levels": levels} if levels else {}
-            found = [[m["text"], [c["id"] for c in m["candidates"]]] for m in CATALOG.mentions(text, **options)]
-            self.assertEqual(found, expected, text)
+        for catalog in (CATALOG, ENTITIES):
+            for text, levels, expected in CASES["mentions"]:
+                options = {"levels": levels} if levels else {}
+                found = [[m["text"], [c["id"] for c in m["candidates"]]] for m in catalog.mentions(text, **options)]
+                self.assertEqual(found, expected, text)
 
     def test_relate_name(self):
         for text, within, levels, status, territory, candidates, reason in CASES["relate_name"]:
@@ -64,6 +67,65 @@ class SharedCases(unittest.TestCase):
         for text, status, territory, reason in CASES["relate_cadastral_reference"]:
             found = relate_cadastral_reference(CATALOG, text)
             self.assertEqual((found["status"], found["territory"], found["reason"]), (status, territory, reason), text)
+
+
+class EntityCases(unittest.TestCase):
+    CASES = CASES["entities"]
+
+    def test_resolve(self):
+        for system, code, expected, ancestors in self.CASES["resolve"]:
+            found = ENTITIES.resolve(system, code)
+            self.assertEqual((found["id"], found["ancestors"]) if found else (None, None),
+                             (expected, ancestors), (system, code))
+
+    def test_children(self):
+        for identity, expected in self.CASES["children"]:
+            self.assertEqual(ENTITIES.children(identity), expected, identity)
+
+    def test_search(self):
+        for text, within, levels, expected in self.CASES["search"]:
+            found = [[c["id"], c["reason"]] for c in ENTITIES.search(text, within=within, levels=levels)]
+            self.assertEqual(found, expected, text)
+
+    def test_to_municipality(self):
+        for text, within, levels, status, territory, candidates, reason in self.CASES["to_municipality"]:
+            found = to_municipality(ENTITIES, relate_name(ENTITIES, text, within=within, levels=levels))
+            self.assertEqual((found["status"], found["territory"], found["candidates"], found["reason"]),
+                             (status, territory, candidates, reason), text)
+
+    def test_records_and_links(self):
+        record = ENTITIES.territory("es:entidad:36038010101")
+        self.assertEqual(record["codes"], {"ine:entidad": "36038010101", "ine:entidad:dc": "360380101601"})
+        self.assertEqual(record["names"], {"official": "DEVESA (A)", "display": "A DEVESA", "reviewed": False})
+        self.assertEqual((record["municipality"], record["collective_entity"]),
+                         ("es:municipio:36038", "es:entidad:36038010000"))
+        self.assertNotIn("collective_entity", ENTITIES.territory("es:entidad:36038000101"))
+        first = ENTITIES.search("A Devesa", levels=["singular_entity"])[0]
+        self.assertEqual((first["municipality"], first["collective_entity"]), ("es:municipio:36008", "es:entidad:36008030000"))
+        self.assertNotIn("municipality", ENTITIES.search("Pontevedra")[0])
+        self.assertEqual(ENTITIES.ids("collective_entity"),
+                         ["es:entidad:33031030000", "es:entidad:36008030000", "es:entidad:36038010000"])
+        self.assertEqual(CATALOG.ids("nucleus"), [])
+        self.assertIsNone(CATALOG.resolve("ine:entidad", "36038010101"))
+        # Linked: an entity and the municipality that holds it are not a contradiction once projected.
+        entity, town = relate_name(ENTITIES, "Talaya", levels=["singular_entity"]), relate_name(ENTITIES, "Langreo")
+        self.assertEqual(combine(entity, town)["status"], "conflict")
+        self.assertEqual(combine(to_municipality(ENTITIES, entity), town)["territory"], "es:municipio:33031")
+        self.assertEqual(to_municipality(ENTITIES, entity)["evidence"][-1],
+                         {"source": "municipality", "datum": "es:entidad:33031030200", "territory": "es:municipio:33031"})
+
+    def test_rejects_bad_tables(self):
+        data = json.loads((ROOT / "pruebas" / "datos" / "territorios.json").read_text(encoding="utf-8"))
+        good = (ROOT / "pruebas" / "datos" / "entidades.csv").read_text(encoding="utf-8")
+        Catalog(data, good)
+        for bad in ("id,ine,official\n",
+                    good + "es:entidad:36017151100,360171511700,DEVESA (A)\n",  # unknown municipality
+                    good + "es:entidad:36038020100,360380201600,SIN PARROQUIA\n",  # missing collective
+                    good + "es:entidad:x,360380101601,DEVESA (A)\n",  # repeated code
+                    good + "es:entidad:36038000000,360380000000,MUNICIPIO\n",  # not an entity
+                    good + "es:entidad:36038010102,3603801016,CORTO\n",
+                    good + "es:entidad:36038010102,360380101602,\n"):
+            self.assertRaises(ValueError, Catalog, data, bad)
 
 
 class PostalCodeCases(unittest.TestCase):
@@ -150,6 +212,9 @@ class CatalogValidation(unittest.TestCase):
         self.assertRaises(ValueError, Catalog, twice)
         orphan = {**base, "territories": [{**base["territories"][0], "parent": "z"}]}
         self.assertRaises(ValueError, Catalog, orphan)
+        loop = {**base, "territories": [{**base["territories"][0], "parent": "b"},
+                                        {**base["territories"][0], "id": "b", "parent": "a", "codes": {}}]}
+        self.assertRaises(ValueError, Catalog, loop)
         self.assertRaises(ValueError, Catalog, {"schema": 2, "territories": []})
 
     def test_within_must_exist(self):

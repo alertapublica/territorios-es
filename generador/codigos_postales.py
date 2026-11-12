@@ -403,18 +403,27 @@ def ine_street_urls(template: str, today: str) -> list[str]:
     return [template.format(month=f"{m:02d}", year=y) for y, m in periods if (y, m) <= (year, month)][:3]
 
 
+def ine_register_file(content: bytes, kind: str, what: str):
+    """(archive, name) of a file of the INE street register ZIP: TRAM… (street sections) or UP…
+    (population units), at times inside a second ZIP."""
+    def find(archive):
+        return next(n for n in archive.namelist() if n.rsplit("/", 1)[-1].upper().startswith(kind))
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(content))
+        name = find(archive)
+        if name.lower().endswith(".zip"):
+            archive = zipfile.ZipFile(io.BytesIO(archive.read(name)))
+            name = find(archive)
+    except (zipfile.BadZipFile, StopIteration):
+        raise ValueError(f"INE: el ZIP del callejero no trae el fichero de {what}") from None
+    return archive, name
+
+
 def parse_ine_streets(content: bytes) -> Counter:
     """Counter{(postal code, INE code): street sections} of the INE electoral street register: the
     sections file (TRAM…, at times inside a second ZIP), fixed width, with the municipality at 0–5
     and the postal code at 42–47 (the code of each section comes from Correos)."""
-    try:
-        archive = zipfile.ZipFile(io.BytesIO(content))
-        name = next(n for n in archive.namelist() if "TRAM" in n.upper())
-        if name.lower().endswith(".zip"):
-            archive = zipfile.ZipFile(io.BytesIO(archive.read(name)))
-            name = next(n for n in archive.namelist() if "TRAM" in n.upper())
-    except (zipfile.BadZipFile, StopIteration):
-        raise ValueError("INE: el ZIP del callejero no trae el fichero de tramos") from None
+    archive, name = ine_register_file(content, "TRAM", "tramos")
     pairs, lines, odd = Counter(), 0, 0
     with archive.open(name) as stream:
         for raw in stream:

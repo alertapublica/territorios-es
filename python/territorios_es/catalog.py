@@ -4,17 +4,19 @@ from __future__ import annotations
 import re
 from copy import deepcopy
 
+from .entities import ENTITY_LEVELS, entity_records
 from .text import drop_article, normalize
 
 LEVELS = ("country", "autonomous_community", "province", "island", "municipality", "judicial_district",
-          "warning_zone", "comarca")
+          "warning_zone", "comarca", *ENTITY_LEVELS)
 # Groups of municipalities that do not change their parent: the field of the municipality that names
 # its group is the level of the group.
 GROUPS = ("island", "judicial_district", "warning_zone", "comarca")
 # Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
-# warning zone of AEMET is not an administration and a comarca exists only in some communities (and
-# some share their name with a municipality).
-UNSEARCHED_LEVELS = ("judicial_district", "warning_zone", "comarca")
+# warning zone of AEMET is not an administration, a comarca exists only in some communities (and
+# some share their name with a municipality) and population entities have tens of thousands of
+# namesakes.
+UNSEARCHED_LEVELS = ("judicial_district", "warning_zone", "comarca", *ENTITY_LEVELS)
 # Order of the reasons why a text matches a territory, best first.
 REASONS = ("official", "part", "lang", "alias", "variant")
 DEFAULT_MENTION_LEVELS = ("autonomous_community", "province")
@@ -24,14 +26,21 @@ TRANSLATED_LEVELS = ("country", "autonomous_community")
 
 
 class Catalog:
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, entities: str | None = None):
+        """`data`, the content of territorios.json; `entities`, that of entidades.csv, if the
+        population entities are wanted too."""
         if data.get("schema") != 1:
             raise ValueError("Unsupported data schema")
         self.reference_date = data.get("reference_date")
         self._by_id: dict[str, dict] = {}
         self._codes: dict[tuple[str, str], str] = {}
         self._children: dict[str, list[str]] = {}
-        for record in data["territories"]:
+        records = data["territories"]
+        if entities is not None:
+            municipalities = {r["codes"].get("ine:municipio"): r["id"] for r in records
+                              if r.get("level") == "municipality"}
+            records = [*records, *entity_records(entities, municipalities.get)]
+        for record in records:
             identity = record.get("id")
             if not isinstance(identity, str) or identity in self._by_id:
                 raise ValueError(f"Missing or repeated id: {identity!r}")
@@ -59,6 +68,15 @@ class Catalog:
                     if self._by_id.get(member_of, {}).get("level") != group:
                         raise ValueError(f"Unknown {group} {member_of} of {identity}")
                     self._children.setdefault(member_of, []).append(identity)
+        checked: set[str] = set()
+        for identity in self._by_id:
+            path = []
+            while identity is not None and identity not in checked:
+                if identity in path:
+                    raise ValueError(f"Cycle of parents at {identity}")
+                path.append(identity)
+                identity = self._by_id[identity].get("parent")
+            checked.update(path)
         self._index = self._build_index()
         self._mention_patterns: dict[tuple[str, ...], tuple[re.Pattern | None, dict]] = {}
 
@@ -88,7 +106,7 @@ class Catalog:
 
     def children(self, identity: str) -> list[str]:
         """Territories whose parent is this one; for an island, a judicial district, a warning zone or
-        a comarca, its municipalities."""
+        a comarca, its municipalities (and not their population entities)."""
         return sorted(self._children.get(identity, []))
 
     def ids(self, level: str | None = None) -> list[str]:
@@ -130,9 +148,12 @@ class Catalog:
 
     def _build_index(self) -> dict[str, list[tuple[int, int, str, str, str | None]]]:
         best: dict[tuple[str, str], tuple[int, str, str | None]] = {}
+        keys: dict[str, str] = {}  # many entities share a name
         for identity, record in self._by_id.items():
             for text, reason, lang in self._forms(record):
-                key = normalize(text)
+                key = keys.get(text)
+                if key is None:
+                    key = keys[text] = normalize(text)
                 if not key:
                     continue
                 rank = REASONS.index(reason)
@@ -150,8 +171,12 @@ class Catalog:
     def _candidate(self, entry) -> dict:
         _, _, identity, reason, lang = entry
         record = self._by_id[identity]
-        return {"id": identity, "level": record["level"], "name": record["names"]["display"],
-                "reason": reason, "lang": lang}
+        found = {"id": identity, "level": record["level"], "name": record["names"]["display"],
+                 "reason": reason, "lang": lang}
+        for link in ("municipality", "collective_entity"):  # of a population entity
+            if link in record:
+                found[link] = record[link]
+        return found
 
     def _accept(self, identity: str, within: str | None, levels) -> bool:
         level = self._by_id[identity]["level"]
@@ -159,7 +184,10 @@ class Catalog:
             return False
         if within is None or within in self.ancestors(identity):
             return True
-        return any(self._by_id[identity].get(group) == within for group in GROUPS)
+        # A population entity is in the island, comarca… of its municipality.
+        record = self._by_id[identity]
+        record = self._by_id.get(record.get("municipality"), record)
+        return any(record.get(group) == within for group in GROUPS)
 
     # Search ----------------------------------------------------------------------------------------
 

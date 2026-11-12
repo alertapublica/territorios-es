@@ -11,7 +11,8 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from pruebas import ROOT
-from generador import aemet, catastro, codigos_postales, comarcas, eurostat, exportar, ign, ine, justicia, limites, wikidata
+from generador import aemet, catastro, codigos_postales, comarcas, entidades, eurostat, exportar, ign, ine, justicia, limites
+from generador import wikidata
 from generador.construir import _other_names, build, catastro_name_matches
 from generador.xlsx import read_rows
 
@@ -664,6 +665,9 @@ class Build(unittest.TestCase):
                 build(inputs, ROOT / "fuentes", "2026-01-01")
 
 
+ENTITIES = (ROOT / "pruebas" / "datos" / "entidades.csv").read_text(encoding="utf-8")
+
+
 def zipped(files: dict[str, bytes]) -> bytes:
     out = io.BytesIO()
     with ZipFile(out, "w") as archive:
@@ -1041,7 +1045,7 @@ class PostalCodes(unittest.TestCase):
             for name in ("territorios.json", "manifiesto.json", codigos_postales.FILE, codigos_postales.OBSERVATIONS):
                 shutil.copy(ROOT / "pruebas" / "datos" / name, folder / name)
             data = json.loads((folder / "territorios.json").read_text(encoding="utf-8"))
-            exportar.write(folder, data, [], {"otra": {"url": "u"}})
+            exportar.write(folder, data, [], {"otra": {"url": "u"}}, ENTITIES)
             manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
             self.assertIn(codigos_postales.FILE, manifest["files"])
             self.assertIn(codigos_postales.OBSERVATIONS, manifest["files"])
@@ -1049,10 +1053,66 @@ class PostalCodes(unittest.TestCase):
             codigos_postales.write(folder, [["15001", "es:municipio:15030", "15030", "catastro", 9, "addresses", ""]],
                                    [["15001", "es:municipio:15030", "15030", "catastro", 9, "addresses"]],
                                    {"catastro_direcciones": {"url": "c"}})
-            exportar.write(folder, data, [], {"otra": {"url": "u"}})
+            exportar.write(folder, data, [], {"otra": {"url": "u"}}, ENTITIES)
             manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
             self.assertEqual(list(manifest["sources"]), ["otra", "catastro_direcciones"])
             self.assertEqual(exportar.check(folder), [])
+
+
+class Entities(unittest.TestCase):
+    @staticmethod
+    def line(code, collective="", singular="", nucleus=""):
+        """A row of the population units file (UP…): fixed width, names at their positions."""
+        text = code.ljust(94) + "MUNICIPIO".ljust(75) + collective.ljust(145) + singular.ljust(145) + nucleus
+        return text.ljust(604) + "\r\n"
+
+    def test_parse_units(self):
+        rows = (self.line("360380000000") + self.line("360380100000", "ALBA")
+                + self.line("360380101600", "ALBA", "DEVESA (A)") + self.line("360380101601", "ALBA", "DEVESA (A)", "DEVESA (A)")
+                + self.line("360380101699", "ALBA", "DEVESA (A)", "*DISEMINADO*")
+                + self.line("150300001300", "", "CORUÑA (A)")).encode("cp1252")
+        expected = [("360380100000", "ALBA"), ("360380101600", "DEVESA (A)"), ("360380101601", "DEVESA (A)"),
+                    ("360380101699", "*DISEMINADO*"), ("150300001300", "CORUÑA (A)")]
+        self.assertEqual(entidades.parse_units(zipped({"caj_esp_072026/UP.D260630.G260702": rows,
+                                                       "caj_esp_072026/TRAM.D260630": b""})), expected)
+        self.assertEqual(entidades.parse_units(zipped({"UP.zip": zipped({"UP.D260630": rows})})), expected)
+        self.assertRaises(ValueError, entidades.parse_units, zipped({"TRAM.D260630": rows}))
+        self.assertRaises(ValueError, entidades.parse_units, zipped({"UP.D260630": b"otra forma\r\n" * 5}))
+        self.assertRaises(ValueError, entidades.parse_units, b"no es un zip")
+
+    def test_build(self):
+        data = {"territories": [{"id": "es:municipio:36038", "level": "municipality", "codes": {"ine:municipio": "36038"}}]}
+        units = [("360380101601", "DEVESA (A)"), ("360380101600", "DEVESA (A)"), ("360380100000", "ALBA"),
+                 ("360380201600", "SIN PARROQUIA"), ("360380201601", "SIN PARROQUIA"), ("360380300000", ""),
+                 ("360170000100", "OTRO MUNICIPIO"), ("360380100000", "ALBA")]
+        rows, left_out, counts = entidades.build(units, data)
+        self.assertEqual(rows, [["es:entidad:36038010000", "360380100000", "ALBA"],
+                                ["es:entidad:36038010100", "360380101600", "DEVESA (A)"],
+                                ["es:entidad:36038010101", "360380101601", "DEVESA (A)"]])
+        self.assertEqual(sorted(left_out), [
+            "360170000100 OTRO MUNICIPIO: el municipio 36017 no está en el catálogo",
+            "360380100000: código repetido", "360380201600 SIN PARROQUIA: falta su entidad 36038020000",
+            "360380201601 SIN PARROQUIA: falta su entidad 36038020100", "360380300000: sin nombre"])
+        self.assertEqual(counts, {"collective_entity": 1, "singular_entity": 1, "nucleus": 1, "scattered": 0})
+        self.assertEqual(entidades.summary(counts), "1 colectivas, 1 singulares, 1 núcleos, 0 diseminados")
+        self.assertEqual(entidades.table(rows).splitlines()[:2], ["id,ine_dc,official", "es:entidad:36038010000,360380100000,ALBA"])
+
+    def test_check(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "datos"
+            shutil.copytree(ROOT / "pruebas" / "datos", folder)
+            path = folder / entidades.FILE
+            good = path.read_text(encoding="utf-8")
+            lines = good.splitlines(keepends=True)
+            path.write_text(lines[0] + "".join(reversed(lines[1:])), encoding="utf-8")
+            self.assertIn(f"{entidades.FILE} is not in canonical form", exportar.check(folder))
+            path.write_text(good + "es:entidad:36017151100,360171511700,DEVESA (A)\n", encoding="utf-8")
+            self.assertTrue(any(p.startswith(f"{entidades.FILE}: Not an entity") for p in exportar.check(folder)))
+            path.write_text(good, encoding="utf-8")
+            manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
+            del manifest["files"][entidades.FILE]
+            (folder / "manifiesto.json").write_text(json.dumps(manifest), encoding="utf-8")
+            self.assertEqual(exportar.check(folder), [f"{entidades.FILE} is not in manifiesto.json"])
 
 
 class HandLists(unittest.TestCase):

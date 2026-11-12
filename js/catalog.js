@@ -1,17 +1,19 @@
 // Catalogue of territories built from datos/territorios.json. Mirrors python/territorios_es/catalog.py.
+import { ENTITY_LEVELS, entityRecords } from './entities.js';
 import { dropArticle, normalize } from './text.js';
 
 export const LEVELS = [
   'country', 'autonomous_community', 'province', 'island', 'municipality', 'judicial_district', 'warning_zone',
-  'comarca',
+  'comarca', ...ENTITY_LEVELS,
 ];
 // Groups of municipalities that do not change their parent: the field of the municipality that names
 // its group is the level of the group.
 const GROUPS = ['island', 'judicial_district', 'warning_zone', 'comarca'];
 // Levels that search() leaves out unless asked for: a judicial district has the name of its seat, a
-// warning zone of AEMET is not an administration and a comarca exists only in some communities (and
-// some share their name with a municipality).
-const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone', 'comarca'];
+// warning zone of AEMET is not an administration, a comarca exists only in some communities (and
+// some share their name with a municipality) and population entities have tens of thousands of
+// namesakes.
+const UNSEARCHED_LEVELS = ['judicial_district', 'warning_zone', 'comarca', ...ENTITY_LEVELS];
 export const REASONS = ['official', 'part', 'lang', 'alias', 'variant'];
 export const DEFAULT_MENTION_LEVELS = ['autonomous_community', 'province'];
 const TRANSLATED_LEVELS = ['country', 'autonomous_community'];
@@ -34,12 +36,19 @@ function* forms(record) {
   }
 }
 
-export function createCatalog(data) {
+// `data`, the content of territorios.json; `entities`, that of entidades.csv, if the population
+// entities are wanted too.
+export function createCatalog(data, { entities = null } = {}) {
   if (data.schema !== 1) throw new Error('Unsupported data schema');
   const byId = new Map();
   const codes = new Map();
   const childrenOf = new Map();
-  for (const record of data.territories) {
+  let records = data.territories;
+  if (entities != null) {
+    const municipalities = new Map(records.filter((r) => r.level === 'municipality').map((r) => [r.codes?.['ine:municipio'], r.id]));
+    records = [...records, ...entityRecords(entities, (code) => municipalities.get(code))];
+  }
+  for (const record of records) {
     const id = record.id;
     if (typeof id !== 'string' || byId.has(id)) throw new Error(`Missing or repeated id: ${id}`);
     if (!LEVELS.includes(record.level)) throw new Error(`Unknown level in ${id}`);
@@ -67,6 +76,16 @@ export function createCatalog(data) {
       childrenOf.get(memberOf).push(id);
     }
   }
+  const checked = new Set();
+  for (let id of byId.keys()) {
+    const path = [];
+    while (id != null && !checked.has(id)) {
+      if (path.includes(id)) throw new Error(`Cycle of parents at ${id}`);
+      path.push(id);
+      id = byId.get(id).parent;
+    }
+    for (const seen of path) checked.add(seen);
+  }
 
   const ancestors = (id) => {
     const result = [];
@@ -80,9 +99,11 @@ export function createCatalog(data) {
 
   // Index: normalized form -> entries [rank, level, id, reason, lang], best first.
   const best = new Map();
+  const keys = new Map(); // many entities share a name
   for (const [id, record] of byId) {
     for (const [text, reason, lang] of forms(record)) {
-      const key = normalize(text);
+      let key = keys.get(text);
+      if (key === undefined) keys.set(text, (key = normalize(text)));
       if (!key) continue;
       const rank = REASONS.indexOf(reason);
       const slot = `${key}\u0000${id}`;
@@ -103,12 +124,19 @@ export function createCatalog(data) {
 
   const candidate = ([, , id, reason, lang]) => {
     const record = byId.get(id);
-    return { id, level: record.level, name: record.names.display, reason, lang };
+    const found = { id, level: record.level, name: record.names.display, reason, lang };
+    for (const link of ['municipality', 'collective_entity']) { // of a population entity
+      if (link in record) found[link] = record[link];
+    }
+    return found;
   };
   const accept = (id, within, levels) => {
     const level = byId.get(id).level;
     if (levels != null ? !levels.includes(level) : UNSEARCHED_LEVELS.includes(level)) return false;
-    return within == null || ancestors(id).includes(within) || GROUPS.some((group) => byId.get(id)[group] === within);
+    if (within == null || ancestors(id).includes(within)) return true;
+    // A population entity is in the island, comarca… of its municipality.
+    const record = byId.get(byId.get(id).municipality) ?? byId.get(id);
+    return GROUPS.some((group) => record[group] === within);
   };
   const territory = (id) => {
     const record = typeof id === 'string' ? byId.get(id) : undefined;

@@ -22,7 +22,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from . import aemet, catastro, codigos_postales, comarcas, descargas, eurostat, ign, ine, justicia, wikidata  # noqa: E402
+from . import aemet, catastro, codigos_postales, comarcas, descargas, entidades, eurostat, ign, ine  # noqa: E402
+from . import justicia, wikidata  # noqa: E402
 from .construir import build, load_hand_lists  # noqa: E402
 from .exportar import check, write  # noqa: E402
 from .limites import build_limits  # noqa: E402
@@ -189,6 +190,11 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
         "licence": c["licence"], "attribution": c["attribution"]}
 
+    c = config["ine_entidades"]
+    inputs["ine_units"], got, _ = download_ine_register(c["url"], cache, entidades.parse_units)
+    records["ine_entidades"] = got.record(licence=c["licence"], attribution=c["attribution"])
+    del got
+
     c = config["ign_limites"]
     got = download_limits(cache)
     inputs["ign_units"] = ign.parse_units(got.content)
@@ -206,6 +212,31 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
     inputs["wikidata_spain"] = wikidata.parse(raw, "spain")
     inputs["wikidata_countries"] = wikidata.parse(raw, "country")
     return inputs, records
+
+
+def download_ine_register(template: str, cache: Path | None, parse):
+    """(what `parse` reads, the download, its file name) of the newest edition of the INE street
+    register that answers: it comes out in January and July. The same ZIP for the postal codes and
+    the population entities."""
+    errors = []
+    for url in codigos_postales.ine_street_urls(template, date.today().isoformat()):
+        name = url.rsplit("/", 1)[1]
+        try:
+            got = descargas.fetch(url, cache=cache, cache_name="cp_ine_" + name,
+                                  validate=lambda content: codigos_postales.check_zip(content, ""))
+            return parse(got.content), got, name
+        except (RuntimeError, ValueError) as error:
+            errors.append(f"{name}: {error}")
+    raise RuntimeError("; ".join(errors))
+
+
+def entities_table(units: list, data: dict, report) -> str:
+    """datos/entidades.csv, with what is left out and the count per level in the report."""
+    rows, left_out, counts = entidades.build(units, data)
+    for message in left_out:
+        report.add(entidades.SECTION, message)
+    report.summary["entidades de población"] = entidades.summary(counts)
+    return entidades.table(rows)
 
 
 def download_limits(cache: Path | None):
@@ -357,20 +388,14 @@ def download_postal_codes(cache: Path | None, workers: int = 3) -> tuple[dict, d
     timings["CDAU"] = _minutes(time.monotonic() - begin)
 
     # The INE register: the newest edition that answers (it comes out in January and July).
-    begin, c, errors = time.monotonic(), config["ine_callejero"], []
-    for url in codigos_postales.ine_street_urls(c["url"], date.today().isoformat()):
-        try:
-            got = descargas.fetch(url, cache=cache, cache_name="cp_ine_" + url.rsplit("/", 1)[1],
-                                  validate=lambda content: codigos_postales.check_zip(content, ""))
-            counts["ine"] = codigos_postales.parse_ine_streets(got.content)
-        except (RuntimeError, ValueError) as error:
-            errors.append(f"{url.rsplit('/', 1)[1]}: {error}")
-            continue
+    begin, c = time.monotonic(), config["ine_callejero"]
+    try:
+        counts["ine"], got, name = download_ine_register(c["url"], cache, codigos_postales.parse_ine_streets)
         records["ine_callejero"] = got.record(licence=c["licence"], attribution=c["attribution"])
-        timings["INE"] = f"{_minutes(time.monotonic() - begin)} ({url.rsplit('/', 1)[1]})"
-        break
-    else:
-        failed.append("INE: " + "; ".join(errors))
+        timings["INE"] = f"{_minutes(time.monotonic() - begin)} ({name})"
+        del got
+    except RuntimeError as error:
+        failed.append(f"INE: {error}")
     timings["total"] = _minutes(time.monotonic() - start)
     if failed:
         timings["descargas fallidas"] = f"{len(failed)}: " + "; ".join(sorted(failed)[:20])
@@ -405,7 +430,10 @@ def fixture():
     inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
     inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
     data, report, articles = build(inputs, FUENTES, "2026-01-01")
-    write(ROOT / "pruebas" / "datos", data, articles, {"fixture": {"url": "pruebas/fuentes/entrada.json"}})
+    # Population entities: invented rows in the shape of the reader's output.
+    units = [tuple(u) for u in json.loads((folder / "entidades.json").read_text(encoding="utf-8"))]
+    entities = entities_table(units, data, report)
+    write(ROOT / "pruebas" / "datos", data, articles, {"fixture": {"url": "pruebas/fuentes/entrada.json"}}, entities)
     (ROOT / "pruebas" / "datos" / "informe.md").write_text(report.markdown(), encoding="utf-8")
     # Postal codes: invented counts in the shape of the readers' output.
     raw = json.loads((folder / "codigos-postales.json").read_text(encoding="utf-8"))
@@ -452,7 +480,7 @@ def main(argv=None):
     data, report, articles = build(inputs, FUENTES, reference)
     for orphan in codigos_postales.orphans(args.salida / codigos_postales.FILE, data):
         report.add("Códigos postales: municipios que ya no existen", orphan)
-    write(args.salida, data, articles, records)
+    write(args.salida, data, articles, records, entities_table(inputs["ine_units"], data, report))
     text = report.markdown()
     if args.informe:
         args.informe.write_text(text, encoding="utf-8")

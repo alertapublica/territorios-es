@@ -42,12 +42,13 @@
       "wikipedia.csv": "Artículos de Wikipedia de cada territorio en cada idioma.",
       "manifiesto.json": "Fuentes usadas (dirección, huella SHA-256, fecha y licencia) y huella de cada fichero.",
       "codigos-postales.csv": "Códigos postales: una fila por código y municipio, con la fuente que decide en ese municipio, su recuento y las demás fuentes que lo tienen. Un código puede abarcar varios municipios.",
-      "codigos-postales-fuentes.csv": "Lo que dice cada fuente de códigos postales: una fila por código, municipio y fuente, también los pares que no se publican. Sirve para contrastar y para reclamar."
+      "codigos-postales-fuentes.csv": "Lo que dice cada fuente de códigos postales: una fila por código, municipio y fuente, también los pares que no se publican. Sirve para contrastar y para reclamar.",
+      "entidades.csv": "Entidades de población del callejero del INE: entidades colectivas (las parroquias de Galicia y Asturias…), entidades singulares, núcleos y diseminados. Una fila por entidad, con su identificador, su código del INE y su nombre tal como lo escribe el INE; el nivel y el padre salen del código. La librería las carga solo si se piden."
     },
     "columns": {
       "id": "Identificador estable del territorio (es:municipio:36038).",
       "ine": "Código del INE.",
-      "ine_dc": "Código del INE del municipio con su dígito de control.",
+      "ine_dc": "Código del INE con su dígito de control: el del municipio (6 cifras) o, en entidades.csv, el de la entidad de población (12).",
       "dgc": "Código del municipio en el Catastro (Dirección General del Catastro), distinto del del INE. Vacío en Álava, Gipuzkoa, Navarra y Bizkaia, que tienen catastro foral.",
       "bddae": "Código de la unidad administrativa del IGN (BDDAE): 34, comunidad, provincia y código INE. Es el identificador INSPIRE de sus límites.",
       "autonomia": "Código del INE de la comunidad autónoma.",
@@ -253,6 +254,7 @@
         "eustat_portales": "códigos postales del País Vasco",
         "ideib_portales": "códigos postales de Baleares",
         "ine_callejero": "códigos postales de toda España (callejero del censo electoral)",
+        "ine_entidades": "entidades de población: colectivas, singulares, núcleos y diseminados (callejero del censo electoral)",
         "cdau_portales": "códigos postales de Andalucía (contraste)",
         "catastro_direcciones": "códigos postales de los municipios de régimen común"
       },
@@ -342,12 +344,13 @@
       "wikipedia.csv": "Wikipedia articles about each territory in each language.",
       "manifiesto.json": "Sources used (address, SHA-256 fingerprint, date and licence) and the fingerprint of each file.",
       "codigos-postales.csv": "Postal codes: one row per code and municipality, with the source that decides in that municipality, its count and the other sources that have it. A code can span several municipalities.",
-      "codigos-postales-fuentes.csv": "What each source says about postal codes: one row per code, municipality and source, including the pairs that are not published. For cross-checking and for claims."
+      "codigos-postales-fuentes.csv": "What each source says about postal codes: one row per code, municipality and source, including the pairs that are not published. For cross-checking and for claims.",
+      "entidades.csv": "Population entities of the INE street register: collective entities (the parishes of Galicia and Asturias…), singular entities, nuclei and scattered areas. One row per entity, with its identifier, its INE code and its name as the INE writes it; the level and the parent come from the code. The library loads them only when asked."
     },
     "columns": {
       "id": "Stable identifier of the territory (es:municipio:36038).",
       "ine": "INE code.",
-      "ine_dc": "INE code of the municipality with its check digit.",
+      "ine_dc": "INE code with its check digit: that of the municipality (6 digits) or, in entidades.csv, that of the population entity (12).",
       "dgc": "Municipality code in the Spanish cadastre (Dirección General del Catastro), different from the INE code. Empty in Álava, Gipuzkoa, Navarre and Biscay, which have their own (foral) cadastre.",
       "bddae": "Code of the IGN administrative unit (BDDAE): 34, community, province and INE code. It is the INSPIRE identifier of its boundaries.",
       "autonomia": "INE code of the autonomous community.",
@@ -553,6 +556,7 @@
         "eustat_portales": "postal codes of the Basque Country",
         "ideib_portales": "postal codes of the Balearic Islands",
         "ine_callejero": "postal codes of all Spain (electoral census street map)",
+        "ine_entidades": "population entities: collective, singular, nuclei and scattered areas (electoral census street map)",
         "cdau_portales": "postal codes of Andalusia (cross-check)",
         "catastro_direcciones": "postal codes of the common-regime municipalities"
       },
@@ -642,12 +646,13 @@
       "wikipedia.csv": "Articles de la Viquipèdia de cada territori en cada idioma.",
       "manifiesto.json": "Fonts utilitzades (adreça, empremta SHA-256, data i llicència) i empremta de cada fitxer.",
       "codigos-postales.csv": "Codis postals: una fila per codi i municipi, amb la font que decideix en aquest municipi, el seu recompte i les altres fonts que el tenen. Un codi pot abastar diversos municipis.",
-      "codigos-postales-fuentes.csv": "El que diu cada font de codis postals: una fila per codi, municipi i font, també els parells que no es publiquen. Serveix per contrastar i per reclamar."
+      "codigos-postales-fuentes.csv": "El que diu cada font de codis postals: una fila per codi, municipi i font, també els parells que no es publiquen. Serveix per contrastar i per reclamar.",
+      "entidades.csv": "Entitats de població del carrerer de l'INE: entitats col·lectives (les parròquies de Galícia i Astúries…), entitats singulars, nuclis i disseminats. Una fila per entitat, amb el seu identificador, el seu codi de l'INE i el seu nom tal com l'escriu l'INE; el nivell i el pare surten del codi. La llibreria només les carrega si es demanen."
     },
     "columns": {
       "id": "Identificador estable del territori (es:municipio:36038).",
       "ine": "Codi de l'INE.",
-      "ine_dc": "Codi de l'INE del municipi amb el seu dígit de control.",
+      "ine_dc": "Codi de l'INE amb el seu dígit de control: el del municipi (6 xifres) o, a entidades.csv, el de l'entitat de població (12).",
       "dgc": "Codi del municipi al Cadastre (Direcció General del Cadastre), diferent del de l'INE. Buit a Àlaba, Guipúscoa, Navarra i Biscaia, que tenen cadastre foral.",
       "bddae": "Codi de la unitat administrativa de l'IGN (BDDAE): 34, comunitat, província i codi INE. És l'identificador INSPIRE dels seus límits.",
       "autonomia": "Codi de l'INE de la comunitat autònoma.",
@@ -853,6 +858,7 @@
         "eustat_portales": "codis postals del País Basc",
         "ideib_portales": "codis postals de les Illes Balears",
         "ine_callejero": "codis postals de tota Espanya (carrerer del cens electoral)",
+        "ine_entidades": "entitats de població: col·lectives, singulars, nuclis i disseminats (carrerer del cens electoral)",
         "cdau_portales": "codis postals d'Andalusia (contrast)",
         "catastro_direcciones": "codis postals dels municipis de règim comú"
       },
@@ -942,12 +948,13 @@
       "wikipedia.csv": "Artigos da Wikipedia de cada territorio en cada idioma.",
       "manifiesto.json": "Fontes usadas (enderezo, pegada SHA-256, data e licenza) e pegada de cada ficheiro.",
       "codigos-postales.csv": "Códigos postais: unha fila por código e concello, coa fonte que decide nese concello, o seu reconto e as demais fontes que o teñen. Un código pode abranguer varios concellos.",
-      "codigos-postales-fuentes.csv": "O que di cada fonte de códigos postais: unha fila por código, concello e fonte, tamén os pares que non se publican. Serve para contrastar e para reclamar."
+      "codigos-postales-fuentes.csv": "O que di cada fonte de códigos postais: unha fila por código, concello e fonte, tamén os pares que non se publican. Serve para contrastar e para reclamar.",
+      "entidades.csv": "Entidades de poboación do rueiro do INE: entidades colectivas (as parroquias de Galicia e Asturias…), entidades singulares, núcleos e diseminados. Unha fila por entidade, co seu identificador, o seu código do INE e o seu nome tal como o escribe o INE; o nivel e o pai saen do código. A biblioteca só as carga se se piden."
     },
     "columns": {
       "id": "Identificador estable do territorio (es:municipio:36038).",
       "ine": "Código do INE.",
-      "ine_dc": "Código do INE do concello co seu díxito de control.",
+      "ine_dc": "Código do INE co seu díxito de control: o do concello (6 cifras) ou, en entidades.csv, o da entidade de poboación (12).",
       "dgc": "Código do concello no Catastro (Dirección Xeral do Catastro), distinto do do INE. Baleiro en Álava, Gipuzkoa, Navarra e Biscaia, que teñen catastro foral.",
       "bddae": "Código da unidade administrativa do IGN (BDDAE): 34, comunidade, provincia e código INE. É o identificador INSPIRE dos seus límites.",
       "autonomia": "Código do INE da comunidade autónoma.",
@@ -1153,6 +1160,7 @@
         "eustat_portales": "códigos postais do País Vasco",
         "ideib_portales": "códigos postais das Baleares",
         "ine_callejero": "códigos postais de toda España (rueiro do censo electoral)",
+        "ine_entidades": "entidades de poboación: colectivas, singulares, núcleos e diseminados (rueiro do censo electoral)",
         "cdau_portales": "códigos postais de Andalucía (contraste)",
         "catastro_direcciones": "códigos postais dos concellos de réxime común"
       },
@@ -1242,12 +1250,13 @@
       "wikipedia.csv": "Lurralde bakoitzaren Wikipedia artikuluak hizkuntza bakoitzean.",
       "manifiesto.json": "Erabilitako iturriak (helbidea, SHA-256 aztarna, data eta lizentzia) eta fitxategi bakoitzaren aztarna.",
       "codigos-postales.csv": "Posta-kodeak: lerro bat kode eta udalerri bakoitzeko, udalerri horretan erabakitzen duen iturriarekin, haren zenbaketarekin eta hura duten beste iturriekin. Kode batek hainbat udalerri har ditzake.",
-      "codigos-postales-fuentes.csv": "Iturri bakoitzak posta-kodeei buruz dioena: lerro bat kode, udalerri eta iturri bakoitzeko, argitaratzen ez diren bikoteak barne. Egiaztatzeko eta erreklamatzeko balio du."
+      "codigos-postales-fuentes.csv": "Iturri bakoitzak posta-kodeei buruz dioena: lerro bat kode, udalerri eta iturri bakoitzeko, argitaratzen ez diren bikoteak barne. Egiaztatzeko eta erreklamatzeko balio du.",
+      "entidades.csv": "INEren kale-izendegiko biztanle-entitateak: entitate kolektiboak (Galiziako eta Asturiasko parrokiak…), entitate singularrak, guneak eta sakabanatuak. Lerro bat entitate bakoitzeko, bere identifikatzailearekin, INEren kodearekin eta INEk idazten duen izenarekin; maila eta gurasoa kodetik ateratzen dira. Liburutegiak eskatzen bada bakarrik kargatzen ditu."
     },
     "columns": {
       "id": "Lurraldearen identifikatzaile egonkorra (es:municipio:36038).",
       "ine": "INEren kodea.",
-      "ine_dc": "Udalerriaren INEren kodea, kontrol-digituarekin.",
+      "ine_dc": "INEren kodea, kontrol-digituarekin: udalerriarena (6 digitu) edo, entidades.csv fitxategian, biztanle-entitatearena (12).",
       "dgc": "Udalerriaren kodea Katastroan (Katastroko Zuzendaritza Nagusia), INEren kodetik desberdina. Hutsik Araban, Gipuzkoan, Nafarroan eta Bizkaian, foru-katastroa baitute.",
       "bddae": "IGNren unitate administratiboaren kodea (BDDAE): 34, erkidegoa, probintzia eta INE kodea. Bere mugen INSPIRE identifikatzailea da.",
       "autonomia": "Autonomia-erkidegoaren INEren kodea.",
@@ -1453,6 +1462,7 @@
         "eustat_portales": "Euskadiko posta-kodeak",
         "ideib_portales": "Balearretako posta-kodeak",
         "ine_callejero": "Espainia osoko posta-kodeak (hauteskunde-erroldako kale-izendegia)",
+        "ine_entidades": "biztanle-entitateak: kolektiboak, singularrak, guneak eta sakabanatuak (hauteskunde-erroldako kale-izendegia)",
         "cdau_portales": "Andaluziako posta-kodeak (kontrastea)",
         "catastro_direcciones": "erregimen erkideko udalerrien posta-kodeak"
       },
@@ -1542,12 +1552,13 @@
       "wikipedia.csv": "Articles dera Wikipèdia de cada territòri en cada lengua.",
       "manifiesto.json": "Hònts utilizades (adreça, emprenta SHA-256, data e licéncia) e emprenta de cada fichièr.",
       "codigos-postales.csv": "Còdis postaus: ua linha per còdi e municipi, damb era hònt que decidís en aguest municipi, eth sòn compde e es autes hònts que l'an. Un còdi pòt cubrir diuèrsi municipis.",
-      "codigos-postales-fuentes.csv": "Çò que ditz cada hònt de còdis postaus: ua linha per còdi, municipi e hònt, tanben es parelhs que non se publiquen. Servís entà contrastar e entà reclamar."
+      "codigos-postales-fuentes.csv": "Çò que ditz cada hònt de còdis postaus: ua linha per còdi, municipi e hònt, tanben es parelhs que non se publiquen. Servís entà contrastar e entà reclamar.",
+      "entidades.csv": "Entitats de poblacion deth carrerèr der INE: entitats collectives (es parròquies de Galícia e Astúries…), entitats singulars, nuclèus e disseminats. Ua linha per entitat, damb eth sòn identificador, eth sòn còdi der INE e eth sòn nom tau coma l'escriu er INE; eth nivèu e eth pair gessen deth còdi. Era bibliotèca les carga solament se se demanen."
     },
     "columns": {
       "id": "Identificador estable deth territòri (es:municipio:36038).",
       "ine": "Còdi der INE.",
-      "ine_dc": "Còdi der INE deth municipi damb eth sòn dígit de contròle.",
+      "ine_dc": "Còdi der INE damb eth sòn dígit de contròle: eth deth municipi (6 chifres) o, en entidades.csv, eth dera entitat de poblacion (12).",
       "dgc": "Còdi deth municipi en Cadastre (Direccion Generau deth Cadastre), diferent deth der INE. Vuet en Araba, Gipuzkoa, Navarra e Biscaia, qu'an cadastre forau.",
       "bddae": "Còdi dera unitat administrativa der IGN (BDDAE): 34, comunitat, província e còdi INE. Ei er identificador INSPIRE des sons limits.",
       "autonomia": "Còdi der INE dera comunitat autonòma.",
@@ -1753,6 +1764,7 @@
         "eustat_portales": "còdis postaus deth País Basc",
         "ideib_portales": "còdis postaus des Balears",
         "ine_callejero": "còdis postaus de tota Espanha (carrerèr deth cens electorau)",
+        "ine_entidades": "entitats de poblacion: collectives, singulars, nuclèus e disseminats (carrerèr deth cens electorau)",
         "cdau_portales": "còdis postaus d'Andalosia (contraste)",
         "catastro_direcciones": "còdis postaus des municipis de regim comun"
       },

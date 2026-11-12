@@ -4,30 +4,34 @@ from __future__ import annotations
 import re
 import unicodedata
 
-# Articles that the INE writes after a comma: «Coruña, A», «Orxa, l'», «Bòrdes, Es».
-# Per language, so that other countries can add theirs.
+# Articles that the INE writes after a comma («Coruña, A», «Orxa, l'», «Bòrdes, Es») or, in the street
+# register, in brackets and in capitals («DEVESA (A)», «ESTEPAR (L')»). Per language, so that other
+# countries can add theirs.
 ARTICLES = {
     "es": ("El", "La", "Los", "Las"),
     "gl": ("O", "A", "Os", "As"),
     "ca": ("El", "La", "Els", "Les", "L'", "Es", "Sa", "Ses"),
     "oc": ("Eth", "Era", "Es", "Eras"),
 }
-_ARTICLES = {a for group in ARTICLES.values() for a in group}
-_ARTICLES |= {a.lower() for a in _ARTICLES}
-_TRAILING_ARTICLE = re.compile(r"^(?P<name>.+), (?P<article>[^,/]+)$")
+_ARTICLES = {a.lower() for group in ARTICLES.values() for a in group}
+_BY_LENGTH = sorted(_ARTICLES, key=lambda a: (-len(a), a))
+_TRAILING_ARTICLES = (re.compile(r"^(?P<name>.+), (?P<article>[^,/]+)$"),
+                      re.compile(r"^(?P<name>.+) \((?P<article>[^()/]+)\)$"))
 _APOSTROPHES = re.compile("[’‘´`]")
 
 
 def flip_article(name: str) -> str:
-    """«Coruña, A» -> «A Coruña»; «Orxa, l'» -> «l'Orxa». Other commas stay as they are."""
-    match = _TRAILING_ARTICLE.match(name.strip())
-    if not match:
-        return name.strip()
-    article = _APOSTROPHES.sub("'", match["article"])
-    if article not in _ARTICLES:
-        return name.strip()
-    joiner = "" if article.endswith("'") else " "
-    return f"{article}{joiner}{match['name']}"
+    """«Coruña, A» -> «A Coruña»; «Orxa, l'» -> «l'Orxa»; «DEVESA (A)» -> «A DEVESA». Other commas
+    and brackets stay as they are («BURRES (SAN VICENTE)»)."""
+    name = name.strip()
+    for pattern in _TRAILING_ARTICLES:
+        match = pattern.match(name)
+        if match:
+            article = _APOSTROPHES.sub("'", match["article"])
+            if article.lower() in _ARTICLES:
+                joiner = "" if article.endswith("'") else " "
+                return f"{article}{joiner}{match['name']}"
+    return name
 
 
 def display_name(official: str) -> str:
@@ -37,11 +41,13 @@ def display_name(official: str) -> str:
 
 
 def drop_article(name: str) -> str | None:
-    """«A Coruña» -> «Coruña»; None if the name does not start with an article."""
-    for article in sorted(_ARTICLES, key=lambda a: (-len(a), a)):
-        if article.endswith("'") and name.startswith(article) and len(name) > len(article):
+    """«A Coruña» -> «Coruña», «LA PULGOSA» -> «PULGOSA»; None if the name does not start with an
+    article."""
+    lower = name.lower()
+    for article in _BY_LENGTH:
+        if article.endswith("'") and lower.startswith(article) and len(name) > len(article):
             return name[len(article):]
-        if name.startswith(article + " ") and len(name) > len(article) + 1:
+        if lower.startswith(article + " ") and len(name) > len(article) + 1:
             return name[len(article) + 1:]
     return None
 

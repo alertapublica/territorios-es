@@ -8,9 +8,10 @@
     ".": { "node": "./js/node.js", "default": "./js/index.js" },
     "./catastro-online": "./js/catastro_online.js",
     "./territorios.json": "./datos/territorios.json",
-    "./codigos-postales.csv": "./datos/codigos-postales.csv"
+    "./codigos-postales.csv": "./datos/codigos-postales.csv",
+    "./entidades.csv": "./datos/entidades.csv"
   },
-  "files": ["js", "datos/territorios.json", "datos/codigos-postales.csv"],
+  "files": ["js", "datos/territorios.json", "datos/codigos-postales.csv", "datos/entidades.csv"],
   "engines": { "node": ">=20" },
   "scripts": { "test": "node --test pruebas/*.test.mjs" },
   "repository": { "type": "git", "url": "git+https://github.com/alertapublica/territorios-es.git" }

@@ -136,7 +136,7 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
   are added, they will have another type. `search` and `mentions` leave them out unless asked for
   in `levels`, since they only exist in four communities and some share their name with a
   municipality.
-- **Population entities** (in preparation, issue #31): the INE population units, from the units
+- **Population entities** (issue #31; reading and loading since #43; the rest, in preparation): the INE population units, from the units
   file (`UP`) of the electoral street register, the same ZIP already read for postal codes. Four
   levels: `collective_entity` (the parishes of Galicia and Asturias, the diputaciones of Murcia…,
   only where they exist), `singular_entity`, `nucleus` and `scattered` (diseminado: the part of a
@@ -144,19 +144,24 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
   population and IGN places hang from them. The parent of a singular entity is its collective
   entity, if it has one, or its municipality; that of a nucleus or a scattered area, its singular
   entity. No collective entities are made up. They are about 146,000 records, so they do not go in
-  `territorios.json` but in a separate file with its own loader, which extends the catalogue only
-  when asked, like the postal codes; whether it goes in the packages is decided by measuring its
-  size. Identifier `es:entidad:` and the INE's 11 digits (province, municipality, collective,
+  `territorios.json` but in a separate file with its own loader (`load_entities`; in JS,
+  `loadEntities` in Node or `createCatalog(data, { entities })` in the browser), which extends the
+  catalogue only when asked. It is `datos/entidades.csv`, which goes in the packages: about 7 MB
+  (1 MB compressed), with the identifier, the 12-digit code and the INE name; the level and the
+  parent come from the code. It is rebuilt every month with the rest of the data, from the newest
+  edition of the street register, so it never points to a municipality that no longer exists; what
+  cannot be published (unknown municipality, no name, no parent entity) goes to the report.
+  Identifier `es:entidad:` and the INE's 11 digits (province, municipality, collective,
   singular and nucleus, without the check digit the street register adds), assigned the first time
   and frozen: if the INE recodes, the identifier stays and the new code is recorded (§4.6). Codes
   `ine:entidad` (11 digits) and `ine:entidad:dc` (12). `search`, `mentions` and `relate_name` leave
   them out unless asked for in `levels`, because there are tens of thousands of homonyms, and each
   candidate carries its municipality and its collective entity. So that everything stays linked,
   what hangs from the municipality (island, comarca, judicial district, warning zone) also applies
-  to its entities, `within` included; a relation to an entity can be explicitly taken to its
-  municipality to combine it with a relation to a municipality (today `combine` would see them as
-  contradictory); and `normalize` will have to understand the INE's article in brackets ("DEVESA
-  (A)"). A collective entity is not by itself a parish or a minor local entity: those equivalences,
+  to its entities, `within` included; a relation to an entity is explicitly taken to its
+  municipality with `to_municipality` to combine it with a relation to a municipality (without that
+  step, `combine` sees them as contradictory); and `normalize` understands the INE's article in
+  brackets ("DEVESA (A)"). A collective entity is not by itself a parish or a minor local entity: those equivalences,
   if made, carry their source. A point is not a boundary: `locate` still returns municipalities.
 
 ### 4.2 Codes
@@ -226,7 +231,9 @@ and the language, which is not applied blindly to other texts (streets, field na
 name carries its source and whether it is reviewed (#40). An accent dictionary only proposes
 corrections for review. If the IGN gives another name ("Santiago" against "SANTIAGO DE CUDEYO"), it
 goes to the report as a discrepancy, not as an alias. A scattered area is shown with a label derived
-from its singular entity's name ("Diseminado de A Devesa").
+from its singular entity's name ("Diseminado de A Devesa"). Until this layer is there (#44),
+`display` is the INE's literal text with the article in front ("A DEVESA") and `names.reviewed` is
+false.
 
 ### 4.4 Which name is shown in each language
 
@@ -313,7 +320,7 @@ options go in an object (`search(text, { within, levels })`).
 |---|---|
 | `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca. Judicial districts, warning zones and comarcas only come up if asked for in `levels`. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca. Judicial districts, warning zones, comarcas and population entities only come up if asked for in `levels`. |
 | `children(id)` | The territories whose parent is this one; for an island, a judicial district, a warning zone or a comarca, its municipalities. Those of a community include its comarcas; those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
@@ -326,6 +333,8 @@ options go in an object (`search(text, { within, levels })`).
 | `postal_codes(id)` | The postal codes of a municipality, by code, each with its source, its count, its unit and the other sources that have it (`also`). |
 | `municipalities(code)` | The municipalities of a postal code: by count when all have the same unit (addresses, portals or street sections), otherwise by the street sections of the INE (0 if it lacks the pair), because counts in different units do not compare. |
 | `relate_postal_code(code)` | Resolved if the code belongs to a single municipality; pending if it belongs to several or to none. The evidence carries each candidate's source, count, unit and `also`. `combine` with the municipality's name removes the ambiguity. |
+| `load_entities(path)` | The catalogue with the population entities (§4.1): `resolve` with `ine:entidad` or `ine:entidad:dc`, `children` down the hierarchy and `search` if their levels are asked for, with each candidate's municipality and collective entity. It takes a few seconds; the module's functions keep using the catalogue without entities. |
+| `to_municipality(relation)` | The same relation taken to municipalities: each population entity becomes its municipality, with the evidence of the step. If every candidate falls in one municipality, resolved (`same_municipality`). That way it combines with a relation to a municipality. |
 
 Postal codes have their own table (`load_postal_codes`; in JS, `loadPostalCodes` in Node or
 `createPostalCodes` in the browser), not `resolve`: a code spans several municipalities and a
@@ -537,7 +546,8 @@ Taken on 12 November 2026, with an independent review by Codex:
     register and loading; display names and cross-check with the IGN; population and changes
     between editions; postal codes by entity; Wikidata and aliases. The minor local entities of the
     Registro de Entidades Locales go separately. Whatever is published must stay linked to the
-    municipality and to what hangs from it.
+    municipality and to what hangs from it. The file, `datos/entidades.csv`, goes in the packages
+    (about 7 MB, 1 MB compressed) and is built every month with the rest of the data (#43).
 
 ## 13. Source checks
 
