@@ -136,6 +136,28 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
   are added, they will have another type. `search` and `mentions` leave them out unless asked for
   in `levels`, since they only exist in four communities and some share their name with a
   municipality.
+- **Population entities** (in preparation, issue #31): the INE population units, from the units
+  file (`UP`) of the electoral street register, the same ZIP already read for postal codes. Four
+  levels: `collective_entity` (the parishes of Galicia and Asturias, the diputaciones of Murcia…,
+  only where they exist), `singular_entity`, `nucleus` and `scattered` (diseminado: the part of a
+  singular entity outside any nucleus). Scattered areas are included too, because street sections,
+  population and IGN places hang from them. The parent of a singular entity is its collective
+  entity, if it has one, or its municipality; that of a nucleus or a scattered area, its singular
+  entity. No collective entities are made up. They are about 146,000 records, so they do not go in
+  `territorios.json` but in a separate file with its own loader, which extends the catalogue only
+  when asked, like the postal codes; whether it goes in the packages is decided by measuring its
+  size. Identifier `es:entidad:` and the INE's 11 digits (province, municipality, collective,
+  singular and nucleus, without the check digit the street register adds), assigned the first time
+  and frozen: if the INE recodes, the identifier stays and the new code is recorded (§4.6). Codes
+  `ine:entidad` (11 digits) and `ine:entidad:dc` (12). `search`, `mentions` and `relate_name` leave
+  them out unless asked for in `levels`, because there are tens of thousands of homonyms, and each
+  candidate carries its municipality and its collective entity. So that everything stays linked,
+  what hangs from the municipality (island, comarca, judicial district, warning zone) also applies
+  to its entities, `within` included; a relation to an entity can be explicitly taken to its
+  municipality to combine it with a relation to a municipality (today `combine` would see them as
+  contradictory); and `normalize` will have to understand the INE's article in brackets ("DEVESA
+  (A)"). A collective entity is not by itself a parish or a minor local entity: those equivalences,
+  if made, carry their source. A point is not a boundary: `locate` still returns municipalities.
 
 ### 4.2 Codes
 
@@ -194,6 +216,18 @@ The official INE names are already those of the local language when the law so s
 Catalonia and Illes Balears only the Galician or Catalan form is official. "Gerona" or "Sanjenjo"
 are not official names, but aliases.
 
+For population entities, `official` is the INE's literal text, in capitals, with the article in
+brackets and sometimes without accents ("DEVESA (A)", "*DISEMINADO*"); it means "the name the INE
+publishes", not a checked legal name. `display` is chosen in this order: a hand-reviewed correction
+for that entity, which goes back to review if the INE's literal changes; the IGN spelling with the
+same code, if only capitals and accents differ; that of an IGN nucleus or place of the same entity
+with the same name; and, failing all that, a capitalisation and article rule specific to the source
+and the language, which is not applied blindly to other texts (streets, field names, bodies). Each
+name carries its source and whether it is reviewed (#40). An accent dictionary only proposes
+corrections for review. If the IGN gives another name ("Santiago" against "SANTIAGO DE CUDEYO"), it
+goes to the report as a discrepancy, not as an alias. A scattered area is shown with a label derived
+from its singular entity's name ("Diseminado de A Devesa").
+
 ### 4.4 Which name is shown in each language
 
 The data stores all the names; this is the default rule of `name(id, lang)`:
@@ -248,6 +282,13 @@ removals of the year go to the report and come in with the next dictionary. Afte
 - a merger or segregation creates new identities and succession links;
 - a monthly workflow checks whether the sources have changed and, if so, opens a PR with the
   summary: new or removed municipalities and changes of name or code.
+
+For population entities the INE publishes no list of changes. Changes are detected by comparing
+each edition of the street register (January and July) with the previous one: new entities, removed
+ones and name changes go to the report. An entity that disappears while another with the same name
+appears in the same municipality is only a candidate recoding: continuity is recorded by hand in
+`fuentes/`, with its source, and is never inferred from the name or the position. The identifiers
+of removed entities are not reused.
 
 ## 5. How the sources are related
 
@@ -488,6 +529,16 @@ Taken on 11 November 2026:
     because it is an old binary Excel file and they change very little. Municipalities of other
     communities are not filled in with statistical comarcas.
 
+Taken on 12 November 2026, with an independent review by Codex:
+
+18. Population entities: the INE's four levels, scattered areas included, in a separate file loaded
+    when asked, with identifier `es:entidad:` and the INE's 11 digits, frozen (§4.1, §4.3 and §4.6).
+    It is done in parts, each with its tests, documentation and website: reading the street
+    register and loading; display names and cross-check with the IGN; population and changes
+    between editions; postal codes by entity; Wikidata and aliases. The minor local entities of the
+    Registro de Entidades Locales go separately. Whatever is published must stay linked to the
+    municipality and to what hangs from it.
+
 ## 13. Source checks
 
 Before using each source, its URL, format and licence have to be checked. Already checked on
@@ -603,3 +654,34 @@ Checked on 11 November 2026:
 - **Cross-checking the districts**: the CGPJ publishes the population by district and municipality
   every year (XLSX, names only) and the Generalitat the CTEAJE catalogue of Spain's districts (code,
   name and seat). No third-party repository with the national relation is maintained.
+
+Checked on 12 November 2026:
+
+- **Electoral street register (INE), population units**: the July 2026 ZIP (50 MB) brings, besides
+  the street sections, the `UP` file (93 MB, cp1252, fixed width): a 12-digit code (municipality,
+  collective, singular, check digit and nucleus; 99 is the scattered area) and the names of the
+  municipality, the collective, the singular and the nucleus, in capitals, with the article in
+  brackets and often without accents. There are 8,132 municipalities, 4,904 collective entities
+  (3,772 in Galicia, 857 in Asturias, 124 in Murcia, 49 in Almería, 39 in León, 30 in Navarre…),
+  62,204 singular entities (28,926 without a nucleus), 37,585 nuclei and 41,386 scattered areas,
+  with no missing parents. Each street section carries its population unit: 74,943 units with
+  sections, 37,184 nuclei and 37,759 scattered areas. The 11 digits of the other sources are the 12
+  without the tenth (the check digit). The INE publishes no list of changes of entities; its
+  methodology only says that nuclei were recoded in 1991 in alphabetical order within each singular
+  entity.
+- **IGN, populations**: the `nuc` collection (37,497 nuclei) has the properly written name and
+  `habitantes`; 37,458 match nuclei of the street register by code, and in about 3,800 the name is
+  really different ("Villacalbiel" against "VILLACALVIEL"). The `opob` collection has 144,110 "other
+  populations" with the code of the unit they belong to: 73,834 of a scattered area and 55,881 of a
+  singular entity. By code and same name, `nuc` and `opob` give the spelling of 81% of singular
+  entities; Wikidata, another 2%. 31 municipal capitals in the catalogue point to a scattered area
+  and 25 to a singular entity, not to a nucleus.
+- **Wikidata**: 11-digit P772 on about 29,000 items, with a Spanish label for 25,080 codes; it has
+  almost all collective entities, but in another form ("San Vicente de Burres" against "BURRES (SAN
+  VICENTE)"). That day the query service was limited to one query per minute.
+- **A capitalisation and article rule** on the INE name gives the IGN spelling, ignoring case, for
+  76% of the nuclei that match by code; with an accent dictionary taken from `opob` and Wikidata,
+  82%, but it spoils 74 that the rule alone got right. Almost all failures are accents the INE does
+  not write.
+- **Catastro**: it does not use the INE entity codes. A rural parcel gives polygon, parcel and field
+  name; a place is a street of type `LG` or `DS` ("LG CENDONA-LEREZ 14 36156 PONTEVEDRA").

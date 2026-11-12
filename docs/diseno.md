@@ -130,6 +130,28 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   de Galicia, la Comunitat Valenciana o Asturias, que son estadísticas o de planificación, quedan
   fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
   pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
+- **Entidades de población** (en preparación, issue #31): las unidades poblacionales del INE, del
+  fichero de unidades (`UP`) del callejero del censo electoral, el mismo ZIP que ya se lee para los
+  códigos postales. Cuatro niveles: `collective_entity` (entidad colectiva: las parroquias de
+  Galicia y Asturias, las diputaciones de Murcia…, solo donde existen), `singular_entity`, `nucleus`
+  y `scattered` (diseminado: la parte de una entidad singular que no está en ningún núcleo). Van
+  también los diseminados, porque de ellos cuelgan tramos del callejero, población y lugares del
+  IGN. El padre de una entidad singular es su colectiva, si la tiene, o su municipio; el de un
+  núcleo o un diseminado, su entidad singular. No se inventan colectivas. Son unos 146.000
+  registros, así que no van en `territorios.json`, sino en un fichero aparte con su cargador, que
+  amplía el catálogo solo si se pide, como los códigos postales; si entra en los paquetes se decide
+  midiendo su tamaño. Identificador `es:entidad:` y las 11 cifras del INE (provincia, municipio,
+  colectiva, singular y núcleo, sin el dígito de control que añade el callejero), asignado la
+  primera vez y congelado: si el INE recodifica, el identificador se mantiene y se anota el código
+  nuevo (§4.6). Códigos `ine:entidad` (11 cifras) e `ine:entidad:dc` (12). `search`, `mentions` y
+  `relate_name` no las devuelven salvo que se pidan en `levels`, porque hay decenas de miles de
+  homónimos, y cada candidato lleva su municipio y su colectiva. Para que todo quede enlazado, lo
+  que cuelga del municipio (isla, comarca, partido judicial, zona de aviso) vale también para sus
+  entidades, también en `within`; una relación con una entidad se podrá llevar de forma explícita a
+  su municipio para combinarla con otra de municipio (hoy `combine` las daría por contradictorias);
+  y `normalize` tendrá que entender el artículo entre paréntesis del INE («DEVESA (A)»). Una entidad
+  colectiva no es sin más una parroquia ni una entidad local menor: esas equivalencias, si se hacen,
+  llevan su fuente. Un punto no es un límite: `locate` sigue devolviendo municipios.
 
 ### 4.2 Códigos
 
@@ -187,6 +209,18 @@ Los nombres oficiales del INE son ya los de la lengua propia cuando la ley lo di
 Cataluña e Illes Balears solo la forma gallega o catalana es oficial. «Gerona» o «Sanjenjo» no son
 nombres oficiales, sino alias.
 
+En las entidades de población, `official` es el literal del INE, en mayúsculas, con el artículo entre
+paréntesis y a veces sin tildes («DEVESA (A)», «*DISEMINADO*»); significa «el nombre que publica el
+INE», no una denominación legal comprobada. `display` se elige en este orden: una corrección revisada
+a mano para esa entidad, que vuelve a revisión si cambia el literal del INE; la grafía del IGN con
+el mismo código, si solo cambian mayúsculas y tildes; la de un núcleo o lugar del IGN de esa misma
+entidad con el mismo nombre; y, si no hay nada, una regla de mayúsculas y artículos propia de la
+fuente y del idioma, que no se aplica a ciegas a otros textos (vías, parajes, organismos). Cada
+nombre lleva su procedencia y si está revisado (#40). Un diccionario de tildes solo propone
+correcciones para revisar. Si el IGN da otro nombre («Santiago» frente a «SANTIAGO DE CUDEYO»), va
+al informe como discrepancia, no como alias. Un diseminado se muestra con una etiqueta derivada del
+nombre de su entidad singular («Diseminado de A Devesa»).
+
 ### 4.4 Qué nombre se muestra en cada idioma
 
 Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, lang)`:
@@ -240,6 +274,13 @@ al informe y entran con el diccionario siguiente. Después:
 - una fusión o segregación crea identidades nuevas y enlaces de sucesión;
 - un workflow mensual comprueba si las fuentes han cambiado y, si es así, abre una PR con el
   resumen: municipios nuevos o dados de baja y cambios de nombre o de código.
+
+Para las entidades de población el INE no publica una relación de variaciones. Los cambios se
+detectan comparando cada edición del callejero (enero y julio) con la anterior: las entidades
+nuevas, las desaparecidas y los cambios de nombre van al informe. Que una entidad desaparezca y
+aparezca otra con el mismo nombre en el mismo municipio solo la hace candidata a recodificación: la
+continuidad se anota a mano en `fuentes/`, con su fuente, y nunca se deduce por el nombre ni por la
+posición. Los identificadores de las bajas no se reutilizan.
 
 ## 5. Cómo se relacionan las fuentes
 
@@ -475,6 +516,16 @@ Tomada el 11 de noviembre de 2026:
     una exportación del Registro revisada a mano, porque es un Excel binario antiguo y cambian muy
     poco. No se rellenan con comarcas estadísticas los municipios de las demás comunidades.
 
+Tomada el 12 de noviembre de 2026, con una revisión independiente de Codex:
+
+18. Entidades de población: los cuatro niveles del INE, diseminados incluidos, en un fichero aparte
+    que se carga si se pide, con identificador `es:entidad:` y las 11 cifras del INE, congelado
+    (§4.1, §4.3 y §4.6). Se hace por partes, cada una con sus pruebas, documentación y web: lectura
+    del callejero y carga; nombres para mostrar y cruce con el IGN; población y cambios entre
+    ediciones; códigos postales por entidad; Wikidata y alias. Las entidades locales menores del
+    Registro de Entidades Locales van aparte. Lo que se publique tiene que quedar enlazado con el
+    municipio y con lo que cuelga de él.
+
 ## 13. Comprobaciones de las fuentes
 
 Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo ya comprobado el
@@ -586,3 +637,33 @@ Comprobado el 11 de noviembre de 2026:
 - **Contraste de partidos**: el CGPJ publica cada año la población por partido y municipio (XLSX,
   solo con nombres) y la Generalitat el catálogo CTEAJE de partidos de España (código, nombre y
   sede). Ningún repositorio ajeno con la relación nacional está mantenido.
+
+Comprobado el 12 de noviembre de 2026:
+
+- **Callejero del censo electoral (INE), unidades poblacionales**: el ZIP de julio de 2026 (50 MB)
+  trae, además de los tramos, el fichero `UP` (93 MB, cp1252, ancho fijo): código de 12 cifras
+  (municipio, colectiva, singular, dígito de control y núcleo; 99 es el diseminado) y los nombres
+  del municipio, la colectiva, la singular y el núcleo, en mayúsculas, con el artículo entre
+  paréntesis y a menudo sin tildes. Son 8.132 municipios, 4.904 entidades colectivas (3.772 en
+  Galicia, 857 en Asturias, 124 en Murcia, 49 en Almería, 39 en León, 30 en Navarra…), 62.204
+  singulares (28.926 sin núcleo), 37.585 núcleos y 41.386 diseminados, sin padres que falten.
+  Cada tramo lleva su unidad poblacional: 74.943 unidades con tramos, 37.184 núcleos y 37.759
+  diseminados. Las 11 cifras de las demás fuentes son las 12 sin la décima (el dígito de control).
+  El INE no publica una relación de variaciones de entidades; su metodología solo dice que los
+  núcleos se recodificaron en 1991 por orden alfabético dentro de cada entidad singular.
+- **IGN, poblaciones**: la colección `nuc` (37.497 núcleos) trae el nombre bien escrito y
+  `habitantes`; 37.458 casan con núcleos del callejero por código, y en unos 3.800 el nombre es otro
+  de verdad («Villacalbiel» frente a «VILLACALVIEL»). La colección `opob` tiene 144.110 «otras
+  poblaciones» con el código de la unidad a la que pertenecen: 73.834 de un diseminado y 55.881 de
+  una entidad singular. Por código y mismo nombre, `nuc` y `opob` dan la grafía del 81 % de las
+  entidades singulares; Wikidata, otro 2 %. 31 capitales municipales del catálogo apuntan a un
+  diseminado y 25 a una entidad singular, no a un núcleo.
+- **Wikidata**: P772 de 11 cifras en unos 29.000 elementos, con etiqueta en castellano en 25.080
+  códigos; tiene casi todas las colectivas, pero con otra forma («San Vicente de Burres» frente a
+  «BURRES (SAN VICENTE)»). El servicio de consultas limitaba ese día a una consulta por minuto.
+- **Una regla de mayúsculas y artículos** sobre el nombre del INE da la grafía del IGN, sin contar
+  mayúsculas, en el 76 % de los núcleos que casan por código; con un diccionario de tildes sacado de
+  `opob` y Wikidata, en el 82 %, pero estropea 74 que la regla sola acertaba. Casi todos los fallos
+  son tildes que el INE no escribe.
+- **Catastro**: no usa los códigos de entidad del INE. Una rústica da polígono, parcela y paraje;
+  un lugar es una vía de tipo `LG` o `DS` («LG CENDONA-LEREZ 14 36156 PONTEVEDRA»).
