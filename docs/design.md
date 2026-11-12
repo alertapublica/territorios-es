@@ -511,10 +511,7 @@ Taken on 11 November 2026:
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General →
   Workflow permissions). Until then, the monthly update pushes the data branch and warns with the
   link to open the PR by hand. GitHub Pages is already enabled.
-- Release version 0.4. Already on `main`: official INE population, postal-code gatherer, judicial
-  districts, AEMET warning zones, comarcas that are a local entity and status page. Before, the
-  GitHub actions still on Node 20 (Dependabot PR). Afterwards, more postal-code sources: La Rioja,
-  Gipuzkoa, Málaga, Barcelona…
+- More postal-code sources: La Rioja, Gipuzkoa, Málaga, Barcelona…
 - Status page, later (Codex review of PR #19): operational state (age of each source, coverage
   regressions, open discrepancies, published version); diagrams drawn as SVG in CI so as not to
   depend on jsDelivr; data PRs opened by Actions should trigger CI; bars instead of pies if these
