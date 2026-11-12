@@ -185,6 +185,11 @@ Name fields of each territory:
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Hand-reviewed list, with its language and its type (exonym, historical, abbreviation). |
 | `slug` | `a-coruna` | Derived |
 
+In `fuentes/nombres-comunidades.csv`, each `revisado` (reviewed) name carries its source in `source`: `ine`
+(official name), `estatuto` (statute of autonomy), `optimot` (Catalan), `rag` (Galician), `euskaltzaindia`
+(rule 32), `iea` (dictionary of the Institut d'Estudis Aranesi) or `uso` (English, no standard). `pendiente`
+(pending) names carry no source.
+
 The official INE names are already those of the local language when the law so states: in Galicia,
 Catalonia and Illes Balears only the Galician or Catalan form is official. "Gerona" or "Sanjenjo"
 are not official names, but aliases.

@@ -179,6 +179,10 @@ Campos de nombre de cada territorio:
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Lista revisada a mano, con su idioma y su tipo (exónimo, histórico, abreviatura). |
 | `slug` | `a-coruna` | Derivado |
 
+En `fuentes/nombres-comunidades.csv`, cada nombre `revisado` lleva su fuente en `source`: `ine` (nombre
+oficial), `estatuto`, `optimot` (catalán), `rag` (gallego), `euskaltzaindia` (norma 32), `iea` (diccionario
+del Institut d'Estudis Aranesi) o `uso` (inglés, sin norma). Los `pendiente` no llevan fuente.
+
 Los nombres oficiales del INE son ya los de la lengua propia cuando la ley lo dice: en Galicia,
 Cataluña e Illes Balears solo la forma gallega o catalana es oficial. «Gerona» o «Sanjenjo» no son
 nombres oficiales, sino alias.

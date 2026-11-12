@@ -1063,6 +1063,19 @@ class HandLists(unittest.TestCase):
         pairs = {(r["ine"], r["lang"]) for r in rows if r["name"]}
         self.assertEqual(len(pairs), 19 * 6)
 
+    def test_every_reviewed_community_name_has_its_source(self):
+        import csv
+        with (ROOT / "fuentes" / "nombres-comunidades.csv").open(encoding="utf-8") as file:
+            rows = list(csv.DictReader(file))
+        sources = {"ine", "estatuto", "optimot", "rag", "euskaltzaindia", "iea", "uso"}
+        for r in rows:
+            with self.subTest(ine=r["ine"], lang=r["lang"]):
+                self.assertIn(r["status"], {"revisado", "pendiente"})
+                if r["status"] == "revisado":
+                    self.assertIn(r["source"], sources)
+                else:
+                    self.assertEqual(r["source"], "")
+
 
 if __name__ == "__main__":
     unittest.main()
