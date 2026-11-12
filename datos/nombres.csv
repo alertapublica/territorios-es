@@ -2504,13 +2504,13 @@ es:autonomia:03,lang,en,Principality of Asturias,fuentes
 es:autonomia:03,lang,es,Principado de Asturias,fuentes
 es:autonomia:03,lang,eu,Asturiasko Printzerria,fuentes
 es:autonomia:03,lang,gl,Principado de Asturias,fuentes
-es:autonomia:03,lang,oc,Principat d'Astúrias,fuentes
+es:autonomia:03,lang,oc,Principat d'Astúries,fuentes
 es:autonomia:03,short,ca,Astúries,fuentes
 es:autonomia:03,short,en,Asturias,fuentes
 es:autonomia:03,short,es,Asturias,fuentes
 es:autonomia:03,short,eu,Asturias,fuentes
 es:autonomia:03,short,gl,Asturias,fuentes
-es:autonomia:03,short,oc,Astúrias,fuentes
+es:autonomia:03,short,oc,Astúries,fuentes
 es:autonomia:04,official,,"Balears, Illes",fuentes
 es:autonomia:04,display,,Illes Balears,fuentes
 es:autonomia:04,lang,ast,Islles Baleares,wikidata
@@ -2519,7 +2519,7 @@ es:autonomia:04,lang,en,Balearic Islands,fuentes
 es:autonomia:04,lang,es,Illes Balears,fuentes
 es:autonomia:04,lang,eu,Balear Uharteak,fuentes
 es:autonomia:04,lang,gl,Illas Baleares,fuentes
-es:autonomia:04,lang,oc,Illes Balears,fuentes
+es:autonomia:04,lang,oc,Isles Balears,fuentes
 es:autonomia:04,short,ca,Balears,fuentes
 es:autonomia:04,short,es,Baleares,fuentes
 es:autonomia:04,short,gl,Baleares,fuentes
@@ -2535,7 +2535,7 @@ es:autonomia:05,lang,en,Canary Islands,fuentes
 es:autonomia:05,lang,es,Canarias,fuentes
 es:autonomia:05,lang,eu,Kanariak,fuentes
 es:autonomia:05,lang,gl,Canarias,fuentes
-es:autonomia:05,lang,oc,Canàrias,fuentes
+es:autonomia:05,lang,oc,Canàries,fuentes
 es:autonomia:06,official,,Cantabria,fuentes
 es:autonomia:06,display,,Cantabria,fuentes
 es:autonomia:06,lang,an,Cantabria,wikidata
@@ -2553,7 +2553,7 @@ es:autonomia:07,lang,ast,Castiella y Llión,wikidata
 es:autonomia:07,lang,ca,Castella i Lleó,fuentes
 es:autonomia:07,lang,en,Castile and León,fuentes
 es:autonomia:07,lang,es,Castilla y León,fuentes
-es:autonomia:07,lang,eu,Gaztela eta Leon,fuentes
+es:autonomia:07,lang,eu,Gaztela eta León,fuentes
 es:autonomia:07,lang,gl,Castela e León,fuentes
 es:autonomia:07,lang,oc,Castelha e Leon,fuentes
 es:autonomia:08,official,,Castilla - La Mancha,fuentes
@@ -2561,7 +2561,7 @@ es:autonomia:08,display,,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,an,Castiella-La Mancha,wikidata
 es:autonomia:08,lang,ast,Castiella-La Mancha,wikidata
 es:autonomia:08,lang,ca,Castella-la Manxa,fuentes
-es:autonomia:08,lang,en,Castilla–La Mancha,fuentes
+es:autonomia:08,lang,en,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,es,Castilla-La Mancha,fuentes
 es:autonomia:08,lang,eu,Gaztela-Mantxa,fuentes
 es:autonomia:08,lang,gl,Castela-A Mancha,fuentes
@@ -2617,7 +2617,7 @@ es:autonomia:13,lang,en,Community of Madrid,fuentes
 es:autonomia:13,lang,es,Comunidad de Madrid,fuentes
 es:autonomia:13,lang,eu,Madrilgo Erkidegoa,fuentes
 es:autonomia:13,lang,gl,Comunidade de Madrid,fuentes
-es:autonomia:13,lang,oc,Comunautat de Madrid,fuentes
+es:autonomia:13,lang,oc,Comunitat de Madrid,fuentes
 es:autonomia:13,short,ca,Madrid,fuentes
 es:autonomia:13,short,en,Madrid,fuentes
 es:autonomia:13,short,es,Madrid,fuentes
@@ -2631,7 +2631,7 @@ es:autonomia:14,lang,ast,Rexón de Murcia,wikidata
 es:autonomia:14,lang,ca,Regió de Múrcia,fuentes
 es:autonomia:14,lang,en,Region of Murcia,fuentes
 es:autonomia:14,lang,es,Región de Murcia,fuentes
-es:autonomia:14,lang,eu,Murtziako Eskualdea,fuentes
+es:autonomia:14,lang,eu,Murtziako Erregioa,fuentes
 es:autonomia:14,lang,gl,Rexión de Murcia,fuentes
 es:autonomia:14,lang,oc,Region de Múrcia,fuentes
 es:autonomia:14,short,ca,Múrcia,fuentes
@@ -2649,7 +2649,7 @@ es:autonomia:15,lang,en,Chartered Community of Navarre,fuentes
 es:autonomia:15,lang,es,Comunidad Foral de Navarra,fuentes
 es:autonomia:15,lang,eu,Nafarroako Foru Komunitatea,fuentes
 es:autonomia:15,lang,gl,Comunidade Foral de Navarra,fuentes
-es:autonomia:15,lang,oc,Comunautat Forau de Navarra,fuentes
+es:autonomia:15,lang,oc,Comunitat Forau de Navarra,fuentes
 es:autonomia:15,short,ca,Navarra,fuentes
 es:autonomia:15,short,en,Navarre,fuentes
 es:autonomia:15,short,es,Navarra,fuentes
@@ -2697,7 +2697,7 @@ es:autonomia:19,lang,en,Melilla,fuentes
 es:autonomia:19,lang,es,Melilla,fuentes
 es:autonomia:19,lang,eu,Melilla,fuentes
 es:autonomia:19,lang,gl,Melilla,fuentes
-es:autonomia:19,lang,oc,Melilla,fuentes
+es:autonomia:19,lang,oc,Melilha,fuentes
 es:provincia:01,official,,Araba/Álava,fuentes
 es:provincia:01,display,,Araba/Álava,fuentes
 es:provincia:01,parts,eu,Araba,fuentes
@@ -4039,7 +4039,6 @@ es:municipio:04006,official,,Albox,ine
 es:municipio:04006,display,,Albox,derivado
 es:municipio:04007,official,,Alcolea,ine
 es:municipio:04007,display,,Alcolea,derivado
-es:municipio:04007,lang,an,Alcolea (Almería),wikidata
 es:municipio:04008,official,,Alcóntar,ine
 es:municipio:04008,display,,Alcóntar,derivado
 es:municipio:04009,official,,Alcudia de Monteagud,ine
@@ -5078,7 +5077,6 @@ es:municipio:06902,official,,Pueblonuevo del Guadiana,ine
 es:municipio:06902,display,,Pueblonuevo del Guadiana,derivado
 es:municipio:06903,official,,Guadiana,ine
 es:municipio:06903,display,,Guadiana,derivado
-es:municipio:06903,lang,eu,Guadiana (Badajoz),wikidata
 es:municipio:07001,official,,Alaró,ine
 es:municipio:07001,display,,Alaró,derivado
 es:municipio:07002,official,,Alaior,ine
@@ -8123,7 +8121,6 @@ es:municipio:14037,official,,Iznájar,ine
 es:municipio:14037,display,,Iznájar,derivado
 es:municipio:14038,official,,Lucena,ine
 es:municipio:14038,display,,Lucena,derivado
-es:municipio:14038,lang,eu,Lucena (Kordoba),wikidata
 es:municipio:14039,official,,Luque,ine
 es:municipio:14039,display,,Luque,derivado
 es:municipio:14040,official,,Montalbán de Córdoba,ine
@@ -8162,7 +8159,6 @@ es:municipio:14056,official,,Puente Genil,ine
 es:municipio:14056,display,,Puente Genil,derivado
 es:municipio:14057,official,,"Rambla, La",ine
 es:municipio:14057,display,,La Rambla,derivado
-es:municipio:14057,lang,ca,La Rambla (Còrdova),wikidata
 es:municipio:14058,official,,Rute,ine
 es:municipio:14058,display,,Rute,derivado
 es:municipio:14059,official,,San Sebastián de los Ballesteros,ine
@@ -8207,12 +8203,10 @@ es:municipio:15001,official,,Abegondo,ine
 es:municipio:15001,display,,Abegondo,derivado
 es:municipio:15002,official,,Ames,ine
 es:municipio:15002,display,,Ames,derivado
-es:municipio:15002,lang,an,Ames (A Coruña),wikidata
 es:municipio:15003,official,,Aranga,ine
 es:municipio:15003,display,,Aranga,derivado
 es:municipio:15004,official,,Ares,ine
 es:municipio:15004,display,,Ares,derivado
-es:municipio:15004,lang,an,Ares (A Coruña),wikidata
 es:municipio:15005,official,,Arteixo,ine
 es:municipio:15005,display,,Arteixo,derivado
 es:municipio:15005,lang,es,Arteijo,wikidata
@@ -8225,7 +8219,6 @@ es:municipio:15008,official,,Bergondo,ine
 es:municipio:15008,display,,Bergondo,derivado
 es:municipio:15009,official,,Betanzos,ine
 es:municipio:15009,display,,Betanzos,derivado
-es:municipio:15009,lang,an,Betanzos (A Coruña),wikidata
 es:municipio:15010,official,,Boimorto,ine
 es:municipio:15010,display,,Boimorto,derivado
 es:municipio:15011,official,,Boiro,ine
@@ -8239,7 +8232,6 @@ es:municipio:15014,official,,Cabana de Bergantiños,ine
 es:municipio:15014,display,,Cabana de Bergantiños,derivado
 es:municipio:15015,official,,Cabanas,ine
 es:municipio:15015,display,,Cabanas,derivado
-es:municipio:15015,lang,an,Cabanas (A Coruña),wikidata
 es:municipio:15016,official,,Camariñas,ine
 es:municipio:15016,display,,Camariñas,derivado
 es:municipio:15017,official,,Cambre,ine
@@ -8251,10 +8243,8 @@ es:municipio:15019,official,,Carballo,ine
 es:municipio:15019,display,,Carballo,derivado
 es:municipio:15020,official,,Carnota,ine
 es:municipio:15020,display,,Carnota,derivado
-es:municipio:15020,lang,an,Carnota (A Coruña),wikidata
 es:municipio:15021,official,,Carral,ine
 es:municipio:15021,display,,Carral,derivado
-es:municipio:15021,lang,an,Carral (A Coruña),wikidata
 es:municipio:15022,official,,Cedeira,ine
 es:municipio:15022,display,,Cedeira,derivado
 es:municipio:15023,official,,Cee,ine
@@ -8318,7 +8308,6 @@ es:municipio:15047,official,,Mesía,ine
 es:municipio:15047,display,,Mesía,derivado
 es:municipio:15048,official,,Miño,ine
 es:municipio:15048,display,,Miño,derivado
-es:municipio:15048,lang,an,Miño (A Coruña),wikidata
 es:municipio:15049,official,,Moeche,ine
 es:municipio:15049,display,,Moeche,derivado
 es:municipio:15050,official,,Monfero,ine
@@ -8330,13 +8319,10 @@ es:municipio:15052,display,,Muxía,derivado
 es:municipio:15052,lang,es,Mugía,wikidata
 es:municipio:15053,official,,Muros,ine
 es:municipio:15053,display,,Muros,derivado
-es:municipio:15053,lang,an,Muros (A Coruña),wikidata
 es:municipio:15054,official,,Narón,ine
 es:municipio:15054,display,,Narón,derivado
 es:municipio:15055,official,,Neda,ine
 es:municipio:15055,display,,Neda,derivado
-es:municipio:15055,lang,an,Neda (A Coruña),wikidata
-es:municipio:15055,lang,oc,Neda (La Coronha),wikidata
 es:municipio:15056,official,,Negreira,ine
 es:municipio:15056,display,,Negreira,derivado
 es:municipio:15057,official,,Noia,ine
@@ -8386,7 +8372,6 @@ es:municipio:15074,official,,Rois,ine
 es:municipio:15074,display,,Rois,derivado
 es:municipio:15075,official,,Sada,ine
 es:municipio:15075,display,,Sada,derivado
-es:municipio:15075,lang,an,Sada (A Coruña),wikidata
 es:municipio:15076,official,,San Sadurniño,ine
 es:municipio:15076,display,,San Sadurniño,derivado
 es:municipio:15076,lang,es,San Saturnino,wikidata
@@ -8400,7 +8385,6 @@ es:municipio:15079,official,,Santiso,ine
 es:municipio:15079,display,,Santiso,derivado
 es:municipio:15080,official,,Sobrado,ine
 es:municipio:15080,display,,Sobrado,derivado
-es:municipio:15080,lang,an,Sobrado (A Coruña),wikidata
 es:municipio:15081,official,,"Somozas, As",ine
 es:municipio:15081,display,,As Somozas,derivado
 es:municipio:15082,official,,Teo,ine
@@ -9662,7 +9646,6 @@ es:municipio:18079,official,,Fuente Vaqueros,ine
 es:municipio:18079,display,,Fuente Vaqueros,derivado
 es:municipio:18082,official,,Galera,ine
 es:municipio:18082,display,,Galera,derivado
-es:municipio:18082,lang,oc,Galera (província de Granada),wikidata
 es:municipio:18083,official,,Gobernador,ine
 es:municipio:18083,display,,Gobernador,derivado
 es:municipio:18084,official,,Gójar,ine
@@ -9873,7 +9856,6 @@ es:municipio:18909,official,,Morelábor,ine
 es:municipio:18909,display,,Morelábor,derivado
 es:municipio:18910,official,,"Pinar, El",ine
 es:municipio:18910,display,,El Pinar,derivado
-es:municipio:18910,lang,an,El Pinar (Granada),wikidata
 es:municipio:18911,official,,Vegas del Genil,ine
 es:municipio:18911,display,,Vegas del Genil,derivado
 es:municipio:18912,official,,Cuevas del Campo,ine
@@ -10282,7 +10264,6 @@ es:municipio:19229,official,,Puebla de Valles,ine
 es:municipio:19229,display,,Puebla de Valles,derivado
 es:municipio:19230,official,,Quer,ine
 es:municipio:19230,display,,Quer,derivado
-es:municipio:19230,lang,ca,Quer (Guadalajara),wikidata
 es:municipio:19231,official,,Rebollosa de Jadraque,ine
 es:municipio:19231,display,,Rebollosa de Jadraque,derivado
 es:municipio:19232,official,,"Recuenco, El",ine
@@ -10726,17 +10707,14 @@ es:municipio:21002,official,,Aljaraque,ine
 es:municipio:21002,display,,Aljaraque,derivado
 es:municipio:21003,official,,"Almendro, El",ine
 es:municipio:21003,display,,El Almendro,derivado
-es:municipio:21003,lang,an,El Almendro (Uelba),wikidata
 es:municipio:21004,official,,Almonaster la Real,ine
 es:municipio:21004,display,,Almonaster la Real,derivado
 es:municipio:21005,official,,Almonte,ine
 es:municipio:21005,display,,Almonte,derivado
 es:municipio:21006,official,,Alosno,ine
 es:municipio:21006,display,,Alosno,derivado
-es:municipio:21006,lang,an,Alosno (Uelba),wikidata
 es:municipio:21007,official,,Aracena,ine
 es:municipio:21007,display,,Aracena,derivado
-es:municipio:21007,lang,an,Aracena (Uelba),wikidata
 es:municipio:21008,official,,Aroche,ine
 es:municipio:21008,display,,Aroche,derivado
 es:municipio:21009,official,,Arroyomolinos de León,ine
@@ -10747,7 +10725,6 @@ es:municipio:21011,official,,Beas,ine
 es:municipio:21011,display,,Beas,derivado
 es:municipio:21012,official,,Berrocal,ine
 es:municipio:21012,display,,Berrocal,derivado
-es:municipio:21012,lang,an,Berrocal (Uelba),wikidata
 es:municipio:21013,official,,Bollullos Par del Condado,ine
 es:municipio:21013,display,,Bollullos Par del Condado,derivado
 es:municipio:21014,official,,Bonares,ine
@@ -10756,12 +10733,10 @@ es:municipio:21015,official,,Cabezas Rubias,ine
 es:municipio:21015,display,,Cabezas Rubias,derivado
 es:municipio:21016,official,,Cala,ine
 es:municipio:21016,display,,Cala,derivado
-es:municipio:21016,lang,an,Cala (Uelba),wikidata
 es:municipio:21017,official,,Calañas,ine
 es:municipio:21017,display,,Calañas,derivado
 es:municipio:21018,official,,"Campillo, El",ine
 es:municipio:21018,display,,El Campillo,derivado
-es:municipio:21018,lang,an,El Campillo (Uelba),wikidata
 es:municipio:21019,official,,Campofrío,ine
 es:municipio:21019,display,,Campofrío,derivado
 es:municipio:21020,official,,Cañaveral de León,ine
@@ -10803,14 +10778,12 @@ es:municipio:21036,lang,es,La Granada de Riotinto,wikidata
 es:municipio:21036,lang,gl,La Granada de Riotinto,wikidata
 es:municipio:21037,official,,"Granado, El",ine
 es:municipio:21037,display,,El Granado,derivado
-es:municipio:21037,lang,an,El Granado (Uelba),wikidata
 es:municipio:21038,official,,Higuera de la Sierra,ine
 es:municipio:21038,display,,Higuera de la Sierra,derivado
 es:municipio:21039,official,,Hinojales,ine
 es:municipio:21039,display,,Hinojales,derivado
 es:municipio:21040,official,,Hinojos,ine
 es:municipio:21040,display,,Hinojos,derivado
-es:municipio:21040,lang,an,Hinojos (Uelba),wikidata
 es:municipio:21041,official,,Huelva,ine
 es:municipio:21041,display,,Huelva,derivado
 es:municipio:21041,lang,an,Uelba,wikidata
@@ -10822,31 +10795,24 @@ es:municipio:21044,official,,Lepe,ine
 es:municipio:21044,display,,Lepe,derivado
 es:municipio:21045,official,,Linares de la Sierra,ine
 es:municipio:21045,display,,Linares de la Sierra,derivado
-es:municipio:21045,lang,an,Linares de la Sierra (Uelba),wikidata
 es:municipio:21046,official,,Lucena del Puerto,ine
 es:municipio:21046,display,,Lucena del Puerto,derivado
 es:municipio:21047,official,,Manzanilla,ine
 es:municipio:21047,display,,Manzanilla,derivado
-es:municipio:21047,lang,an,Manzanilla (Uelba),wikidata
 es:municipio:21048,official,,"Marines, Los",ine
 es:municipio:21048,display,,Los Marines,derivado
-es:municipio:21048,lang,an,Los Marines (Uelba),wikidata
 es:municipio:21049,official,,Minas de Riotinto,ine
 es:municipio:21049,display,,Minas de Riotinto,derivado
 es:municipio:21050,official,,Moguer,ine
 es:municipio:21050,display,,Moguer,derivado
 es:municipio:21051,official,,"Nava, La",ine
 es:municipio:21051,display,,La Nava,derivado
-es:municipio:21051,lang,an,La Nava (Uelba),wikidata
 es:municipio:21052,official,,Nerva,ine
 es:municipio:21052,display,,Nerva,derivado
-es:municipio:21052,lang,an,Nerva (Uelba),wikidata
 es:municipio:21053,official,,Niebla,ine
 es:municipio:21053,display,,Niebla,derivado
-es:municipio:21053,lang,an,Niebla (Uelba),wikidata
 es:municipio:21054,official,,"Palma del Condado, La",ine
 es:municipio:21054,display,,La Palma del Condado,derivado
-es:municipio:21054,lang,an,La Palma del Condado (Uelba),wikidata
 es:municipio:21055,official,,Palos de la Frontera,ine
 es:municipio:21055,display,,Palos de la Frontera,derivado
 es:municipio:21056,official,,Paterna del Campo,ine
@@ -10867,28 +10833,24 @@ es:municipio:21063,official,,San Bartolomé de la Torre,ine
 es:municipio:21063,display,,San Bartolomé de la Torre,derivado
 es:municipio:21064,official,,San Juan del Puerto,ine
 es:municipio:21064,display,,San Juan del Puerto,derivado
-es:municipio:21064,lang,an,San Juan del Puerto (Uelba),wikidata
 es:municipio:21065,official,,Sanlúcar de Guadiana,ine
 es:municipio:21065,display,,Sanlúcar de Guadiana,derivado
 es:municipio:21066,official,,San Silvestre de Guzmán,ine
 es:municipio:21066,display,,San Silvestre de Guzmán,derivado
 es:municipio:21067,official,,Santa Ana la Real,ine
 es:municipio:21067,display,,Santa Ana la Real,derivado
-es:municipio:21067,lang,an,Santa Ana la Real (Uelba),wikidata
 es:municipio:21068,official,,Santa Bárbara de Casa,ine
 es:municipio:21068,display,,Santa Bárbara de Casa,derivado
 es:municipio:21069,official,,Santa Olalla del Cala,ine
 es:municipio:21069,display,,Santa Olalla del Cala,derivado
 es:municipio:21070,official,,Trigueros,ine
 es:municipio:21070,display,,Trigueros,derivado
-es:municipio:21070,lang,an,Trigueros (Uelba),wikidata
 es:municipio:21071,official,,Valdelarco,ine
 es:municipio:21071,display,,Valdelarco,derivado
 es:municipio:21072,official,,Valverde del Camino,ine
 es:municipio:21072,display,,Valverde del Camino,derivado
 es:municipio:21073,official,,Villablanca,ine
 es:municipio:21073,display,,Villablanca,derivado
-es:municipio:21073,lang,an,Villablanca (Uelba),wikidata
 es:municipio:21074,official,,Villalba del Alcor,ine
 es:municipio:21074,display,,Villalba del Alcor,derivado
 es:municipio:21075,official,,Villanueva de las Cruces,ine
@@ -10901,7 +10863,6 @@ es:municipio:21078,official,,Zalamea la Real,ine
 es:municipio:21078,display,,Zalamea la Real,derivado
 es:municipio:21079,official,,Zufre,ine
 es:municipio:21079,display,,Zufre,derivado
-es:municipio:21079,lang,an,Zufre (Uelba),wikidata
 es:municipio:21902,official,,"Zarza-Perrunal, La",ine
 es:municipio:21902,display,,La Zarza-Perrunal,derivado
 es:municipio:22001,official,,Abiego,ine
@@ -11629,7 +11590,6 @@ es:municipio:23033,official,,Frailes,ine
 es:municipio:23033,display,,Frailes,derivado
 es:municipio:23034,official,,Fuensanta de Martos,ine
 es:municipio:23034,display,,Fuensanta de Martos,derivado
-es:municipio:23034,lang,an,Fuensanta de Martos (Chaén),wikidata
 es:municipio:23035,official,,Fuerte del Rey,ine
 es:municipio:23035,display,,Fuerte del Rey,derivado
 es:municipio:23037,official,,Génave,ine
@@ -11671,10 +11631,8 @@ es:municipio:23053,official,,Jódar,ine
 es:municipio:23053,display,,Jódar,derivado
 es:municipio:23054,official,,Larva,ine
 es:municipio:23054,display,,Larva,derivado
-es:municipio:23054,lang,an,Larva (Chaén),wikidata
 es:municipio:23055,official,,Linares,ine
 es:municipio:23055,display,,Linares,derivado
-es:municipio:23055,lang,an,Linares (Chaén),wikidata
 es:municipio:23056,official,,Lopera,ine
 es:municipio:23056,display,,Lopera,derivado
 es:municipio:23057,official,,Lupión,ine
@@ -11715,7 +11673,6 @@ es:municipio:23075,official,,Sabiote,ine
 es:municipio:23075,display,,Sabiote,derivado
 es:municipio:23076,official,,Santa Elena,ine
 es:municipio:23076,display,,Santa Elena,derivado
-es:municipio:23076,lang,an,Santa Elena (Chaén),wikidata
 es:municipio:23077,official,,Santiago de Calatrava,ine
 es:municipio:23077,display,,Santiago de Calatrava,derivado
 es:municipio:23079,official,,Santisteban del Puerto,ine
@@ -11726,7 +11683,6 @@ es:municipio:23081,official,,Segura de la Sierra,ine
 es:municipio:23081,display,,Segura de la Sierra,derivado
 es:municipio:23082,official,,Siles,ine
 es:municipio:23082,display,,Siles,derivado
-es:municipio:23082,lang,an,Siles (Chaén),wikidata
 es:municipio:23084,official,,Sorihuela del Guadalimar,ine
 es:municipio:23084,display,,Sorihuela del Guadalimar,derivado
 es:municipio:23085,official,,Torreblascopedro,ine
@@ -11740,8 +11696,6 @@ es:municipio:23088,official,,Torreperogil,ine
 es:municipio:23088,display,,Torreperogil,derivado
 es:municipio:23090,official,,Torres,ine
 es:municipio:23090,display,,Torres,derivado
-es:municipio:23090,lang,an,Torres (Chaén),wikidata
-es:municipio:23090,lang,ca,Cervo,wikidata
 es:municipio:23091,official,,Torres de Albánchez,ine
 es:municipio:23091,display,,Torres de Albánchez,derivado
 es:municipio:23092,official,,Úbeda,ine
@@ -11754,7 +11708,6 @@ es:municipio:23095,official,,Villacarrillo,ine
 es:municipio:23095,display,,Villacarrillo,derivado
 es:municipio:23096,official,,Villanueva de la Reina,ine
 es:municipio:23096,display,,Villanueva de la Reina,derivado
-es:municipio:23096,lang,an,Villanueva de la Reina (Chaén),wikidata
 es:municipio:23097,official,,Villanueva del Arzobispo,ine
 es:municipio:23097,display,,Villanueva del Arzobispo,derivado
 es:municipio:23098,official,,Villardompardo,ine
@@ -13422,7 +13375,6 @@ es:municipio:28003,official,,Alameda del Valle,ine
 es:municipio:28003,display,,Alameda del Valle,derivado
 es:municipio:28004,official,,"Álamo, El",ine
 es:municipio:28004,display,,El Álamo,derivado
-es:municipio:28004,lang,an,El Álamo (Madrit),wikidata
 es:municipio:28005,official,,Alcalá de Henares,ine
 es:municipio:28005,display,,Alcalá de Henares,derivado
 es:municipio:28006,official,,Alcobendas,ine
@@ -13445,7 +13397,6 @@ es:municipio:28014,official,,Arganda del Rey,ine
 es:municipio:28014,display,,Arganda del Rey,derivado
 es:municipio:28015,official,,Arroyomolinos,ine
 es:municipio:28015,display,,Arroyomolinos,derivado
-es:municipio:28015,lang,an,Arroyomolinos (Madrit),wikidata
 es:municipio:28016,official,,"Atazar, El",ine
 es:municipio:28016,display,,El Atazar,derivado
 es:municipio:28017,official,,Batres,ine
@@ -13479,7 +13430,6 @@ es:municipio:28029,official,,Cabanillas de la Sierra,ine
 es:municipio:28029,display,,Cabanillas de la Sierra,derivado
 es:municipio:28030,official,,"Cabrera, La",ine
 es:municipio:28030,display,,La Cabrera,derivado
-es:municipio:28030,lang,eu,La Cabrera (Madril),wikidata
 es:municipio:28031,official,,Cadalso de los Vidrios,ine
 es:municipio:28031,display,,Cadalso de los Vidrios,derivado
 es:municipio:28032,official,,Camarma de Esteruelas,ine
@@ -13502,7 +13452,6 @@ es:municipio:28040,official,,Ciempozuelos,ine
 es:municipio:28040,display,,Ciempozuelos,derivado
 es:municipio:28041,official,,Cobeña,ine
 es:municipio:28041,display,,Cobeña,derivado
-es:municipio:28041,lang,an,Cobeña (Madrit),wikidata
 es:municipio:28042,official,,Colmenar del Arroyo,ine
 es:municipio:28042,display,,Colmenar del Arroyo,derivado
 es:municipio:28043,official,,Colmenar de Oreja,ine
@@ -13575,7 +13524,6 @@ es:municipio:28075,official,,Loeches,ine
 es:municipio:28075,display,,Loeches,derivado
 es:municipio:28076,official,,Lozoya,ine
 es:municipio:28076,display,,Lozoya,derivado
-es:municipio:28076,lang,an,Lozoya (Madrit),wikidata
 es:municipio:28078,official,,Madarcos,ine
 es:municipio:28078,display,,Madarcos,derivado
 es:municipio:28079,official,,Madrid,ine
@@ -13594,10 +13542,8 @@ es:municipio:28085,official,,Miraflores de la Sierra,ine
 es:municipio:28085,display,,Miraflores de la Sierra,derivado
 es:municipio:28086,official,,"Molar, El",ine
 es:municipio:28086,display,,El Molar,derivado
-es:municipio:28086,lang,an,El Molar (Madrit),wikidata
 es:municipio:28087,official,,"Molinos, Los",ine
 es:municipio:28087,display,,Los Molinos,derivado
-es:municipio:28087,lang,an,Los Molinos (Madrit),wikidata
 es:municipio:28088,official,,Montejo de la Sierra,ine
 es:municipio:28088,display,,Montejo de la Sierra,derivado
 es:municipio:28089,official,,Moraleja de Enmedio,ine
@@ -13610,7 +13556,6 @@ es:municipio:28092,official,,Móstoles,ine
 es:municipio:28092,display,,Móstoles,derivado
 es:municipio:28093,official,,Navacerrada,ine
 es:municipio:28093,display,,Navacerrada,derivado
-es:municipio:28093,lang,an,Navacerrada (Madrit),wikidata
 es:municipio:28094,official,,Navalafuente,ine
 es:municipio:28094,display,,Navalafuente,derivado
 es:municipio:28095,official,,Navalagamella,ine
@@ -13645,7 +13590,6 @@ es:municipio:28112,official,,Pinilla del Valle,ine
 es:municipio:28112,display,,Pinilla del Valle,derivado
 es:municipio:28113,official,,Pinto,ine
 es:municipio:28113,display,,Pinto,derivado
-es:municipio:28113,lang,an,Pinto (Madrit),wikidata
 es:municipio:28114,official,,Piñuécar-Gandullas,ine
 es:municipio:28114,display,,Piñuécar-Gandullas,derivado
 es:municipio:28115,official,,Pozuelo de Alarcón,ine
@@ -13702,7 +13646,6 @@ es:municipio:28141,official,,Sevilla la Nueva,ine
 es:municipio:28141,display,,Sevilla la Nueva,derivado
 es:municipio:28143,official,,Somosierra,ine
 es:municipio:28143,display,,Somosierra,derivado
-es:municipio:28143,lang,an,Somosierra (Madrit),wikidata
 es:municipio:28144,official,,Soto del Real,ine
 es:municipio:28144,display,,Soto del Real,derivado
 es:municipio:28145,official,,Talamanca de Jarama,ine
@@ -14041,7 +13984,6 @@ es:municipio:30016,display,,Cartagena,derivado
 es:municipio:30016,lang,an,Cartachena,wikidata
 es:municipio:30016,lang,ast,Cartaxena,wikidata
 es:municipio:30016,lang,gl,Cartaxena,wikidata
-es:municipio:30016,lang,oc,Cartagena (Espanha),wikidata
 es:municipio:30017,official,,Cehegín,ine
 es:municipio:30017,display,,Cehegín,derivado
 es:municipio:30018,official,,Ceutí,ine
@@ -14740,7 +14682,6 @@ es:municipio:31181,official,,Navascués/Nabaskoze,ine
 es:municipio:31181,display,,Navascués/Nabaskoze,derivado
 es:municipio:31181,parts,es,Navascués,fuentes
 es:municipio:31181,parts,eu,Nabaskoze,fuentes
-es:municipio:31181,lang,oc,Nabaskoze-Nabaskoze,wikidata
 es:municipio:31182,official,,Nazar,ine
 es:municipio:31182,display,,Nazar,derivado
 es:municipio:31183,official,,Obanos,ine
@@ -16130,10 +16071,8 @@ es:municipio:35034,official,,Yaiza,ine
 es:municipio:35034,display,,Yaiza,derivado
 es:municipio:36001,official,,Arbo,ine
 es:municipio:36001,display,,Arbo,derivado
-es:municipio:36001,lang,an,Arbo (Pontevedra),wikidata
 es:municipio:36002,official,,Barro,ine
 es:municipio:36002,display,,Barro,derivado
-es:municipio:36002,lang,an,Barro (Pontevedra),wikidata
 es:municipio:36003,official,,Baiona,ine
 es:municipio:36003,display,,Baiona,derivado
 es:municipio:36003,lang,es,Bayona,wikidata
@@ -16201,7 +16140,6 @@ es:municipio:36025,display,,A Lama,derivado
 es:municipio:36025,lang,es,La Lama,wikidata
 es:municipio:36026,official,,Marín,ine
 es:municipio:36026,display,,Marín,derivado
-es:municipio:36026,lang,an,Marín (Pontevedra),wikidata
 es:municipio:36027,official,,Meaño,ine
 es:municipio:36027,display,,Meaño,derivado
 es:municipio:36028,official,,Meis,ine
@@ -16217,7 +16155,6 @@ es:municipio:36032,official,,Moraña,ine
 es:municipio:36032,display,,Moraña,derivado
 es:municipio:36033,official,,Mos,ine
 es:municipio:36033,display,,Mos,derivado
-es:municipio:36033,lang,an,Mos (Pontevedra),wikidata
 es:municipio:36034,official,,"Neves, As",ine
 es:municipio:36034,display,,As Neves,derivado
 es:municipio:36035,official,,Nigrán,ine
@@ -17057,8 +16994,6 @@ es:municipio:38005,official,,Arico,ine
 es:municipio:38005,display,,Arico,derivado
 es:municipio:38006,official,,Arona,ine
 es:municipio:38006,display,,Arona,derivado
-es:municipio:38006,lang,eu,Arona (Tenerife),wikidata
-es:municipio:38006,lang,oc,Arona (Illas Canàrias),wikidata
 es:municipio:38007,official,,Barlovento,ine
 es:municipio:38007,display,,Barlovento,derivado
 es:municipio:38008,official,,Breña Alta,ine
@@ -17069,7 +17004,6 @@ es:municipio:38010,official,,Buenavista del Norte,ine
 es:municipio:38010,display,,Buenavista del Norte,derivado
 es:municipio:38011,official,,Candelaria,ine
 es:municipio:38011,display,,Candelaria,derivado
-es:municipio:38011,lang,an,Candelaria (Tenerife),wikidata
 es:municipio:38012,official,,Fasnia,ine
 es:municipio:38012,display,,Fasnia,derivado
 es:municipio:38013,official,,Frontera,ine
@@ -18872,7 +18806,6 @@ es:municipio:44006,official,,Alacón,ine
 es:municipio:44006,display,,Alacón,derivado
 es:municipio:44007,official,,Alba,ine
 es:municipio:44007,display,,Alba,derivado
-es:municipio:44007,lang,oc,Alba (Teròl),wikidata
 es:municipio:44008,official,,Albalate del Arzobispo,ine
 es:municipio:44008,display,,Albalate del Arzobispo,derivado
 es:municipio:44008,lang,an,Albalat de l'Arcebispe,wikidata
@@ -19113,7 +19046,6 @@ es:municipio:44101,lang,an,Ferreruela de la Uerva,wikidata
 es:municipio:44102,official,,Fonfría,ine
 es:municipio:44102,display,,Fonfría,derivado
 es:municipio:44102,lang,an,Fuent Frida,wikidata
-es:municipio:44102,lang,oc,Fonfría (Teròl),wikidata
 es:municipio:44103,official,,Formiche Alto,ine
 es:municipio:44103,display,,Formiche Alto,derivado
 es:municipio:44103,lang,an,Formich Susano,wikidata
@@ -20722,7 +20654,6 @@ es:municipio:46243,display,,Torrella,derivado
 es:municipio:46244,official,,Torrent,ine
 es:municipio:46244,display,,Torrent,derivado
 es:municipio:46244,lang,es,Torrente,wikidata
-es:municipio:46244,lang,oc,Torrent (Valéncia),wikidata
 es:municipio:46245,official,,Torres Torres,ine
 es:municipio:46245,display,,Torres Torres,derivado
 es:municipio:46246,official,,Tous,ine
@@ -20780,9 +20711,7 @@ es:municipio:46262,display,,La Yesa,derivado
 es:municipio:46262,lang,ca,la Iessa,wikidata
 es:municipio:46263,official,,Zarra,ine
 es:municipio:46263,display,,Zarra,derivado
-es:municipio:46263,lang,an,Zarra (Valencia),wikidata
 es:municipio:46263,lang,en,Zara,wikidata
-es:municipio:46263,lang,oc,Zarra (Valencia),wikidata
 es:municipio:46902,official,,Gátova,ine
 es:municipio:46902,display,,Gátova,derivado
 es:municipio:46903,official,,San Antonio de Benagéber,ine
@@ -21744,7 +21673,6 @@ es:municipio:49063,official,,Faramontanos de Tábara,ine
 es:municipio:49063,display,,Faramontanos de Tábara,derivado
 es:municipio:49064,official,,Fariza,ine
 es:municipio:49064,display,,Fariza,derivado
-es:municipio:49064,lang,eu,Fariza (Zamora),wikidata
 es:municipio:49065,official,,Fermoselle,ine
 es:municipio:49065,display,,Fermoselle,derivado
 es:municipio:49066,official,,Ferreras de Abajo,ine
@@ -22943,7 +22871,6 @@ es:municipio:50298,official,,Zuera,ine
 es:municipio:50298,display,,Zuera,derivado
 es:municipio:50901,official,,Biel,ine
 es:municipio:50901,display,,Biel,derivado
-es:municipio:50901,lang,eu,Biel (Zaragoza),wikidata
 es:municipio:50902,official,,Marracos,ine
 es:municipio:50902,display,,Marracos,derivado
 es:municipio:50903,official,,Villamayor de Gállego,ine
