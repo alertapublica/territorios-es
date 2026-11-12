@@ -501,10 +501,7 @@ Tomada el 11 de noviembre de 2026:
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
   Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
   avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Publicar la versión 0.4. Ya está en `main`: población oficial del INE, recopilador de códigos
-  postales, partidos judiciales, zonas de aviso de AEMET, comarcas que son entidad local y página de
-  estado. Antes, las acciones de GitHub que aún usan Node 20 (PR de Dependabot). Después, más fuentes
-  de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
+- Más fuentes de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
 - Página de estado, más adelante (review de Codex de la PR #19): estado operativo (antigüedad de cada
   fuente, regresiones de cobertura, discrepancias abiertas, versión publicada); diagramas dibujados
   como SVG en la CI para no depender de jsDelivr; que las PR de datos que abre Actions lancen la CI;

@@ -12,7 +12,7 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
-USER_AGENT = "territorios-es/0.3 (+https://github.com/alertapublica/territorios-es)"
+USER_AGENT = "territorios-es/0.4 (+https://github.com/alertapublica/territorios-es)"
 PAUSE = 2.0
 
 # Hosts that drop connections from GitHub Actions' IPs: read through a relay with a Spanish IP, signed

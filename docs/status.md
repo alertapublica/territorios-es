@@ -419,7 +419,7 @@ From [section 13 of the design](../docs/design.md#13-pending):
 - Review the translations of the website, of its status page and of the names of autonomous communities (marked as pending)
 - Review the discrepancy report of the first generation
 - Allow Actions to open PRs: it is an organisation setting (Settings → Actions → General → Workflow permissions)
-- Release version 0.4
+- More postal-code sources: La Rioja, Gipuzkoa, Málaga, Barcelona…
 - Status page, later (Codex review of PR #19)
 - Comarcas, later: check them every month against the Registro de Entidades Locales export (it is downloaded without a browser from…
 - Cross-references of the judicial districts, as later layers

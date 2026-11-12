@@ -419,7 +419,7 @@ Del [apartado 13 del diseño](../docs/diseno.md#13-pendiente):
 - Revisar las traducciones de la web, de su página de estado y de los nombres de comunidades (marcadas como pendientes)
 - Revisar el informe de discrepancias de la primera generación
 - Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General → Workflow permissions)
-- Publicar la versión 0.4
+- Más fuentes de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
 - Página de estado, más adelante (review de Codex de la PR #19)
 - Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales (se baja sin navegador de…
 - Cruces de los partidos judiciales, como capas posteriores
