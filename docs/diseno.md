@@ -1,9 +1,10 @@
 # Diseño de territorios-es
 
-Borrador del 9 de noviembre de 2026. Las decisiones ya tomadas están en el apartado
-[Decisiones](#12-decisiones); lo que falta, en [Pendiente](#13-pendiente), y lo que hay que
-comprobar de cada fuente, en [Por verificar](#14-por-verificar). Hay una versión en inglés en
-[`design.md`](design.md).
+Describe lo que hay en el repositorio. Las decisiones tomadas están en el apartado
+[Decisiones](#12-decisiones) y lo comprobado de cada fuente, en
+[Comprobaciones de las fuentes](#13-comprobaciones-de-las-fuentes). Lo que falta está en los
+[issues con la etiqueta «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo). Hay una versión en
+inglés en [`design.md`](design.md).
 
 ## 1. Para qué
 
@@ -13,8 +14,8 @@ reúne todo eso en un solo lugar, donde un territorio se reconoce por cualquiera
 códigos. Sus datos se regeneran desde las fuentes oficiales, y las abiertas (Wikidata,
 OpenStreetMap) sirven de apoyo y de contraste. Ofrece tres cosas:
 
-1. **Catálogo**: España, sus comunidades y ciudades autónomas, provincias y municipios, y los
-   países del mundo, con su jerarquía, sus nombres (oficial, visible, por idioma y alias) y sus
+1. **Catálogo**: España, sus comunidades y ciudades autónomas, provincias, islas, municipios,
+   partidos judiciales, zonas de aviso de AEMET y comarcas, y los países del mundo, con su jerarquía, sus nombres (oficial, visible, por idioma y alias) y sus
    códigos (INE, Catastro, ISO, europeos y otros).
 2. **Herramientas** en Python y JavaScript: resolver un código, buscar un nombre dentro de un
    ámbito, encontrar menciones en un texto, elegir el nombre que se muestra en cada idioma y
@@ -69,25 +70,18 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
 - **No se usa la red al ejecutar.** El catálogo viaja con el paquete; los límites, por su tamaño,
   se descargan aparte cuando hacen falta. La única excepción es el módulo opcional
   `catastro_online`, que solo llama al Catastro cuando se le pide (§6).
-- **Todo es determinista, sin IA.** La búsqueda aproximada es un añadido opcional.
+- **Todo es determinista, sin IA.**
 - **Se usan todas las fuentes que sirvan, relacionadas con su procedencia** (ver el apartado 5).
 
 ## 4. Datos
 
 ### 4.1 Niveles
 
-Primera versión:
-
 - **España**: 19 comunidades y ciudades autónomas, 52 provincias y 8.132 municipios (los del INE
   a 1 de enero de 2026).
 - **Países**: la lista ISO 3166-1 completa, con su nombre en cada idioma y si pertenecen a la UE
   o al Espacio Económico Europeo. Sirve, por ejemplo, para el requisito de nacionalidad de las
   convocatorias.
-
-Segunda versión: islas (cabildos y consells), comarcas oficiales y partidos judiciales. Las islas
-ya están (versión 0.3); los partidos judiciales, las zonas de aviso de AEMET y las comarcas, desde la
-0.4:
-
 - **Islas**: las 11 que tienen cabildo (Canarias) o consell insular (Illes Balears), con nivel
   `island` e identificador con el código de isla del INE (`es:isla:384` es Tenerife; `es:isla:072`,
   Ibiza). Su padre es la provincia. Los municipios no cambian de padre: llevan además el campo
@@ -115,8 +109,8 @@ ya están (versión 0.3); los partidos judiciales, las zonas de aviso de AEMET y
   algún municipio nuevo y conserva otros ya extinguidos: los que AEMET sí sitúa en su web van en
   `fuentes/zonas-aviso.csv`, con el enlace a su ficha, y los demás se quedan sin zona y salen en el
   informe; nunca se deduce del mapa, que es de 2018 y no casa con los límites actuales. Las zonas
-  costeras (sufijo `C`) quedan para más adelante. `search` y `mentions` no las devuelven salvo que
-  se pidan en `levels`.
+  costeras (sufijo `C`) no están. `search` y `mentions` no las devuelven salvo que se pidan en
+  `levels`.
 - **Comarcas**: solo las que son entidad local, las del Registro de Entidades Locales: las 42
   comarcas de Cataluña más Aran, las 33 de Aragón, las 7 cuadrillas de Álava y El Bierzo. De las 42
   catalanas, el Registro aún no tiene el Lluçanès, que la Ley 7/2023 creó como comarca aunque su
@@ -137,29 +131,24 @@ ya están (versión 0.3); los partidos judiciales, las zonas de aviso de AEMET y
   fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
   pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
 
-Más adelante: entidades de población del Nomenclátor del INE (núcleos, y parroquias en Galicia y
-Asturias), que son decenas de miles.
-
 ### 4.2 Códigos
 
 | Código | Niveles | Fuente | Notas |
 |---|---|---|---|
-| INE | comunidad (2 cifras), provincia (2), isla (3), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
+| INE | comunidad (2 cifras), provincia (2), isla (3, `ine:isla`), municipio (5 + dígito de control) | Diccionario anual y tabla de islas del INE | Oficial; es la base de la identidad. |
 | Censo Judicial | partido judicial (`mjusticia:partido`, 4 cifras: provincia 2 + número 2) | Censo Judicial del Ministerio de Justicia | El número es el del partido en la demarcación de su provincia. El catálogo técnico de la Generalitat (CTEAJE) usa el mismo código salvo en Ceuta y Melilla (1112 y 2908, frente a 5112 y 5208). |
 | AEMET | zona de aviso (`aemet:zona`, 6 cifras: comunidad 2 + provincia o grupo de islas 2 + zona 2) | Maestro de municipios de AEMET OpenData y delimitación de zonas de Meteoalerta | Las cifras de comunidad y provincia son de AEMET, no del INE (Baleares usa 53–55 y Canarias 90–96). |
 | Comarca | comarca (`rel:comarca`, 8 cifras; `idescat:comarca` y `aragon:comarca`, 2 cifras) | Registro de Entidades Locales, Idescat y Gobierno de Aragón | El número del Registro empieza por 06 y la comunidad; el Excel del Registro pierde el cero inicial. El Lluçanès aún no lo tiene. |
-| ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata, contrastado con la ONU | |
-| ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano, contrastada con Wikidata | |
+| ISO 3166-1 | país (alfa-2, alfa-3, numérico) | Wikidata | |
+| ISO 3166-2 | comunidad y provincia (`ES-GA`, `ES-C`) | Lista revisada a mano; enlaza con Wikidata | |
 | NUTS 2024 | NUTS 1 (grupos de comunidades), NUTS 2 (comunidad), NUTS 3 (provincia; islas en Baleares y Canarias) | Eurostat | Para cruzar con estadísticas europeas. |
 | LAU | municipio | Tabla anual LAU de Eurostat | En España es el código INE de 5 cifras (comprobado en los 8.132 municipios); ver §4.5 para lo que trae además. |
 | DGC (Catastro) | municipio (`dgc:municipio`, 5 cifras: delegación 2 + municipio 3) | Servicios web libres del Catastro (`OVCCallejero`, `ConsultaProvincia` y `ConsultaMunicipio`), que dan el código DGC y el del INE de cada municipio | Distinto del INE en muchos municipios (A Coruña: INE `15030`, DGC `15900`). El enlace es por código, no por nombre; el nombre solo se contrasta. Álava, Gipuzkoa, Navarra y Bizkaia tienen catastro foral y quedan sin código DGC. |
 | BDDAE (INSPIRE) | municipio (`ign:bddae`, 11 cifras: 34 + comunidad 2 + provincia 2 + INE 5) | Límites del IGN (BDLJE) | Código de la unidad administrativa del IGN y `localId` de su identificador INSPIRE (espacio de nombres `ES.IGN.BDDAE`). Se enlaza si coinciden el código INE, la provincia y la comunidad. |
 | Wikidata | todos | SPARQL a partir del código INE | CC0. Aporta nombres por idioma, enlaces a Wikipedia y otros identificadores. |
-| OpenStreetMap | todos | Identificador de la relación, desde Wikidata y contrastado con OSM | El identificador de Wikidata es CC0; lo que se copie de OSM va aparte con ODbL (§7). |
+| OpenStreetMap | todos | Identificador de la relación, desde Wikidata | El identificador de Wikidata es CC0; lo que se copie de OSM va aparte con ODbL (§7). |
 | GeoNames | todos | Desde Wikidata | CC BY 4.0. Muy usado por otras herramientas. |
 | Código postal | municipio (relación de muchos a muchos, `datos/codigos-postales.csv`) | Lo que publican las administraciones: Ayuntamiento de Madrid, ICGC (Cataluña), IDENA (Navarra), Eustat (País Vasco), IDEIB (Baleares), callejero del censo electoral del INE (toda España), CDAU (Andalucía, solo contraste) y Catastro (INSPIRE Addresses, régimen común) | Útil para leer direcciones. No es un sistema de `resolve` (§6). En cada municipio decide la primera fuente que lo cubre y tiene datos (decisión 14); cada par lleva su fuente, su recuento en la unidad de esa fuente y las demás fuentes que lo tienen (`also`). `codigos-postales-fuentes.csv` guarda lo que dice cada fuente, para contrastar y para atender reclamaciones. Lo regenera su propio workflow dos veces al año. Fuentes descartadas: CartoCiudad (su convenio con Correos solo permite consultar los códigos, no descargarlos) y la web de Correos. |
-| datos.gob.es | comunidad y provincia | URIs de la Norma Técnica de reutilización (anexo V) | Identificador adicional para enlazar con el catálogo nacional de datos abiertos; no hay URIs de municipio. |
-| EU Vocabularies (ATU) | por confirmar | Oficina de Publicaciones de la UE | Lista de unidades administrativas de los Estados miembros con URIs; se enlaza si llega a municipios. |
 
 DIR3 y los demás códigos de organismos no van aquí: identifican al ayuntamiento, no al territorio
 (ver §10).
@@ -186,7 +175,7 @@ Campos de nombre de cada territorio:
 | `display` | «A Coruña», «Alicante/Alacant», «Illes Balears» | Derivado: el artículo pasa delante. Se puede corregir a mano. |
 | `parts` | `{"es": "Alicante", "ca": "Alacant"}` | Solo en los nombres oficiales bilingües. El idioma de cada parte sale de una lista revisada a mano y contrastada con Wikidata. |
 | `lang` | `{"en": "Catalonia", "eu": "Katalunia"}` | Nombre habitual en cada idioma. En las comunidades, lista revisada a mano; en provincias y municipios, Wikidata, solo si difiere del oficial. |
-| `short` | «Baleares», «Navarra» | Comunidades y provincias; lista revisada a mano, por idioma. |
+| `short` | «Baleares», «Navarra» | Comunidades; lista revisada a mano, por idioma. |
 | `aliases` | «Orense», «Lérida», «La Coruña», «Guipúzcoa» | Lista revisada a mano, con su idioma y su tipo (exónimo, histórico, abreviatura). |
 | `slug` | `a-coruna` | Derivado |
 
@@ -221,8 +210,6 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
   debajo de la incertidumbre de unos 40 m de los propios límites) y con nuestros identificadores.
   Incluye las zonas comunes que no son de ningún municipio (comunidades jurisdiccionales), sin
   identificador.
-- **Mapas simplificados** (TopoJSON de comunidades, provincias y municipios) para dibujar en una
-  web, hechos por nosotros a partir de los del IGN.
 - **Población oficial** del INE (padrón a 1 de enero) de provincias y municipios, de su API JSON:
   una tabla por provincia con su total y el de cada municipio. Se comprueba que los municipios
   suman el total de su provincia. Las tablas del INE de comunidades e islas acaban en 2021; su
@@ -232,8 +219,6 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
   urbanización (ciudad, intermedio, rural), si es costero y a qué ciudad o área urbana funcional
   pertenece. Por ejemplo, permiten
   filtrar ofertas en el medio rural con un criterio oficial.
-- **Tipologías europeas por provincia** (NUTS 3): urbana o rural, metropolitana, de montaña,
-  costera, insular y fronteriza.
 - **Huso horario**: `Europe/Madrid`; `Atlantic/Canary` en Canarias; `Africa/Ceuta` en Ceuta y
   Melilla.
 - **Enlaces a Wikipedia** en cada idioma, desde Wikidata.
@@ -293,8 +278,6 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 Los códigos postales van en su propia tabla (`load_postal_codes`; en JS, `loadPostalCodes` en Node o
 `createPostalCodes` en el navegador), no en `resolve`: un código abarca varios municipios y un
 municipio tiene varios códigos, y `resolve` devuelve un solo territorio.
-
-La búsqueda aproximada (`fuzzy=True`, con una dependencia opcional) queda para más adelante.
 
 El resto de la librería no llama nunca al Catastro. Para situar una referencia urbana o unas
 coordenadas está el módulo aparte y opcional `catastro_online` (en JS, la subruta
@@ -398,8 +381,6 @@ La primera versión es solo España, pero nada impide ampliarla:
   página de empleo): en un repo hermano, más adelante, enlazado con estos identificadores. Cambian
   más a menudo y tienen otras fuentes, como el Registro de Entidades Locales.
 - **Días inhábiles por territorio**, para calcular plazos en días hábiles: otro conjunto hermano.
-- **Aviso de cambios**: una PR automática cuando el INE publique un municipio nuevo o un cambio de
-  nombre.
 
 ## 11. Proyectos parecidos
 
@@ -410,13 +391,13 @@ fuente), pero varios sirven para contrastar o como inspiración:
 | Proyecto | Qué aporta | Uso previsto |
 |---|---|---|
 | [codeforspain/ds-organizacion-administrativa](https://github.com/codeforspain/ds-organizacion-administrativa) | Comunidades, provincias, municipios actuales e históricos (diccionarios del INE desde 2004) e islas, en CSV y JSON. | Solo contraste: el repositorio no tiene licencia. El 10 de noviembre de 2026 coincidía con nuestros datos en los 8.132 municipios y las 52 provincias. Sus fuentes son las del INE, que leemos directamente. |
-| [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Cruce de códigos INE y Catastro sacado del servicio OVC. | Contraste del cruce con el Catastro que haremos nosotros. |
+| [inigoflores/ds-municipios-catastro-es](https://github.com/inigoflores/ds-municipios-catastro-es) | Cruce de códigos INE y Catastro sacado del servicio OVC. | Contraste de nuestro cruce con el Catastro. |
 | EU Vocabularies: tablas de autoridad ATU y Country (Oficina de Publicaciones) | Unidades administrativas de los Estados miembros, actuales y pasadas, con URIs estables. | Contraste y enlace, si su cobertura de España llega a municipios. |
 | Eurostat GISCO | Tablas LAU–NUTS y límites. | Las tablas y los códigos, sí. Los límites no: su licencia excluye el uso comercial. |
 | EuroGeographics, Open Maps For Europe | Límites europeos. | Descartado: la licencia es propia de EuroGeographics, EuroBoundaryMap no es abierto y los datos de España salen del IGN, que usamos directamente. |
 | Unicode CLDR y Debian iso-codes | Nombres traducidos de países y de subdivisiones ISO 3166-2. | Revisado el 11 de noviembre de 2026 (CLDR 49): descartado para los nombres de países, que siguen saliendo de Wikidata. No trae aranés y usa nombres de interfaz («Congo - Kinshasa», «RAE de Hong Kong (China)», «Côte d’Ivoire» en castellano). |
 | mapSpain y giscoR (paquetes de R) | Mapas de España y diccionarios de códigos y nombres. | Inspiración. |
-| datos.gob.es | URIs de comunidades y provincias. | Identificador adicional (§4.2). |
+| datos.gob.es | URIs de comunidades y provincias. | Posible identificador adicional. |
 | Base de datos general de entidades locales (Ministerio de Hacienda) | Entidades locales con código INE y NIF. | Para el repo hermano de organismos. |
 
 Revisados el 10 de noviembre de 2026:
@@ -490,45 +471,7 @@ Tomada el 11 de noviembre de 2026:
     una exportación del Registro revisada a mano, porque es un Excel binario antiguo y cambian muy
     poco. No se rellenan con comarcas estadísticas los municipios de las demás comunidades.
 
-## 13. Pendiente
-
-- Traducir este documento y el README al catalán, gallego, euskera y aranés.
-- Revisar las traducciones de la web, de su página de estado y de los nombres de comunidades
-  (marcadas como pendientes).
-- Revisar el informe de discrepancias de la primera generación: etiquetas de Wikidata que son el
-  nombre de otro municipio, identificadores repetidos y municipios antiguos con código INE en
-  Wikidata; corregir en Wikidata lo que sea error suyo.
-- Permitir que Actions abra PR: es un ajuste de la organización (Settings → Actions → General →
-  Workflow permissions). Mientras no esté, la actualización mensual sube la rama con los datos y
-  avisa con el enlace para abrir la PR a mano. GitHub Pages ya está activo.
-- Más fuentes de códigos postales: La Rioja, Gipuzkoa, Málaga, Barcelona…
-- Página de estado, más adelante (review de Codex de la PR #19): estado operativo (antigüedad de cada
-  fuente, regresiones de cobertura, discrepancias abiertas, versión publicada); diagramas dibujados
-  como SVG en la CI para no depender de jsDelivr; que las PR de datos que abre Actions lancen la CI;
-  barras en lugar de tartas si se quedan cortas.
-- Comarcas, más adelante: contrastar cada mes con la exportación del Registro de Entidades Locales
-  (se baja sin navegador de `…/export_excel/comarcas/all`, pero es un Excel binario antiguo, .xls,
-  que habría que leer); su elemento de Wikidata y sus nombres en otros idiomas; inscribir el
-  Lluçanès cuando el Registro lo haga, tras las elecciones de 2027. Las comarcas estadísticas o de
-  planificación (Galicia, Comunitat Valenciana, Asturias, la zonificación de Navarra) irían con
-  otro tipo, si se quieren.
-- Cruces de los partidos judiciales, como capas posteriores: su elemento de Wikidata (390 de 431,
-  enlazables por la sede) y sus nombres en otros idiomas; la población por partido del CGPJ; las
-  demás demarcaciones del Censo Judicial (sección de la Audiencia, Tribunal Superior, fiscalía,
-  registro civil).
-- Zonas de aviso de AEMET, más adelante: las 51 costeras, ligadas a su zona terrestre, y su
-  elemento de Wikidata. Pedir a AEMET que sitúe los municipios que aún no tienen zona (San Martín
-  del Tesorillo, Usansolo, El Palmar de Troya…).
-- Nombres de países: siguen saliendo de Wikidata, que tiene alguna errata. Revisarlos, corregir
-  aquí las erratas con un fichero en `fuentes/` y corregirlas también en Wikidata.
-- Códigos postales en Andalucía: el CDAU trae 526 pares que no tiene el INE, que decide allí;
-  176 los confirma el Catastro (Vera Playa, 04621, entre ellos). Probablemente son zonas de segunda
-  residencia que no salen en el censo electoral, del que sale el dato del INE. Valorar si el CDAU
-  debe aportar esos pares.
-- Más adelante: entidades de población, variaciones históricas del INE (diccionarios anuales desde
-  2004 y páginas de modificaciones de cada año), búsqueda aproximada.
-
-## 14. Por verificar
+## 13. Comprobaciones de las fuentes
 
 Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo ya comprobado el
 9 de noviembre de 2026:
@@ -539,7 +482,7 @@ Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo
   igual en los 8.132 municipios de 2026), nombres, población, superficie, grado de urbanización,
   costa, ciudad y área urbana funcional.
 - **NUTS 2024**: en vigor desde el 1 de enero de 2024 (Reglamento Delegado (UE) 2023/674); España
-  tiene 7 NUTS 1, 19 NUTS 2 y 59 NUTS 3. Falta confirmar si hay cambios respecto a NUTS 2021.
+  tiene 7 NUTS 1, 19 NUTS 2 y 59 NUTS 3.
 - **Wikidata**: la propiedad P772 (código INE) admite 2 cifras (provincia), 5 (municipio) y 11
   (entidad de población), así que hay que filtrar por longitud. P782 (LAU) lleva el prefijo del
   país. No hay propiedad para el código del Catastro.
@@ -639,7 +582,3 @@ Comprobado el 11 de noviembre de 2026:
 - **Contraste de partidos**: el CGPJ publica cada año la población por partido y municipio (XLSX,
   solo con nombres) y la Generalitat el catálogo CTEAJE de partidos de España (código, nombre y
   sede). Ningún repositorio ajeno con la relación nacional está mantenido.
-
-Por comprobar:
-
-- licencias de iso-codes y EU Vocabularies.

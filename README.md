@@ -11,7 +11,8 @@ Python y JavaScript para resolver códigos, buscar nombres y elegir el nombre qu
 cada idioma.
 
 Los identificadores (`es:municipio:36038`) solo cambian en una versión mayor; los campos y niveles
-nuevos llegan en versiones menores. El planteamiento está en [`docs/diseno.md`](docs/diseno.md).
+nuevos llegan en versiones menores. El planteamiento está en [`docs/diseno.md`](docs/diseno.md) y lo
+que falta, en los [issues «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo).
 
 La [web de datos](https://alertapublica.github.io/territorios-es/) describe cada fichero y cada campo en seis idiomas. Su página de
 [estado](https://alertapublica.github.io/territorios-es/es/estado/) (también en [`docs/estado.md`](docs/estado.md)) muestra qué hay en los
@@ -168,7 +169,8 @@ to resolve codes, search names, pick the display name for each language and plac
 municipality.
 
 Identifiers (`es:municipio:36038`) only change in a major version; new fields and levels come in
-minor versions. The design is in [`docs/design.md`](docs/design.md). The [data website](https://alertapublica.github.io/territorios-es/)
+minor versions. The design is in [`docs/design.md`](docs/design.md) and what is missing, in the
+[«objetivo» issues](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo). The [data website](https://alertapublica.github.io/territorios-es/)
 describes every file and field in six languages, and its [status page](https://alertapublica.github.io/territorios-es/en/estado/) (also in
 [`docs/status.md`](docs/status.md)) shows what is in the data, how much each datum covers, where
 everything comes from and how the pieces of the repository relate. Usage, data, tests and
