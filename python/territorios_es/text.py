@@ -14,6 +14,7 @@ ARTICLES = {
 }
 _ARTICLES = {a for group in ARTICLES.values() for a in group}
 _ARTICLES |= {a.lower() for a in _ARTICLES}
+_BY_LENGTH = sorted(_ARTICLES, key=lambda a: (-len(a), a))
 _TRAILING_ARTICLE = re.compile(r"^(?P<name>.+), (?P<article>[^,/]+)$")
 _APOSTROPHES = re.compile("[’‘´`]")
 
@@ -38,7 +39,7 @@ def display_name(official: str) -> str:
 
 def drop_article(name: str) -> str | None:
     """«A Coruña» -> «Coruña»; None if the name does not start with an article."""
-    for article in sorted(_ARTICLES, key=lambda a: (-len(a), a)):
+    for article in _BY_LENGTH:
         if article.endswith("'") and name.startswith(article) and len(name) > len(article):
             return name[len(article):]
         if name.startswith(article + " ") and len(name) > len(article) + 1:

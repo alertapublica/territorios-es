@@ -475,6 +475,16 @@ Tomada el 11 de noviembre de 2026:
     una exportación del Registro revisada a mano, porque es un Excel binario antiguo y cambian muy
     poco. No se rellenan con comarcas estadísticas los municipios de las demás comunidades.
 
+Tomada el 12 de noviembre de 2026:
+
+18. Entidades de población (#31): aparcadas hasta que un uso concreto mida con textos reales lo
+    que aportan. Se llegó a leer el callejero del INE (146.079 entidades en cuatro niveles) y a
+    cruzar sus nombres con el IGN. Cruces puede haber: el 86 % de los nombres de entidades
+    singulares es de un solo municipio, y muchos no los encuentra hoy la búsqueda. Pero esta forma
+    de hacerlo pesaba mucho: el paquete de npm pasaba de 0,9 a 2,2 MB comprimido, cargar las
+    entidades costaba de 5 a 9 s y unos 350 MB de memoria, y cada mes quedaban miles de avisos de
+    nombres. Lo comprobado, y por dónde empezar si se retoma, está en #31.
+
 ## 13. Comprobaciones de las fuentes
 
 Antes de usar cada fuente hay que comprobar su URL, su formato y su licencia. Lo ya comprobado el

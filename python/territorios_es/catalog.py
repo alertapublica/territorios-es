@@ -130,9 +130,12 @@ class Catalog:
 
     def _build_index(self) -> dict[str, list[tuple[int, int, str, str, str | None]]]:
         best: dict[tuple[str, str], tuple[int, str, str | None]] = {}
+        keys: dict[str, str] = {}  # the same name in several languages is normalized once
         for identity, record in self._by_id.items():
             for text, reason, lang in self._forms(record):
-                key = normalize(text)
+                key = keys.get(text)
+                if key is None:
+                    key = keys[text] = normalize(text)
                 if not key:
                     continue
                 rank = REASONS.index(reason)

@@ -488,6 +488,16 @@ Taken on 11 November 2026:
     because it is an old binary Excel file and they change very little. Municipalities of other
     communities are not filled in with statistical comarcas.
 
+Taken on 12 November 2026:
+
+18. Population entities (#31): set aside until a concrete use measures with real texts what they
+    add. The INE street register was read (146,079 entities on four levels) and their names were
+    matched with the IGN. There may be matches: 86% of the names of singular entities belong to a
+    single municipality, and search does not find many of them today. But this way of doing it
+    was heavy: the npm package went from 0.9 to 2.2 MB compressed, loading the entities took 5 to
+    9 s and about 350 MB of memory, and every month left thousands of name warnings. What was
+    checked, and where to start if it is taken up again, is in #31.
+
 ## 13. Source checks
 
 Before using each source, its URL, format and licence have to be checked. Already checked on
