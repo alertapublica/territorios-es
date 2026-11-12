@@ -9,7 +9,8 @@ export const ARTICLES = {
 const ALL = new Set(Object.values(ARTICLES).flat().map((a) => a.toLowerCase()));
 const BY_LENGTH = [...ALL].sort((a, b) => b.length - a.length || (a < b ? -1 : a > b ? 1 : 0));
 // After a comma («Coruña, A») or, in the INE street register, in brackets («DEVESA (A)»).
-const TRAILING_ARTICLES = [/^(.+), ([^,/]+)$/, /^(.+) \(([^()/]+)\)$/];
+// Also an article followed by another bracket («ERMO (O) (SAN XULIAN)»).
+const TRAILING_ARTICLES = [/^(.+), ([^,/]+)$/, /^(.+) \(([^()/]+)\)$/, /^([^()]+) \(([^()/]+)\)( \([^()]+\))$/];
 const APOSTROPHES = /[’‘´`]/g;
 
 export function flipArticle(name) {
@@ -18,7 +19,7 @@ export function flipArticle(name) {
     const match = pattern.exec(trimmed);
     if (!match) continue;
     const article = match[2].replace(APOSTROPHES, "'");
-    if (ALL.has(article.toLowerCase())) return article + (article.endsWith("'") ? '' : ' ') + match[1];
+    if (ALL.has(article.toLowerCase())) return article + (article.endsWith("'") ? '' : ' ') + match[1] + (match[3] ?? '');
   }
   return trimmed;
 }

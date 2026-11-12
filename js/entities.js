@@ -1,10 +1,10 @@
 // Population entities (entidades de población) of the INE street register, from datos/entidades.csv.
 // Mirrors python/territorios_es/entities.py: the level and the parent come out of the 12-digit code
 // (province and municipality 5, collective 2, singular 2, check digit 1, nucleus 2; 99 is the
-// scattered part), and `ine:entidad` is the 11-digit code without the check digit.
-import { displayName } from './text.js';
-
-export const ENTITY_HEADER = ['id', 'ine_dc', 'official'];
+// scattered part), and `ine:entidad` is the 11-digit code without the check digit. The name to show
+// comes with where it comes from (display_source) and its reference: only `manual` is reviewed.
+export const ENTITY_HEADER = ['id', 'ine_dc', 'official', 'display', 'display_source', 'display_ref'];
+export const ENTITY_SOURCES = ['manual', 'ign', 'ign_lugar', 'regla', 'derivado'];
 export const ENTITY_LEVELS = ['collective_entity', 'singular_entity', 'nucleus', 'scattered'];
 const CODE = /^[0-9]{12}$/;
 
@@ -43,7 +43,8 @@ export function entityRecords(text, municipalityId) {
   const found = [];
   for (const line of lines.slice(1)) {
     const row = parseRow(line);
-    if (row.length !== ENTITY_HEADER.length || !CODE.test(row[1]) || !row[0] || !row[2]) throw new Error(`Invalid row ${line}`);
+    if (row.length !== ENTITY_HEADER.length || !CODE.test(row[1]) || !row[0] || !row[2] || !row[3]
+      || !ENTITY_SOURCES.includes(row[4])) throw new Error(`Invalid row ${line}`);
     const code = entityCode(row[1]);
     const level = entityLevel(code);
     const municipality = municipalityId(code.slice(0, 5));
@@ -60,8 +61,9 @@ export function entityRecords(text, municipalityId) {
     if (collective == null || parent == null) throw new Error(`Missing parent entity of ${row[0]}`);
     const record = {
       id: row[0], level, parent, codes: { 'ine:entidad': code, 'ine:entidad:dc': row[1] },
-      names: { official: row[2], display: displayName(row[2]), reviewed: false }, municipality,
+      names: { official: row[2], display: row[3], reviewed: row[4] === 'manual', source: row[4] }, municipality,
     };
+    if (row[5]) record.names.ref = row[5];
     if (collective !== municipality && level !== 'collective_entity') record.collective_entity = collective;
     return record;
   });

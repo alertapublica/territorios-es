@@ -35,7 +35,7 @@ class Report:
     def add(self, section: str, message: str):
         self.sections.setdefault(section, []).append(message)
 
-    def markdown(self, limit: int = 60) -> str:
+    def markdown(self, limit: int | None = 60) -> str:
         lines = ["# Informe del generador", ""]
         lines += [f"- {key}: {value}" for key, value in self.summary.items()]
         if not self.sections:
@@ -43,7 +43,7 @@ class Report:
         for section, messages in sorted(self.sections.items()):
             lines += ["", f"## {section} ({len(messages)})", ""]
             lines += [f"- {m}" for m in sorted(messages)[:limit]]
-            if len(messages) > limit:
+            if limit is not None and len(messages) > limit:
                 lines.append(f"- … y {len(messages) - limit} más")
         return "\n".join(lines) + "\n"
 
@@ -179,10 +179,12 @@ def _attach_ign(record: dict, ccaa: str, units: list[list], capitals: list[list]
         report.add("IGN: capitales", f"{identity}: varias capitales "
                                      f"({', '.join(c[1] for c in capitals)}); no se usa ninguna")
     elif capitals:
-        _, entity, label, lon, lat, altitude = capitals[0]
+        _, entity, label, lon, lat, altitude, *place = capitals[0]
         record["capital"] = {"name": label, "ine": entity, "lon": lon, "lat": lat}
         if altitude is not None:
             record["capital"]["altitude"] = altitude
+        if place:
+            record["capital"]["ign"] = place[0]  # the IGN place; capital.entity, its entity (entidades.py)
         if unit and not geo.contains(unit[3], lon, lat):
             report.add("IGN: capital fuera del término",
                        f"{identity} «{display}»: «{label}» ({entity}) a {geo.distance(unit[3], lon, lat):.0f} m "

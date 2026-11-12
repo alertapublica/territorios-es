@@ -76,7 +76,12 @@ test('entities: resolve, children, search and toMunicipality', () => {
 test('entities: records and links', () => {
   const record = ENTITIES.territory('es:entidad:36038010101');
   assert.deepEqual(record.codes, { 'ine:entidad': '36038010101', 'ine:entidad:dc': '360380101601' });
-  assert.deepEqual(record.names, { official: 'DEVESA (A)', display: 'A DEVESA', reviewed: false });
+  // The IGN núcleo with this code is called otherwise («A Devesa de Alba»): the rule, not reviewed.
+  assert.deepEqual(record.names, { official: 'DEVESA (A)', display: 'A Devesa', reviewed: false, source: 'regla' });
+  assert.deepEqual(ENTITIES.territory('es:entidad:36038010100').names,
+    { official: 'DEVESA (A)', display: 'A Devesa', reviewed: false, source: 'ign_lugar', ref: 'ign:opob/10' });
+  assert.equal(ENTITIES.name('es:entidad:33031030299'), 'Diseminado de La Talaya');
+  assert.equal(ENTITIES.territory('es:entidad:08101000101').names.display, "L'Hospitalet de Llobregat");
   assert.deepEqual([record.municipality, record.collective_entity], ['es:municipio:36038', 'es:entidad:36038010000']);
   assert.ok(!('collective_entity' in ENTITIES.territory('es:entidad:36038000101')));
   const first = ENTITIES.search('A Devesa', { levels: ['singular_entity'] })[0];
@@ -97,13 +102,19 @@ test('entities: bad tables are refused', () => {
   const data = read('./datos/territorios.json');
   const good = readFileSync(new URL('./datos/entidades.csv', import.meta.url), 'utf8');
   createCatalog(data, { entities: good });
+  const reviewed = createCatalog(data, { entities: good.replace('ALBA,Alba,regla,', 'ALBA,Santa María de Alba,manual,rag') });
+  assert.deepEqual(reviewed.territory('es:entidad:36038010000').names,
+    { official: 'ALBA', display: 'Santa María de Alba', reviewed: true, source: 'manual', ref: 'rag' });
   for (const bad of ['id,ine,official\n',
-    `${good}es:entidad:36017151100,360171511700,DEVESA (A)\n`,
-    `${good}es:entidad:36038020100,360380201600,SIN PARROQUIA\n`,
-    `${good}es:entidad:x,360380101601,DEVESA (A)\n`,
-    `${good}es:entidad:36038000000,360380000000,MUNICIPIO\n`,
-    `${good}es:entidad:36038010102,3603801016,CORTO\n`,
-    `${good}es:entidad:36038010102,360380101602,\n`]) {
+    `${good}es:entidad:36017151100,360171511700,DEVESA (A),A Devesa,regla,\n`,
+    `${good}es:entidad:36038020100,360380201600,SIN PARROQUIA,Sin Parroquia,regla,\n`,
+    `${good}es:entidad:x,360380101601,DEVESA (A),A Devesa,regla,\n`,
+    `${good}es:entidad:36038000000,360380000000,MUNICIPIO,Municipio,regla,\n`,
+    `${good}es:entidad:36038010102,3603801016,CORTO,Corto,regla,\n`,
+    `${good}es:entidad:36038010102,360380101602,,X,regla,\n`,
+    `${good}es:entidad:36038010102,360380101602,X,,regla,\n`,
+    `${good}es:entidad:36038010102,360380101602,X,X,otra,\n`,
+    `${good}es:entidad:36038010102,360380101602,X\n`]) {
     assert.throws(() => createCatalog(data, { entities: bad }));
   }
   const base = { schema: 1, territories: [{ id: 'a', level: 'country', parent: 'b', codes: {}, names: { official: 'A', display: 'A' } },

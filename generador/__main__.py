@@ -164,28 +164,35 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         "licence": c["licence"], "attribution": c["attribution"]}
 
     c = config["ign_poblaciones"]
-    answers, rows, counts = [], [], []
-    for other, name in ((False, "ign_poblaciones"), (True, "ign_otras_capitales")):
+    answers, rows, counts, skipped = [], [], [], 0
+    for other, collection in ((False, "nuc"), (True, "opob")):
         found, offset = [], 0
         while True:
             got = descargas.fetch(ign.populations_url(offset, other=other), cache=cache,
-                                  cache_name=f"{name}_{offset}.json", validate=ign.parse_populations)
-            page, matched = ign.parse_populations(got.content)
+                                  cache_name=f"ign_{collection}_{offset}.json",
+                                  validate=lambda content, c=collection: ign.parse_populations(content, c))
+            page, matched, left_out = ign.parse_populations(got.content, collection)
             answers.append(got)
             found += page
+            skipped += left_out
             offset += ign.PAGE
             if offset >= matched:
                 break
-            if not page:
+            if not page and not left_out:
                 raise ValueError(f"IGN: página vacía en {offset} de {matched}")
-        if len(found) != matched:
-            raise ValueError(f"IGN: {len(found)} poblaciones de {matched}")
+        # Every place once: pages that moved while being read would repeat or lose some.
+        if len(found) + skipped != matched or len({row[6] for row in found}) != len(found):
+            raise ValueError(f"IGN: {len(found)} lugares de {matched} en {collection}, o repetidos")
+        if skipped > matched * 0.01:
+            raise ValueError(f"IGN: {skipped} lugares sin código o nombre en {collection}")
         rows += found
         counts.append(matched)
+        skipped = 0
     inputs["ign_capitals"] = ign.municipal_capitals(rows)
+    inputs["ign_places"] = ign.places(rows)
     records["ign_poblaciones"] = {
-        "url": f"{ign.POPULATIONS_URL} ({counts[0]} núcleos) y {ign.OTHER_POPULATIONS_URL}?capital="
-               f"{ign.OTHER_CAPITALS} ({counts[1]} capitales que no son núcleos); {len(answers)} páginas",
+        "url": f"{ign.POPULATIONS_URL} ({counts[0]} núcleos) y {ign.OTHER_POPULATIONS_URL} ({counts[1]} otras "
+               f"poblaciones); {len(answers)} páginas",
         "sha256": hashlib.sha256("".join(a.sha256 for a in answers).encode()).hexdigest(),
         "bytes": sum(len(a.content) for a in answers), "retrieved": answers[0].retrieved,
         "licence": c["licence"], "attribution": c["attribution"]}
@@ -230,13 +237,23 @@ def download_ine_register(template: str, cache: Path | None, parse):
     raise RuntimeError("; ".join(errors))
 
 
-def entities_table(units: list, data: dict, report) -> str:
-    """datos/entidades.csv, with what is left out and the count per level in the report."""
+def entities_table(units: list, data: dict, report, places: list, corrections: dict) -> str:
+    """datos/entidades.csv, with the names to show (IGN places and hand corrections), what is left
+    out and the counts in the report; links the capital of each municipality to its entity."""
     rows, left_out, counts = entidades.build(units, data)
     for message in left_out:
         report.add(entidades.SECTION, message)
+    sources = entidades.names(rows, places, corrections, report)
+    entidades.link_capitals(data, rows, report)
     report.summary["entidades de población"] = entidades.summary(counts)
+    report.summary["nombres de entidades"] = ", ".join(f"{n:,}".replace(",", ".") + f" {source}"
+                                                       for source, n in sorted(sources.items()))
+    report.summary["regla de mayúsculas de las entidades"] = entidades.rule_check(rows)
     return entidades.table(rows)
+
+
+def entity_corrections() -> dict:
+    return entidades.read_corrections((FUENTES / entidades.CORRECTIONS).read_text(encoding="utf-8"))
 
 
 def download_limits(cache: Path | None):
@@ -424,7 +441,8 @@ def postal_codes_file(salida: Path, informe: Path | None, cache: Path | None) ->
     return 0 if write_postal and not problems else 1
 
 
-def fixture():
+def build_fixture() -> tuple[dict, object, list, str]:
+    """(data, report, Wikipedia rows, entidades.csv) of the test fixture, as main() builds them."""
     folder = ROOT / "pruebas" / "fuentes"
     inputs = json.loads((folder / "entrada.json").read_text(encoding="utf-8"))
     inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
@@ -432,7 +450,13 @@ def fixture():
     data, report, articles = build(inputs, FUENTES, "2026-01-01")
     # Population entities: invented rows in the shape of the reader's output.
     units = [tuple(u) for u in json.loads((folder / "entidades.json").read_text(encoding="utf-8"))]
-    entities = entities_table(units, data, report)
+    entities = entities_table(units, data, report, inputs["ign_places"], entity_corrections())
+    return data, report, articles, entities
+
+
+def fixture():
+    folder = ROOT / "pruebas" / "fuentes"
+    data, report, articles, entities = build_fixture()
     write(ROOT / "pruebas" / "datos", data, articles, {"fixture": {"url": "pruebas/fuentes/entrada.json"}}, entities)
     (ROOT / "pruebas" / "datos" / "informe.md").write_text(report.markdown(), encoding="utf-8")
     # Postal codes: invented counts in the shape of the readers' output.
@@ -480,10 +504,14 @@ def main(argv=None):
     data, report, articles = build(inputs, FUENTES, reference)
     for orphan in codigos_postales.orphans(args.salida / codigos_postales.FILE, data):
         report.add("Códigos postales: municipios que ya no existen", orphan)
-    write(args.salida, data, articles, records, entities_table(inputs["ine_units"], data, report))
+    entities = entities_table(inputs["ine_units"], data, report, inputs["ign_places"], entity_corrections())
+    write(args.salida, data, articles, records, entities)
     text = report.markdown()
     if args.informe:
         args.informe.write_text(text, encoding="utf-8")
+        # The summary cuts each section; the whole report goes with it (artifact of generar.yml).
+        args.informe.with_name(args.informe.stem + "-completo.md").write_text(report.markdown(limit=None),
+                                                                            encoding="utf-8")
     print(text)
     return 0
 

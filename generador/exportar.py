@@ -195,7 +195,11 @@ def check(folder: Path) -> list[str]:
             problems.append(f"{entidades.FILE} is not in manifiesto.json")
         text = path.read_text(encoding="utf-8")
         try:
-            Catalog(data, text)  # validates the rows, their municipalities and their parents
+            catalog = Catalog(data, text)  # validates the rows, their municipalities and their parents
+            for territory in data["territories"]:
+                entity = territory.get("capital", {}).get("entity")
+                if entity and (catalog.territory(entity) or {}).get("municipality") != territory["id"]:
+                    problems.append(f"{territory['id']}: capital.entity {entity} is not one of its entities")
             rows = list(csv.reader(io.StringIO(text)))[1:]
             if text != entidades.table(sorted(rows, key=lambda row: row[1])):
                 problems.append(f"{entidades.FILE} is not in canonical form")

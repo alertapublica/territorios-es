@@ -65,7 +65,7 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "eurostat_lau": ("Eurostat", "eurostat", ["municipios.csv", "codigos.csv"]),
     "wikidata": ("Wikidata", "wikidata", ["nombres.csv", "codigos.csv", "wikipedia.csv", "paises.csv"]),
     "catastro": ("Catastro", "catastro", ["municipios.csv", "codigos.csv"]),
-    "ign_poblaciones": ("IGN", "ign", ["municipios.csv"]),
+    "ign_poblaciones": ("IGN", "ign", ["municipios.csv", "entidades.csv"]),
     "ign_limites": ("IGN", "ign", ["municipios.csv", "limites-municipios.geojson.gz"]),
     "madrid_direcciones": ("Ayto. de Madrid", "codigos_postales", POSTAL),
     "icgc_direcciones": ("ICGC", "codigos_postales", POSTAL),
@@ -77,7 +77,7 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "cdau_portales": ("CDAU", "codigos_postales", POSTAL),
     "catastro_direcciones": ("Catastro", "codigos_postales", POSTAL),
 }
-HAND_LISTS = ["fuentes.json", "comunidades.csv", "nombres-comunidades.csv", "provincias.csv", "islas.csv", "comarcas.csv",
+HAND_LISTS = ["fuentes.json", "comunidades.csv", "nombres-comunidades.csv", "nombres-entidades.csv", "provincias.csv", "islas.csv", "comarcas.csv",
               "comarcas-municipios.csv", "zonas-aviso.csv", "alias.csv", "partes-bilingues.csv", "descartes-wikidata.csv",
               "paises-ue.csv", "paises-excluidos.csv"]
 GENERATOR = ["__main__", "descargas", "xlsx", "construir", "exportar", "limites"]  # generator modules that read no source

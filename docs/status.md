@@ -140,7 +140,7 @@ From the sources to the data and from the data to the library, the website and t
 flowchart TB
   accTitle: Repository
   ext(["25 external sources<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
-  hand[/"fuentes/<br>13 lists reviewed by hand"/]
+  hand[/"fuentes/<br>14 lists reviewed by hand"/]
   descargas["descargas<br>downloads with cache, SHA-256 and relay"]
   readers["readers<br>aemet · catastro · codigos_postales · comarcas · entidades · eurostat · ign · ine · justicia · wikidata"]
   construir["construir<br>joins the sources and builds the catalogue"]
@@ -206,7 +206,7 @@ flowchart TB
 | `comarcas` | comarca of each municipality of Catalonia; comarca of each municipality of Aragon |
 | `entidades` | population entities: collective, singular, nuclei and scattered areas (electoral census street map) |
 | `eurostat` | LAU, NUTS 3 and area |
-| `ign` | capital of each municipality, with coordinates and altitude; BDDAE code and municipal boundaries |
+| `ign` | capital of each municipality, with coordinates and altitude, and spelling of the names of the population entities; BDDAE code and municipal boundaries |
 | `ine` | official codes and names of municipalities; islands and their municipalities; name changes of the year; provinces and communities; official population |
 | `justicia` | judicial district of each municipality and its seat |
 | `wikidata` | names per language, links and identifiers |
@@ -279,6 +279,7 @@ flowchart LR
   o_IDEIB --> f_codigos_postales_csv
   o_IDENA --> f_codigos_postales_fuentes_csv
   o_IDENA --> f_codigos_postales_csv
+  o_IGN --> f_entidades_csv
   o_IGN --> f_limites_municipios_geojson_gz
   o_IGN --> f_municipios_csv
   o_INE --> f_codigos_postales_fuentes_csv
@@ -324,7 +325,7 @@ flowchart LR
 | `eurostat_lau` | Eurostat | `generador/eurostat.py` | LAU, NUTS 3 and area | 2026-11-12 |
 | `wikidata` | Wikidata | `generador/wikidata.py` | names per language, links and identifiers | 2026-11-12 |
 | `catastro` | Catastro | `generador/catastro.py` | DGC code of each municipality | 2026-11-12 |
-| `ign_poblaciones` | IGN | `generador/ign.py` | capital of each municipality, with coordinates and altitude | 2026-11-12 |
+| `ign_poblaciones` | IGN | `generador/ign.py` | capital of each municipality, with coordinates and altitude, and spelling of the names of the population entities | 2026-11-12 |
 | `ign_limites` | IGN | `generador/ign.py` | BDDAE code and municipal boundaries | 2026-11-12 |
 | `madrid_direcciones` | Ayto. de Madrid | `generador/codigos_postales.py` | postal codes of the municipality of Madrid | 2026-11-11 |
 | `icgc_direcciones` | ICGC | `generador/codigos_postales.py` | postal codes of Catalonia | 2026-11-11 |
@@ -349,7 +350,7 @@ flowchart LR
 | [`codigos.csv`](../datos/codigos.csv) | 67,083 | 2.9 MB | Catastro, Eurostat, INE, Wikidata | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/codigos) |
 | [`comarcas.csv`](../datos/comarcas.csv) | 84 | 15 KB | Aragón, Idescat, REL | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comarcas) |
 | [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comunidades) |
-| [`entidades.csv`](../datos/entidades.csv) | 146,079 | 6.8 MB | INE | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/entidades) |
+| [`entidades.csv`](../datos/entidades.csv) | 146,079 | 6.8 MB | IGN, INE | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/entidades) |
 | [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/islas) |
 | [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | in datos/ |  |
 | [`municipios.csv`](../datos/municipios.csv) | 8,132 | 2.3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/municipios) |
@@ -362,13 +363,14 @@ flowchart LR
 | [`zonas-aviso.csv`](../datos/zonas-aviso.csv) | 182 | 15 KB | AEMET | in datos/ | [explore](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/zonas-aviso) |
 
 <details>
-<summary>The 13 lists reviewed by hand (<code>fuentes/</code>)</summary>
+<summary>The 14 lists reviewed by hand (<code>fuentes/</code>)</summary>
 
 | List | Rows | Provides |
 |---|---:|---|
 | `fuentes.json` |  | URL, licence and attribution of each source |
 | `comunidades.csv` | 19 | communities: name, ISO 3166-2, NUTS 2 |
 | `nombres-comunidades.csv` | 114 | names of the communities in each language |
+| `nombres-entidades.csv` | 0 | names of population entities corrected by hand |
 | `provincias.csv` | 52 | provinces: ISO 3166-2 and NUTS 3 |
 | `islas.csv` | 11 | Wikidata and NUTS 3 of each island |
 | `comarcas.csv` | 84 | comarcas: type, name and codes |

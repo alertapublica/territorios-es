@@ -3,6 +3,7 @@ __pycache__/
 _site/
 .cache/
 /informe.md
+/informe-completo.md
 node_modules/
 dist/
 build/

@@ -22,7 +22,7 @@ concurrency:
 jobs:
   generar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45  # unas 26 min en noviembre de 2026, con opob entero
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -54,6 +54,7 @@ jobs:
           path: |
             datos/
             informe.md
+            informe-completo.md
           if-no-files-found: ignore
 
   publicar:

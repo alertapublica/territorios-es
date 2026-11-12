@@ -78,7 +78,11 @@ así que se cargan aparte, con `load_entities` (en JS, `loadEntities`). Cada una
 municipio y está en su isla, partido judicial, zona de aviso y comarca, también para `within`.
 `search` solo las devuelve si se piden en `levels`, y cada candidato lleva su municipio y su
 colectiva. `to_municipality` lleva una relación con entidades a su municipio para combinarla con
-otras. Por ahora el nombre es el del INE, en mayúsculas («A DEVESA»), sin revisar.
+otras. El nombre que se muestra («A Devesa») lleva su procedencia en `names.source`: una corrección
+revisada a mano (`manual`, la única con `reviewed`), la grafía de un núcleo o lugar del IGN de esa
+entidad (`ign`, `ign_lugar`, con el lugar en `names.ref`), una regla de mayúsculas y artículos sobre
+el nombre del INE (`regla`, que no pone las tildes que el INE no escribe) o, en un diseminado, el de
+su entidad singular («Diseminado de A Devesa»). `names.official` sigue siendo el literal del INE.
 
 `locate` usa los límites municipales del IGN, que por tamaño no van en el paquete: cada versión
 lleva adjunto `limites-municipios.geojson.gz` (simplificado a 5 m), que se descarga una vez. Un
@@ -165,7 +169,7 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 | INE (callejero del censo electoral) | códigos postales de toda España, con el número de tramos de calle; entidades de población | CC BY 4.0: «Elaboración propia con datos extraídos del sitio web del INE: www.ine.es» |
 | Instituto de Estadística y Cartografía de Andalucía (CDAU) | códigos postales de Andalucía, con el número de portales (contraste) | CC BY 4.0: «Fuente: CDAU (Entidades Locales-Junta de Andalucía- IGN)» |
 | Dirección General del Catastro | códigos postales de los municipios de régimen común, con el número de direcciones (de INSPIRE Addresses) | licencia de la DGC: uso de la información transformada citando la fuente y la fecha de acceso (en el manifiesto); no es «información catastral» |
-| Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
+| Instituto Geográfico Nacional | capital de cada municipio, con sus coordenadas y altitud; grafía de los nombres de las entidades de población (`ign`, `ign_lugar`) | CC BY 4.0: «IGR_POBLACIONES 2024 CC-BY 4.0 scne.es» |
 | Instituto Geográfico Nacional | código BDDAE y límites municipales (fichero adjunto a cada versión, simplificado) | CC BY 4.0: «Obra derivada de BDLJE Continua CC-BY 4.0 ign.es» |
 | Wikidata | nombres por idioma, enlaces, identificadores | CC0 |
 | GeoNames (vía Wikidata) | identificador | CC BY 4.0 |

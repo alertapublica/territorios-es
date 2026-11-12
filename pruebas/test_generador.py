@@ -13,7 +13,8 @@ from zipfile import ZipFile
 from pruebas import ROOT
 from generador import aemet, catastro, codigos_postales, comarcas, entidades, eurostat, exportar, ign, ine, justicia, limites
 from generador import wikidata
-from generador.construir import _other_names, build, catastro_name_matches
+from generador.__main__ import build_fixture
+from generador.construir import Report, _other_names, build, catastro_name_matches
 from generador.xlsx import read_rows
 
 
@@ -253,23 +254,31 @@ class Readers(unittest.TestCase):
                          catastro.SERVICE + "/ConsultaMunicipio?Provincia=A%20CORU%C3%91A&Municipio=")
 
     def test_ign_populations(self):
-        # Same shape as the IGN features API (collection nuc, seen on 2026-11-09); values invented.
+        # Same shape as the IGN features API (collections nuc and opob, seen on 2026-11-12); values invented.
         def page(features, matched=3):
             return json.dumps({"numberMatched": matched, "features": [
-                {"type": "Feature", "geometry": None, "properties": p} for p in features]}).encode()
-        rows, matched = ign.parse_populations(page([
-            {"codine": "32054000101", "nombre": "Ourense", "capital": "001100", "longitud": -7.86, "latitud": 42.33, "altitud": 136.24},
-            {"codine": "32054000201", "nombre": "Aldea", "capital": "000000", "longitud": -7.8, "latitud": 42.3, "altitud": None},
-            {"codine": "28079000101", "nombre": "Madrid", "capital": "111100", "longitud": -3.7, "latitud": 40.4, "altitud": 657}]))
-        self.assertEqual(matched, 3)
+                {"type": "Feature", "geometry": None, "properties": p, "id": i} for i, p in features]}).encode()
+        rows, matched, skipped = ign.parse_populations(page([
+            (1, {"codine": "32054000101", "nombre": "Ourense", "capital": "001100", "longitud": -7.86, "latitud": 42.33, "altitud": 136.24}),
+            (2, {"codine": "32054000201", "nombre": "Aldea", "capital": "000000", "longitud": -7.8, "latitud": 42.3, "altitud": None}),
+            (3, {"codine": "28079000101", "nombre": "Madrid", "capital": "111100", "longitud": -3.7, "latitud": 40.4, "altitud": 657})]))
+        self.assertEqual((matched, skipped), (3, 0))
         self.assertIn("/collections/nuc/items?", ign.populations_url(0))
-        self.assertNotIn("capital=", ign.populations_url(0))
         self.assertIn("/collections/opob/items?", ign.populations_url(0, other=True))
-        self.assertIn("capital=000100", ign.populations_url(0, other=True))
-        self.assertEqual(ign.municipal_capitals(rows), [["28079", "28079000101", "Madrid", -3.7, 40.4, 657.0],
-                                                        ["32054", "32054000101", "Ourense", -7.86, 42.33, 136.2]])
-        self.assertRaises(ValueError, ign.parse_populations, page([{"codine": "3205", "capital": "0011"}]))
-        self.assertRaises(ValueError, ign.parse_populations, page([{"codine": "32054000101", "capital": "0011"}]))
+        self.assertIn("tipo", ign.populations_url(0, other=True))
+        self.assertNotIn("capital=", ign.populations_url(0, other=True))  # the whole collection
+        self.assertEqual(ign.municipal_capitals(rows), [
+            ["28079", "28079000101", "Madrid", -3.7, 40.4, 657.0, "ign:nuc/3"],
+            ["32054", "32054000101", "Ourense", -7.86, 42.33, 136.2, "ign:nuc/1"]])
+        others, _, skipped = ign.parse_populations(page([
+            (9, {"codine": "32054000000", "nombre": "Fonte", "tipo": "OPOB", "capital": "000000"}),  # no coordinates
+            (10, {"codine": "", "nombre": "Sin código", "tipo": "OPOB"}),
+            (11, {"codine": "32054000199", "nombre": "Mina", "tipo": "OINS", "capital": "000000", "longitud": 1, "latitud": 2})]), "opob")
+        self.assertEqual(skipped, 1)
+        self.assertEqual(ign.places(others), [["32054000000", "Fonte", "ign:opob/9", "OPOB"],
+                                              ["32054000199", "Mina", "ign:opob/11", "OINS"]])
+        self.assertRaises(ValueError, ign.parse_populations, page([(1, {"codine": "32054000101", "nombre": "X", "capital": "0011"})]))
+        self.assertRaises(ValueError, ign.parse_populations, page([(1, {"codine": "32054000101", "nombre": "X", "capital": "2"})]))
         self.assertRaises(ValueError, ign.parse_populations, b"<html>")
         self.assertIn("skipGeometry=true", ign.populations_url(5000))
         self.assertIn("offset=5000", ign.populations_url(5000))
@@ -372,10 +381,7 @@ class Readers(unittest.TestCase):
 
 class Build(unittest.TestCase):
     def setUp(self):
-        inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
-        inputs["wikidata_spain"] = wikidata.from_jsonable(inputs["wikidata_spain"])
-        inputs["wikidata_countries"] = wikidata.from_jsonable(inputs["wikidata_countries"])
-        self.data, self.report, self.articles = build(inputs, ROOT / "fuentes", "2026-01-01")
+        self.data, self.report, self.articles, self.entities = build_fixture()
 
     def test_fixture_data_is_up_to_date(self):
         """pruebas/datos must be rebuilt (python -m generador --fixture) when the generator changes."""
@@ -426,7 +432,10 @@ class Build(unittest.TestCase):
         by_id = {t["id"]: t for t in self.data["territories"]}
         self.assertEqual(by_id["es:municipio:15030"]["codes"]["ign:bddae"], "34121515030")
         self.assertEqual(by_id["es:municipio:15030"]["capital"],
-                         {"name": "A Coruña", "ine": "15030000101", "lon": -8.4, "lat": 43.36, "altitude": 20.5})
+                         {"name": "A Coruña", "ine": "15030000101", "lon": -8.4, "lat": 43.36, "altitude": 20.5,
+                      "ign": "ign:nuc/102"})
+        # The entity of the capital, apart from the IGN place, when the street register has its code.
+        self.assertEqual(by_id["es:municipio:32054"]["capital"]["entity"], "es:entidad:32054000101")
         self.assertEqual(by_id["es:municipio:03139"]["codes"]["ign:bddae"], "34100303139")  # bilingual name
         self.assertNotIn("ign:bddae", by_id["es:municipio:03014"]["codes"])
         self.assertNotIn("capital", by_id["es:municipio:36038"])
@@ -1095,7 +1104,92 @@ class Entities(unittest.TestCase):
             "360380201601 SIN PARROQUIA: falta su entidad 36038020100", "360380300000: sin nombre"])
         self.assertEqual(counts, {"collective_entity": 1, "singular_entity": 1, "nucleus": 1, "scattered": 0})
         self.assertEqual(entidades.summary(counts), "1 colectivas, 1 singulares, 1 núcleos, 0 diseminados")
-        self.assertEqual(entidades.table(rows).splitlines()[:2], ["id,ine_dc,official", "es:entidad:36038010000,360380100000,ALBA"])
+        report = Report()
+        sources = entidades.names(rows, [["36038010101", "a Devesa", "ign:nuc/7", "NUC"]], {}, report)
+        self.assertEqual(sources, {"regla": 1, "ign_lugar": 1, "ign": 1})
+        self.assertEqual(entidades.table(rows).splitlines()[:3], [
+            "id,ine_dc,official,display,display_source,display_ref", "es:entidad:36038010000,360380100000,ALBA,Alba,regla,",
+            "es:entidad:36038010100,360380101600,DEVESA (A),A Devesa,ign_lugar,ign:nuc/7"])
+        self.assertEqual(rows[2][3:], ["A Devesa", "ign", "ign:nuc/7"])
+
+    def test_rule(self):
+        # Real INE names, with the spelling of the IGN núcleo with the same code (seen on 2026-11-12).
+        for official, lang, expected in [
+                ("DEVESA (A)", "gl", "A Devesa"), ("PONTE DA BARCA", "gl", "Ponte da Barca"),
+                ("ERMO (O) (SAN XULIAN)", "gl", "O Ermo (San Xulian)"), ("BURRES (SAN VICENTE)", "gl", "Burres (San Vicente)"),
+                ("HOSPITALET DE LLOBREGAT (L')", "ca", "L'Hospitalet de Llobregat"), ("MAS D'EN GUAL", "ca", "Mas d'en Gual"),
+                ("CASES DELS PINS (LES)", "ca", "Les Cases dels Pins"), ("SANT JOAN I SANT PERE", "ca", "Sant Joan i Sant Pere"),
+                ("L.LAMAS", "ast", "L.lamas"), ("FASE II", "es", "Fase II"), ("URBANITZACIÓ MAS-TRADER I", "ca", "Urbanització Mas-Trader I"), ("VIL", "es", "Vil"),
+                ("ALEGRIA-DULANTZI", "eu", "Alegria-Dulantzi"), ("LAGUARDIA/BIASTERI", "eu", "Laguardia/Biasteri"),
+                ("CASAS DE LOS PINOS (LAS)", "es", "Las Casas de los Pinos")]:
+            self.assertEqual(entidades.recase(official, lang), expected, official)
+        self.assertEqual(entidades.language("36038010101"), "gl")
+        self.assertEqual(entidades.language("28079000101"), "es")
+        # Same name: only capitals and accents; ñ, ç and the article count.
+        self.assertEqual(entidades.same_name("DEVESA (A)"), entidades.same_name("A Devésa"))
+        self.assertNotEqual(entidades.same_name("PEÑA"), entidades.same_name("Pena"))
+        self.assertNotEqual(entidades.same_name("DEVESA (A)"), entidades.same_name("Devesa"))
+        self.assertEqual(entidades.same_name("PAL.LA"), entidades.same_name("Pal·la"))
+
+    def test_names(self):
+        rows = [["es:entidad:36038010000", "360380100000", "ALBA"],
+                ["es:entidad:36038010100", "360380101600", "DEVESA (A)"],
+                ["es:entidad:36038010101", "360380101601", "DEVESA (A)"],
+                ["es:entidad:36038010199", "360380101699", "*DISEMINADO*"],
+                ["es:entidad:36038010200", "360380102700", "CORTES"],
+                ["es:entidad:36038010300", "360380103800", "PENA"],
+                ["es:entidad:36038010400", "360380104900", "FONTE"]]
+        places = [["36038010101", "A Devesa", "ign:nuc/1", "NUC"],
+                  ["36038010199", "A Dévesa", "ign:opob/2", "OPOB"],  # a núcleo goes first
+                  ["36038010299", "Cortés", "ign:opob/3", "OPOB"], ["36038010299", "Cortes", "ign:opob/4", "URBA"],
+                  ["36038010399", "Pena", "ign:opob/5", "OINS"],  # a facility: not a name
+                  ["36038000000", "Pena", "ign:opob/6", "OPOB"],  # only the municipality: a proposal
+                  *[["36038000000", f"Fonté {n}", f"ign:opob/{n}", "OPOB"] for n in range(10, 13)]]
+        corrections = {"es:entidad:36038010000": {"official": "ALBA", "display": "Santa María de Alba", "source": "rag"},
+                       "es:entidad:36038010101": {"official": "DEVESA", "display": "A Devesa", "source": "rag"},
+                       "es:entidad:36038999900": {"official": "X", "display": "X", "source": "rag"}}
+        report = Report()
+        sources = entidades.names(rows, places, corrections, report)
+        self.assertEqual([row[3:] for row in rows], [
+            ["Santa María de Alba", "manual", "rag"], ["A Devesa", "ign_lugar", "ign:nuc/1"], ["A Devesa", "ign", "ign:nuc/1"],
+            ["Diseminado de A Devesa", "derivado", "es:entidad:36038010100"], ["Cortes", "regla", ""],
+            ["Pena", "regla", ""], ["Fonte", "regla", ""]])
+        self.assertEqual(sources, {"regla": 3, "manual": 1, "ign_lugar": 1, "ign": 1, "derivado": 1})
+        sections = report.sections
+        self.assertEqual(sections[entidades.NAME_SECTIONS["review"]], [
+            "es:entidad:36038010101: el INE escribe ahora «DEVESA (A)», no «DEVESA»",
+            "es:entidad:36038999900: no está en el callejero"])
+        self.assertEqual(sections[entidades.NAME_SECTIONS["spellings"]], ["es:entidad:36038010200 «CORTES»: «Cortes», «Cortés»"])
+        self.assertEqual(sections[entidades.NAME_SECTIONS["proposals"]], ["es:entidad:36038010300 «Pena»: «Pena» (ign:opob/6)"])
+        self.assertEqual(sections[entidades.NAME_SECTIONS["accents"]], ["es:entidad:36038010400 «Fonte»: «Fonté»"])
+        self.assertNotIn(entidades.NAME_SECTIONS["other"], sections)
+        self.assertIn("frente a 1 núcleos del IGN", entidades.rule_check(rows))
+        self.assertEqual(entidades.rule_check([]), "sin núcleos del IGN para comparar")
+        # Another name in the IGN núcleo with the same code: to the report, never to the name.
+        report = Report()
+        rows = [["es:entidad:01031000201", "010310002201", "LAGUARDIA"]]
+        entidades.names(rows, [["01031000201", "Laguardia/Biasteri", "ign:nuc/9", "NUC"]], {}, report)
+        self.assertEqual(rows[0][3:], ["Laguardia", "regla", ""])
+        self.assertEqual(report.sections[entidades.NAME_SECTIONS["other"]],
+                         ["es:entidad:01031000201 «LAGUARDIA»: «Laguardia/Biasteri» (ign:nuc/9)"])
+
+    def test_corrections_and_capitals(self):
+        header = ",".join(entidades.CORRECTION_HEADER) + "\n"
+        self.assertEqual(entidades.read_corrections(header), {})
+        good = header + "es:entidad:36038010000,ALBA,Santa María de Alba,rag,2026-11-12\n"
+        self.assertEqual(entidades.read_corrections(good)["es:entidad:36038010000"]["source"], "rag")
+        for bad in ("id,official\n", good + good.split("\n")[1] + "\n",
+                    header + "es:entidad:36038010000,ALBA,Santa María de Alba,,2026-11-12\n",
+                    header + "es:entidad:36038010000,ALBA,Santa María de Alba,rag,12/11/2026\n"):
+            self.assertRaises(ValueError, entidades.read_corrections, bad)
+        entidades.read_corrections((ROOT / "fuentes" / entidades.CORRECTIONS).read_text(encoding="utf-8"))
+        data = {"territories": [{"id": "es:municipio:36038", "capital": {"name": "Pontevedra", "ine": "36038000101"}},
+                                {"id": "es:municipio:15030", "capital": {"name": "A Coruña", "ine": "15030000101"}}]}
+        report = Report()
+        entidades.link_capitals(data, [["es:entidad:36038000101", "360380001701", "PONTEVEDRA"]], report)
+        self.assertEqual(data["territories"][0]["capital"]["entity"], "es:entidad:36038000101")
+        self.assertNotIn("entity", data["territories"][1]["capital"])
+        self.assertEqual(report.sections[entidades.NAME_SECTIONS["capitals"]], ["es:municipio:15030: «A Coruña» (15030000101)"])
 
     def test_check(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1106,9 +1200,15 @@ class Entities(unittest.TestCase):
             lines = good.splitlines(keepends=True)
             path.write_text(lines[0] + "".join(reversed(lines[1:])), encoding="utf-8")
             self.assertIn(f"{entidades.FILE} is not in canonical form", exportar.check(folder))
-            path.write_text(good + "es:entidad:36017151100,360171511700,DEVESA (A)\n", encoding="utf-8")
+            path.write_text(good + "es:entidad:36017151100,360171511700,DEVESA (A),A Devesa,regla,\n", encoding="utf-8")
             self.assertTrue(any(p.startswith(f"{entidades.FILE}: Not an entity") for p in exportar.check(folder)))
             path.write_text(good, encoding="utf-8")
+            territories = (folder / "territorios.json").read_text(encoding="utf-8")
+            (folder / "territorios.json").write_text(territories.replace('"entity":"es:entidad:32054000101"',
+                                                                         '"entity":"es:entidad:36038000101"'), encoding="utf-8")
+            self.assertIn("es:municipio:32054: capital.entity es:entidad:36038000101 is not one of its entities",
+                          exportar.check(folder))
+            (folder / "territorios.json").write_text(territories, encoding="utf-8")
             manifest = json.loads((folder / "manifiesto.json").read_text(encoding="utf-8"))
             del manifest["files"][entidades.FILE]
             (folder / "manifiesto.json").write_text(json.dumps(manifest), encoding="utf-8")

@@ -8,8 +8,13 @@ js/entities.js mirrors this file.
 Four levels below the municipality (design §4.1): the collective entity (the parishes of Galicia and
 Asturias…, only where there are any), the singular entity, and the nucleus and the scattered part
 (diseminado) of a singular entity. The table has the identifier, frozen the first time it is given
-(§4.6), the 12-digit code of the street register and the official name as the INE writes it, in
-capitals and with the article in brackets. The level and the parent come out of the code: province
+(§4.6), the 12-digit code of the street register, the official name as the INE writes it, in
+capitals and with the article in brackets, and the name to show with where it comes from (§4.3):
+`manual` (a hand correction, the only one that is reviewed; the reference is its source), `ign`
+(the IGN núcleo with the same code), `ign_lugar` (a population place of the IGN inside the
+entity), `regla` (the generator's rule of capitals and articles) or `derivado` (a scattered part,
+from its singular entity; the reference is that entity). The reference of an IGN name is the IGN
+place («ign:nuc/100000001»). The level and the parent come out of the code: province
 and municipality (5), collective (2), singular (2), check digit (1), nucleus (2; 99 is the scattered
 part). The 11-digit code (`ine:entidad`) leaves out the check digit, as the IGN and Wikidata do.
 """
@@ -19,9 +24,8 @@ import csv
 import io
 import re
 
-from .text import display_name
-
-ENTITY_HEADER = ["id", "ine_dc", "official"]
+ENTITY_HEADER = ["id", "ine_dc", "official", "display", "display_source", "display_ref"]
+ENTITY_SOURCES = ("manual", "ign", "ign_lugar", "regla", "derivado")
 ENTITY_LEVELS = ("collective_entity", "singular_entity", "nucleus", "scattered")
 _CODE = re.compile(r"[0-9]{12}")
 
@@ -49,7 +53,8 @@ def entity_records(text: str, municipality_id) -> list[dict]:
         raise ValueError("Not an entidades.csv table")
     by_code, found = {}, []
     for row in rows[1:]:
-        if len(row) != len(ENTITY_HEADER) or not _CODE.fullmatch(row[1]) or not row[0] or not row[2]:
+        if (len(row) != len(ENTITY_HEADER) or not _CODE.fullmatch(row[1]) or not row[0] or not row[2]
+                or not row[3] or row[4] not in ENTITY_SOURCES):
             raise ValueError(f"Invalid row {row}")
         code = entity_code(row[1])
         level, municipality = entity_level(code), municipality_id(code[:5])
@@ -66,8 +71,11 @@ def entity_records(text: str, municipality_id) -> list[dict]:
             raise ValueError(f"Missing parent entity of {row[0]}")
         record = {"id": row[0], "level": level, "parent": parent,
                   "codes": {"ine:entidad": code, "ine:entidad:dc": row[1]},
-                  "names": {"official": row[2], "display": display_name(row[2]), "reviewed": False},
+                  "names": {"official": row[2], "display": row[3], "reviewed": row[4] == "manual",
+                            "source": row[4]},
                   "municipality": municipality}
+        if row[5]:
+            record["names"]["ref"] = row[5]
         if collective != municipality and level != "collective_entity":
             record["collective_entity"] = collective
         records.append(record)

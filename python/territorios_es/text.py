@@ -16,13 +16,15 @@ ARTICLES = {
 _ARTICLES = {a.lower() for group in ARTICLES.values() for a in group}
 _BY_LENGTH = sorted(_ARTICLES, key=lambda a: (-len(a), a))
 _TRAILING_ARTICLES = (re.compile(r"^(?P<name>.+), (?P<article>[^,/]+)$"),
-                      re.compile(r"^(?P<name>.+) \((?P<article>[^()/]+)\)$"))
+                      re.compile(r"^(?P<name>.+) \((?P<article>[^()/]+)\)$"),
+                      re.compile(r"^(?P<name>[^()]+) \((?P<article>[^()/]+)\)(?P<rest> \([^()]+\))$"))
 _APOSTROPHES = re.compile("[’‘´`]")
 
 
 def flip_article(name: str) -> str:
-    """«Coruña, A» -> «A Coruña»; «Orxa, l'» -> «l'Orxa»; «DEVESA (A)» -> «A DEVESA». Other commas
-    and brackets stay as they are («BURRES (SAN VICENTE)»)."""
+    """«Coruña, A» -> «A Coruña»; «Orxa, l'» -> «l'Orxa»; «DEVESA (A)» -> «A DEVESA»; «ERMO (O) (SAN
+    XULIAN)» -> «O ERMO (SAN XULIAN)». Other commas and brackets stay as they are («BURRES (SAN
+    VICENTE)»)."""
     name = name.strip()
     for pattern in _TRAILING_ARTICLES:
         match = pattern.match(name)
@@ -30,7 +32,7 @@ def flip_article(name: str) -> str:
             article = _APOSTROPHES.sub("'", match["article"])
             if article.lower() in _ARTICLES:
                 joiner = "" if article.endswith("'") else " "
-                return f"{article}{joiner}{match['name']}"
+                return f"{article}{joiner}{match['name']}{match.groupdict().get('rest') or ''}"
     return name
 
 

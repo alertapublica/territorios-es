@@ -43,7 +43,7 @@
       "manifiesto.json": "Fuentes usadas (dirección, huella SHA-256, fecha y licencia) y huella de cada fichero.",
       "codigos-postales.csv": "Códigos postales: una fila por código y municipio, con la fuente que decide en ese municipio, su recuento y las demás fuentes que lo tienen. Un código puede abarcar varios municipios.",
       "codigos-postales-fuentes.csv": "Lo que dice cada fuente de códigos postales: una fila por código, municipio y fuente, también los pares que no se publican. Sirve para contrastar y para reclamar.",
-      "entidades.csv": "Entidades de población del callejero del INE: entidades colectivas (las parroquias de Galicia y Asturias…), entidades singulares, núcleos y diseminados. Una fila por entidad, con su identificador, su código del INE y su nombre tal como lo escribe el INE; el nivel y el padre salen del código. La librería las carga solo si se piden."
+      "entidades.csv": "Entidades de población del callejero del INE: entidades colectivas (las parroquias de Galicia y Asturias…), entidades singulares, núcleos y diseminados. Una fila por entidad, con su identificador, su código del INE y su nombre tal como lo escribe el INE; el nivel y el padre salen del código. También el nombre que se muestra, con su procedencia: una corrección revisada a mano, la grafía del IGN o una regla de mayúsculas y artículos. La librería las carga solo si se piden."
     },
     "columns": {
       "id": "Identificador estable del territorio (es:municipio:36038).",
@@ -75,6 +75,8 @@
       "geonames": "Identificador de GeoNames.",
       "official": "Nombre oficial, tal como lo escribe la fuente («Coruña, A»).",
       "display": "Nombre visible, con el artículo delante («A Coruña»).",
+      "display_source": "En entidades.csv, de dónde sale el nombre visible: manual (corrección revisada a mano), ign (núcleo del IGN con el mismo código), ign_lugar (lugar del IGN dentro de la entidad), regla (regla de mayúsculas y artículos, sin revisar) o derivado (diseminado, por su entidad singular).",
+      "display_ref": "En entidades.csv, la referencia del nombre visible: el lugar del IGN (ign:nuc/…, ign:opob/…), la fuente de la corrección a mano o, en un diseminado, su entidad singular.",
       "name_xx": "Nombre que se muestra en ese idioma (es, ca, gl, eu, oc, en).",
       "short_xx": "Nombre corto en ese idioma.",
       "population": "Población oficial del INE (padrón a 1 de enero; la fecha está en manifiesto.json).",
@@ -246,7 +248,7 @@
         "eurostat_lau": "LAU, NUTS 3 y superficie",
         "wikidata": "nombres por idioma, enlaces e identificadores",
         "catastro": "código DGC de cada municipio",
-        "ign_poblaciones": "capital de cada municipio, con coordenadas y altitud",
+        "ign_poblaciones": "capital de cada municipio, con coordenadas y altitud, y grafía de los nombres de las entidades de población",
         "ign_limites": "código BDDAE y límites municipales",
         "madrid_direcciones": "códigos postales del municipio de Madrid",
         "icgc_direcciones": "códigos postales de Cataluña",
@@ -262,6 +264,7 @@
         "fuentes.json": "URL, licencia y atribución de cada fuente",
         "comunidades.csv": "comunidades: nombre, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "nombres de las comunidades en cada idioma",
+        "nombres-entidades.csv": "nombres de entidades de población corregidos a mano",
         "provincias.csv": "provincias: ISO 3166-2 y NUTS 3",
         "islas.csv": "Wikidata y NUTS 3 de cada isla",
         "comarcas.csv": "comarcas: tipo, nombre y códigos",
@@ -345,7 +348,7 @@
       "manifiesto.json": "Sources used (address, SHA-256 fingerprint, date and licence) and the fingerprint of each file.",
       "codigos-postales.csv": "Postal codes: one row per code and municipality, with the source that decides in that municipality, its count and the other sources that have it. A code can span several municipalities.",
       "codigos-postales-fuentes.csv": "What each source says about postal codes: one row per code, municipality and source, including the pairs that are not published. For cross-checking and for claims.",
-      "entidades.csv": "Population entities of the INE street register: collective entities (the parishes of Galicia and Asturias…), singular entities, nuclei and scattered areas. One row per entity, with its identifier, its INE code and its name as the INE writes it; the level and the parent come from the code. The library loads them only when asked."
+      "entidades.csv": "Population entities of the INE street register: collective entities (the parishes of Galicia and Asturias…), singular entities, nuclei and scattered areas. One row per entity, with its identifier, its INE code and its name as the INE writes it; the level and the parent come from the code. Also the name to show, with where it comes from: a hand-reviewed correction, the IGN spelling or a rule of capitals and articles. The library loads them only when asked."
     },
     "columns": {
       "id": "Stable identifier of the territory (es:municipio:36038).",
@@ -377,6 +380,8 @@
       "geonames": "GeoNames identifier.",
       "official": "Official name, as written by the source («Coruña, A»).",
       "display": "Display name, with the article in front («A Coruña»).",
+      "display_source": "In entidades.csv, where the display name comes from: manual (hand-reviewed correction), ign (IGN nucleus with the same code), ign_lugar (IGN place inside the entity), regla (rule of capitals and articles, not reviewed) or derivado (scattered area, from its singular entity).",
+      "display_ref": "In entidades.csv, the reference of the display name: the IGN place (ign:nuc/…, ign:opob/…), the source of the hand correction or, for a scattered area, its singular entity.",
       "name_xx": "Name shown in that language (es, ca, gl, eu, oc, en).",
       "short_xx": "Short name in that language.",
       "population": "Official INE population (municipal register at 1 January; the date is in manifiesto.json).",
@@ -548,7 +553,7 @@
         "eurostat_lau": "LAU, NUTS 3 and area",
         "wikidata": "names per language, links and identifiers",
         "catastro": "DGC code of each municipality",
-        "ign_poblaciones": "capital of each municipality, with coordinates and altitude",
+        "ign_poblaciones": "capital of each municipality, with coordinates and altitude, and spelling of the names of the population entities",
         "ign_limites": "BDDAE code and municipal boundaries",
         "madrid_direcciones": "postal codes of the municipality of Madrid",
         "icgc_direcciones": "postal codes of Catalonia",
@@ -564,6 +569,7 @@
         "fuentes.json": "URL, licence and attribution of each source",
         "comunidades.csv": "communities: name, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "names of the communities in each language",
+        "nombres-entidades.csv": "names of population entities corrected by hand",
         "provincias.csv": "provinces: ISO 3166-2 and NUTS 3",
         "islas.csv": "Wikidata and NUTS 3 of each island",
         "comarcas.csv": "comarcas: type, name and codes",
@@ -647,7 +653,7 @@
       "manifiesto.json": "Fonts utilitzades (adreça, empremta SHA-256, data i llicència) i empremta de cada fitxer.",
       "codigos-postales.csv": "Codis postals: una fila per codi i municipi, amb la font que decideix en aquest municipi, el seu recompte i les altres fonts que el tenen. Un codi pot abastar diversos municipis.",
       "codigos-postales-fuentes.csv": "El que diu cada font de codis postals: una fila per codi, municipi i font, també els parells que no es publiquen. Serveix per contrastar i per reclamar.",
-      "entidades.csv": "Entitats de població del carrerer de l'INE: entitats col·lectives (les parròquies de Galícia i Astúries…), entitats singulars, nuclis i disseminats. Una fila per entitat, amb el seu identificador, el seu codi de l'INE i el seu nom tal com l'escriu l'INE; el nivell i el pare surten del codi. La llibreria només les carrega si es demanen."
+      "entidades.csv": "Entitats de població del carrerer de l'INE: entitats col·lectives (les parròquies de Galícia i Astúries…), entitats singulars, nuclis i disseminats. Una fila per entitat, amb el seu identificador, el seu codi de l'INE i el seu nom tal com l'escriu l'INE; el nivell i el pare surten del codi. També el nom que es mostra, amb la seva procedència: una correcció revisada a mà, la grafia de l'IGN o una regla de majúscules i articles. La llibreria només les carrega si es demanen."
     },
     "columns": {
       "id": "Identificador estable del territori (es:municipio:36038).",
@@ -679,6 +685,8 @@
       "geonames": "Identificador de GeoNames.",
       "official": "Nom oficial, tal com l'escriu la font («Coruña, A»).",
       "display": "Nom visible, amb l'article davant («A Coruña»).",
+      "display_source": "A entidades.csv, d'on surt el nom visible: manual (correcció revisada a mà), ign (nucli de l'IGN amb el mateix codi), ign_lugar (lloc de l'IGN dins de l'entitat), regla (regla de majúscules i articles, sense revisar) o derivado (disseminat, per la seva entitat singular).",
+      "display_ref": "A entidades.csv, la referència del nom visible: el lloc de l'IGN (ign:nuc/…, ign:opob/…), la font de la correcció a mà o, en un disseminat, la seva entitat singular.",
       "name_xx": "Nom que es mostra en aquest idioma (es, ca, gl, eu, oc, en).",
       "short_xx": "Nom curt en aquest idioma.",
       "population": "Població oficial de l'INE (padró a 1 de gener; la data és a manifiesto.json).",
@@ -850,7 +858,7 @@
         "eurostat_lau": "LAU, NUTS 3 i superfície",
         "wikidata": "noms per idioma, enllaços i identificadors",
         "catastro": "codi DGC de cada municipi",
-        "ign_poblaciones": "capital de cada municipi, amb coordenades i altitud",
+        "ign_poblaciones": "capital de cada municipi, amb coordenades i altitud, i grafia dels noms de les entitats de població",
         "ign_limites": "codi BDDAE i límits municipals",
         "madrid_direcciones": "codis postals del municipi de Madrid",
         "icgc_direcciones": "codis postals de Catalunya",
@@ -866,6 +874,7 @@
         "fuentes.json": "URL, llicència i atribució de cada font",
         "comunidades.csv": "comunitats: nom, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "noms de les comunitats en cada idioma",
+        "nombres-entidades.csv": "noms d'entitats de població corregits a mà",
         "provincias.csv": "províncies: ISO 3166-2 i NUTS 3",
         "islas.csv": "Wikidata i NUTS 3 de cada illa",
         "comarcas.csv": "comarques: tipus, nom i codis",
@@ -949,7 +958,7 @@
       "manifiesto.json": "Fontes usadas (enderezo, pegada SHA-256, data e licenza) e pegada de cada ficheiro.",
       "codigos-postales.csv": "Códigos postais: unha fila por código e concello, coa fonte que decide nese concello, o seu reconto e as demais fontes que o teñen. Un código pode abranguer varios concellos.",
       "codigos-postales-fuentes.csv": "O que di cada fonte de códigos postais: unha fila por código, concello e fonte, tamén os pares que non se publican. Serve para contrastar e para reclamar.",
-      "entidades.csv": "Entidades de poboación do rueiro do INE: entidades colectivas (as parroquias de Galicia e Asturias…), entidades singulares, núcleos e diseminados. Unha fila por entidade, co seu identificador, o seu código do INE e o seu nome tal como o escribe o INE; o nivel e o pai saen do código. A biblioteca só as carga se se piden."
+      "entidades.csv": "Entidades de poboación do rueiro do INE: entidades colectivas (as parroquias de Galicia e Asturias…), entidades singulares, núcleos e diseminados. Unha fila por entidade, co seu identificador, o seu código do INE e o seu nome tal como o escribe o INE; o nivel e o pai saen do código. Tamén o nome que se mostra, coa súa procedencia: unha corrección revisada a man, a grafía do IGN ou unha regra de maiúsculas e artigos. A biblioteca só as carga se se piden."
     },
     "columns": {
       "id": "Identificador estable do territorio (es:municipio:36038).",
@@ -981,6 +990,8 @@
       "geonames": "Identificador de GeoNames.",
       "official": "Nome oficial, tal como o escribe a fonte («Coruña, A»).",
       "display": "Nome visible, co artigo diante («A Coruña»).",
+      "display_source": "En entidades.csv, de onde sae o nome visible: manual (corrección revisada a man), ign (núcleo do IGN co mesmo código), ign_lugar (lugar do IGN dentro da entidade), regla (regra de maiúsculas e artigos, sen revisar) ou derivado (diseminado, pola súa entidade singular).",
+      "display_ref": "En entidades.csv, a referencia do nome visible: o lugar do IGN (ign:nuc/…, ign:opob/…), a fonte da corrección a man ou, nun diseminado, a súa entidade singular.",
       "name_xx": "Nome que se mostra nese idioma (es, ca, gl, eu, oc, en).",
       "short_xx": "Nome curto nese idioma.",
       "population": "Poboación oficial do INE (padrón a 1 de xaneiro; a data está en manifiesto.json).",
@@ -1152,7 +1163,7 @@
         "eurostat_lau": "LAU, NUTS 3 e superficie",
         "wikidata": "nomes por idioma, ligazóns e identificadores",
         "catastro": "código DGC de cada concello",
-        "ign_poblaciones": "capital de cada concello, con coordenadas e altitude",
+        "ign_poblaciones": "capital de cada concello, con coordenadas e altitude, e grafía dos nomes das entidades de poboación",
         "ign_limites": "código BDDAE e límites municipais",
         "madrid_direcciones": "códigos postais do concello de Madrid",
         "icgc_direcciones": "códigos postais de Cataluña",
@@ -1168,6 +1179,7 @@
         "fuentes.json": "URL, licenza e atribución de cada fonte",
         "comunidades.csv": "comunidades: nome, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "nomes das comunidades en cada idioma",
+        "nombres-entidades.csv": "nomes de entidades de poboación corrixidos a man",
         "provincias.csv": "provincias: ISO 3166-2 e NUTS 3",
         "islas.csv": "Wikidata e NUTS 3 de cada illa",
         "comarcas.csv": "comarcas: tipo, nome e códigos",
@@ -1251,7 +1263,7 @@
       "manifiesto.json": "Erabilitako iturriak (helbidea, SHA-256 aztarna, data eta lizentzia) eta fitxategi bakoitzaren aztarna.",
       "codigos-postales.csv": "Posta-kodeak: lerro bat kode eta udalerri bakoitzeko, udalerri horretan erabakitzen duen iturriarekin, haren zenbaketarekin eta hura duten beste iturriekin. Kode batek hainbat udalerri har ditzake.",
       "codigos-postales-fuentes.csv": "Iturri bakoitzak posta-kodeei buruz dioena: lerro bat kode, udalerri eta iturri bakoitzeko, argitaratzen ez diren bikoteak barne. Egiaztatzeko eta erreklamatzeko balio du.",
-      "entidades.csv": "INEren kale-izendegiko biztanle-entitateak: entitate kolektiboak (Galiziako eta Asturiasko parrokiak…), entitate singularrak, guneak eta sakabanatuak. Lerro bat entitate bakoitzeko, bere identifikatzailearekin, INEren kodearekin eta INEk idazten duen izenarekin; maila eta gurasoa kodetik ateratzen dira. Liburutegiak eskatzen bada bakarrik kargatzen ditu."
+      "entidades.csv": "INEren kale-izendegiko biztanle-entitateak: entitate kolektiboak (Galiziako eta Asturiasko parrokiak…), entitate singularrak, guneak eta sakabanatuak. Lerro bat entitate bakoitzeko, bere identifikatzailearekin, INEren kodearekin eta INEk idazten duen izenarekin; maila eta gurasoa kodetik ateratzen dira. Erakusten den izena ere bai, bere jatorriarekin: eskuz berrikusitako zuzenketa, IGNren idazkera edo maiuskula eta artikuluen arau bat. Liburutegiak eskatzen bada bakarrik kargatzen ditu."
     },
     "columns": {
       "id": "Lurraldearen identifikatzaile egonkorra (es:municipio:36038).",
@@ -1283,6 +1295,8 @@
       "geonames": "GeoNamesen identifikatzailea.",
       "official": "Izen ofiziala, iturriak idazten duen bezala («Coruña, A»).",
       "display": "Izen ikusgaia, artikulua aurrean duela («A Coruña»).",
+      "display_source": "entidades.csv fitxategian, izen ikusgaiaren jatorria: manual (eskuz berrikusitako zuzenketa), ign (kode bera duen IGNren gunea), ign_lugar (entitatearen barruko IGNren lekua), regla (maiuskula eta artikuluen araua, berrikusi gabe) edo derivado (sakabanatua, bere entitate singularretik).",
+      "display_ref": "entidades.csv fitxategian, izen ikusgaiaren erreferentzia: IGNren lekua (ign:nuc/…, ign:opob/…), eskuzko zuzenketaren iturria edo, sakabanatu batean, bere entitate singularra.",
       "name_xx": "Hizkuntza horretan erakusten den izena (es, ca, gl, eu, oc, en).",
       "short_xx": "Izen laburra hizkuntza horretan.",
       "population": "INEren biztanleria ofiziala (urtarrilaren 1eko errolda; data manifiesto.json fitxategian dago).",
@@ -1454,7 +1468,7 @@
         "eurostat_lau": "LAU, NUTS 3 eta azalera",
         "wikidata": "izenak hizkuntzaka, estekak eta identifikatzaileak",
         "catastro": "udalerri bakoitzaren DGC kodea",
-        "ign_poblaciones": "udalerri bakoitzaren hiriburua, koordenatu eta altitudearekin",
+        "ign_poblaciones": "udalerri bakoitzaren hiriburua, koordenatu eta altitudearekin, eta biztanle-entitateen izenen idazkera",
         "ign_limites": "BDDAE kodea eta udal-mugak",
         "madrid_direcciones": "Madrilgo udalerriko posta-kodeak",
         "icgc_direcciones": "Kataluniako posta-kodeak",
@@ -1470,6 +1484,7 @@
         "fuentes.json": "iturri bakoitzaren URLa, lizentzia eta aitortza",
         "comunidades.csv": "erkidegoak: izena, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "erkidegoen izenak hizkuntza bakoitzean",
+        "nombres-entidades.csv": "eskuz zuzendutako biztanle-entitateen izenak",
         "provincias.csv": "probintziak: ISO 3166-2 eta NUTS 3",
         "islas.csv": "uharte bakoitzaren Wikidata eta NUTS 3",
         "comarcas.csv": "eskualdeak: mota, izena eta kodeak",
@@ -1553,7 +1568,7 @@
       "manifiesto.json": "Hònts utilizades (adreça, emprenta SHA-256, data e licéncia) e emprenta de cada fichièr.",
       "codigos-postales.csv": "Còdis postaus: ua linha per còdi e municipi, damb era hònt que decidís en aguest municipi, eth sòn compde e es autes hònts que l'an. Un còdi pòt cubrir diuèrsi municipis.",
       "codigos-postales-fuentes.csv": "Çò que ditz cada hònt de còdis postaus: ua linha per còdi, municipi e hònt, tanben es parelhs que non se publiquen. Servís entà contrastar e entà reclamar.",
-      "entidades.csv": "Entitats de poblacion deth carrerèr der INE: entitats collectives (es parròquies de Galícia e Astúries…), entitats singulars, nuclèus e disseminats. Ua linha per entitat, damb eth sòn identificador, eth sòn còdi der INE e eth sòn nom tau coma l'escriu er INE; eth nivèu e eth pair gessen deth còdi. Era bibliotèca les carga solament se se demanen."
+      "entidades.csv": "Entitats de poblacion deth carrerèr der INE: entitats collectives (es parròquies de Galícia e Astúries…), entitats singulars, nuclèus e disseminats. Ua linha per entitat, damb eth sòn identificador, eth sòn còdi der INE e eth sòn nom tau coma l'escriu er INE; eth nivèu e eth pair gessen deth còdi. Tanben eth nom que se mòstre, damb era sua procedéncia: ua correccion revisada a man, era grafia der IGN o ua règla de majuscules e articles. Era bibliotèca les carga solament se se demanen."
     },
     "columns": {
       "id": "Identificador estable deth territòri (es:municipio:36038).",
@@ -1585,6 +1600,8 @@
       "geonames": "Identificador de GeoNames.",
       "official": "Nom oficiau, tau coma l'escriu era hònt («Coruña, A»).",
       "display": "Nom visible, damb er article davant («A Coruña»).",
+      "display_source": "En entidades.csv, d'a on ges eth nom visible: manual (correccion revisada a man), ign (nuclèu der IGN damb eth madeish còdi), ign_lugar (lòc der IGN laguens dera entitat), regla (règla de majuscules e articles, sense revisar) o derivado (disseminat, per sa entitat singular).",
+      "display_ref": "En entidades.csv, era referéncia deth nom visible: eth lòc der IGN (ign:nuc/…, ign:opob/…), era hont dera correccion a man o, en un disseminat, era sua entitat singular.",
       "name_xx": "Nom que se mòstre en aguesta lengua (es, ca, gl, eu, oc, en).",
       "short_xx": "Nom cort en aguesta lengua.",
       "population": "Poblacion oficiau der INE (padron a 1 de gèr; era data ei en manifiesto.json).",
@@ -1756,7 +1773,7 @@
         "eurostat_lau": "LAU, NUTS 3 e superfícia",
         "wikidata": "noms per lengua, ligams e identificadors",
         "catastro": "còdi DGC de cada municipi",
-        "ign_poblaciones": "capitau de cada municipi, damb coordenades e altitud",
+        "ign_poblaciones": "capitau de cada municipi, damb coordenades e altitud, e grafia des noms des entitats de poblacion",
         "ign_limites": "còdi BDDAE e limits municipaus",
         "madrid_direcciones": "còdis postaus deth municipi de Madrid",
         "icgc_direcciones": "còdis postaus de Catalonha",
@@ -1772,6 +1789,7 @@
         "fuentes.json": "URL, licéncia e atribucion de cada hònt",
         "comunidades.csv": "comunitats: nom, ISO 3166-2, NUTS 2",
         "nombres-comunidades.csv": "noms des comunitats en cada lengua",
+        "nombres-entidades.csv": "noms d'entitats de poblacion corregits a man",
         "provincias.csv": "províncies: ISO 3166-2 e NUTS 3",
         "islas.csv": "Wikidata e NUTS 3 de cada isla",
         "comarcas.csv": "comarques: tipe, nom e còdis",

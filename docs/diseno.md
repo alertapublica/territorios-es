@@ -130,7 +130,7 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   de Galicia, la Comunitat Valenciana o Asturias, que son estadísticas o de planificación, quedan
   fuera; si se añaden, irán con otro tipo. `search` y `mentions` no las devuelven salvo que se
   pidan en `levels`, porque solo existen en cuatro comunidades y alguna se llama como un municipio.
-- **Entidades de población** (issue #31; la lectura y la carga, desde #43; lo demás, en preparación): las unidades poblacionales del INE, del
+- **Entidades de población** (issue #31; la lectura y la carga, desde #43; los nombres para mostrar, desde #44; lo demás, en preparación): las unidades poblacionales del INE, del
   fichero de unidades (`UP`) del callejero del censo electoral, el mismo ZIP que ya se lee para los
   códigos postales. Cuatro niveles: `collective_entity` (entidad colectiva: las parroquias de
   Galicia y Asturias, las diputaciones de Murcia…, solo donde existen), `singular_entity`, `nucleus`
@@ -141,8 +141,9 @@ Los proyectos parecidos que ya existen, en España y en la UE, se repasan en el 
   registros, así que no van en `territorios.json`, sino en un fichero aparte con su cargador
   (`load_entities`; en JS, `loadEntities` en Node o `createCatalog(datos, { entities })` en el
   navegador), que amplía el catálogo solo si se pide. Es `datos/entidades.csv`, que va en los
-  paquetes: unos 7 MB (1 MB comprimido), con el identificador, el código de 12 cifras y el nombre del
-  INE; el nivel y el padre salen del código. Se regenera cada mes con los demás datos, desde la
+  paquetes: unos 13 MB (2,4 MB comprimido), con el identificador, el código de 12 cifras, el nombre del
+  INE y el nombre que se muestra con su procedencia y su referencia (§4.3); el nivel y el padre salen
+  del código. Se regenera cada mes con los demás datos, desde la
   edición más reciente del callejero, así que nunca apunta a un municipio que ya no existe; lo que
   no se puede publicar (municipio desconocido, sin nombre, sin su entidad padre) va al informe.
   Identificador `es:entidad:` y las 11 cifras del INE (provincia, municipio,
@@ -225,8 +226,33 @@ fuente y del idioma, que no se aplica a ciegas a otros textos (vías, parajes, o
 nombre lleva su procedencia y si está revisado (#40). Un diccionario de tildes solo propone
 correcciones para revisar. Si el IGN da otro nombre («Santiago» frente a «SANTIAGO DE CUDEYO»), va
 al informe como discrepancia, no como alias. Un diseminado se muestra con una etiqueta derivada del
-nombre de su entidad singular («Diseminado de A Devesa»). Mientras no esté esta capa (#44),
-`display` es el literal del INE con el artículo delante («A DEVESA») y `names.reviewed` es falso.
+nombre de su entidad singular («Diseminado de A Devesa»), en castellano.
+
+Así se hace (#44), en el generador (`generador/entidades.py`), no en la librería, que solo lee:
+
+- **Corrección a mano**: `fuentes/nombres-entidades.csv`, con el identificador, el literal del INE que
+  se espera, el nombre, la fuente y la fecha. Es la única procedencia revisada (`reviewed`). Si el
+  INE escribe otra cosa, o la entidad ya no está, no se aplica y sale en el informe.
+- **IGN**: «mismo nombre» es igual salvo mayúsculas y tildes, con el artículo delante; la ñ, la ç y
+  el artículo cuentan («PEÑA» no es «Pena»). Para un núcleo, el núcleo del IGN (`nuc`) con el mismo
+  código (`ign`) u otro lugar con ese código (`ign_lugar`). Para una singular, un lugar de población
+  del IGN dentro de ella: ella, sus núcleos o su diseminado (las 9 primeras cifras); para una
+  colectiva, uno de su parroquia (las 7). Son lugares de población los de `nuc` y los de `opob` de
+  tipo OPOB, NUCL, BARR y URBA; las instalaciones (minas, dotaciones…) no. Si hay varias grafías,
+  gana la del núcleo del IGN; si no, la regla, y el caso va al informe. Los lugares que el IGN solo
+  asigna al municipio no son «de esa entidad»: su nombre va al informe como propuesta. La primera
+  letra va en mayúscula aunque el IGN escriba el artículo catalán en minúscula («les Cases Noves»),
+  como en los municipios. `display_ref` guarda el lugar (`ign:nuc/…`, `ign:opob/…`).
+- **Regla**: mayúsculas y artículos sobre el literal del INE, con las palabras que van en minúscula
+  de cada idioma, que sale de la provincia (gallego, catalán, euskera, asturiano; castellano en todas).
+  El artículo entre paréntesis pasa delante, también si le sigue otro paréntesis («ERMO (O) (SAN
+  XULIAN)» → «O Ermo (San Xulian)»); las colectivas conservan su forma («Burres (San Vicente)»); no
+  pone tildes. Cada mes, el resumen del informe da su acierto frente a los núcleos que el IGN escribe
+  igual: exacto y sin contar tildes, en total y por idioma.
+- **Informe**: otro nombre en el núcleo del IGN con el mismo código (discrepancia, nunca alias),
+  varias grafías, propuestas de lugares del municipio, tildes que propone el IGN (palabras que el IGN
+  escribe siempre igual en la provincia, al menos tres veces) y correcciones que hay que revisar. Como
+  son miles, `generar.yml` guarda además `informe-completo.md`, sin recortar.
 
 ### 4.4 Qué nombre se muestra en cada idioma
 
@@ -245,7 +271,9 @@ Los datos guardan todos los nombres; esta es la regla por defecto de `name(id, l
 - **Punto de referencia del municipio** (su capital): el núcleo de población que el IGN marca como
   capital del municipio en su API de entidades (colección `nuc`, producto IGR Poblaciones, CC BY
   4.0), con longitud, latitud y altitud. Algunas capitales no son núcleos para el INE: están en la
-  colección `opob` del mismo producto, de la que se leen solo las marcadas como capital municipal. Se contrasta con los límites: una capital fuera de su
+  colección `opob` del mismo producto, que se lee entera para los nombres de las entidades (§4.3).
+  `capital.ign` es el lugar del IGN (`ign:nuc/…`, `ign:opob/…`) y `capital.entity`, por separado, la
+  entidad de población con ese código, si el callejero la tiene; si no, va al informe. Se contrasta con los límites: una capital fuera de su
   término va al informe. El Nomenclátor de Municipios y Entidades de Población traería lo mismo,
   pero su descarga exige un formulario con firma del navegador; si el CNIG da un enlace directo,
   se puede cambiar de fuente.
@@ -534,7 +562,9 @@ Tomada el 12 de noviembre de 2026, con una revisión independiente de Codex:
     ediciones; códigos postales por entidad; Wikidata y alias. Las entidades locales menores del
     Registro de Entidades Locales van aparte. Lo que se publique tiene que quedar enlazado con el
     municipio y con lo que cuelga de él. El fichero, `datos/entidades.csv`, va en los paquetes
-    (unos 7 MB, 1 MB comprimido) y se genera cada mes con los demás datos (#43).
+    (unos 13 MB, 2,4 MB comprimido) y se genera cada mes con los demás datos (#43). El nombre que se
+    muestra sale de una corrección a mano, del IGN o de una regla, y lleva su procedencia y su
+    referencia; la colección `opob` del IGN se descarga entera cada mes (#44).
 
 ## 13. Comprobaciones de las fuentes
 
@@ -662,18 +692,25 @@ Comprobado el 12 de noviembre de 2026:
   El INE no publica una relación de variaciones de entidades; su metodología solo dice que los
   núcleos se recodificaron en 1991 por orden alfabético dentro de cada entidad singular.
 - **IGN, poblaciones**: la colección `nuc` (37.497 núcleos) trae el nombre bien escrito y
-  `habitantes`; 37.458 casan con núcleos del callejero por código, y en unos 3.800 el nombre es otro
-  de verdad («Villacalbiel» frente a «VILLACALVIEL»). La colección `opob` tiene 144.110 «otras
-  poblaciones» con el código de la unidad a la que pertenecen: 73.834 de un diseminado y 55.881 de
-  una entidad singular. Por código y mismo nombre, `nuc` y `opob` dan la grafía del 81 % de las
-  entidades singulares; Wikidata, otro 2 %. 31 capitales municipales del catálogo apuntan a un
-  diseminado y 25 a una entidad singular, no a un núcleo.
+  `habitantes`; 37.458 casan con núcleos del callejero por código: 33.506 con el mismo nombre (salvo
+  mayúsculas y tildes) y 3.952 con otro de verdad («Villacalbiel» frente a «VILLACALVIEL»;
+  «Laguardia/Biasteri» frente a «LAGUARDIA»). La colección `opob` tiene 144.110 «otras poblaciones»
+  con el código de la unidad a la que pertenecen: 73.814 de un diseminado, 14.393 de un núcleo, 8.428
+  de una colectiva, 836 de una singular y 46.612 solo del municipio; 133.164 son de población y el
+  resto, instalaciones. Cada lugar tiene su identificador. Sin `opob`, el IGN da la grafía del 48 % de
+  las singulares; con él, del 82 % (un 1,5 % más solo por lugares del municipio, que no cuentan),
+  del 89 % de los núcleos y del 14 % de las colectivas. En el INE hay tres pares de entidades de un
+  mismo municipio que solo difieren en tildes («AUGUERA» y «AUGÜERA»). De las capitales, 8.047 son
+  núcleos, 31 diseminados, 6 singulares y una colectiva (en San Sadurniño, una calle); 20 tienen
+  solo el código del municipio.
 - **Wikidata**: P772 de 11 cifras en unos 29.000 elementos, con etiqueta en castellano en 25.080
   códigos; tiene casi todas las colectivas, pero con otra forma («San Vicente de Burres» frente a
   «BURRES (SAN VICENTE)»). El servicio de consultas limitaba ese día a una consulta por minuto.
-- **Una regla de mayúsculas y artículos** sobre el nombre del INE da la grafía del IGN, sin contar
-  mayúsculas, en el 76 % de los núcleos que casan por código; con un diccionario de tildes sacado de
-  `opob` y Wikidata, en el 82 %, pero estropea 74 que la regla sola acertaba. Casi todos los fallos
-  son tildes que el INE no escribe.
+- **Una regla de mayúsculas y artículos** sobre el nombre del INE, con las palabras en minúscula de
+  cada idioma, da exactamente la grafía del IGN (con la inicial en mayúscula) en el 84 % de los 33.506
+  núcleos con el mismo nombre, y en el 99,5 % sin contar tildes (del 98,4 % en catalán al 99,9 % en
+  euskera). Casi todos los fallos son tildes que el INE no escribe. Un diccionario de tildes sacado
+  de `opob` subiría el acierto exacto al 86–88 %, pero estropea de 21 a 97 nombres que la regla sola
+  acertaba: solo propone. La muestra son núcleos ya enlazados; no mide el acierto en las colectivas.
 - **Catastro**: no usa los códigos de entidad del INE. Una rústica da polígono, parcela y paraje;
   un lugar es una vía de tipo `LG` o `DS` («LG CENDONA-LEREZ 14 36156 PONTEVEDRA»).

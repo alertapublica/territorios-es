@@ -96,7 +96,14 @@ class EntityCases(unittest.TestCase):
     def test_records_and_links(self):
         record = ENTITIES.territory("es:entidad:36038010101")
         self.assertEqual(record["codes"], {"ine:entidad": "36038010101", "ine:entidad:dc": "360380101601"})
-        self.assertEqual(record["names"], {"official": "DEVESA (A)", "display": "A DEVESA", "reviewed": False})
+        # The IGN núcleo with this code is called otherwise («A Devesa de Alba»): the rule, not reviewed.
+        self.assertEqual(record["names"], {"official": "DEVESA (A)", "display": "A Devesa", "reviewed": False,
+                                           "source": "regla"})
+        self.assertEqual(ENTITIES.territory("es:entidad:36038010100")["names"],
+                         {"official": "DEVESA (A)", "display": "A Devesa", "reviewed": False, "source": "ign_lugar",
+                          "ref": "ign:opob/10"})
+        self.assertEqual(ENTITIES.name("es:entidad:33031030299"), "Diseminado de La Talaya")
+        self.assertEqual(ENTITIES.territory("es:entidad:08101000101")["names"]["display"], "L'Hospitalet de Llobregat")
         self.assertEqual((record["municipality"], record["collective_entity"]),
                          ("es:municipio:36038", "es:entidad:36038010000"))
         self.assertNotIn("collective_entity", ENTITIES.territory("es:entidad:36038000101"))
@@ -118,13 +125,19 @@ class EntityCases(unittest.TestCase):
         data = json.loads((ROOT / "pruebas" / "datos" / "territorios.json").read_text(encoding="utf-8"))
         good = (ROOT / "pruebas" / "datos" / "entidades.csv").read_text(encoding="utf-8")
         Catalog(data, good)
+        reviewed = Catalog(data, good.replace("ALBA,Alba,regla,", "ALBA,Santa María de Alba,manual,rag"))
+        self.assertEqual(reviewed.territory("es:entidad:36038010000")["names"],
+                         {"official": "ALBA", "display": "Santa María de Alba", "reviewed": True, "source": "manual", "ref": "rag"})
         for bad in ("id,ine,official\n",
-                    good + "es:entidad:36017151100,360171511700,DEVESA (A)\n",  # unknown municipality
-                    good + "es:entidad:36038020100,360380201600,SIN PARROQUIA\n",  # missing collective
-                    good + "es:entidad:x,360380101601,DEVESA (A)\n",  # repeated code
-                    good + "es:entidad:36038000000,360380000000,MUNICIPIO\n",  # not an entity
-                    good + "es:entidad:36038010102,3603801016,CORTO\n",
-                    good + "es:entidad:36038010102,360380101602,\n"):
+                    good + "es:entidad:36017151100,360171511700,DEVESA (A),A Devesa,regla,\n",  # unknown municipality
+                    good + "es:entidad:36038020100,360380201600,SIN PARROQUIA,Sin Parroquia,regla,\n",  # missing collective
+                    good + "es:entidad:x,360380101601,DEVESA (A),A Devesa,regla,\n",  # repeated code
+                    good + "es:entidad:36038000000,360380000000,MUNICIPIO,Municipio,regla,\n",  # not an entity
+                    good + "es:entidad:36038010102,3603801016,CORTO,Corto,regla,\n",
+                    good + "es:entidad:36038010102,360380101602,,X,regla,\n",
+                    good + "es:entidad:36038010102,360380101602,X,,regla,\n",  # no name to show
+                    good + "es:entidad:36038010102,360380101602,X,X,otra,\n",  # unknown source
+                    good + "es:entidad:36038010102,360380101602,X\n"):
             self.assertRaises(ValueError, Catalog, data, bad)
 
 

@@ -18,7 +18,9 @@
 - Municipios con zona de aviso: 31
 - Comarcas: 6
 - Municipios con comarca: 7
-- entidades de población: 3 colectivas, 5 singulares, 3 núcleos, 2 diseminados
+- entidades de población: 3 colectivas, 6 singulares, 4 núcleos, 2 diseminados
+- nombres de entidades: 2 derivado, 3 ign, 5 ign_lugar, 5 regla
+- regla de mayúsculas de las entidades: 100,0 % exacta y 100,0 % sin contar tildes, frente a 3 núcleos del IGN (con la inicial en mayúscula); sin tildes, por idioma: ca 100,0 % de 1, gl 100,0 % de 2
 
 ## Catastro (22)
 
@@ -67,6 +69,18 @@
 - 360171511700 DEVESA (A): el municipio 36017 no está en el catálogo
 - 360380101600: código repetido
 
+## Entidades de población: nombre que propone un lugar del municipio (1)
+
+- es:entidad:36008030700 «A Devesa»: «A Devesa» (ign:opob/15)
+
+## Entidades de población: otro nombre en el IGN (1)
+
+- es:entidad:36038010101 «DEVESA (A)»: «A Devesa de Alba» (ign:nuc/3)
+
+## Entidades de población: varias grafías en el IGN (1)
+
+- es:entidad:33031030000 «FELGUERA (LA)»: «La Felguera», «La Félguera»
+
 ## Eurostat LAU (3)
 
 - 99998 «LAU inexistente» no está en el INE
@@ -77,6 +91,11 @@
 
 - es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite
 - es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite
+
+## IGN: capital sin entidad del INE (2)
+
+- es:municipio:15030: «A Coruña» (15030000101)
+- es:municipio:28079: «Madrid» (28079000101)
 
 ## IGN: capitales (31)
 
