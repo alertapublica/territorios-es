@@ -4,7 +4,7 @@ Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fu
 
 | **12.834** | **9 de 9** | **8.132** | **25** | **14.054** |
 |:---:|:---:|:---:|:---:|:---:|
-| territorios | niveles con datos | municipios | fuentes · descarga 2026-11-12 | pares código postal–municipio |
+| territorios | niveles con datos | municipios | fuentes · descarga 2026-11-13 | pares código postal–municipio |
 
 **Índice**: [Territorios](#territorios) · [Cobertura](#cobertura) · [Por comunidad](#por-comunidad) · [Repositorio](#repositorio) · [Fuentes](#fuentes) · [Ficheros](#ficheros) · [Librería](#librería)
 
@@ -311,23 +311,23 @@ flowchart LR
 
 | Fuente | Organismo | Lector | Aporta | Descargada |
 |---|---|---|---|---|
-| `ine_municipios` | INE | `generador/ine.py` | códigos y nombres oficiales de los municipios | 2026-11-12 |
-| `ine_islas` | INE | `generador/ine.py` | islas y sus municipios | 2026-11-12 |
-| `ine_cambios` | INE | `generador/ine.py` | cambios de nombre del año | 2026-11-12 |
-| `ine_provincias` | INE | `generador/ine.py` | provincias y comunidades | 2026-11-12 |
-| `ine_poblacion` | INE | `generador/ine.py` | población oficial | 2026-11-12 |
-| `mjusticia_censo_judicial` | Justicia | `generador/justicia.py` | partido judicial de cada municipio y su sede | 2026-11-12 |
-| `aemet_municipios` | AEMET | `generador/aemet.py` | zona de aviso de cada municipio | 2026-11-12 |
-| `aemet_zonas` | AEMET | `generador/aemet.py` | nombre de cada zona de aviso | 2026-11-12 |
-| `idescat_comarcas` | Idescat | `generador/comarcas.py` | comarca de cada municipio de Cataluña | 2026-11-12 |
-| `aragon_comarcas` | Aragón | `generador/comarcas.py` | comarca de cada municipio de Aragón | 2026-11-12 |
-| `rel_comarcas` | REL | `fuentes/` | comarcas que son entidad local; cuadrillas de Álava y El Bierzo (exportación revisada a mano) | aún no |
-| `rel_eatim` | REL | `fuentes/` | entidades locales menores, con su municipio y su tipo (exportación revisada a mano) | aún no |
-| `eurostat_lau` | Eurostat | `generador/eurostat.py` | LAU, NUTS 3 y superficie | 2026-11-12 |
-| `wikidata` | Wikidata | `generador/wikidata.py` | nombres por idioma, enlaces e identificadores | 2026-11-12 |
-| `catastro` | Catastro | `generador/catastro.py` | código DGC de cada municipio | 2026-11-12 |
-| `ign_poblaciones` | IGN | `generador/ign.py` | capital de cada municipio, con coordenadas y altitud | 2026-11-12 |
-| `ign_limites` | IGN | `generador/ign.py` | código BDDAE y límites municipales | 2026-11-12 |
+| `ine_municipios` | INE | `generador/ine.py` | códigos y nombres oficiales de los municipios | 2026-11-13 |
+| `ine_islas` | INE | `generador/ine.py` | islas y sus municipios | 2026-11-13 |
+| `ine_cambios` | INE | `generador/ine.py` | cambios de nombre del año | 2026-11-13 |
+| `ine_provincias` | INE | `generador/ine.py` | provincias y comunidades | 2026-11-13 |
+| `ine_poblacion` | INE | `generador/ine.py` | población oficial | 2026-11-13 |
+| `mjusticia_censo_judicial` | Justicia | `generador/justicia.py` | partido judicial de cada municipio y su sede | 2026-11-13 |
+| `aemet_municipios` | AEMET | `generador/aemet.py` | zona de aviso de cada municipio | 2026-11-13 |
+| `aemet_zonas` | AEMET | `generador/aemet.py` | nombre de cada zona de aviso | 2026-11-13 |
+| `idescat_comarcas` | Idescat | `generador/comarcas.py` | comarca de cada municipio de Cataluña | 2026-11-13 |
+| `aragon_comarcas` | Aragón | `generador/comarcas.py` | comarca de cada municipio de Aragón | 2026-11-13 |
+| `rel_comarcas` | REL | `fuentes/` | comarcas que son entidad local; cuadrillas de Álava y El Bierzo (exportación revisada a mano) | 2026-11-11 |
+| `rel_eatim` | REL | `fuentes/` | entidades locales menores, con su municipio y su tipo (exportación revisada a mano) | 2026-11-13 |
+| `eurostat_lau` | Eurostat | `generador/eurostat.py` | LAU, NUTS 3 y superficie | 2026-11-13 |
+| `wikidata` | Wikidata | `generador/wikidata.py` | nombres por idioma, enlaces e identificadores | 2026-11-13 |
+| `catastro` | Catastro | `generador/catastro.py` | código DGC de cada municipio | 2026-11-13 |
+| `ign_poblaciones` | IGN | `generador/ign.py` | capital de cada municipio, con coordenadas y altitud | 2026-11-13 |
+| `ign_limites` | IGN | `generador/ign.py` | código BDDAE y límites municipales | 2026-11-13 |
 | `madrid_direcciones` | Ayto. de Madrid | `generador/codigos_postales.py` | códigos postales del municipio de Madrid | 2026-11-11 |
 | `icgc_direcciones` | ICGC | `generador/codigos_postales.py` | códigos postales de Cataluña | 2026-11-11 |
 | `idena_direcciones` | IDENA | `generador/codigos_postales.py` | códigos postales de Navarra | 2026-11-11 |
@@ -352,7 +352,7 @@ flowchart LR
 | [`comunidades.csv`](../datos/comunidades.csv) | 19 | 5 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/comunidades) |
 | [`entidades-menores.csv`](../datos/entidades-menores.csv) | 3.674 | 677 KB | REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/entidades-menores) |
 | [`islas.csv`](../datos/islas.csv) | 11 | 2 KB | INE | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/islas) |
-| [`manifiesto.json`](../datos/manifiesto.json) |  | 22 KB |  | en datos/ |  |
+| [`manifiesto.json`](../datos/manifiesto.json) |  | 23 KB |  | en datos/ |  |
 | [`municipios.csv`](../datos/municipios.csv) | 8.132 | 2,3 MB | AEMET, Aragón, Catastro, Eurostat, IGN, INE, Idescat, Justicia, REL | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/municipios) |
 | [`nombres.csv`](../datos/nombres.csv) | 31.921 | 1,5 MB | INE, Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/nombres) |
 | [`paises.csv`](../datos/paises.csv) | 249 | 23 KB | Wikidata | en datos/ | [explorar](https://lite.datasette.io/?url=https%3A%2F%2Falertapublica.github.io%2Fterritorios-es%2Fdatos%2Fterritorios-es.db#/territorios-es/paises) |
