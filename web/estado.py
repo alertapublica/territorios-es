@@ -23,6 +23,11 @@ from html import escape
 from pathlib import Path
 from urllib.parse import quote
 
+try:
+    from . import cambios
+except ImportError:  # run as a script: python web/estado.py
+    import cambios
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = {"es": ROOT / "docs" / "estado.md", "en": ROOT / "docs" / "status.md"}
 REPO = "https://github.com/alertapublica/territorios-es"
@@ -110,8 +115,11 @@ STYLE = ["classDef done fill:#d8f0d8,stroke:#2e7d32,color:#173d17",
 PIE = ('%%{init: {"themeVariables": {' + ", ".join(f'"pie{n}": "{c}"' for n, c in enumerate(
     ["#4e8fd6", "#f2a33a", "#4cb08a", "#d98cb8", "#8cc8ef", "#e6794a", "#e8dc4a", "#b0b0b0"], 1))
        + ', "pieSectionTextColor": "#111111", "pieStrokeColor": "#ffffff", "pieOpacity": "1"}}}%%')
-TABS = {"summary": ["levels"], "coverage": ["coverage"], "communities": ["communities"], "repo": ["repo"],
-        "sources": ["sources"], "files": ["files"], "library": ["library"]}
+TABS = {"summary": ["levels"], "coverage": ["coverage"], "communities": ["communities"], "contrast": ["contrast"],
+        "changes": ["changes"],  # only on the website: it comes from the git history (web/cambios.py)
+        "repo": ["repo"], "sources": ["sources"], "files": ["files"], "library": ["library"]}
+FIELDS_SHOWN = 8  # columns named in the detail of a file in the changes tab; the rest are counted
+VALUE_SHOWN = 80  # characters of a value shown in a change
 MERMAID = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
 
 
@@ -248,14 +256,77 @@ def problems() -> list[str]:
     for path in sorted((ROOT / "datos").glob("*.*")):
         if path.suffix in (".csv", ".json") and path.name not in published:
             out.append(f"datos/{path.name} no se publica en la web (FILES de web/construir.py)")
+    for folder in (ROOT / "datos", ROOT / "pruebas" / "datos"):  # the changes tab compares rows by these keys
+        for path in sorted(folder.glob("*.csv")):
+            rows, key = _csv(path), cambios.key_of(path.name)
+            if rows and any(c not in rows[0] for c in key):
+                out.append(f"la clave de {path.name} en web/cambios.py nombra columnas que no tiene: {', '.join(key)}")
+            elif len({tuple(r[c] for c in key) for r in rows}) != len(rows):
+                out.append(f"la clave de {path.name} en web/cambios.py ({', '.join(key)}) se repite en "
+                           f"{path.relative_to(ROOT)}")
     return sorted(set(out))
 
 
 # Blocks: ("p", text) · ("mermaid", code) · ("table", header, aligns, rows) · ("details", summary, blocks)
+# (aligns: one letter per column, l left, r right, k left in one line, for codes and dates)
 # · ("list", items[, lang]). A diagram may carry an accessible title: ("mermaid", code, title). Text is Markdown with `code`, **bold** and [links]; a table cell may be ("bar", n, total).
 
-def collect(lang: str, datos: Path, html: bool = False):
-    """Cards and sections of the status page, from datos/ (the same numbers for Markdown and HTML)."""
+def _plain(value: str) -> str:
+    """A value of the data inside a line of text: no backticks or line breaks, and not too long."""
+    value = re.sub(r"\s+", " ", str(value)).replace("`", "'")
+    return value if len(value) <= VALUE_SHOWN else value[:VALUE_SHOWN - 1] + "…"
+
+
+def _changes(lang: str, history: dict) -> list:
+    """The changes tab: one row per generation of datos/, the detail of each one and since when each source has the
+    same footprint (web/cambios.py)."""
+    t = texts()[lang]["estado"]
+    rows, details = [], []
+    for g in history["generations"]:
+        label = f"#{g['pull']} {g['branch']}".strip() if g["pull"] else f"{g['commit'][:7]} {_plain(g['subject'])}"
+        link = (f"[#{g['pull']}]({REPO}/pull/{g['pull']}) {g['branch']}".strip() if g["pull"] else
+                f"[{g['commit'][:7]}]({REPO}/commit/{g['commit']}) {_plain(g['subject'])}")
+        files = g["files"]
+        rows.append([g["date"], link, ", ".join(f"`{Path(name).stem}`" for name in files) or t["only_manifest"],
+                     *[_num(sum(f[k] for f in files.values()), lang) if files else "" for k in ("added", "removed", "changed")]])
+        if not files:
+            continue
+        table, lists = [], []
+        for name, f in files.items():
+            notes = [t["new_file"]] if f["new"] else [t["gone_file"]] if f["gone"] else []
+            for key, columns in ((t["new_columns"], f["columns_added"]), (t["gone_columns"], f["columns_removed"])):
+                if columns:
+                    notes.append(f"{key}: " + ", ".join(f"`{c}`" for c in columns))
+            fields = sorted(f["fields"].items(), key=lambda x: -x[1])
+            notes += [f"`{c}` {_num(n, lang)}" for c, n in fields[:FIELDS_SHOWN]]
+            if len(fields) > FIELDS_SHOWN:
+                notes.append(t["and_more"].format(n=_num(len(fields) - FIELDS_SHOWN, lang)))
+            table.append([f"`{name}`", *[_num(f[k], lang) for k in ("added", "removed", "changed")], " · ".join(notes)])
+            if f["new"] or f["gone"] or not f["detail"]:
+                continue
+            items = []
+            for kind, key, *cell in f["detail"]:
+                key = "`" + _plain(" · ".join(key)) + "`"
+                items.append(f"{key} · `{cell[0]}`: «{_plain(cell[1])}» → «{_plain(cell[2])}»" if kind == "~" else
+                             f"{'+' if kind == '+' else '−'} {key}")
+            lists += [("p", f"**`{name}`**"), ("list", items)]
+        details.append(("details", f"{g['date']} · {label}",
+                        [("table", [t["file"], t["added"], t["removed"], t["changed"], t["detail"]], "krrrl", table)] + lists))
+    ages = []
+    for key, (org, _, _) in SOURCES.items():
+        seen = [v for k, v in history["sources"].items() if k == key or (key == "wikidata" and k.startswith("wikidata_"))]
+        ages.append([f"`{key}`", org, max((v["retrieved"] for v in seen), default="") or t["never"],
+                     max((v["since"] for v in seen), default=""),
+                     _num(max(v["changes"] for v in seen), lang) if seen else ""])
+    return [("p", t["changes_text"]),
+            ("table", [t["date"], t["change"], t["files_touched"], t["added"], t["removed"], t["changed"]], "kllrrr", rows),
+            *details, ("p", f"**{t['source_age']}**"), ("p", t["source_age_text"]),
+            ("table", [t["source"], t["org"], t["retrieved"], t["unchanged_since"], t["footprint_changes"]], "klkkr", ages)]
+
+
+def collect(lang: str, datos: Path, html: bool = False, history: dict | None = None):
+    """Cards and sections of the status page, from datos/ (the same numbers for Markdown and HTML). With the history
+    of web/cambios.py, also the changes section, which only the website carries."""
     t = texts()[lang]["estado"]
     repo = f"{REPO}/blob/main/" if html else "../"
     fixture = ROOT / "pruebas" / "datos"
@@ -360,6 +431,52 @@ def collect(lang: str, datos: Path, html: bool = False):
     sections["communities"] = [("table", [t["community"], t["municipalities"], t["population"],
                                           *[t[f"col_{c}"] for c in layers], t["with_cp"], t["cp_source"]],
                                 "lrr" + "r" * len(layers) + "rl", rows)]
+
+    # Contrast between sources
+    blocks = [("p", t["contrast_text"])]
+    if postal:
+        support = {}  # sources that give each published pair: the one that decides and those in "also"
+        for r in postal:
+            n = 1 + len((r.get("also") or "").split())
+            support[n] = support.get(n, 0) + 1
+        blocks += [("p", f"**{t['contrast_cp_support']}**"),
+                   ("table", [t["n_sources"], t["pairs"], "%", ""], "rrrl",
+                    [[str(n), _num(c, lang), _pct(c, len(postal), lang), ("bar", c, len(postal))]
+                     for n, c in sorted(support.items())])]
+    givers = {}
+    for r in _csv(datos / "codigos-postales-fuentes.csv"):
+        givers.setdefault((r["postal_code"], r["id"]), set()).add(r["source"])
+    if givers:
+        published = {(r["postal_code"], r["id"]) for r in postal}
+        stats = {}  # source: pairs, also in another source, only in this one, not published
+        for pair, who in givers.items():
+            for source in who:
+                s = stats.setdefault(source, [0, 0, 0, 0])
+                s[0] += 1
+                s[1 if len(who) > 1 else 2] += 1
+                s[3] += pair not in published
+        blocks += [("p", f"**{t['contrast_cp_sources']}**"),
+                   ("table", [t["source"], t["pairs"], t["also_other"], "%", "", t["only_here"], t["unpublished"]], "lrrrlrr",
+                    [[CP_SOURCES.get(k, k), _num(s[0], lang), _num(s[1], lang), _pct(s[1], s[0], lang), ("bar", s[1], s[0]),
+                      _num(s[2], lang), _num(s[3], lang)] for k, s in sorted(stats.items(), key=lambda x: -x[1][0])])]
+    for title, head, detail, name, group in (
+            (t["contrast_names"], t["names"], t["kinds"], "nombres.csv", lambda r: r["kind"].split(":")[0]),
+            (t["contrast_codes"], t["codes"], t["systems"], "codigos.csv", lambda r: r["system"])):
+        counted = {}
+        for r in _csv(datos / name):
+            groups = counted.setdefault(r["source"], {})
+            groups[group(r)] = groups.get(group(r), 0) + 1
+        total = sum(sum(groups.values()) for groups in counted.values())
+        if total:
+            blocks += [("p", f"**{title}**"),
+                       ("table", [t["source"], head, "%", "", detail], "krrll",
+                        [[f"`{source}`", _num(sum(groups.values()), lang), _pct(sum(groups.values()), total, lang),
+                          ("bar", sum(groups.values()), total),
+                          " · ".join(f"`{g}` {_num(n, lang)}" for g, n in sorted(groups.items(), key=lambda x: (-x[1], x[0])))]
+                         for source, groups in sorted(counted.items(), key=lambda x: (-sum(x[1].values()), x[0]))])]
+    sections["contrast"] = blocks
+    if history:
+        sections["changes"] = _changes(lang, history)
 
     # Repository
     code = ["flowchart TB",
@@ -509,7 +626,7 @@ def _md_inline_html(text: str) -> str:
 def markdown(lang: str, datos: Path) -> str:
     t = texts()[lang]["estado"]
     cards, sections = collect(lang, datos)
-    order = [s for tab in TABS.values() for s in tab]
+    order = [s for tab in TABS.values() for s in tab if s in sections]
     lines = [f"# {t['title']}", "", t["generated_md"].format(pages=PAGES, issues=ISSUES), "",
              "| " + " | ".join(f"**{value}**" for value, _ in cards) + " |",
              "|" + "|".join(":---:" for _ in cards) + "|",
@@ -575,7 +692,7 @@ pre.mermaid{background:none;text-align:center;margin:0}.tools{position:absolute;
 .tools button{font:inherit;min-width:2em;padding:.1em .4em;border:1px solid var(--line);border-radius:5px;background:var(--bg);
 color:var(--fg);cursor:pointer}.diagram:fullscreen{border:0;border-radius:0;overflow:hidden}
 .diagram:fullscreen .canvas{max-height:none;height:100vh}
-th.r,td.r{text-align:right;white-space:nowrap}
+th.r,td.r{text-align:right;white-space:nowrap}th.k,td.k{white-space:nowrap}td.k code{overflow-wrap:normal}
 .bar{display:inline-block;width:9rem;max-width:30vw;height:.65em;background:var(--line);border-radius:4px;overflow:hidden;
 vertical-align:middle}.bar i{display:block;height:100%;background:var(--accent)}
 details{margin:1em 0}summary{cursor:pointer;font-weight:600}"""
@@ -626,11 +743,14 @@ show(location.hash.slice(1));
 })();""" % MERMAID
 
 
-def page(lang: str, datos: Path) -> str:
-    """The status page of the website (<lang>/estado/), with tabs, in every language of the website."""
+def page(lang: str, datos: Path, history: dict | None = None) -> str:
+    """The status page of the website (<lang>/estado/), with tabs, in every language of the website. The changes tab
+    needs the history that web/cambios.py reads from git."""
     everything = texts()
     web, t = everything[lang], everything[lang]["estado"]
-    cards, sections = collect(lang, datos, html=True)
+    cards, sections = collect(lang, datos, html=True, history=history)
+    shown = {tab: [s for s in names if s in sections] for tab, names in TABS.items()}
+    shown = {tab: names for tab, names in shown.items() if names}
     tab_title = {"summary": t["summary_tab"], **{k: t["s_" + k] for k in TABS if k != "summary"}}
     langs = " · ".join(f'<a href="../../{c}/estado/" hreflang="{c}" lang="{c}"' + (' aria-current="page"' if c == lang else "")
                        + f">{escape(other['language_name'])}</a>" for c, other in everything.items())
@@ -638,10 +758,10 @@ def page(lang: str, datos: Path) -> str:
            f'<a href="{REPO}">GitHub</a><span class="langs">{langs}</span></nav>')
     review = f'<p class="note">{escape(web["review"])}</p>' if web.get("review") else ""
     panels = []
-    for tab, names in TABS.items():
+    for tab, names in shown.items():
         body = "".join(f"<h2>{escape(t['s_' + s])}</h2>{_html_blocks(sections[s], lang)}" for s in names)
         panels.append(f'<section class="panel" id="tab-{_anchor(tab_title[tab])}" aria-label="{escape(tab_title[tab])}">{body}</section>')
-    tabs = "".join(f'<a href="#{_anchor(tab_title[tab])}">{escape(tab_title[tab])}</a>' for tab in TABS)
+    tabs = "".join(f'<a href="#{_anchor(tab_title[tab])}">{escape(tab_title[tab])}</a>' for tab in shown)
     card_html = "".join(f"<div class=\"card\"><b>{escape(v)}</b><span>{_inline(label)}</span></div>" for v, label in cards)
     alternates = "".join(f'<link rel="alternate" hreflang="{c}" href="../../{c}/estado/">' for c in everything)
     return (f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'

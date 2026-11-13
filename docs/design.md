@@ -403,6 +403,17 @@ GitHub renders: CI checks they are up to date and the data workflows regenerate 
 If a source, module, workflow, level or column appears that is not on its map, or the map names
 something that no longer exists, the check fails.
 
+The status page also has two tabs about the sources and time. "Cross-check" counts, on the published
+data, how many sources give each pair of postal code and municipality, what each one brings (and what
+only it says or is not published) and which source gives each name and each code. "Changes" compares
+every generation of `datos/` with the previous one, row by row and with one key per file
+(`web/cambios.py`): rows added, removed and changed and new columns, with the detail when they are
+few, and since when each source has had the same footprint. A generation is a change of `datos/` that
+reaches `main`, so it comes from the git history and is only on the website, not in `docs/status.md`.
+Everything that is published goes through git; the originals of each source are not kept, and their
+footprint and the date they were read stay in the manifest. A published file with these changes is
+left for later.
+
 ## 9. Ready for the EU
 
 The first version is Spain only, but nothing prevents extending it:
