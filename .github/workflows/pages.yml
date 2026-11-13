@@ -27,6 +27,8 @@ jobs:
         with:
           # El commit que pasó la CI, no el último de main.
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          # Con todo el historial: la pestaña de cambios compara las generaciones de datos/ (web/cambios.py).
+          fetch-depth: 0
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"

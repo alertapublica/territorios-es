@@ -182,7 +182,8 @@ def chooser(texts: dict) -> str:
             f'<ul>{links}</ul></nav></main></body></html>\n')
 
 
-def build(out: Path, datos: Path | None):
+def build(out: Path, datos: Path | None, history: dict | None = None):
+    """history: the generations of datos/ in git (estado.cambios.history), for the changes tab of the status page."""
     texts = json.loads((ROOT / "web" / "textos.json").read_text(encoding="utf-8"))
     if datos and not (datos / "manifiesto.json").exists():
         datos = None
@@ -202,7 +203,7 @@ def build(out: Path, datos: Path | None):
         database(out / "datos" / estado.DATABASE, datos)
         for lang in texts:
             (out / lang / "estado").mkdir()
-            (out / lang / "estado" / "index.html").write_text(estado.page(lang, datos), encoding="utf-8")
+            (out / lang / "estado" / "index.html").write_text(estado.page(lang, datos, history), encoding="utf-8")
 
 
 def main():
@@ -210,7 +211,8 @@ def main():
     parser.add_argument("--salida", type=Path, default=ROOT / "_site")
     parser.add_argument("--datos", type=Path, default=ROOT / "datos")
     args = parser.parse_args()
-    build(args.salida, args.datos)
+    datos = args.datos.resolve()
+    build(args.salida, args.datos, estado.cambios.history(datos.parent, datos.name))
 
 
 if __name__ == "__main__":

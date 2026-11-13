@@ -395,6 +395,16 @@ ven en GitHub: la CI comprueba que están al día y los workflows de datos los r
 aparece una fuente, un módulo, un workflow, un nivel o una columna que no está en su mapa, o si el
 mapa nombra algo que ya no existe, la comprobación falla.
 
+La página de estado tiene además dos pestañas sobre las fuentes y el tiempo. «Contraste» cuenta, sobre
+los datos publicados, cuántas fuentes dan cada par de código postal y municipio, qué trae cada una
+(y qué dice solo ella o no se publica) y qué fuente aporta cada nombre y cada código. «Cambios»
+compara cada generación de `datos/` con la anterior, fila a fila y con una clave por fichero
+(`web/cambios.py`): altas, bajas, filas cambiadas y columnas nuevas, con el detalle cuando son pocos,
+y desde cuándo tiene cada fuente la misma huella. Una generación es un cambio de `datos/` que llega a
+`main`, así que sale del historial de git y solo está en la web, no en `docs/estado.md`. Todo lo que
+se publica pasa por git; los originales de cada fuente no se guardan, y de ellos quedan la huella y la
+fecha de lectura en el manifiesto. Un fichero publicado con estos cambios queda para más adelante.
+
 ## 9. Preparado para la UE
 
 La primera versión es solo España, pero nada impide ampliarla:
