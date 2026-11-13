@@ -47,8 +47,13 @@ COVERAGE = ["population", "partido", "zona_aviso", "comarca", "isla", "postal_co
 SCOPE = {  # data that only exist in part of the country: which municipalities they apply to
     "isla": lambda r: r["provincia"] in ("07", "35", "38"),
     "dgc": lambda r: r["provincia"] not in ("01", "20", "31", "48"),
-    "comarca": lambda r: r["autonomia"] in ("02", "09") or r["provincia"] == "01" or (r["provincia"] == "24" and r["comarca"]),
+    "comarca": lambda r: r["autonomia"] in ("02", "09") or r["ine"] in _hand_comarcas(),  # Álava and El Bierzo by list
 }
+LINK_COLUMN = {"island": "isla", "comarca": "comarca", "judicial_district": "partido", "warning_zone": "zona_aviso"}
+SOURCE_ORG = {"ine": "INE", "wikidata": "Wikidata", "eurostat": "Eurostat", "ign": "IGN", "catastro": "Catastro",
+              "mjusticia": "Justicia", "aemet": "AEMET"}  # "source" of codigos.csv and nombres.csv: who gives it
+OURS = {"fuentes", "derivado"}  # values of "source" that are no organisation: hand lists and derived names
+WIKIDATA_COLUMNS = ("wikidata", "osm_relation", "geonames")  # identifiers that come from Wikidata
 MISSING_LIST = 30  # list the municipalities missing a datum when they are this many or fewer
 MUNICIPAL_PLAIN = {"id", "ine", "ine_dc", "provincia", "autonomia", "official", "display", "lat", "time_zone", "slug"}
 CP_SOURCES = {"madrid": "Ayto. de Madrid", "icgc": "ICGC", "idena": "IDENA", "eustat": "Eustat", "ideib": "IDEIB",
@@ -61,18 +66,19 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "ine_cambios": ("INE", "ine", ["nombres.csv"]),
     "ine_provincias": ("INE", "ine", ["provincias.csv", "comunidades.csv"]),
     "ine_poblacion": ("INE", "ine", ["provincias.csv", "municipios.csv"]),
-    "mjusticia_censo_judicial": ("Justicia", "justicia", ["partidos-judiciales.csv", "municipios.csv"]),
+    "mjusticia_censo_judicial": ("Justicia", "justicia", ["partidos-judiciales.csv", "municipios.csv", "codigos.csv"]),
     "aemet_municipios": ("AEMET", "aemet", ["municipios.csv"]),
-    "aemet_zonas": ("AEMET", "aemet", ["zonas-aviso.csv"]),
+    "aemet_zonas": ("AEMET", "aemet", ["zonas-aviso.csv", "codigos.csv", "nombres.csv"]),
     "idescat_comarcas": ("Idescat", "comarcas", ["comarcas.csv", "municipios.csv"]),
     "aragon_comarcas": ("Aragón", "comarcas", ["comarcas.csv", "municipios.csv"]),
     "rel_comarcas": ("REL", "fuentes/", ["comarcas.csv", "municipios.csv"]),
     "rel_eatim": ("REL", "fuentes/", ["entidades-menores.csv"]),
     "eurostat_lau": ("Eurostat", "eurostat", ["municipios.csv", "codigos.csv"]),
-    "wikidata": ("Wikidata", "wikidata", ["nombres.csv", "codigos.csv", "wikipedia.csv", "paises.csv"]),
+    "wikidata": ("Wikidata", "wikidata", ["nombres.csv", "codigos.csv", "wikipedia.csv", "paises.csv", "comunidades.csv",
+                                          "provincias.csv", "islas.csv", "municipios.csv"]),
     "catastro": ("Catastro", "catastro", ["municipios.csv", "codigos.csv"]),
     "ign_poblaciones": ("IGN", "ign", ["municipios.csv"]),
-    "ign_limites": ("IGN", "ign", ["municipios.csv", "limites-municipios.geojson.gz"]),
+    "ign_limites": ("IGN", "ign", ["municipios.csv", "codigos.csv", "limites-municipios.geojson.gz"]),
     "madrid_direcciones": ("Ayto. de Madrid", "codigos_postales", POSTAL),
     "icgc_direcciones": ("ICGC", "codigos_postales", POSTAL),
     "idena_direcciones": ("IDENA", "codigos_postales", POSTAL),
@@ -151,6 +157,12 @@ def _csv(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
+@lru_cache(maxsize=1)
+def _hand_comarcas() -> frozenset:
+    """INE codes of the municipalities whose comarca comes from fuentes/comarcas-municipios.csv."""
+    return frozenset(r["ine"] for r in _csv(ROOT / "fuentes" / "comarcas-municipios.csv"))
+
+
 def _pct(n: int, total: int, lang: str) -> str:
     if not total:
         return ""
@@ -168,20 +180,25 @@ def _territories(path: Path) -> list[dict]:
 
 
 def _graph(territories: list[dict]):
-    """Counts per level, parent edges and link edges (with how many territories carry the link)."""
+    """Counts per level, parent edges, link edges (with how many territories carry the link) and the countries that
+    are the parent of something, with the levels below each: they are drawn one by one, so that the diagram goes
+    from the countries to Spain and from Spain to its communities."""
     level_of = {t["id"]: t["level"] for t in territories}
-    counts, parents, links = {}, {}, {}
+    counts, parents, links, homes = {}, {}, {}, {}
     for t in territories:
         counts[t["level"]] = counts.get(t["level"], 0) + 1
         if t.get("parent") in level_of:
             key = (level_of[t["parent"]], t["level"])
+            if key[0] == "country" and key[1] != "country":
+                homes.setdefault(t["parent"], set()).add(t["level"])
+                continue
             parents[key] = parents.get(key, 0) + 1
         for field, value in t.items():
             if field in ("id", "parent") or not isinstance(value, str) or value not in level_of:
                 continue
             key = (t["level"], field, level_of[value])
             links[key] = links.get(key, 0) + 1
-    return counts, parents, links
+    return counts, parents, links, homes
 
 
 def _workflow_triggers(path: Path) -> tuple[list[str], list[str]]:
@@ -256,6 +273,17 @@ def problems() -> list[str]:
     for path in sorted((ROOT / "datos").glob("*.*")):
         if path.suffix in (".csv", ".json") and path.name not in published:
             out.append(f"datos/{path.name} no se publica en la web (FILES de web/construir.py)")
+    fed = {name: {org for org, _, files in SOURCES.values() if name in files} for name in published}
+    for folder in (ROOT / "datos", ROOT / "pruebas" / "datos"):  # who feeds each file, as the data themselves say
+        for name in ("codigos.csv", "nombres.csv"):
+            for source in sorted({r["source"] for r in _csv(folder / name)} - OURS):
+                if source not in SOURCE_ORG:
+                    out.append(f"«{source}» en la columna source de {name} no está en SOURCE_ORG")
+                elif SOURCE_ORG[source] not in fed[name]:
+                    out.append(f"{name} lleva datos de {SOURCE_ORG[source]} y ninguna de sus fuentes lo declara en SOURCES")
+        for path in sorted(folder.glob("*.csv")):
+            if any(r.get(c) for r in _csv(path) for c in WIKIDATA_COLUMNS) and "Wikidata" not in fed.get(path.name, ()):
+                out.append(f"{path.name} lleva identificadores de Wikidata y SOURCES no lo declara")
     for folder in (ROOT / "datos", ROOT / "pruebas" / "datos"):  # the changes tab compares rows by these keys
         for path in sorted(folder.glob("*.csv")):
             rows, key = _csv(path), cambios.key_of(path.name)
@@ -273,7 +301,7 @@ def problems() -> list[str]:
 
 def _plain(value: str) -> str:
     """A value of the data inside a line of text: no backticks or line breaks, and not too long."""
-    value = re.sub(r"\s+", " ", str(value)).replace("`", "'")
+    value = re.sub(r"\s+", " ", str(value)).replace("`", "'").replace("](", "] (")  # never code or a link
     return value if len(value) <= VALUE_SHOWN else value[:VALUE_SHOWN - 1] + "…"
 
 
@@ -287,7 +315,8 @@ def _changes(lang: str, history: dict) -> list:
         link = (f"[#{g['pull']}]({REPO}/pull/{g['pull']}) {g['branch']}".strip() if g["pull"] else
                 f"[{g['commit'][:7]}]({REPO}/commit/{g['commit']}) {_plain(g['subject'])}")
         files = g["files"]
-        rows.append([g["date"], link, ", ".join(f"`{Path(name).stem}`" for name in files) or t["only_manifest"],
+        rows.append([g["date"], link, ", ".join(f"`{Path(name).stem}`" for name in files)
+                     or ", ".join(f"`{name}`" for name in g["touched"]),  # nothing changed in the rows of a CSV
                      *[_num(sum(f[k] for f in files.values()), lang) if files else "" for k in ("added", "removed", "changed")]])
         if not files:
             continue
@@ -337,7 +366,7 @@ def collect(lang: str, datos: Path, html: bool = False, history: dict | None = N
     if wikidata:
         retrieved["wikidata"] = max(wikidata)
     territories = _territories(datos / "territorios.json")
-    counts, parents, links = _graph(territories)
+    counts, parents, links, homes = _graph(territories)
     test = _graph(_territories(fixture / "territorios.json"))
     readers = sorted({s[1] for s in SOURCES.values() if s[1] != "fuentes/"})
     data_files = sorted({f for s in SOURCES.values() for f in s[2] if f.endswith((".csv", ".json"))}
@@ -361,11 +390,19 @@ def collect(lang: str, datos: Path, html: bool = False, history: dict | None = N
     def only_in_test(*lvs):  # a relation with a level that the generator can build but datos/ does not have yet
         return not all(lv in counts for lv in lvs)
     code += [f"  {parent} --> {child}" for parent, child in sorted(set(parents) | {e for e in test[1] if only_in_test(*e)})]
+    country_names = {r["id"]: r.get(f"name_{lang}") or r.get("name_es") or r["id"]
+                     for r in _csv(datos / "paises.csv") + _csv(fixture / "paises.csv")}
+    for home, below in sorted((homes or test[3]).items()):  # Countries --> Spain --> its communities
+        code.append(f'  {_node(home)}["{country_names.get(home, home)}"]:::done')
+        code += [f"  country --> {_node(home)}"] + [f"  {_node(home)} --> {child}" for child in sorted(below)]
     for src, field, dst in sorted(set(links) | {e for e in test[2] if only_in_test(e[0], e[2])}):
         if field == "capital":
             continue
         n = links.get((src, field, dst))
-        label = t["links"][field] + (f": {_num(n, lang)} {t['of']} {_num(counts.get(src), lang)}" if n else "")
+        total = counts.get(src)
+        if src == "municipality" and LINK_COLUMN.get(field) in SCOPE:  # only over the municipalities where it exists
+            total = sum(1 for r in munis if SCOPE[LINK_COLUMN[field]](r))
+        label = t["links"][field] + (f": {_num(n, lang)} {t['of']} {_num(total, lang)}" if n else "")
         code.append(f'  {src} -.->|"{label}"| {dst}')
     sections["levels"] = [("p", t["levels_text"]), ("mermaid", "\n".join(code + [f"  {s}" for s in STYLE]), t["s_levels"])]
 
@@ -493,7 +530,7 @@ def collect(lang: str, datos: Path, html: bool = False, history: dict | None = N
             f'  lib["{t["lib"]}"]', f'  web["{t["web"]}"]', f'  users(["{t["users"]}"])',
             f'  fixture[("pruebas/datos/<br>{t["fixture"]}")]', f'  tests["{t["tests"]}"]',
             "  ext --> descargas --> readers --> construir --> exportar --> datos",
-            "  hand --> construir", "  readers --> limites --> geo", "  construir --> report",
+            "  hand --> construir", "  readers --> limites --> geo", "  datos --> limites", "  construir --> report",
             "  datos --> lib", "  geo --> lib", "  datos --> web", "  lib --> users", "  web --> users",
             "  construir --> fixture --> tests", "  lib --> tests"]
     code += [f'  wf_{_node(name)}{{{{"{title}"}}}}' for name, title in WORKFLOWS.items()]
@@ -637,9 +674,17 @@ def markdown(lang: str, datos: Path) -> str:
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
+def _link(match) -> str:
+    """[text](address) as a link only if the address is http(s) or relative; anything else stays as written."""
+    label, address = match.group(1), match.group(2)
+    if re.match(r"[A-Za-z][A-Za-z0-9+.-]*:", address) and not address.startswith(("https://", "http://")):
+        return match.group(0)
+    return f'<a href="{address.replace(chr(34), "&quot;")}">{label}</a>'
+
+
 def _inline(text: str) -> str:
     text = escape(str(text), quote=False)
-    text = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>', text)
+    text = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", _link, text)
     text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
     return re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
 

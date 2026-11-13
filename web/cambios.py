@@ -33,13 +33,18 @@ def key_of(name: str) -> tuple[str, ...]:
     return KEYS.get(name, DEFAULT_KEY)
 
 
-def compare(old: list[dict], new: list[dict], key: tuple[str, ...] = DEFAULT_KEY) -> dict:
+def compare(old: list[dict], new: list[dict], key: tuple[str, ...] = DEFAULT_KEY,
+            columns: tuple[list[str], list[str]] | None = None) -> dict:
     """Rows added, removed and changed between two tables, and the columns that appear or disappear.
 
     A row is identified by the key columns present in both tables (by the whole row if none is). A new column
     is a change of structure, not a change in every row: only the columns that both tables have are compared.
-    "changed" holds (key, column, before, after), one per cell."""
-    old_columns, new_columns = (list(old[0]) if old else []), (list(new[0]) if new else [])
+    "changed" holds (key, column, before, after), one per cell. columns are the headers of both tables, for
+    when one has no rows; without them, they are those of the first row, and an empty table has the header of
+    the other one."""
+    old_columns, new_columns = columns or ((list(old[0]) if old else []), (list(new[0]) if new else []))
+    if not columns:
+        old_columns, new_columns = old_columns or new_columns, new_columns or old_columns
     common = [c for c in new_columns if c in old_columns]
     by = tuple(c for c in key if c in common) or tuple(common)
     before = {tuple(row[c] for c in by): row for row in old}
@@ -48,11 +53,12 @@ def compare(old: list[dict], new: list[dict], key: tuple[str, ...] = DEFAULT_KEY
                for c in common if before[k][c] != row[c]]
     return {"added": [k for k in after if k not in before], "removed": [k for k in before if k not in after],
             "changed": changed,
-            "columns_added": [c for c in new_columns if old and c not in old_columns],
-            "columns_removed": [c for c in old_columns if new and c not in new_columns]}
+            "columns_added": [c for c in new_columns if c not in old_columns],
+            "columns_removed": [c for c in old_columns if c not in new_columns]}
 
 
-def summary(old: list[dict] | None, new: list[dict] | None, key: tuple[str, ...] = DEFAULT_KEY) -> dict | None:
+def summary(old: list[dict] | None, new: list[dict] | None, key: tuple[str, ...] = DEFAULT_KEY,
+            columns: tuple[list[str], list[str]] | None = None) -> dict | None:
     """What the status page shows of a file in one generation; None if nothing changed. old is None when the file
     is new and new is None when it is gone."""
     if old is None or new is None:
@@ -60,7 +66,7 @@ def summary(old: list[dict] | None, new: list[dict] | None, key: tuple[str, ...]
         return {"new": old is None, "gone": new is None, "rows": rows, "added": rows if old is None else 0,
                 "removed": rows if new is None else 0, "changed": 0, "fields": {}, "columns_added": [],
                 "columns_removed": [], "detail": []}
-    diff = compare(old, new, key)
+    diff = compare(old, new, key, columns)
     if not any(diff.values()):
         return None
     fields = {}
@@ -74,8 +80,10 @@ def summary(old: list[dict] | None, new: list[dict] | None, key: tuple[str, ...]
             "detail": detail if len(detail) <= DETAIL else []}
 
 
-def table(text: str) -> list[dict]:
-    return list(csv.DictReader(io.StringIO(text, newline="")))
+def table(text: str) -> tuple[list[str], list[dict]]:
+    """Header and rows of a CSV: the header apart, because a file may have no rows."""
+    reader = csv.DictReader(io.StringIO(text, newline=""))
+    return list(reader.fieldnames or []), list(reader)
 
 
 def footprint(source: dict) -> str:
@@ -96,7 +104,8 @@ def history(root: Path, folder: str = "datos") -> dict | None:
     """Every generation of `folder` in the git history of `root`, newest first, and since when each source has the
     footprint it has now. None without git, in a shallow clone or with no generation.
 
-    {"generations": [{"commit", "date", "subject", "pull", "branch", "files": {name: summary()}}],
+    {"generations": [{"commit", "date", "subject", "pull", "branch", "files": {name: summary()}, "touched": [name]}],
+     (touched: every file of the folder whose content is not that of the previous generation, CSV or not)
      "sources": {key: {"retrieved", "since", "changes"}}}"""
     if (_git(root, "rev-parse", "--is-shallow-repository") or "").strip() != "false":
         return None
@@ -116,7 +125,7 @@ def history(root: Path, folder: str = "datos") -> dict | None:
             new = table(_git(root, "cat-file", "blob", now[name]) or "") if name in now else None
             if new is not None:
                 tables[name] = new
-            change = summary(old, new, key_of(name))
+            change = summary(old and old[1], new and new[1], key_of(name), (old[0], new[0]) if old and new else None)
             if change:
                 files[name] = change
         manifest = now.get("manifiesto.json")
@@ -130,10 +139,12 @@ def history(root: Path, folder: str = "datos") -> dict | None:
                     seen.update(footprint=mark, since=source.get("retrieved") or date, changes=seen["changes"] + 1)
                 sources[key]["retrieved"] = source.get("retrieved", "")
             sources = {key: seen for key, seen in sources.items() if key in current}
+        touched = sorted(name for name in set(now) | set(blobs) if now.get(name) != blobs.get(name))
         blobs = now
         pull = PULL.search(subject)
         generations.append({"commit": commit, "date": date, "subject": subject,
                             "pull": int(pull.group(1) or pull.group(3)) if pull else None,
-                            "branch": pull.group(2) if pull and pull.group(2) else "", "files": files})
+                            "branch": pull.group(2) if pull and pull.group(2) else "", "files": files,
+                            "touched": touched})
     return {"generations": generations[::-1],
             "sources": {key: {k: v for k, v in seen.items() if k != "footprint"} for key, seen in sources.items()}}
