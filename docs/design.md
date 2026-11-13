@@ -348,7 +348,9 @@ evidence. Each project keeps only what is its own (for example, the coverage of 
 - **Structure**:
   - `datos/`: generated files (JSON and CSV) and their manifest;
   - `fuentes/`: what is hand-reviewed (names per language, aliases, ISO and NUTS codes, languages
-    of the bilingual names, URL of each source);
+    of the bilingual names, URL of each source); for a source copied by hand, such as the exports
+    of the Registro de Entidades Locales, `fuentes.json` keeps the date (`retrieved`) and the lists
+    made from it (`copies`), and the manifest the digest of each;
   - `python/` and `js/`: two small readers of the same data;
   - `generador/`: downloads, cross-checking and discrepancy report;
   - `web/`: the data website;

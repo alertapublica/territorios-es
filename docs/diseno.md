@@ -341,7 +341,9 @@ evidencias. Cada proyecto conserva solo lo suyo (por ejemplo, la cobertura de un
 - **Estructura**:
   - `datos/`: ficheros generados (JSON y CSV) y su manifiesto;
   - `fuentes/`: lo revisado a mano (nombres por idioma, alias, códigos ISO y NUTS, idiomas de los
-    nombres bilingües, URL de cada fuente);
+    nombres bilingües, URL de cada fuente); de una fuente copiada a mano, como las exportaciones del
+    Registro de Entidades Locales, `fuentes.json` guarda la fecha (`retrieved`) y las listas que salen
+    de ella (`copies`), y el manifiesto, la huella de cada una;
   - `python/` y `js/`: dos lectores pequeños de los mismos datos;
   - `generador/`: descargas, contraste e informe de discrepancias;
   - `web/`: la web de datos;

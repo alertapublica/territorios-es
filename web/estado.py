@@ -202,6 +202,8 @@ def problems() -> list[str]:
     fuentes = json.loads((ROOT / "fuentes" / "fuentes.json").read_text(encoding="utf-8"))
     out += [f"fuente sin declarar en SOURCES: {k}" for k in fuentes if k not in SOURCES]
     out += [f"fuente declarada que ya no está en fuentes.json: {k}" for k in SOURCES if k not in fuentes]
+    out += [f"copia de fuentes/ sin «retrieved» ni «copies» en fuentes.json: {k}" for k, s in SOURCES.items()
+            if s[1] == "fuentes/" and k in fuentes and not (fuentes[k].get("retrieved") and fuentes[k].get("copies"))]
     hand = {p.name for p in (ROOT / "fuentes").iterdir() if p.suffix in (".csv", ".json")}
     out += [f"lista sin declarar en HAND_LISTS: fuentes/{k}" for k in sorted(hand - set(HAND_LISTS))]
     readers = {s[1] for s in SOURCES.values()}
