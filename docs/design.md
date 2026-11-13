@@ -15,7 +15,7 @@ of its names and codes. Its data is regenerated from the official sources, and t
 (Wikidata, OpenStreetMap) serve as support and for cross-checking. It offers three things:
 
 1. **Catalogue**: Spain, its autonomous communities and autonomous cities, provinces, islands,
-   municipalities, judicial districts, AEMET warning zones and comarcas, and the countries of the
+   municipalities, judicial districts, AEMET warning zones, comarcas and minor local entities, and the countries of the
    world, with their hierarchy, their names (official,
    display, per language and aliases) and their codes (INE, Catastro, ISO, European and others).
 2. **Tools** in Python and JavaScript: resolve a code, search for a name within a scope, find
@@ -136,6 +136,35 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
   are added, they will have another type. `search` and `mentions` leave them out unless asked for
   in `levels`, since they only exist in four communities and some share their name with a
   municipality.
+- **Minor local entities**: the entities below the municipality (EATIM) registered in the Registro
+  de Entidades Locales, 3,674 in 776 municipalities of 15 communities (León 1,225, Burgos 643,
+  Cantabria 514, Navarre 344, Álava 333, Palencia 223; 9 in Galicia). Level `minor_local_entity`,
+  the first below the municipality, which is its parent. The identifier is the Registro number,
+  eight digits: 04, the INE province and an order number (`es:entidad-menor:04360001` is Arcos da
+  Condesa, in Caldas de Reis); it is also the code `rel:eatim`. `fuentes/entidades-menores.csv`
+  comes from the Registro's export, reviewed by hand, with the municipality by its INE code (the
+  Registro only gives its name; all 3,674 match a single municipality of their province), the type,
+  the seat (76 have one) and the registration date, which is not the date of creation. The last two
+  are only there to cross-check against the Registro and are not published. The name is the
+  Registro's, with the article in front for display, and the 126 bilingual ones have their parts
+  reviewed in `partes-bilingues.csv` («Brañas/Leitariegos», in Asturias, is not bilingual and goes to
+  the report). The type is the category of each community's law:
+
+  | Type | Where | Law |
+  |---|---|---|
+  | `concejo` | Álava and Navarre (677) | Norma Foral 11/1995 de Concejos (Álava); [Ley Foral 6/1990, art. 37](https://www.boe.es/buscar/act.php?id=BOE-A-1990-19817) |
+  | `parroquia_rural` | Asturias (39) | [Ley 11/1986, art. 1](https://www.boe.es/buscar/act.php?id=BOE-A-1987-773) |
+  | `entidad_local_autonoma` | Andalusia (36) | [Ley 5/2010, art. 113](https://www.boe.es/buscar/act.php?id=BOE-A-2010-11491); the 36 are those in the annex of [Decreto 76/2023](https://www.juntadeandalucia.es/boja/2023/64/BOJA23-064-00003-6113-01_00281152.pdf) |
+  | `entitat_municipal_descentralitzada` | Catalonia (65) | [Decreto Legislativo 2/2003, art. 2](https://www.boe.es/buscar/act.php?id=DOGC-f-2003-90008) |
+  | `eatim` | Castilla-La Mancha (42) | [Ley 3/1991, art. 24](https://www.boe.es/buscar/act.php?id=BOE-A-1991-10111) |
+  | `entidad_local_menor` | the rest (2,815) | Castilla y León, [Ley 1/1998, art. 49](https://www.boe.es/buscar/act.php?id=BOE-A-1998-20054); Cantabria, [Ley 3/2022, art. 2](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12386); Aragon, [Ley 7/1999, arts. 85–89](https://www.boe.es/buscar/act.php?id=BOE-A-1999-10151); Galicia, [Ley 5/1997, art. 153](https://www.boe.es/buscar/act.php?id=BOE-A-1997-21040); Extremadura, [Ley 17/2010, art. 70](https://www.boe.es/buscar/act.php?id=BOE-A-2011-555); Valencian Community, [Ley 8/2010, art. 54](https://www.boe.es/buscar/act.php?id=BOE-A-2010-11729); La Rioja, [Ley 1/2003, art. 76](https://www.boe.es/buscar/act.php?id=BOE-A-2003-5909); Madrid, [Ley 2/2003, art. 81](https://www.boe.es/buscar/act.php?id=BOE-A-2003-10722); Balearic Islands, [Ley 20/2006, art. 53](https://www.boe.es/buscar/act.php?id=BOE-A-2007-1893); Bizkaia, Norma Foral 9/2012, art. 58; Gipuzkoa, Norma Foral 2/2003, arts. 26–29 |
+
+  «Junta vecinal» is the governing body in Castilla y León, and Cantabria's law recognises it as a
+  traditional name, but the type is entidad local menor. The 36 of the Condado de Treviño belong to
+  Burgos. No match with the INE population entities is assumed (decision 18). `search` and
+  `mentions` leave them out unless asked for in `levels`, since 244 have the same name as their
+  municipality and others the name of another one; with `within`, an entity is also within the
+  island, judicial district, warning zone and comarca of its municipality.
 
 ### 4.2 Codes
 
@@ -145,6 +174,7 @@ The similar projects that already exist, in Spain and in the EU, are reviewed in
 | Censo Judicial | judicial district (`mjusticia:partido`, 4 digits: province 2 + number 2) | Ministry of Justice's Censo Judicial | The number is the district's in the judicial map of its province. The Generalitat's technical catalogue (CTEAJE) uses the same code except in Ceuta and Melilla (1112 and 2908, against 5112 and 5208). |
 | AEMET | warning zone (`aemet:zona`, 6 digits: community 2 + province or island group 2 + zone 2) | AEMET OpenData municipality master and Meteoalerta zone boundaries | The community and province digits are AEMET's, not the INE's (the Balearic Islands use 53–55 and the Canary Islands 90–96). |
 | Comarca | comarca (`rel:comarca`, 8 digits; `idescat:comarca` and `aragon:comarca`, 2 digits) | Registro de Entidades Locales, Idescat and Government of Aragon | The Registro number starts with 06 and the community; the Registro's Excel drops the leading zero. The Lluçanès does not have one yet. |
+| Minor local entity | minor local entity (`rel:eatim`, 8 digits) | Registro de Entidades Locales | Starts with 04 and the INE province; the Registro's Excel drops the leading zero. |
 | ISO 3166-1 | country (alpha-2, alpha-3, numeric) | Wikidata | |
 | ISO 3166-2 | autonomous community and province (`ES-GA`, `ES-C`) | Hand-reviewed list; linked to Wikidata | |
 | NUTS 2024 | NUTS 1 (groups of autonomous communities), NUTS 2 (autonomous community), NUTS 3 (province; islands in the Balearic and Canary Islands) | Eurostat | For cross-referencing with European statistics. |
@@ -200,7 +230,7 @@ The data stores all the names; this is the default rule of `name(id, lang)`:
 
 - **Countries and autonomous communities**: the name in the language of the page ("Catalonia", "Katalunia",
   "Cataluña").
-- **Provinces, islands, comarcas, judicial districts, warning zones and municipalities**: the official one (a district's is
+- **Provinces, islands, comarcas, judicial districts, warning zones, municipalities and minor local entities**: the official one (a district's is
   its seat's). If it is bilingual, only the part in the language of the page ("Alacant" in Catalan,
   "San Sebastián" in Spanish) and the full name in the others. In Spanish "Girona" is shown, not "Gerona".
 - The usual names in other languages ("Gerona", "Seville", "Saragossa") are used for searching and
@@ -270,10 +300,10 @@ options go in an object (`search(text, { within, levels })`).
 
 | Function | What it does |
 |---|---|
-| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
+| `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `rel:eatim`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca. Judicial districts, warning zones and comarcas only come up if asked for in `levels`. |
-| `children(id)` | The territories whose parent is this one; for an island, a judicial district, a warning zone or a comarca, its municipalities. Those of a community include its comarcas; those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca; a minor local entity is within those of its municipality. Judicial districts, warning zones, comarcas and minor local entities only come up if asked for in `levels`. |
+| `children(id)` | The territories whose parent is this one; for an island, a judicial district, a warning zone or a comarca, its municipalities. Those of a community include its comarcas; those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands; those of a municipality are its minor local entities. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
 | `name(id, lang, short)` | The name that is displayed, according to §4.4. |
@@ -498,6 +528,17 @@ Taken on 12 November 2026:
     9 s and about 350 MB of memory, and every month left thousands of name warnings. What was
     checked, and where to start if it is taken up again, is in #31.
 
+Taken on 13 November 2026:
+
+19. Minor local entities (#48): those of the Registro de Entidades Locales, level
+    `minor_local_entity` with the municipality as parent and identifier `es:entidad-menor:` plus the
+    Registro number, the only code they have. The list comes from an export of the Registro reviewed
+    by hand, like the comarcas, with the municipality by INE code and the type under each
+    community's law, checked article by article (in Andalusia, entity by entity). Left out of
+    `search` and `mentions` unless asked for. No match with the population entities, which are still
+    set aside. The DIR3 and NIF of public bodies, these entities included, do not go here (§4.2):
+    they will go to the public bodies repository (§10).
+
 ## 13. Source checks
 
 Before using each source, its URL, format and licence have to be checked. Already checked on
@@ -613,3 +654,12 @@ Checked on 11 November 2026:
 - **Cross-checking the districts**: the CGPJ publishes the population by district and municipality
   every year (XLSX, names only) and the Generalitat the CTEAJE catalogue of Spain's districts (code,
   name and seat). No third-party repository with the national relation is maintained.
+
+Checked on 13 November 2026:
+
+- **Minor local entities in the Registro de Entidades Locales**: exported without a form at
+  `…/export_excel/eatimes/all/all` (community and province; with a single `all` the server gives a
+  PHP error), in the same old binary Excel as the comarcas. Columns: community, province, name,
+  registration number (without the leading zero), registration date, seat and municipality, by
+  name only. No coordinates, population entity code or Wikidata (in Wikidata, 226 items are a minor
+  local entity, Q3333989). The latest registered are Igeldo and Aizarotz, in 2025.

@@ -20,7 +20,7 @@ CODE_SOURCES = {
     "iso3166-1:alpha2": "wikidata", "iso3166-1:alpha3": "wikidata", "iso3166-1:numeric": "wikidata",
     "iso3166-2": "fuentes", "nuts": "fuentes", "lau": "eurostat", "dgc:municipio": "catastro", "ign:bddae": "ign",
     "mjusticia:partido": "mjusticia", "aemet:zona": "aemet",
-    "rel:comarca": "fuentes", "idescat:comarca": "fuentes", "aragon:comarca": "fuentes",
+    "rel:comarca": "fuentes", "idescat:comarca": "fuentes", "aragon:comarca": "fuentes", "rel:eatim": "fuentes",
     "wikidata": "wikidata", "osm:relation": "wikidata", "geonames": "wikidata",
 }
 
@@ -30,7 +30,7 @@ def _name_source(level: str, kind: str, lang: str | None = None) -> str:
         return "derivado"  # the names of its seat
     if level == "warning_zone":
         return "aemet" if kind in ("official", "display") else "fuentes"
-    if level == "comarca":
+    if level in ("comarca", "minor_local_entity"):
         return "fuentes"
     if kind == "official":
         return "wikidata" if level == "country" else ("ine" if level in ("island", "municipality") else "fuentes")
@@ -104,6 +104,14 @@ def tables(data: dict) -> dict[str, str]:
         [[t["id"], t["parent"].rsplit(":", 1)[1], t["type"], code(t, "rel:comarca"), code(t, "idescat:comarca"),
           code(t, "aragon:comarca"), t["names"]["official"], t["names"]["display"], *names(t), t["time_zone"]]
          for t in by_level.get("comarca", [])])
+    def ancestor(t: dict, level: str) -> str:
+        return next(a for a in catalog.ancestors(t["id"]) if a.startswith(f"es:{level}:")).rsplit(":", 1)[1]
+
+    files["entidades-menores.csv"] = _table(
+        ["id", "rel", "municipio", "provincia", "autonomia", "tipo", "official", "display", *name_cols, "time_zone"],
+        [[t["id"], code(t, "rel:eatim"), t["parent"].rsplit(":", 1)[1], ancestor(t, "provincia"),
+          ancestor(t, "autonomia"), t["type"], t["names"]["official"], t["names"]["display"], *names(t), t["time_zone"]]
+         for t in by_level.get("minor_local_entity", [])])
     files["municipios.csv"] = _table(
         ["id", "ine", "ine_dc", "dgc", "bddae", "provincia", "autonomia", "isla", "partido", "zona_aviso", "comarca", "lau",
          "nuts3", "wikidata", "osm_relation", "geonames", "official", "display", *name_cols, "population", "area_km2", "capital",

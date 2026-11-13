@@ -84,6 +84,15 @@
     "attribution": "Fuente: Registro de Entidades Locales",
     "note": "Exportación consultada el 2026-11-11 para fuentes/comarcas.csv y fuentes/comarcas-municipios.csv; no se descarga en cada generación"
   },
+  "rel_eatim": {
+    "url": "https://registroentidadeslocales.mpt.es/REL/frontend/export_data/file_export/export_excel/eatimes/all/all",
+    "page": "https://registroentidadeslocales.mpt.es/REL/frontend/inicio/eatimes",
+    "conditions": "https://mptmd.gob.es/portal/footer/nota_legal",
+    "publisher": "Ministerio de Política Territorial (Registro de Entidades Locales)",
+    "licence": "Reutilización citando la fuente (nota legal del Ministerio)",
+    "attribution": "Fuente: Registro de Entidades Locales",
+    "note": "Exportación consultada el 2026-11-13 para fuentes/entidades-menores.csv; no se descarga en cada generación"
+  },
   "eurostat_lau": {
     "page": "https://ec.europa.eu/eurostat/web/nuts/local-administrative-units",
     "link_pattern": "EU-27-LAU-2024-NUTS-2024\\.xlsx",
