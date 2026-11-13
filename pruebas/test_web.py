@@ -32,6 +32,13 @@ class Web(unittest.TestCase):
         for column in site._columns(ROOT / "pruebas" / "datos"):
             self.assertIn(column, TEXTS["es"]["columns"], column)
 
+    def test_sources_link_to_a_whole_address(self):
+        import web.construir as site
+        self.assertEqual(site._address("https://example.org/a.xlsx"), "https://example.org/a.xlsx")
+        self.assertEqual(site._address("https://example.org/DATOS/…?n=1 (52 tablas de https://example.org/TABLAS/22)"),
+                         "https://example.org/TABLAS/22")
+        self.assertEqual(site._address("copia revisada a mano"), "")
+
     def test_builds_from_fixture_data(self):
         import web.construir as site
         with tempfile.TemporaryDirectory() as folder:
