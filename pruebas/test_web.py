@@ -92,6 +92,39 @@ class Status(unittest.TestCase):
             text = estado.markdown(lang, ROOT / "pruebas" / "datos")
             self.assertIn("```mermaid", text)
 
+    def test_values_of_the_data_never_become_markup(self):
+        import web.estado as estado
+        self.assertEqual(estado._inline("[x](javascript:alert(1))"), "[x](javascript:alert(1))")
+        self.assertEqual(estado._inline('[x](https://a"onpointerenter="b)'),
+                         '<a href="https://a&quot;onpointerenter=&quot;b">x</a>')
+        self.assertEqual(estado._inline("[x](../datos/a.csv) y [y](https://example.org/)"),
+                         '<a href="../datos/a.csv">x</a> y <a href="https://example.org/">y</a>')
+        value = estado._plain("[x](https://example.org/) `c`")
+        self.assertNotIn("<a", estado._inline(f"«{value}»"))
+        self.assertNotIn("<code", estado._inline(f"«{value}»"))
+
+    def test_links_are_counted_where_they_exist_and_spain_is_drawn(self):
+        import web.estado as estado
+        bierzo = {"ine": "24007", "provincia": "24", "autonomia": "07", "comarca": ""}
+        self.assertTrue(estado.SCOPE["comarca"](bierzo))  # in the hand list: without comarca it is missing, not out of scope
+        self.assertFalse(estado.SCOPE["comarca"]({**bierzo, "ine": "24089"}))
+        datos = ROOT / "pruebas" / "datos"
+        text = estado.markdown("es", datos)
+        self.assertIn('pais_ES["España"]', text)
+        self.assertIn("country --> pais_ES", text)
+        self.assertIn("pais_ES --> autonomous_community", text)
+        self.assertNotIn("country --> autonomous_community", text)
+        islands = sum(1 for r in estado._csv(datos / "municipios.csv") if estado.SCOPE["isla"](r))
+        self.assertIn(f'"isla: {islands} de {islands}"', text)
+
+    def test_the_map_of_sources_is_checked_against_the_data(self):
+        from unittest import mock
+        import web.estado as estado
+        org, module, files = estado.SOURCES["wikidata"]
+        without = {**estado.SOURCES, "wikidata": (org, module, [f for f in files if f != "islas.csv"])}
+        with mock.patch.object(estado, "SOURCES", without):
+            self.assertIn("islas.csv lleva identificadores de Wikidata y SOURCES no lo declara", estado.problems())
+
     def test_contrast_between_sources_from_fixture_data(self):
         import web.estado as estado
         text = estado.markdown("es", ROOT / "pruebas" / "datos")
@@ -129,6 +162,16 @@ class Changes(unittest.TestCase):
         self.assertEqual(diff["added"], [("15002", "y")])
         self.assertEqual(diff["removed"], [("15001", "y")])
         self.assertEqual(diff["changed"], [(("15001", "x"), "count", "1", "5")])
+
+    def test_a_table_emptied_or_filled_counts_every_row(self):
+        from web import cambios
+        self.assertEqual(cambios.compare(self.OLD, [])["removed"], [("a",), ("b",), ("c",)])
+        self.assertEqual(cambios.compare([], self.OLD)["added"], [("a",), ("b",), ("c",)])
+        diff = cambios.compare([], [], columns=(["id", "name"], ["id", "extra"]))  # headers alone, with no rows
+        self.assertEqual((diff["columns_added"], diff["columns_removed"]), (["extra"], ["name"]))
+        self.assertEqual(cambios.table("id,name\n"), (["id", "name"], []))
+        gone = cambios.summary(self.OLD, [], columns=(["id", "name", "n"], ["id", "name", "n"]))
+        self.assertEqual((gone["removed"], gone["columns_removed"]), (3, []))
 
     def test_summary_lists_few_changes_and_counts_many(self):
         from web import cambios
@@ -175,7 +218,8 @@ class Changes(unittest.TestCase):
             history = cambios.history(repo)
             newest, middle, oldest = history["generations"]
             self.assertTrue(oldest["files"]["municipios.csv"]["new"])
-            self.assertEqual(middle["files"], {})  # only the manifest
+            self.assertEqual((middle["files"], middle["touched"]), ({}, ["manifiesto.json"]))
+            self.assertEqual(newest["touched"], ["manifiesto.json", "municipios.csv"])
             change = newest["files"]["municipios.csv"]
             self.assertEqual((change["added"], change["removed"], change["changed"]), (1, 1, 1))
             self.assertIn(("~", ("es:municipio:01001",), "official", "Uno", "Un"), change["detail"])
@@ -188,7 +232,7 @@ class Changes(unittest.TestCase):
             status = (out / "es" / "estado" / "index.html").read_text(encoding="utf-8")
             self.assertIn(f'<a href="#{t["s_changes"].lower()}">', status)
             self.assertIn("«Uno» → «Un»", status)
-            self.assertIn(t["only_manifest"], status)
+            self.assertIn("<code>manifiesto.json</code>", status)  # the generation that changed no row says what it touched
             site.build(out, ROOT / "pruebas" / "datos")
             status = (out / "es" / "estado" / "index.html").read_text(encoding="utf-8")
             self.assertNotIn(f'<a href="#{t["s_changes"].lower()}">', status)

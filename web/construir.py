@@ -136,7 +136,7 @@ def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
             count = _rows(path)
             rows.append(f'<tr><td><a href="../datos/{name}" download><code>{name}</code></a></td>'
                         f'<td>{escape(t["files"].get(name, ""))}</td>'
-                        f'<td class="n">{"" if count is None else f"{count:,}".replace(",", ".")}</td>'
+                        f'<td class="n">{estado._num(count, lang)}</td>'
                         f'<td class="n">{_size(path.stat().st_size)}</td></tr>')
         parts.append(f'<h2>{escape(t["files_heading"])}</h2><div class="table"><table><thead><tr>'
                      f'<th>{escape(t["file"])}</th><th>{escape(t["description"])}</th>'
