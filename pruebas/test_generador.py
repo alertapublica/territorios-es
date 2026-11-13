@@ -1135,6 +1135,25 @@ class HandLists(unittest.TestCase):
                 else:
                     self.assertEqual(r["source"], "")
 
+    def test_hand_copies_go_to_the_manifest_with_their_date_and_digest(self):
+        from generador.__main__ import hand_copies
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder / "lista.csv").write_bytes(b"a\n1\n")
+            sources = {"descargada": {"url": "https://a"},
+                       "copiada": {"url": "https://b", "retrieved": "2026-11-13", "copies": ["lista.csv"],
+                                   "licence": "L", "attribution": "A", "note": "n"}}
+            (folder / "fuentes.json").write_text(json.dumps(sources), encoding="utf-8")
+            self.assertEqual(hand_copies(folder), {"copiada": {
+                "url": "https://b", "retrieved": "2026-11-13", "licence": "L", "attribution": "A",
+                "copies": {"fuentes/lista.csv": {
+                    "sha256": "309b0e45a73d3fc5325e2b6ed0a01ef8b9cde6b05a5633c1f893f970d52bfddc", "bytes": 4}}}})
+            del sources["copiada"]["retrieved"]
+            (folder / "fuentes.json").write_text(json.dumps(sources), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                hand_copies(folder)
+        self.assertEqual(sorted(hand_copies(ROOT / "fuentes")), ["rel_comarcas", "rel_eatim"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -100,7 +100,8 @@ npm install github:alertapublica/territorios-es#vX.Y.Z
 ## Datos
 
 Los datos están en [`datos/`](datos/), en JSON y CSV (los límites, adjuntos a cada versión), con la URL, la huella SHA-256 y la fecha de
-cada fuente en `datos/manifiesto.json`. Los genera `python -m generador` en GitHub Actions
+cada fuente en `datos/manifiesto.json` (de las copias revisadas a mano, la fecha de la exportación y la
+huella de cada lista de `fuentes/`). Los genera `python -m generador` en GitHub Actions
 (workflow «Generar datos»), que abre una PR con los cambios y actualiza un issue con las
 discrepancias entre fuentes. Las listas revisadas a mano están en [`fuentes/`](fuentes/).
 
@@ -141,7 +142,7 @@ El código va con licencia MIT ([LICENSE](LICENSE)). Cada dato conserva la licen
 | AEMET | zona de aviso (Meteoalerta) de cada municipio y nombre de cada zona | nota legal de AEMET: «Fuente: AEMET» |
 | Idescat | comarca de cada municipio de Cataluña | reutilización citando la fuente: «Fuente: Idescat» |
 | Gobierno de Aragón (Aragón Open Data) | comarca de cada municipio de Aragón | CC BY 4.0 |
-| Registro de Entidades Locales | comarcas que son entidad local, municipios de las cuadrillas de Álava y de El Bierzo, y entidades locales menores con su municipio (exportaciones revisadas en `fuentes/`) | reutilización citando la fuente: «Fuente: Registro de Entidades Locales» |
+| Registro de Entidades Locales | comarcas que son entidad local, municipios de las cuadrillas de Álava y de El Bierzo, y entidades locales menores con su municipio (exportaciones revisadas en `fuentes/`) | reutilización citando la fuente: «Fuente: Registro de Entidades Locales» (fecha de cada exportación en el manifiesto) |
 | Dirección General del Catastro | código DGC de cada municipio (cruce con el INE; sin Álava, Gipuzkoa, Navarra ni Bizkaia) | licencia de la DGC: uso de la información transformada citando la fuente; no es «información catastral» ni tiene valor fehaciente |
 | Ayuntamiento de Madrid (callejero oficial) | códigos postales del municipio de Madrid, con el número de direcciones | CC BY 4.0: «Ayuntamiento de Madrid» |
 | Institut Cartogràfic i Geològic de Catalunya (Adreces) | códigos postales de Cataluña, con el número de direcciones | CC BY 4.0: «Institut Cartogràfic i Geològic de Catalunya (ICGC)» |

@@ -223,6 +223,26 @@ def limits_file(path: Path, salida: Path, cache: Path | None):
     print(json.dumps({**counts, "bytes_gzip": len(content)}, ensure_ascii=False))
 
 
+def hand_copies(folder: Path) -> dict:
+    """Manifest records of the sources copied by hand into fuentes/, which are not downloaded in each
+    run: the date of the export and the digest of each list made from it."""
+    records = {}
+    for name, c in json.loads((folder / "fuentes.json").read_text(encoding="utf-8")).items():
+        if "copies" not in c:
+            continue
+        try:
+            date.fromisoformat(c.get("retrieved", ""))
+        except ValueError:
+            raise ValueError(f"fuentes/fuentes.json: {name} no tiene la fecha de su copia") from None
+        copies = {}
+        for file in c["copies"]:
+            content = (folder / file).read_bytes()
+            copies[f"fuentes/{file}"] = {"sha256": hashlib.sha256(content).hexdigest(), "bytes": len(content)}
+        records[name] = {"url": c["url"], "retrieved": c["retrieved"], "copies": copies,
+                         "licence": c["licence"], "attribution": c["attribution"]}
+    return records
+
+
 def _minutes(seconds: float) -> str:
     return f"{seconds / 60:.1f} min".replace(".", ",")
 
@@ -448,6 +468,7 @@ def main(argv=None):
         fixture()
         return 0
     inputs, records = download_all(args.cache)
+    records.update(hand_copies(FUENTES))
     reference = load_hand_lists(FUENTES)["sources"]["ine_municipios"]["reference_date"]
     data, report, articles = build(inputs, FUENTES, reference)
     for orphan in codigos_postales.orphans(args.salida / codigos_postales.FILE, data):
