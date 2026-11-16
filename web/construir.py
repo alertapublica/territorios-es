@@ -107,6 +107,12 @@ def database(path: Path, datos: Path):
         db.close()
 
 
+def _address(url: str) -> str:
+    """The address to link in the table of sources: the first one of the manifest entry that is a whole address.
+    An entry may be a template with «…» followed by the page that lists what it stands for."""
+    return next((a for a in re.findall(r"https?://[^\s)]+", url) if "…" not in a), "")
+
+
 def top_nav(lang: str, t: dict, status: bool) -> str:
     """Data · Status · GitHub, the same on the data pages and on the status page."""
     link = f'<a href="estado/">{escape(t["nav_status"])}</a>' if status else ""
@@ -146,8 +152,8 @@ def page(lang: str, texts: dict, all_texts: dict, datos: Path | None) -> str:
         parts.append(f'<h2>{escape(t["columns_heading"])}</h2><dl>{terms}</dl>')
         sources = []
         for key, source in sorted(manifest.get("sources", {}).items()):
-            url = source.get("url", "")
-            link = f'<a href="{escape(url.split(" ")[0])}">{escape(key)}</a>' if url.startswith("http") else escape(key)
+            address = _address(source.get("url", ""))
+            link = f'<a href="{escape(address)}">{escape(key)}</a>' if address else escape(key)
             sources.append(f'<tr><td>{link}</td><td>{escape(source.get("licence", ""))}</td>'
                            f'<td class="n">{escape(source.get("retrieved", ""))}</td></tr>')
         parts.append(f'<h2>{escape(t["sources_heading"])}</h2><div class="table"><table><thead><tr>'
