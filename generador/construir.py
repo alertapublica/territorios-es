@@ -278,7 +278,8 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
 
     aliases: dict[str, list[dict]] = {}
     for row in hand["aliases"]:
-        aliases.setdefault(row["id"], []).append({"name": row["alias"], "lang": row["lang"], "kind": row["kind"]})
+        aliases.setdefault(row["id"], []).append({"name": row["alias"], "lang": row["lang"], "kind": row["kind"],
+                                                  **({"source": row["source"]} if row["source"] else {})})
 
     # Autonomous communities ----------------------------------------------------------------------
     community_names: dict[str, dict] = {}
@@ -486,6 +487,11 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
                 verb = "creado" if change["kind"] == "created" else "desaparecido"
                 changes_note(f"{change['code']} «{change['name']}» {verb} el {change['date']} ({change['other']}); "
                              f"entrará con el diccionario del año siguiente")
+    # Names that were official before the dictionary (INE, changes of each year), newest first. A
+    # municipality that no longer exists keeps none: it is not in the catalogue.
+    former_names: dict[str, list[dict]] = {}
+    for row in sorted(inputs.get("ine_former_names") or [], key=lambda r: r["until"], reverse=True):
+        former_names.setdefault(row["code"], []).append(row)
     municipalities, ine_codes = [], set()
     island_nuts: dict[str, set] = {}
     for code, check, official, ccaa in inputs["municipalities"]:
@@ -526,6 +532,11 @@ def build(inputs: dict, fuentes: Path, reference_date: str) -> tuple[dict, Repor
             former_alias = {"name": display_name(former), "lang": None, "kind": "former_official", "source": "ine",
                             "until": change["date"]}
             names["aliases"] = [*names.get("aliases", []), former_alias]
+        for row in former_names.get(code, []):
+            name = display_name(row["name"])
+            if name != display and all(name != a["name"] for a in names.get("aliases", [])):
+                names["aliases"] = [*names.get("aliases", []), {
+                    "name": name, "lang": None, "kind": "former_official", "source": "ine", "until": row["until"]}]
         codes = {"ine:municipio": code, "ine:municipio:dc": code + check}
         record = {"id": identity, "level": "municipality", "parent": f"es:provincia:{province}",
                   "codes": codes, "names": names}

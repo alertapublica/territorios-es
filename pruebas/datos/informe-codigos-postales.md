@@ -12,7 +12,7 @@
 - pares que tiene también otra fuente: 14 (60,9%)
 - códigos postales: 21
 - códigos con municipios de fuentes de distinta unidad (por tramos del INE): 1
-- municipios con código: 12 de 33
+- municipios con código: 12 de 35
 - municipios que decide madrid: 1
 - municipios que decide icgc: 1
 - municipios que decide idena: 1
@@ -56,7 +56,7 @@
 
 - Pontevedra (es:municipio:36038): decide catastro; sin datos en ine
 
-## Códigos postales: municipios sin código postal (21)
+## Códigos postales: municipios sin código postal (23)
 
 - Alacant/Alicante (es:municipio:03014)
 - Cangas de Morrazo (es:municipio:36008)
@@ -75,7 +75,9 @@
 - Rubí (es:municipio:08184)
 - Sagunt/Sagunto (es:municipio:46220)
 - Santa Cruz de Tenerife (es:municipio:38038)
+- Sanxenxo (es:municipio:36051)
 - València (es:municipio:46250)
+- Vic (es:municipio:08298)
 - Vielha e Mijaran (es:municipio:25243)
 - Zaragoza (es:municipio:50297)
 - la Vila Joiosa/Villajoyosa (es:municipio:03139)

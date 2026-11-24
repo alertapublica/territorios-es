@@ -33,6 +33,10 @@ function* forms(record) {
     const shorter = dropArticle(value);
     if (shorter) yield [shorter, 'variant', null];
   }
+  for (const value of [names.official, names.display]) { // «Alacant/Alicante» and «Alicante/Alacant»
+    const parts = value.split('/');
+    if (parts.length === 2) yield [`${parts[1]}/${parts[0]}`, 'variant', null];
+  }
 }
 
 export function createCatalog(data) {

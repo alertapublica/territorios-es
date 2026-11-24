@@ -442,22 +442,29 @@ es:municipio:03014,official,,Alacant/Alicante,ine
 es:municipio:03014,display,,Alacant/Alicante,derivado
 es:municipio:03014,parts,ca,Alacant,fuentes
 es:municipio:03014,parts,es,Alicante,fuentes
+es:municipio:03014,alias:former_official,,Alicante/Alacant,ine
 es:municipio:03139,official,,"Vila Joiosa, la/Villajoyosa",ine
 es:municipio:03139,display,,la Vila Joiosa/Villajoyosa,derivado
 es:municipio:03139,parts,ca,la Vila Joiosa,fuentes
 es:municipio:03139,parts,es,Villajoyosa,fuentes
+es:municipio:03139,alias:former_official,,Villajoyosa/la Vila Joiosa,ine
 es:municipio:04078,official,,Rioja,ine
 es:municipio:04078,display,,Rioja,derivado
 es:municipio:07024,official,,Formentera,ine
 es:municipio:07024,display,,Formentera,derivado
 es:municipio:07026,official,,Eivissa,ine
 es:municipio:07026,display,,Eivissa,derivado
+es:municipio:07026,alias:former_official,,Ibiza,ine
 es:municipio:07040,official,,Palma,ine
 es:municipio:07040,display,,Palma,derivado
+es:municipio:07040,alias:former_official,,Palma de Mallorca,ine
 es:municipio:08101,official,,"Hospitalet de Llobregat, L'",ine
 es:municipio:08101,display,,L'Hospitalet de Llobregat,derivado
 es:municipio:08184,official,,Rubí,ine
 es:municipio:08184,display,,Rubí,derivado
+es:municipio:08298,official,,Vic,ine
+es:municipio:08298,display,,Vic,derivado
+es:municipio:08298,alias:former_official,es,Vich,ine
 es:municipio:12040,official,,Castelló de la Plana/Castellón de la Plana,ine
 es:municipio:12040,display,,Castelló de la Plana/Castellón de la Plana,derivado
 es:municipio:12040,parts,ca,Castelló de la Plana,fuentes
@@ -502,6 +509,10 @@ es:municipio:36008,display,,Cangas de Morrazo,derivado
 es:municipio:36008,alias:former_official,,Cangas,ine
 es:municipio:36038,official,,Pontevedra,ine
 es:municipio:36038,display,,Pontevedra,derivado
+es:municipio:36051,official,,Sanxenxo,ine
+es:municipio:36051,display,,Sanxenxo,derivado
+es:municipio:36051,alias:former_official,es,Sangenjo,ine
+es:municipio:36051,alias:former_official,es,Sanjenjo,ine
 es:municipio:38038,official,,Santa Cruz de Tenerife,ine
 es:municipio:38038,display,,Santa Cruz de Tenerife,derivado
 es:municipio:41091,official,,Sevilla,ine
@@ -543,6 +554,8 @@ es:partido:0703,official,,Palma,derivado
 es:partido:0703,display,,Palma,derivado
 es:partido:0705,official,,Eivissa,derivado
 es:partido:0705,display,,Eivissa,derivado
+es:partido:0805,official,,Vic,derivado
+es:partido:0805,display,,Vic,derivado
 es:partido:0817,official,,"Hospitalet de Llobregat, L'",derivado
 es:partido:0817,display,,L'Hospitalet de Llobregat,derivado
 es:partido:0824,official,,Rubí,derivado
@@ -581,6 +594,8 @@ es:partido:3604,official,,Pontevedra,derivado
 es:partido:3604,display,,Pontevedra,derivado
 es:partido:3607,official,,Cangas de Morrazo,derivado
 es:partido:3607,display,,Cangas de Morrazo,derivado
+es:partido:3609,official,,Sanxenxo,derivado
+es:partido:3609,display,,Sanxenxo,derivado
 es:partido:3803,official,,Santa Cruz de Tenerife,derivado
 es:partido:3803,display,,Santa Cruz de Tenerife,derivado
 es:partido:4106,official,,Sevilla,derivado
@@ -615,6 +630,8 @@ es:zona-aviso:659001,official,,Norte de Gran Canaria,aemet
 es:zona-aviso:659001,display,,Norte de Gran Canaria,aemet
 es:zona-aviso:659602,official,,Área metropolitana de Tenerife,aemet
 es:zona-aviso:659602,display,,Área metropolitana de Tenerife,aemet
+es:zona-aviso:690802,official,,Depresión central de Barcelona,aemet
+es:zona-aviso:690802,display,,Depresión central de Barcelona,aemet
 es:zona-aviso:690803,official,,Prelitoral de Barcelona,aemet
 es:zona-aviso:690803,display,,Prelitoral de Barcelona,aemet
 es:zona-aviso:690804,official,,Litoral de Barcelona,aemet
@@ -659,6 +676,8 @@ es:comarca:0913,official,,Barcelonès,fuentes
 es:comarca:0913,display,,Barcelonès,fuentes
 es:comarca:0920,official,,Gironès,fuentes
 es:comarca:0920,display,,Gironès,fuentes
+es:comarca:0924,official,,Osona,fuentes
+es:comarca:0924,display,,Osona,fuentes
 es:comarca:0939,official,,Aran,fuentes
 es:comarca:0939,display,,Aran,fuentes
 es:comarca:0940,official,,Vallès Occidental,fuentes

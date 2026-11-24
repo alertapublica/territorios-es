@@ -1,12 +1,14 @@
 """INE: dictionary of municipalities (XLSX), islands with their municipalities (XLSX), the changes
-registered in the Registro de Entidades Locales since the dictionary (HTML), the list of
-provinces by community (HTML) and the official population of provinces and municipalities (JSON
+registered in the Registro de Entidades Locales since the dictionary and in each past year (HTML),
+the list of provinces by community (HTML) and the official population of provinces and municipalities (JSON
 API)."""
 from __future__ import annotations
 
 import html
 import json
 import re
+
+from territorios_es.text import ARTICLES
 
 from .xlsx import read_rows, sheet_names
 
@@ -83,13 +85,21 @@ def _html_text(content: bytes) -> str:
 
 
 def _cells(row: str) -> list[str]:
-    return [re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", c))).strip()
-            for c in re.findall(r"<td[^>]*>(.*?)</td>", row, flags=re.S | re.I)]
+    cells = [re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", c))).strip()
+             for c in re.findall(r"<td[^>]*>(.*?)</td>", row, flags=re.S | re.I)]
+    # Until 2014 the code of a municipality may take several cells: «03», «1199» or «24», «206», «6».
+    joined = []
+    for cell in cells:
+        if joined and re.fullmatch(r"\d{2}( \d{3})?", joined[-1]) and re.fullmatch(r"\d{1,4}", cell):
+            joined[-1] += " " + cell
+        else:
+            joined.append(cell)
+    return joined
 
 
 def _date(text: str) -> str | None:
-    match = re.fullmatch(r"(\d{2})[/-](\d{2})[/-](\d{4})", text)
-    return f"{match[3]}-{match[2]}-{match[1]}" if match else None
+    match = re.fullmatch(r"(\d{2})[/-](\d{2})[/-](\d{4}|\d{2})", text)
+    return f"{match[3] if len(match[3]) == 4 else '20' + match[3]}-{match[2]}-{match[1]}" if match else None
 
 
 def parse_changes(content: bytes) -> tuple[str | None, list[dict]]:
@@ -129,6 +139,28 @@ def parse_changes(content: bytes) -> tuple[str | None, list[dict]]:
             raise ValueError(f"INE change without a name: {cells}")
         changes.append(change)
     return (_date(start[1]) if start else None), changes
+
+
+_ARTICLES = {a.lower() for group in ARTICLES.values() for a in group}
+
+
+def _article_after_comma(name: str) -> str:
+    """Until 2010 the INE wrote the article in brackets (one of them not closed): «Pinós (el)/Pinoso»
+    -> «Pinós, el/Pinoso»."""
+    return re.sub(r"\s*\(([^()/]+)(?:\)|$)",
+                  lambda m: f", {m[1]}" if m[1].lower() in _ARTICLES else m[0], name)
+
+
+def parse_former_names(content: bytes, year: int) -> list[dict]:
+    """Names that stopped being official during a year, from the page of its changes (the page of 2026 has
+    those of 2025): [{code, name, until}]. until is the date of the resolution, or only the year in the pages
+    and rows without it. Every year has changes: a page without any is not the page expected."""
+    _, changes = parse_changes(content)
+    result = [{"code": c["code"], "name": _article_after_comma(c["previous"]), "until": c["date"] or str(year)}
+              for c in changes if c["kind"] in ("renamed", "corrected")]
+    if not result:
+        raise ValueError(f"INE: no name changes in {year}")
+    return result
 
 
 def parse_provinces(content: bytes) -> list[list[str]]:

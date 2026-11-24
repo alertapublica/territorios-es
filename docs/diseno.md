@@ -265,7 +265,11 @@ y cambios de nombre), y durante el año, los cambios que se van anotando en el R
 Entidades Locales. Los datos parten del diccionario a 1 de enero de 2026 y aplican los cambios de
 nombre anotados desde entonces: el nombre nuevo pasa a ser el oficial y el anterior queda como
 alias (`former_official`, con la fecha de la resolución en `until`). Las altas y bajas del año van
-al informe y entran con el diccionario siguiente. Después:
+al informe y entran con el diccionario siguiente. De las páginas de cambios de cada año (desde la de
+2001, que trae los de 2000) salen los demás nombres que dejaron de ser oficiales, como alias del
+mismo tipo; si el INE no da la fecha, `until` lleva solo el año. Los anteriores a 2000 que hagan falta
+se añaden a mano en `fuentes/alias.csv`, con su fuente («Vich», «Sanjenjo»: alteraciones de los
+municipios en los censos, del INE). Después:
 
 - un cambio de nombre conserva el identificador y guarda el nombre anterior como alias con fechas;
 - una fusión o segregación crea identidades nuevas y enlaces de sucesión;
@@ -296,7 +300,7 @@ en camelCase (`relateName`) y las opciones en un objeto (`search(text, { within,
 |---|---|
 | `resolve(system, code)` | De un código a un territorio con sus ancestros, o `None`/`null` si no existe. Sistemas: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `rel:eatim`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Ficha completa: nombres, códigos, padre y ancestros. |
-| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca; una entidad local menor está en los de su municipio. Los partidos judiciales, las zonas de aviso, las comarcas y las entidades locales menores solo salen si se piden en `levels`. |
+| `search(text, within, levels)` | Candidatos para un texto, cada uno con su motivo (`official`, `part`, `lang`, `alias` o `variant`) y en un orden fijo. Las variantes son las formas sin artículo («Coruña») y las bilingües en el otro orden («Alacant/Alicante»). `within` limita la búsqueda a un ámbito, por ejemplo a una provincia, a una isla, a un partido judicial, a una zona de aviso o a una comarca; una entidad local menor está en los de su municipio. Los partidos judiciales, las zonas de aviso, las comarcas y las entidades locales menores solo salen si se piden en `levels`. |
 | `children(id)` | Los territorios cuyo padre es este; en una isla, un partido judicial, una zona de aviso o una comarca, sus municipios. Los de una comunidad incluyen sus comarcas; los de una provincia incluyen sus partidos judiciales, sus zonas de aviso y, en Baleares y Canarias, sus islas; los de un municipio son sus entidades locales menores. |
 | `mentions(text, levels)` | Territorios nombrados dentro de un texto más largo («Moncada (Valencia)»), sin solaparse y empezando por el nombre más largo. Si el nombre completo no está en el catálogo, puede dar otro más corto contenido en él («Perales de Alfambra» → Alfambra). Por defecto, solo comunidades y provincias. |
 | `normalize(text)` | La normalización común: sin tildes ni mayúsculas, «l·l» como «ll», el artículo delante y los guiones como espacios. |

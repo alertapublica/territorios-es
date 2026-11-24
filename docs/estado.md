@@ -2,7 +2,7 @@
 
 Generado por `python web/estado.py` a partir de `datos/`, `pruebas/datos/` y `fuentes/`; la CI comprueba que está al día. Con pestañas y en seis idiomas, en la [web de datos](https://alertapublica.github.io/territorios-es/es/estado/). [English](status.md). Lo que falta, en los [issues «objetivo»](https://github.com/alertapublica/territorios-es/issues?q=is%3Aissue+is%3Aopen+label%3Aobjetivo).
 
-| **12.834** | **9 de 9** | **8.132** | **25** | **14.054** |
+| **12.834** | **9 de 9** | **8.132** | **26** | **14.054** |
 |:---:|:---:|:---:|:---:|:---:|
 | territorios | niveles con datos | municipios | fuentes · descarga 2026-11-13 | pares código postal–municipio |
 
@@ -191,7 +191,7 @@ De las fuentes a los datos y de los datos a la librería, la web y las pruebas. 
 ```mermaid
 flowchart TB
   accTitle: Repositorio
-  ext(["25 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
+  ext(["26 fuentes externas<br>AEMET · Aragón · Ayto. de Madrid · CDAU · Catastro · Eurostat · Eustat · ICGC · IDEIB · IDENA · IGN · INE · Idescat · Justicia · REL · Wikidata"])
   hand[/"fuentes/<br>14 listas revisadas a mano"/]
   descargas["descargas<br>descarga con caché, huella SHA-256 y relay"]
   readers["lectores<br>aemet · catastro · codigos_postales · comarcas · eurostat · ign · ine · justicia · wikidata"]
@@ -259,7 +259,7 @@ flowchart TB
 | `comarcas` | comarca de cada municipio de Cataluña; comarca de cada municipio de Aragón |
 | `eurostat` | LAU, NUTS 3 y superficie |
 | `ign` | capital de cada municipio, con coordenadas y altitud; código BDDAE y límites municipales |
-| `ine` | códigos y nombres oficiales de los municipios; islas y sus municipios; cambios de nombre del año; provincias y comunidades; población oficial |
+| `ine` | códigos y nombres oficiales de los municipios; islas y sus municipios; cambios de nombre del año; nombres oficiales anteriores, desde 2000; provincias y comunidades; población oficial |
 | `justicia` | partido judicial de cada municipio y su sede |
 | `wikidata` | nombres por idioma, enlaces e identificadores |
 | `__main__` | orquesta las descargas y escribe el informe |
@@ -366,13 +366,14 @@ flowchart LR
 ```
 
 <details>
-<summary>Las 25 fuentes, con su lector y la fecha de descarga</summary>
+<summary>Las 26 fuentes, con su lector y la fecha de descarga</summary>
 
 | Fuente | Organismo | Lector | Aporta | Descargada |
 |---|---|---|---|---|
 | `ine_municipios` | INE | `generador/ine.py` | códigos y nombres oficiales de los municipios | 2026-11-13 |
 | `ine_islas` | INE | `generador/ine.py` | islas y sus municipios | 2026-11-13 |
 | `ine_cambios` | INE | `generador/ine.py` | cambios de nombre del año | 2026-11-13 |
+| `ine_nombres_anteriores` | INE | `generador/ine.py` | nombres oficiales anteriores, desde 2000 | aún no |
 | `ine_provincias` | INE | `generador/ine.py` | provincias y comunidades | 2026-11-13 |
 | `ine_poblacion` | INE | `generador/ine.py` | población oficial | 2026-11-13 |
 | `mjusticia_censo_judicial` | Justicia | `generador/justicia.py` | partido judicial de cada municipio y su sede | 2026-11-13 |
@@ -435,7 +436,7 @@ flowchart LR
 | `comarcas-municipios.csv` | 89 | municipios de las cuadrillas de Álava y de El Bierzo |
 | `entidades-menores.csv` | 3.674 | entidades locales menores: número del Registro, municipio, tipo, nombre, capitalidad y fecha de inscripción |
 | `zonas-aviso.csv` | 4 | zona de los municipios que faltan en el maestro de AEMET |
-| `alias.csv` | 23 | alias |
+| `alias.csv` | 26 | alias |
 | `partes-bilingues.csv` | 273 | partes de los nombres bilingües |
 | `descartes-wikidata.csv` | 7 | etiquetas de Wikidata descartadas |
 | `paises-ue.csv` | 30 | países de la UE y del EEE |
