@@ -6,7 +6,7 @@ es:provincia:04,04,01,ES-AL,ES611,,,,Almería,Almería,Almería,Almería,Almerí
 es:provincia:05,05,07,ES-AV,ES411,,,,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,Ávila,,Europe/Madrid
 es:provincia:06,06,11,ES-BA,ES431,,,,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,Badajoz,,Europe/Madrid
 es:provincia:07,07,04,ES-PM,,,,,"Balears, Illes",Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,Illes Balears,431750,Europe/Madrid
-es:provincia:08,08,09,ES-B,ES511,,,,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,2000,Europe/Madrid
+es:provincia:08,08,09,ES-B,ES511,,,,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,Barcelona,3000,Europe/Madrid
 es:provincia:09,09,07,ES-BU,ES412,,,,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,Burgos,,Europe/Madrid
 es:provincia:10,10,11,ES-CC,ES432,,,,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,Cáceres,,Europe/Madrid
 es:provincia:11,11,01,ES-CA,ES612,,,,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,Cádiz,,Europe/Madrid
@@ -34,7 +34,7 @@ es:provincia:32,32,12,ES-OR,ES113,Q9000005,,,Ourense,Ourense,Ourense,Ourense,Our
 es:provincia:33,33,03,ES-O,ES120,,,,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,Asturias,1000,Europe/Madrid
 es:provincia:34,34,07,ES-P,ES414,,,,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,Palencia,,Europe/Madrid
 es:provincia:35,35,05,ES-GC,,,,,"Palmas, Las",Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,Las Palmas,381223,Atlantic/Canary
-es:provincia:36,36,12,ES-PO,ES114,,,,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,85000,Europe/Madrid
+es:provincia:36,36,12,ES-PO,ES114,,,,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,Pontevedra,86000,Europe/Madrid
 es:provincia:37,37,07,ES-SA,ES415,,,,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,Salamanca,,Europe/Madrid
 es:provincia:38,38,05,ES-TF,,,,,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Santa Cruz de Tenerife,209194,Atlantic/Canary
 es:provincia:39,39,06,ES-S,ES130,,,,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,Cantabria,,Europe/Madrid

@@ -4,23 +4,23 @@
 - Comunidades y ciudades autónomas: 19
 - Provincias: 52
 - Islas: 5
-- Municipios: 33
+- Municipios: 35
 - Municipios con Wikidata: 9
-- Municipios con código LAU: 32
+- Municipios con código LAU: 34
 - Municipios con código DGC: 6
 - Municipios con nombre bilingüe: 7
 - Municipios con capital (IGN): 3
 - Municipios con límites (IGN): 5
 - Municipios con isla: 5
-- Partidos judiciales: 30
-- Municipios con partido judicial: 32
-- Zonas de aviso (AEMET): 25
-- Municipios con zona de aviso: 31
-- Comarcas: 6
-- Municipios con comarca: 7
+- Partidos judiciales: 32
+- Municipios con partido judicial: 34
+- Zonas de aviso (AEMET): 26
+- Municipios con zona de aviso: 33
+- Comarcas: 7
+- Municipios con comarca: 8
 - Entidades locales menores: 72
 
-## Catastro (22)
+## Catastro (24)
 
 - Código DGC 41900 en es:municipio:41091, es:municipio:46250; no se usa en ninguno
 - es:municipio:03139 «la Vila Joiosa/Villajoyosa» no está en el Catastro
@@ -29,6 +29,7 @@
 - es:municipio:07026 «Eivissa» no está en el Catastro
 - es:municipio:07040 «Palma» no está en el Catastro
 - es:municipio:08184 «Rubí» no está en el Catastro
+- es:municipio:08298 «Vic» no está en el Catastro
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» no está en el Catastro
 - es:municipio:17079 «Girona» no está en el Catastro
 - es:municipio:25057 «Es Bòrdes» no está en el Catastro
@@ -39,6 +40,7 @@
 - es:municipio:33031 «Langreo» no está en el Catastro
 - es:municipio:35016 «Las Palmas de Gran Canaria» no está en el Catastro
 - es:municipio:36008 «Cangas de Morrazo» no está en el Catastro
+- es:municipio:36051 «Sanxenxo» no está en el Catastro
 - es:municipio:38038 «Santa Cruz de Tenerife» no está en el Catastro
 - es:municipio:46171 «Montcada/Moncada» no está en el Catastro
 - es:municipio:46220 «Sagunt/Sagunto» no está en el Catastro
@@ -55,7 +57,7 @@
 
 ## Comarcas (5)
 
-- Comarcas sin municipios, que no se publican: 0201 «Jacetania, La», 0202 «Alto Gállego», 0203 «Sobrarbe», 0204 «Ribagorza», 0205 «Cinco Villas», 0206 «Hoya de Huesca/Plana de Uesca», 0207 «Somontano de Barbastro», 0208 «Cinca Medio», 0209 «Litera, La/Llitera, la», 0210 «Monegros, Los», 0211 «Bajo Cinca/Baix Cinca», 0212 «Tarazona y el Moncayo», 0213 «Campo de Borja», 0214 «Aranda», 0215 «Ribera Alta del Ebro», 0216 «Valdejalón», 0218 «Ribera Baja del Ebro», 0219 «Bajo Aragón-Caspe/Baix Aragó-Casp», 0220 «Comunidad de Calatayud», 0221 «Campo de Cariñena», 0222 «Campo de Belchite», 0223 «Bajo Martín», 0224 «Campo de Daroca», 0225 «Jiloca», 0226 «Cuencas Mineras», 0227 «Andorra-Sierra de Arcos», 0228 «Bajo Aragón», 0229 «Comunidad de Teruel», 0230 «Maestrazgo», 0231 «Sierra de Albarracín», 0232 «Gúdar-Javalambre», 0233 «Matarraña/Matarranya», 0701 «Bierzo, El», 0901 «Alt Camp», 0902 «Alt Empordà», 0903 «Alt Penedès», 0904 «Alt Urgell», 0905 «Alta Ribagorça», 0906 «Anoia», 0907 «Bages», 0908 «Baix Camp», 0909 «Baix Ebre», 0910 «Baix Empordà», 0911 «Baix Llobregat», 0912 «Baix Penedès», 0914 «Berguedà», 0915 «Cerdanya», 0916 «Conca de Barberà», 0917 «Garraf», 0918 «Garrigues», 0919 «Garrotxa», 0921 «Maresme», 0922 «Montsià», 0923 «Noguera», 0924 «Osona», 0925 «Pallars Jussà», 0926 «Pallars Sobirà», 0927 «Pla d'Urgell», 0928 «Pla de l'Estany», 0929 «Priorat», 0930 «Ribera d'Ebre», 0931 «Ripollès», 0932 «Segarra», 0933 «Segrià», 0934 «Selva», 0935 «Solsonès», 0936 «Tarragonès», 0937 «Terra Alta», 0938 «Urgell», 0941 «Vallès Oriental», 0942 «Moianès», 0943 «Lluçanès», 1601 «Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa», 1602 «Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa», 1603 «Cuadrilla de Añana/Añanako Kuadrilla», 1605 «Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla», 1606 «Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea», 1607 «Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla»
+- Comarcas sin municipios, que no se publican: 0201 «Jacetania, La», 0202 «Alto Gállego», 0203 «Sobrarbe», 0204 «Ribagorza», 0205 «Cinco Villas», 0206 «Hoya de Huesca/Plana de Uesca», 0207 «Somontano de Barbastro», 0208 «Cinca Medio», 0209 «Litera, La/Llitera, la», 0210 «Monegros, Los», 0211 «Bajo Cinca/Baix Cinca», 0212 «Tarazona y el Moncayo», 0213 «Campo de Borja», 0214 «Aranda», 0215 «Ribera Alta del Ebro», 0216 «Valdejalón», 0218 «Ribera Baja del Ebro», 0219 «Bajo Aragón-Caspe/Baix Aragó-Casp», 0220 «Comunidad de Calatayud», 0221 «Campo de Cariñena», 0222 «Campo de Belchite», 0223 «Bajo Martín», 0224 «Campo de Daroca», 0225 «Jiloca», 0226 «Cuencas Mineras», 0227 «Andorra-Sierra de Arcos», 0228 «Bajo Aragón», 0229 «Comunidad de Teruel», 0230 «Maestrazgo», 0231 «Sierra de Albarracín», 0232 «Gúdar-Javalambre», 0233 «Matarraña/Matarranya», 0701 «Bierzo, El», 0901 «Alt Camp», 0902 «Alt Empordà», 0903 «Alt Penedès», 0904 «Alt Urgell», 0905 «Alta Ribagorça», 0906 «Anoia», 0907 «Bages», 0908 «Baix Camp», 0909 «Baix Ebre», 0910 «Baix Empordà», 0911 «Baix Llobregat», 0912 «Baix Penedès», 0914 «Berguedà», 0915 «Cerdanya», 0916 «Conca de Barberà», 0917 «Garraf», 0918 «Garrigues», 0919 «Garrotxa», 0921 «Maresme», 0922 «Montsià», 0923 «Noguera», 0925 «Pallars Jussà», 0926 «Pallars Sobirà», 0927 «Pla d'Urgell», 0928 «Pla de l'Estany», 0929 «Priorat», 0930 «Ribera d'Ebre», 0931 «Ripollès», 0932 «Segarra», 0933 «Segrià», 0934 «Selva», 0935 «Solsonès», 0936 «Tarragonès», 0937 «Terra Alta», 0938 «Urgell», 0941 «Vallès Oriental», 0942 «Moianès», 0943 «Lluçanès», 1601 «Arabako Lautadako Kuadrilla/Cuadrilla de la Llanada Alavesa», 1602 «Arabako Errioxako Kuadrilla/Cuadrilla de Rioja Alavesa», 1603 «Cuadrilla de Añana/Añanako Kuadrilla», 1605 «Cuadrilla de Montaña Alavesa/Arabako Mendialdeko Kuadrilla», 1606 «Aiaraldeko Kuadrilla/Cuadrilla de Aiaraldea», 1607 «Cuadrilla de Gorbeialdea/Gorbeialdeko Kuadrilla»
 - En fuentes/comarcas-municipios.csv pero no en el diccionario de municipios: 01001, 01002, 01003, 01004, 01006, 01008, 01009, 01010, 01011, 01013, 01014, 01016, 01017, 01018, 01019, 01020, 01021, 01022, 01023, 01027, 01028, 01030, 01031, 01032, 01033, 01034, 01036, 01037, 01039, 01041, 01042, 01043, 01044, 01046, 01047, 01049, 01051, 01052, 01053, 01054, 01055, 01056, 01057, 01058, 01060, 01061, 01062, 01063, 01901, 01902, 24007, 24009, 24011, 24014, 24016, 24019, 24022, 24027, 24030, 24034, 24036, 24038, 24041, 24049, 24057, 24059, 24064, 24070, 24071, 24083, 24100, 24102, 24103, 24109, 24110, 24112, 24115, 24119, 24122, 24143, 24165, 24169, 24170, 24171, 24196, 24198, 24206, 24209
 - Idescat: 08999 en la comarca 99, que no está en fuentes/comarcas.csv
 - Idescat: 43001 (comarca 36) no es un municipio de la comunidad 09 en el diccionario
@@ -136,7 +138,7 @@
 - es:municipio:28079 «Madrid»: «Madrid» (28079000101) a 68783 m del límite
 - es:municipio:32054 «Ourense»: «Ourense» (32054000101) a 823 m del límite
 
-## IGN: capitales (31)
+## IGN: capitales (33)
 
 - 15026000101 «Cesuras» es capital de 15026, que no está en el INE
 - es:municipio:01059 «Vitoria-Gasteiz» sin capital en el IGN
@@ -148,6 +150,7 @@
 - es:municipio:07040 «Palma» sin capital en el IGN
 - es:municipio:08101 «L'Hospitalet de Llobregat» sin capital en el IGN
 - es:municipio:08184 «Rubí» sin capital en el IGN
+- es:municipio:08298 «Vic» sin capital en el IGN
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» sin capital en el IGN
 - es:municipio:17079 «Girona» sin capital en el IGN
 - es:municipio:20069 «Donostia/San Sebastián» sin capital en el IGN
@@ -160,6 +163,7 @@
 - es:municipio:35016 «Las Palmas de Gran Canaria» sin capital en el IGN
 - es:municipio:36008 «Cangas de Morrazo» sin capital en el IGN
 - es:municipio:36038: varias capitales (36038000101, 36038009901); no se usa ninguna
+- es:municipio:36051 «Sanxenxo» sin capital en el IGN
 - es:municipio:38038 «Santa Cruz de Tenerife» sin capital en el IGN
 - es:municipio:41091 «Sevilla» sin capital en el IGN
 - es:municipio:46171 «Montcada/Moncada» sin capital en el IGN
@@ -170,7 +174,7 @@
 - es:municipio:51001 «Ceuta» sin capital en el IGN
 - es:municipio:52001 «Melilla» sin capital en el IGN
 
-## IGN: límites (29)
+## IGN: límites (31)
 
 - 34151531999 «Zona común inventada» (Condominio) no es un municipio del INE
 - es:municipio:01059 «Vitoria-Gasteiz» no está en los límites del IGN
@@ -180,6 +184,7 @@
 - es:municipio:07026 «Eivissa» no está en los límites del IGN
 - es:municipio:07040 «Palma» no está en los límites del IGN
 - es:municipio:08184 «Rubí» no está en los límites del IGN
+- es:municipio:08298 «Vic» no está en los límites del IGN
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana» no está en los límites del IGN
 - es:municipio:17079 «Girona» no está en los límites del IGN
 - es:municipio:20069 «Donostia/San Sebastián» no está en los límites del IGN
@@ -192,6 +197,7 @@
 - es:municipio:35016 «Las Palmas de Gran Canaria» no está en los límites del IGN
 - es:municipio:36008 «Cangas de Morrazo» no está en los límites del IGN
 - es:municipio:36038 «Pontevedra» no está en los límites del IGN
+- es:municipio:36051 «Sanxenxo» no está en los límites del IGN
 - es:municipio:38038 «Santa Cruz de Tenerife» no está en los límites del IGN
 - es:municipio:41091 «Sevilla» no está en los límites del IGN
 - es:municipio:46171 «Montcada/Moncada» no está en los límites del IGN
@@ -332,7 +338,7 @@
 
 - es:municipio:46171 «Montcada/Moncada»: an «Sevilla» es también es:municipio:41091
 
-## Wikidata: sin elemento (41)
+## Wikidata: sin elemento (43)
 
 - es:autonomia:01 (ES-AN)
 - es:autonomia:02 (ES-AR)
@@ -360,6 +366,7 @@
 - es:municipio:07026 «Eivissa»
 - es:municipio:07040 «Palma»
 - es:municipio:08101 «L'Hospitalet de Llobregat»
+- es:municipio:08298 «Vic»
 - es:municipio:12040 «Castelló de la Plana/Castellón de la Plana»
 - es:municipio:20069 «Donostia/San Sebastián»
 - es:municipio:25057 «Es Bòrdes»
@@ -370,6 +377,7 @@
 - es:municipio:33031 «Langreo»
 - es:municipio:35016 «Las Palmas de Gran Canaria»
 - es:municipio:36008 «Cangas de Morrazo»
+- es:municipio:36051 «Sanxenxo»
 - es:municipio:38038 «Santa Cruz de Tenerife»
 - es:municipio:46220 «Sagunt/Sagunto»
 - es:municipio:48020 «Bilbao»

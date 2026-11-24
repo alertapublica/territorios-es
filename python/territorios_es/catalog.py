@@ -128,6 +128,10 @@ class Catalog:
             shorter = drop_article(value)
             if shorter:
                 yield shorter, "variant", None
+        for value in (names["official"], names["display"]):  # «Alacant/Alicante» and «Alicante/Alacant»
+            parts = value.split("/")
+            if len(parts) == 2:
+                yield f"{parts[1]}/{parts[0]}", "variant", None
 
     def _build_index(self) -> dict[str, list[tuple[int, int, str, str, str | None]]]:
         best: dict[tuple[str, str], tuple[int, str, str | None]] = {}

@@ -64,6 +64,7 @@ SOURCES = {  # key in fuentes/fuentes.json: (organisation, generator module, fil
     "ine_municipios": ("INE", "ine", ["municipios.csv", "codigos.csv", "nombres.csv"]),
     "ine_islas": ("INE", "ine", ["islas.csv", "municipios.csv"]),
     "ine_cambios": ("INE", "ine", ["nombres.csv"]),
+    "ine_nombres_anteriores": ("INE", "ine", ["nombres.csv"]),
     "ine_provincias": ("INE", "ine", ["provincias.csv", "comunidades.csv"]),
     "ine_poblacion": ("INE", "ine", ["provincias.csv", "municipios.csv"]),
     "mjusticia_censo_judicial": ("Justicia", "justicia", ["partidos-judiciales.csv", "municipios.csv", "codigos.csv"]),

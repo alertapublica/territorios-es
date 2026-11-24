@@ -56,6 +56,21 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         print(f"Aviso: {error}", file=sys.stderr)
         inputs["ine_changes"] = None
 
+    # Each page has the changes of the year before: the last one reaches the date of the dictionary.
+    c = config["ine_nombres_anteriores"]
+    answers, inputs["ine_former_names"] = [], []
+    last = int(config["ine_municipios"]["reference_date"][:4])
+    for year in range(c["first"], last + 1):
+        def parse(content, changed=year - 1):
+            return ine.parse_former_names(content, changed)
+        got = descargas.fetch(c["url"].format(yy=f"{year % 100:02d}"), cache=cache,
+                              cache_name=f"ine_nombres_anteriores_{year}.htm", validate=parse)
+        answers.append(_Seen(got))
+        inputs["ine_former_names"] += parse(got.content)
+    records["ine_nombres_anteriores"] = _joined(
+        c["url"].format(yy="…") + f" ({len(answers)} páginas, {c['first']}-{last})", answers,
+        reference_date=config["ine_municipios"]["reference_date"], licence=c["licence"], attribution=c["attribution"])
+
     c = config["ine_provincias"]
     try:
         got = descargas.fetch(c["url"], cache=cache, cache_name="ine_provincias.htm")

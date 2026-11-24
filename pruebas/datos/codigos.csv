@@ -326,6 +326,9 @@ es:municipio:08101,ign:bddae,34090808101,ign
 es:municipio:08184,ine:municipio,08184,ine
 es:municipio:08184,ine:municipio:dc,081846,ine
 es:municipio:08184,lau,08184,eurostat
+es:municipio:08298,ine:municipio,08298,ine
+es:municipio:08298,ine:municipio:dc,082981,ine
+es:municipio:08298,lau,08298,eurostat
 es:municipio:12040,ine:municipio,12040,ine
 es:municipio:12040,ine:municipio:dc,120402,ine
 es:municipio:12040,lau,12040,eurostat
@@ -383,6 +386,9 @@ es:municipio:36038,ine:municipio:dc,360388,ine
 es:municipio:36038,lau,36038,eurostat
 es:municipio:36038,dgc:municipio,36041,catastro
 es:municipio:36038,wikidata,Q9000017,wikidata
+es:municipio:36051,ine:municipio,36051,ine
+es:municipio:36051,ine:municipio:dc,360519,ine
+es:municipio:36051,lau,36051,eurostat
 es:municipio:38038,ine:municipio,38038,ine
 es:municipio:38038,ine:municipio:dc,380380,ine
 es:municipio:38038,lau,38038,eurostat
@@ -420,6 +426,7 @@ es:partido:0303,mjusticia:partido,0303,mjusticia
 es:partido:0305,mjusticia:partido,0305,mjusticia
 es:partido:0703,mjusticia:partido,0703,mjusticia
 es:partido:0705,mjusticia:partido,0705,mjusticia
+es:partido:0805,mjusticia:partido,0805,mjusticia
 es:partido:0817,mjusticia:partido,0817,mjusticia
 es:partido:0824,mjusticia:partido,0824,mjusticia
 es:partido:1201,mjusticia:partido,1201,mjusticia
@@ -436,6 +443,7 @@ es:partido:3313,mjusticia:partido,3313,mjusticia
 es:partido:3502,mjusticia:partido,3502,mjusticia
 es:partido:3604,mjusticia:partido,3604,mjusticia
 es:partido:3607,mjusticia:partido,3607,mjusticia
+es:partido:3609,mjusticia:partido,3609,mjusticia
 es:partido:3803,mjusticia:partido,3803,mjusticia
 es:partido:4106,mjusticia:partido,4106,mjusticia
 es:partido:4606,mjusticia:partido,4606,mjusticia
@@ -451,6 +459,7 @@ es:zona-aviso:645301,aemet:zona,645301,aemet
 es:zona-aviso:645404,aemet:zona,645404,aemet
 es:zona-aviso:659001,aemet:zona,659001,aemet
 es:zona-aviso:659602,aemet:zona,659602,aemet
+es:zona-aviso:690802,aemet:zona,690802,aemet
 es:zona-aviso:690803,aemet:zona,690803,aemet
 es:zona-aviso:690804,aemet:zona,690804,aemet
 es:zona-aviso:691702,aemet:zona,691702,aemet
@@ -476,6 +485,8 @@ es:comarca:0913,rel:comarca,06090210,fuentes
 es:comarca:0913,idescat:comarca,13,fuentes
 es:comarca:0920,rel:comarca,06090410,fuentes
 es:comarca:0920,idescat:comarca,20,fuentes
+es:comarca:0924,rel:comarca,06090330,fuentes
+es:comarca:0924,idescat:comarca,24,fuentes
 es:comarca:0939,rel:comarca,06090180,fuentes
 es:comarca:0939,idescat:comarca,39,fuentes
 es:comarca:0940,rel:comarca,06090300,fuentes

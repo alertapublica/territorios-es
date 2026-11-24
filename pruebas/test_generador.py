@@ -203,6 +203,38 @@ class Readers(unittest.TestCase):
         self.assertEqual(ine.parse_changes(page(["Cambio de denominación"], ["Provincia", "Nueva", "Código"])),
                          ("2026-01-01", []))
 
+    def test_ine_former_names_html(self):
+        def page(*rows):
+            body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
+            return f"<table>{body}</table>".encode("latin-1")
+        # A row of each shape of the pages of 2001-2026 (read on 2026-11-24).
+        content = page(["Relación de municipios creados"],
+                       ["Provincia", "Código", "Denominación", "Municipio del que se segrega"],
+                       ["Albacete", "02 9010", "Pozo Cañada", "02 0030 Albacete"],
+                       ["Relación de municipios desaparecidos"],
+                       ["_", "_", "_", "_"],
+                       ["Cambio de denominación de los municipios"],
+                       ["Provincia", "Denominación nueva o en lengua vernácula", "Código", "Denominación anterior"],
+                       ["Balears (Illes)", "Maó", "07", "0321", "Mahón"],
+                       ["Castellón/Castelló", "Borriana/Burriana", "12 0326", "Burriana"],
+                       ["León", "Toral de los Vados", "24", "206", "6", "Villadecanes"],
+                       ["Navarra", "Abárzuza/Abartzuza", "31", "002", "3", "Abárzuza", "15/03/2011"],
+                       ["Navarra", "Barañáin/Barañain", "31 901 9", "Barañain", "01-03-16"],
+                       ["Alicante/Alacant", "Hondón de las Nieves", "03", "0778", "Fondó de les Neus (el)"],
+                       ["Valencia/València", "Alqueria de la Comtessa, l'", "46", "0378",
+                        "Alquería de la Condesa/Alqueria de la Comtessa (l'"],
+                       ["Navarra", "Noáin", "31 088 2", "Noáin (Valle de Elorz)/Noain (Elortzibar)", "11/02/2025"],
+                       ["Corrección en la denominación de los municipios"],
+                       ["Provincia", "Denominación corregida", "Código", "Denominación anterior"],
+                       ["Cáceres", "Acehúche", "10", "0041", "Acehuche"])
+        self.assertEqual([(r["code"], r["name"], r["until"]) for r in ine.parse_former_names(content, 2006)], [
+            ("07032", "Mahón", "2006"), ("12032", "Burriana", "2006"), ("24206", "Villadecanes", "2006"),
+            ("31002", "Abárzuza", "2011-03-15"), ("31901", "Barañain", "2016-03-01"),
+            ("03077", "Fondó de les Neus, el", "2006"),
+            ("46037", "Alquería de la Condesa/Alqueria de la Comtessa, l'", "2006"),
+            ("31088", "Noáin (Valle de Elorz)/Noain (Elortzibar)", "2025-02-11"), ("10004", "Acehuche", "2006")])
+        self.assertRaises(ValueError, ine.parse_former_names, page(["Cambio de denominación"]), 2006)
+
     def test_ine_provinces_html(self):
         page = ("<table><tr><th>CODAUTO</th><th>Comunidad</th><th>CPRO</th><th>Provincia</th></tr>"
                 "<tr><td>12</td><td>Galicia</td><td>15</td><td>Coru&ntilde;a, A</td></tr></table>").encode()
@@ -494,7 +526,7 @@ class Build(unittest.TestCase):
             "36999 está en el Censo Judicial (partido 3604) pero no en el diccionario de municipios",
             "Partido 0401: su sede 04013 no está en el diccionario de municipios; no se usa",
             "es:municipio:04078 «Rioja» sin partido judicial en el Censo Judicial"])
-        self.assertEqual(self.report.summary["Partidos judiciales"], 30)
+        self.assertEqual(self.report.summary["Partidos judiciales"], 32)
 
     def test_warning_zones(self):
         by_id = {t["id"]: t for t in self.data["territories"]}
@@ -521,7 +553,7 @@ class Build(unittest.TestCase):
             "Zona 633304: no está en la delimitación de AEMET; quedan sin zona 33031",
             "es:municipio:04078 «Rioja» sin zona de aviso de AEMET",
             "es:municipio:33031 «Langreo» sin zona de aviso de AEMET"])
-        self.assertEqual(self.report.summary["Zonas de aviso (AEMET)"], 25)
+        self.assertEqual(self.report.summary["Zonas de aviso (AEMET)"], 26)
 
     def test_warning_zones_from_hand_list_and_across_provinces(self):
         inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
@@ -573,7 +605,7 @@ class Build(unittest.TestCase):
         self.assertIn("es:municipio:25120 «Lleida» sin comarca", lines)
         self.assertTrue(any(line.startswith("Comarcas sin municipios, que no se publican: 0201 «Jacetania, La»")
                             for line in lines))
-        self.assertEqual(self.report.summary["Comarcas"], 6)
+        self.assertEqual(self.report.summary["Comarcas"], 7)
 
     def test_comarcas_hand_lists_are_checked(self):
         inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))
@@ -656,7 +688,7 @@ class Build(unittest.TestCase):
     def test_population(self):
         by_id = {t["id"]: t for t in self.data["territories"]}
         self.assertEqual(by_id["es:municipio:28079"]["stats"], {"population": 3422416, "area_km2": 12.346})
-        self.assertEqual(by_id["es:provincia:36"]["stats"], {"population": 85000})
+        self.assertEqual(by_id["es:provincia:36"]["stats"], {"population": 86000})
         self.assertNotIn("stats", by_id["es:provincia:02"])
         self.assertNotIn("stats", by_id["es:municipio:04078"])  # in neither the INE nor the LAU table
         self.assertNotIn("stats", by_id["es:autonomia:12"])
@@ -698,6 +730,19 @@ class Build(unittest.TestCase):
         inputs["ine_changes"] = None
         _, report, _ = build(inputs, ROOT / "fuentes", "2026-01-01")
         self.assertEqual(len(report.sections["INE: cambios del año"]), 1)
+
+    def test_former_names(self):
+        by_id = {t["id"]: t["names"] for t in self.data["territories"]}
+        def former(name, until):
+            return {"name": name, "lang": None, "kind": "former_official", "source": "ine", "until": until}
+        self.assertEqual(by_id["es:municipio:07026"]["aliases"], [former("Ibiza", "2006")])
+        self.assertEqual(by_id["es:municipio:03139"]["aliases"], [former("Villajoyosa/la Vila Joiosa", "2022-05-04")])
+        # The name it has now is left out, and a repeated one keeps its last date.
+        self.assertEqual(by_id["es:municipio:07040"]["aliases"], [former("Palma de Mallorca", "2012-01-10")])
+        # A hand alias may say its source.
+        self.assertEqual(by_id["es:municipio:08298"]["aliases"],
+                         [{"name": "Vich", "lang": "es", "kind": "former_official", "source": "ine"}])
+        self.assertNotIn("source", by_id["es:municipio:01059"]["aliases"][0])
 
     def test_island_table_errors(self):
         inputs = json.loads((ROOT / "pruebas" / "fuentes" / "entrada.json").read_text(encoding="utf-8"))

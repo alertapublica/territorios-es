@@ -272,7 +272,11 @@ mergers and name changes), and during the year, the changes registered in the Re
 Entidades Locales. The data start from the dictionary as of 1 January 2026 and apply the name
 changes registered since then: the new name becomes the official one and the previous one stays
 as an alias (`former_official`, with the date of the resolution in `until`). Additions and
-removals of the year go to the report and come in with the next dictionary. Afterwards:
+removals of the year go to the report and come in with the next dictionary. The other names that
+stopped being official come from the pages of changes of each year (since that of 2001, which has the
+changes of 2000), as aliases of the same kind; if the INE gives no date, `until` has only the year.
+Earlier ones that are needed are added by hand in `fuentes/alias.csv`, with their source («Vich»,
+«Sanjenjo»: INE, alterations of the municipalities in the censuses). Afterwards:
 
 - a name change keeps the identifier and stores the previous name as an alias with dates;
 - a merger or segregation creates new identities and succession links;
@@ -302,7 +306,7 @@ options go in an object (`search(text, { within, levels })`).
 |---|---|
 | `resolve(system, code)` | From a code to a territory with its ancestors, or `None`/`null` if it does not exist. Systems: `ine:autonomia`, `ine:provincia`, `ine:municipio`, `ine:municipio:dc`, `dgc:municipio`, `mjusticia:partido`, `aemet:zona`, `rel:comarca`, `idescat:comarca`, `aragon:comarca`, `rel:eatim`, `iso3166-1:alpha2`, `iso3166-1:alpha3`, `iso3166-2`, `nuts`, `lau`, `wikidata`, `osm:relation`, `geonames`… |
 | `territory(id)` | Full record: names, codes, parent and ancestors. |
-| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca; a minor local entity is within those of its municipality. Judicial districts, warning zones, comarcas and minor local entities only come up if asked for in `levels`. |
+| `search(text, within, levels)` | Candidates for a text, each with its reason (`official`, `part`, `lang`, `alias` or `variant`) and in a fixed order. Variants are the forms without the article («Coruña») and the bilingual ones in the other order («Alacant/Alicante»). `within` limits the search to a scope, for example a province, an island, a judicial district, a warning zone or a comarca; a minor local entity is within those of its municipality. Judicial districts, warning zones, comarcas and minor local entities only come up if asked for in `levels`. |
 | `children(id)` | The territories whose parent is this one; for an island, a judicial district, a warning zone or a comarca, its municipalities. Those of a community include its comarcas; those of a province include its judicial districts, its warning zones and, in the Balearic and Canary Islands, its islands; those of a municipality are its minor local entities. |
 | `mentions(text, levels)` | Territories named within a longer text ("Moncada (Valencia)"), without overlapping and starting with the longest name. If the full name is not in the catalogue, it may return a shorter one contained in it ("Perales de Alfambra" → Alfambra). By default, only autonomous communities and provinces. |
 | `normalize(text)` | The common normalisation: no accents or capitals, "l·l" as "ll", the article in front and hyphens as spaces. |
