@@ -235,6 +235,14 @@ class Readers(unittest.TestCase):
             ("31088", "Noáin (Valle de Elorz)/Noain (Elortzibar)", "2025-02-11"), ("10004", "Acehuche", "2006")])
         self.assertRaises(ValueError, ine.parse_former_names, page(["Cambio de denominación"]), 2006)
 
+    def test_ine_former_names_source(self):
+        from generador.__main__ import _former_names_url
+        source = json.loads((ROOT / "fuentes" / "fuentes.json").read_text(encoding="utf-8"))["ine_nombres_anteriores"]
+        self.assertEqual(_former_names_url(source, 2026),
+                         "https://www.ine.es/daco/daco42/codmun/codmun…/…codmunmod.htm "
+                         f"(26 páginas, 2001-2026; la última, en {source['page']})")
+        self.assertRegex(source["page"], r"^https://www\.ine\.es/[^\s(){}…]+$")  # a whole address, to link it
+
     def test_ine_provinces_html(self):
         page = ("<table><tr><th>CODAUTO</th><th>Comunidad</th><th>CPRO</th><th>Provincia</th></tr>"
                 "<tr><td>12</td><td>Galicia</td><td>15</td><td>Coru&ntilde;a, A</td></tr></table>").encode()

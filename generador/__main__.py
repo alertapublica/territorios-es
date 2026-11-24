@@ -68,7 +68,7 @@ def download_all(cache: Path | None) -> tuple[dict, dict]:
         answers.append(_Seen(got))
         inputs["ine_former_names"] += parse(got.content)
     records["ine_nombres_anteriores"] = _joined(
-        c["url"].format(yy="…") + f" ({len(answers)} páginas, {c['first']}-{last})", answers,
+        _former_names_url(c, last), answers,
         reference_date=config["ine_municipios"]["reference_date"], licence=c["licence"], attribution=c["attribution"])
 
     c = config["ine_provincias"]
@@ -260,6 +260,12 @@ def hand_copies(folder: Path) -> dict:
 
 def _minutes(seconds: float) -> str:
     return f"{seconds / 60:.1f} min".replace(".", ",")
+
+
+def _former_names_url(c: dict, last: int) -> str:
+    """The manifest gives the template of the yearly pages and, as no list of them is known, the page of the INE
+    that links the latest one: a whole address."""
+    return f"{c['url'].format(yy='…')} ({last - c['first'] + 1} páginas, {c['first']}-{last}; la última, en {c['page']})"
 
 
 def _joined(url: str, answers: list, **extra) -> dict:
